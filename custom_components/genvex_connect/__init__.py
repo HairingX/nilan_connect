@@ -31,13 +31,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     authenticatedEmail = entry.data.get(CONF_AUTHENTICATED_EMAIL)
     genvexNabto = GenvexNabto(authenticatedEmail)
     deviceID = entry.data.get(CONF_DEVICE_ID)
-    if deviceID is not None:
-        genvexNabto.setDevice(deviceID)
-    else:
-        deviceIP = entry.data.get(CONF_DEVICE_IP)
-        devicePort = entry.data.get(CONF_DEVICE_PORT)
-        genvexNabto.setManualIP(deviceIP, devicePort)
-        deviceID = genvexNabto._device_id
+    deviceIP = entry.data.get(CONF_DEVICE_IP)
+    devicePort = entry.data.get(CONF_DEVICE_PORT)
+    genvexNabto.setDevice(deviceID, deviceIP, devicePort)
 
     discoveryResult = await genvexNabto.waitForDiscovery()
     if discoveryResult is False:  # Waits for GenvexNabto to discover the current device IP
