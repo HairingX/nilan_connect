@@ -28,7 +28,19 @@ class GenvexConnectSelectFanLevel(GenvexConnectEntityBase, SelectEntity):
     def __init__(self, genvexNabto, valueKey):
         super().__init__(genvexNabto, f"{valueKey}_select", valueKey)
         self._valueKey = valueKey
-        self._attr_options = ["Level 0", "Level 1", "Level 2", "Level 3", "Level 4"]
+        self._min = genvexNabto.getSetpointMinValue(valueKey)
+        self._max = genvexNabto.getSetpointMaxValue(valueKey)
+        self._attr_options = []
+        if self._min == 0:
+            self._attr_options.append("Speed 0")
+        if self._min <= 1 and self._max >= 1:
+            self._attr_options.append("Speed 1")
+        if self._min <= 2 and self._max >= 2:
+            self._attr_options.append("Speed 2")
+        if self._min <= 3 and self._max >= 3:
+            self._attr_options.append("Speed 3")
+        if self._min <= 4 and self._max >= 4:
+            self._attr_options.append("Speed 4")
 
     @property
     def icon(self):
@@ -39,15 +51,16 @@ class GenvexConnectSelectFanLevel(GenvexConnectEntityBase, SelectEntity):
     def current_option(self) -> str | None:
         """Return the selected entity option to represent the entity state."""
         currentFanvalue = int(self.genvexNabto.getValue(self._valueKey))
-        if currentFanvalue < 0 or currentFanvalue > 4:
-            return "Level 0"
-        return self._attr_options[currentFanvalue]
+        index = int(currentFanvalue - self._min)
+        if index < 0 or index > len(self._attr_options):
+            return self._attr_options[0]
+        return self._attr_options[index]
 
     async def async_select_option(self, option: str) -> None:
         """Change the selected option."""
         fanLevel = 0
-        if option in self._attr_options:
-            fanLevel = self._attr_options.index(option)
+        if len(option) > 0:
+            fanLevel = int(option[-1])
         self.genvexNabto.setSetpoint(self._valueKey, fanLevel)
 
 
