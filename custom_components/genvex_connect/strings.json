@@ -276,5 +276,16 @@
         "name": "Months between filterchange"
       }
     }
+  },
+  "selector": {
+    "set_fan_level":{
+      "options": {
+        "level_0": "Stop",
+        "level_1": "Niveau 1",
+        "level_2": "Niveau 2",
+        "level_3": "Niveau 3",
+        "level_4": "Niveau 4"
+      }
+    }
   }
 }

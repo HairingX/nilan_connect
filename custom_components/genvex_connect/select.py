@@ -28,19 +28,20 @@ class GenvexConnectSelectFanLevel(GenvexConnectEntityBase, SelectEntity):
     def __init__(self, genvexNabto, valueKey):
         super().__init__(genvexNabto, f"{valueKey}_select", valueKey)
         self._valueKey = valueKey
+        self.translation_key = "set_fan_level"
         self._min = genvexNabto.getSetpointMinValue(valueKey)
         self._max = genvexNabto.getSetpointMaxValue(valueKey)
         self._attr_options = []
         if self._min == 0:
-            self._attr_options.append("Speed 0")
+            self._attr_options.append("level_0")
         if self._min <= 1 and self._max >= 1:
-            self._attr_options.append("Speed 1")
+            self._attr_options.append("level_1")
         if self._min <= 2 and self._max >= 2:
-            self._attr_options.append("Speed 2")
+            self._attr_options.append("level_2")
         if self._min <= 3 and self._max >= 3:
-            self._attr_options.append("Speed 3")
+            self._attr_options.append("level_3")
         if self._min <= 4 and self._max >= 4:
-            self._attr_options.append("Speed 4")
+            self._attr_options.append("level_4")
 
     @property
     def icon(self):

@@ -228,28 +228,28 @@
         "name": "Bypass offset"
       },
       "supply_air_level1": {
-        "name": "Tilluft - Level 1"
+        "name": "Tilluft - Niveau 1"
       },
       "supply_air_level2": {
-        "name": "Tilluft - Level 2"
+        "name": "Tilluft - Niveau 2"
       },
       "supply_air_level3": {
-        "name": "Tilluft - Level 3"
+        "name": "Tilluft - Niveau 3"
       },
       "supply_air_level4": {
-        "name": "Tilluft - Level 4"
+        "name": "Tilluft - Niveau 4"
       },
       "extract_air_level1": {
-        "name": "Fraluft - Level 1"
+        "name": "Fraluft - Niveau 1"
       },
       "extract_air_level2": {
-        "name": "Fraluft - Level 2"
+        "name": "Fraluft - Niveau 2"
       },
       "extract_air_level3": {
-        "name": "Fraluft - Level 3"
+        "name": "Fraluft - Niveau 3"
       },
       "extract_air_level4": {
-        "name": "Fraluft - Level 4"
+        "name": "Fraluft - Niveau 4"
       },
       "boost_time": {
         "name": "Boost tid"
@@ -274,6 +274,17 @@
       },
       "filter_months_setting": {
         "name": "Måneder mellem filterskift"
+      }
+    }
+  },
+  "selector": {
+    "set_fan_level":{
+      "options": {
+        "level_0": "Stop",
+        "level_1": "Niveau 1",
+        "level_2": "Niveau 2",
+        "level_3": "Niveau 3",
+        "level_4": "Niveau 4"
       }
     }
   }

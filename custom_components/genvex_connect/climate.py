@@ -17,7 +17,14 @@ from homeassistant.const import UnitOfTemperature
 from genvexnabto import GenvexNabto, GenvexNabtoDatapointKey, GenvexNabtoSetpointKey
 from .entity import GenvexConnectEntityBase
 
-from .const import DOMAIN
+from .const import (
+    DOMAIN, 
+    FAN_LEVEL_0, 
+    FAN_LEVEL_1, 
+    FAN_LEVEL_2, 
+    FAN_LEVEL_3, 
+    FAN_LEVEL_4
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -113,43 +120,43 @@ class GenvexConnectClimate(GenvexConnectEntityBase, ClimateEntity):
         max = self.genvexNabto.getSetpointMaxValue(self._fanSetKey)
         modes = []
         if min == 0:
-            modes.append(FAN_OFF)
+            modes.append(FAN_LEVEL_0)
         if min <= 1 and max >= 1:
-            modes.append(FAN_LOW)
+            modes.append(FAN_LEVEL_1)
         if min <= 2 and max >= 2:
-            modes.append(FAN_MIDDLE)
+            modes.append(FAN_LEVEL_2)
         if min <= 3 and max >= 3:
-            modes.append(FAN_MEDIUM)
+            modes.append(FAN_LEVEL_3)
         if min <= 4 and max >= 4:
-            modes.append(FAN_HIGH)
+            modes.append(FAN_LEVEL_4)
         return modes
 
     @property
     def fan_mode(self):
         fanValue = self.genvexNabto.getValue(self._fanSetKey)
         if fanValue == 0:
-            return FAN_OFF
+            return FAN_LEVEL_0
         elif fanValue == 1:
-            return FAN_LOW
+            return FAN_LEVEL_1
         elif fanValue == 2:
-            return FAN_MIDDLE
+            return FAN_LEVEL_2
         elif fanValue == 3:
-            return FAN_MEDIUM
+            return FAN_LEVEL_3
         elif fanValue == 4:
-            return FAN_HIGH
+            return FAN_LEVEL_4
 
     async def async_set_fan_mode(self, fan_mode: str) -> None:
         _LOGGER.info(f"Wanted to set fan mode to {fan_mode}")
         speed = 2
-        if fan_mode == FAN_OFF:
+        if fan_mode == FAN_LEVEL_0:
             speed = 0
-        elif fan_mode == FAN_LOW:
+        elif fan_mode == FAN_LEVEL_1:
             speed = 1
-        elif fan_mode == FAN_MIDDLE:
+        elif fan_mode == FAN_LEVEL_2:
             speed = 2
-        elif fan_mode == FAN_MEDIUM:
+        elif fan_mode == FAN_LEVEL_3:
             speed = 3
-        elif fan_mode == FAN_HIGH:
+        elif fan_mode == FAN_LEVEL_4:
             speed = 4
         self.genvexNabto.setSetpoint(self._fanSetKey, speed)
 

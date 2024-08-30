@@ -1,27 +1,27 @@
 # Genvex Connect
 Component to directly integrate Genvex Connect and Nilan Gateway devices into Home Assistant.
-The integrationen uses my own libary [GenvexNabto](https://github.com/superrob/genvexnabto) which handles all communication with the devices locally. Have a look in that repo for more information about the more technical side of the project.
+The integrationen uses a custom libary [GenvexNabto](https://github.com/HairingX/genvexnabto) which handles all communication with the devices locally. Have a look in that repo for more information about the more technical side of the project.
 
 This integration needs the user to have an Genvex Connect or Nilan gateway connected to their device or own the newer Optima devices, which already have integrated gateways.
 
 ### Supported controller models
 |Controller         | Gateway requiured     | Supported       | Tested  |
 |------------------:|:---------------------:|:---------------:|:-------:|
-|Optima 250         | Yes, internet gateway | ✅              | ✅      |
-|Optima 251         | Yes, internet gateway | ✅              | ✅      |
+|Optima 250         | Yes, internet gateway | ✅              |       |
+|Optima 251         | Yes, internet gateway | ✅              |       |
 |Optima 260         | Yes, internet gateway | ✅              |         |
-|Optima 270         | Built in              | ✅              | ✅     |
-|Optima 301         | Yes, internet gateway | ✅              | ✅     |
+|Optima 270         | Built in              | ✅              |      |
+|Optima 301         | Yes, internet gateway | ✅              |      |
 |Optima 312         | Yes, internet gateway | ✅              |         |
 |Optima 314         | Built in              | ✅              |         |
 |Nilan CTS400       | Yes, nilan gateway    | ✅              | ✅     |
-|Nilan CTS602       | Yes, nilan gateway    | ✅              | ✅     |
+|Nilan CTS602       | Yes, nilan gateway    | ✅              |      |
 |Nilan CTS602 Light | Yes, nilan gateway    | ✅              |         |
 |Nilan CTS602 Geo   | Yes, nilan gateway    | ✅              |         |
 
 ## Installation (HACS)
 
-The preferred method to install is to use HACS. You need to add this repo https://github.com/superrob/genvex-connect as a custom repo. See https://hacs.xyz/docs/faq/custom_repositories for details.
+The preferred method to install is to use HACS. You need to add this repo https://github.com/HairingX/genvexconnect as a custom repo. See https://hacs.xyz/docs/faq/custom_repositories for details.
 
 ## Installation (No HACS)
 
@@ -37,8 +37,13 @@ The integration should search for your device and let you choose which one to us
 Then if all goes well, your device should be added and working in Home Assistant.
 
 ## A little note to Genvex/Nilan
-I know fully well that you have the ability to remotely update your devices and closing local connections are quite simple to do. Please do not use that power irresponsibly. The method of connecting locally does require you to know the exact email used in the app and the capabilities are the same as the ones your users connecting directly through Modbus have. This shouldn't be a security concern and only gives your Gateway solutions much more value to the end user. Might i suggest that some might choose to buy your additional product, instead of a thirdparty solution?
+I know fully well that you have the ability to remotely update your devices and closing local connections are quite simple to do. Please do not use that power irresponsibly. The method of connecting locally does require you to know the exact email used in the app and the capabilities are the same as the ones your users connecting directly through Modbus have. This shouldn't be a security concern and only gives your Gateway solutions much more value to the end user.
 
 # Obligatory statement
 I am not personally or in any way responsible for any damages should you choose to use the integration. No warranty provided. 
 Be especially observant when trying the integration with untested controller models and settings values.
+
+## Credit
+This library would not be possible without the time and effort put in by superrob, who initiated this integration.
+I branched out this codebase for development practice purpose, to tailor the CTS 400 model to my needs.
+For more info see his library here: https://github.com/superrob/genvexconnect
