@@ -20,7 +20,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     new_entities = []
     if genvexNabto.providesValue(GenvexNabtoDatapointKey.BYPASS_ACTIVE):
         new_entities.append(
-            GenvexConnectBinarySensorGeneric(
+            GenvexConnectBinarySensor(
                 genvexNabto,
                 GenvexNabtoDatapointKey.BYPASS_ACTIVE,
                 "mdi:valve",
@@ -29,26 +29,26 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
         )
     if genvexNabto.providesValue(GenvexNabtoDatapointKey.DEFROST_ACTIVE):
         new_entities.append(
-            GenvexConnectBinarySensorGeneric(
+            GenvexConnectBinarySensor(
                 genvexNabto,
                 GenvexNabtoDatapointKey.DEFROST_ACTIVE,
                 "mdi:snowflake-melt",
                 type=BinarySensorDeviceClass.RUNNING,
             )
         )
-    if genvexNabto.providesValue(GenvexNabtoDatapointKey.SUMMER_MODE):
+    if genvexNabto.providesValue(GenvexNabtoDatapointKey.WINTER_MODE_ACTIVE):
         new_entities.append(
-            GenvexConnectBinarySensorGeneric(
+            GenvexConnectBinarySensor(
                 genvexNabto,
-                GenvexNabtoDatapointKey.SUMMER_MODE,
+                GenvexNabtoDatapointKey.WINTER_MODE_ACTIVE,
                 "mdi:sun-snowflake-variant",
             )
         )
-    if genvexNabto.providesValue(GenvexNabtoDatapointKey.SACRIFICIAL_ANODE):
+    if genvexNabto.providesValue(GenvexNabtoDatapointKey.SACRIFICIAL_ANODE_OK):
         new_entities.append(
-            GenvexConnectBinarySensorGeneric(
+            GenvexConnectBinarySensor(
                 genvexNabto,
-                GenvexNabtoDatapointKey.SACRIFICIAL_ANODE,
+                GenvexNabtoDatapointKey.SACRIFICIAL_ANODE_OK,
                 "mdi:water-opacity",
                 type=BinarySensorDeviceClass.PROBLEM,
                 inverted=True,
@@ -58,18 +58,14 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     async_add_entities(new_entities)
 
 
-class GenvexConnectBinarySensorGeneric(GenvexConnectEntityBase, BinarySensorEntity):
-    def __init__(self, genvexNabto, valueKey, icon, type=None, inverted=False):
+class GenvexConnectBinarySensor(GenvexConnectEntityBase, BinarySensorEntity):
+    def __init__(self, genvexNabto: GenvexNabto, valueKey, icon, type=None, inverted=False):
         super().__init__(genvexNabto, valueKey, valueKey)
         self._valueKey = valueKey
         self._icon = icon
         self._attr_device_class = type
+        self._attr_icon = icon
         self._inverted = inverted
-
-    @property
-    def icon(self):
-        """Return the icon of the sensor."""
-        return self._icon
 
     @property
     def is_on(self) -> None:

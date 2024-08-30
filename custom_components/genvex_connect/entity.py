@@ -21,13 +21,14 @@ class GenvexConnectEntityBase(Entity):
         self,
         genvexNabto: GenvexNabto,
         name: str,
-        valueKey,
+        valueKey: str ,
         useDefaultUpdateHandler: bool = True,
     ) -> None:
         self.genvexNabto = genvexNabto
         self._translationKey = name
+        self._valueKey = valueKey
         if useDefaultUpdateHandler:
-            genvexNabto.registerUpdateHandler(valueKey, self._on_change)
+            genvexNabto.registerUpdateHandler(self._valueKey, self._on_change)
 
     @property
     def translation_key(self):
@@ -37,7 +38,7 @@ class GenvexConnectEntityBase(Entity):
     @property
     def unique_id(self) -> str:
         """Return a unique ID to use for this entity."""
-        return f"{self.genvexNabto._device_id}_{self._translationKey}"
+        return f"{self.genvexNabto._device_id}_{self._translationKey.split("__")[0]}"
 
     @property
     def should_poll(self) -> bool:

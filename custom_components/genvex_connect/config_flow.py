@@ -158,8 +158,7 @@ class ConfigFlow(ConfigFlow, domain=DOMAIN):
         _LOGGER.info("User provided email: %s, ip: %s, port: %s", self._authenticatedEmail, self._deviceIP, self._devicePort)
 
         self._genvexNabto._authorized_email = self._authenticatedEmail
-        self._genvexNabto.setManualIP(self._deviceIP, self._devicePort)
-        self._genvexNabto._device_id = self._deviceID
+        self._genvexNabto.setDevice(self._deviceID, self._deviceIP, self._devicePort)
         self._genvexNabto.connectToDevice()
         await self._genvexNabto.waitForConnection()
         if self._genvexNabto._connection_error is not False:

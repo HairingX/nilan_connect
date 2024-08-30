@@ -10,137 +10,184 @@
       "unknown": "Ukendt fejl"
     },
     "step": {
-      "pick": {
-        "title": "Genvex Connect Opsætning",
-        "description": "Vælg din Genvex Connect enhed herunder",
-        "data": {
-          "deviceID": "Enheds ID"
-        }
-      },
       "email": {
-        "title": "Genvex Connect Opsætning",
-        "description": "Indtast den email du bruger i Genvex Connect appen",
         "data": {
           "authenticatedEmail": "Email"
-        }
+        },
+        "description": "Indtast den email du bruger i Genvex Connect appen",
+        "title": "Genvex Connect Opsætning"
       },
       "manual": {
-        "title": "Genvex Connect Opsætning",
-        "description": "Indtast din gateways IP adresse og port, samt den email du bruger i Genvex Connect appen",
         "data": {
+          "authenticatedEmail": "Email",
           "deviceIP": "IP",
-          "devicePort": "Port",
-          "authenticatedEmail": "Email"
-        }
+          "devicePort": "Port"
+        },
+        "description": "Indtast din gateways IP adresse og port, samt den email du bruger i Genvex Connect appen",
+        "title": "Genvex Connect Opsætning"
+      },
+      "pick": {
+        "data": {
+          "deviceID": "Enheds ID"
+        },
+        "description": "Vælg din Genvex Connect enhed herunder",
+        "title": "Genvex Connect Opsætning"
       }
     }
   },
   "entity": {
-    "button": {
-      "filter_reset": {
-        "name": "Nulstil filter"
-      }
-    },
     "binary_sensor": {
       "bypass_active": {
         "name": "Bypass aktiv"
       },
-      "summer_mode": {
-        "name": "Sommer tilstand"
-      },
-      "sacrificial_anode": {
-        "name": "Offeranode"
-      },      
       "defrost_active": {
         "name": "Deice aktiv"
+      },
+      "sacrificial_anode_ok": {
+        "name": "Offeranode"
+      },
+      "winter_mode_active": {
+        "name": "Vinter tilstand"
+      }
+    },
+    "button": {
+      "filter_replace_reset": {
+        "name": "Nulstil filter"
       }
     },
     "climate": {
-      "ventilation": {
+      "hvac": {
         "name": "Ventilation"
       }
     },
+    "number": {
+      "boost_time_minutes": {
+        "name": "Boost tid"
+      },
+      "temp_bypass_open_offset": {
+        "name": "Bypass forskydning"
+      },
+      "fan_level1_extract_preset": {
+        "name": "Fraluft - Niveau 1"
+      },
+      "fan_level1_supply_preset": {
+        "name": "Tilluft - Niveau 1"
+      },
+      "fan_level2_extract_preset": {
+        "name": "Fraluft - Niveau 2"
+      },
+      "fan_level2_supply_preset": {
+        "name": "Tilluft - Niveau 2"
+      },
+      "fan_level3_extract_preset": {
+        "name": "Fraluft - Niveau 3"
+      },
+      "fan_level3_supply_preset": {
+        "name": "Tilluft - Niveau 3"
+      },
+      "fan_level4_extract_preset": {
+        "name": "Fraluft - Niveau 4"
+      },
+      "fan_level4_supply_preset": {
+        "name": "Tilluft - Niveau 4"
+      },
+      "filter_replace_interval_days": {
+        "name": "Dage mellem filterskift"
+      },
+      "filter_replace_interval_months": {
+        "name": "Måneder mellem filterskift"
+      },
+      "temp_hotwater": {
+        "name": "Varmtvands Temperatur"
+      },
+      "temp_hotwater_boost": {
+        "name": "Varmtvands Elpatron maks temperatur"
+      },
+      "temp_summer_supply_max": {
+        "name": "Sommer maks tilluft temperatur"
+      },
+      "temp_summer_supply_min": {
+        "name": "Sommer min tilluft temperatur"
+      },
+      "temp_target": {
+        "name": "Temperatur mål"
+      }
+    },
+    "select": {
+      "antilegionella_day": {
+        "name": "Antilegionella",
+        "state": {
+          "0": "OFF",
+          "1": "Mandag",
+          "2": "Tirsdag",
+          "3": "Onsdag",
+          "4": "Torsdag",
+          "5": "Fredag",
+          "6": "Lørdag",
+          "7": "Søndag"
+        }
+      },
+      "temp_cooling_start_offset": {
+        "name": "Kølning startforskydning",
+        "state": {
+          "0": "OFF",
+          "1": "+0 °C",
+          "2": "+1 °C",
+          "3": "+2 °C",
+          "4": "+3 °C",
+          "5": "+4 °C",
+          "6": "+5 °C",
+          "7": "+7 °C",
+          "8": "+10 °C"
+        }
+      },
+      "compressor_priority": {
+        "name": "Kompressor prioritet",
+        "state": {
+          "0": "Varmvand",
+          "1": "Indblæs"
+        }
+      },
+      "fan_level": {
+        "name": "Ventilator trin",
+        "state": {
+          "0": "Trin 0",
+          "1": "Trin 1",
+          "2": "Trin 2",
+          "3": "Trin 3",
+          "4": "Trin 4",
+          "5": "Trin 5",
+          "6": "Trin 6",
+          "7": "Trin 7",
+          "8": "Trin 8",
+          "9": "Trin 9",
+          "10": "Trin 10"
+        }
+      }
+    },
     "sensor": {
-      "temp_supply": {
-        "name": "Temperatur Tilluft"
+      "alarmlist": {
+        "name": "Alarm liste"
       },
-      "temp_outside": {
-        "name": "Temperatur Udeluft"
-      },
-      "temp_extract": {
-        "name": "Temperatur Fraluft"
-      },
-      "temp_exhaust": {
-        "name": "Temperatur Afkastluft"
-      },
-      "temp_room": {
-        "name": "Temperatur Rum"
-      },
-      "temp_condenser": {
-        "name": "Temperatur Kondensator"
-      },
-      "temp_evaporator": {
-        "name": "Temperatur Fordamper"
-      },
-      "hotwater_top": {
-        "name": "Temperatur Varmtvand Top"
-      },
-      "hotwater_bottom": {
-        "name": "Temperatur Varmtvand Bund"
-      },
-      "humidity": {
-        "name": "Luftfugtighed"
-      },
-      "fan_level_supply": {
-        "name": "Ventilator Niveau Tilluft"
-      },
-      "fan_level_extract": {
-        "name": "Ventilator Niveau Fraluft"
-      },
-      "fan_speed_supply": {
-        "name": "Ventilator Hastighed Tilluft"
-      },
-      "fan_speed_extract": {
-        "name": "Ventilator Hastighed Fraluft"
-      },
-      "fan_rpm_supply": {
-        "name": "Ventilator RPM Tilluft"
-      },
-      "fan_rpm_extract": {
-        "name": "Ventilator RPM Fraluft"
-      },
-      "filter_days": {
-        "name": "Dage siden filter skift"
-      },
-      "filter_days_left": {
-        "name": "Dage til filter skift"
+      "alarmcount": {
+        "name": "Alarm antal"
       },
       "co2_level": {
         "name": "CO2 Sensor"
       },
-      "defrost_timesincelast": {
-        "name": "Tid siden sidste deice"
-      },
-      "efficiency": {
-        "name": "Effektivitet"
-      },
-      "preheat_pwm": {
-        "name": "Forvarme PWM"
-      },
-      "reheat_pwm": {
-        "name": "Eftervarme PWM"
-      },
-      "cts400_alarmlist": {
-        "name": "Aktiv Alarm liste"
-      },
-      "cts400_alarmcount": {
-        "name": "Aktiv Alarm antal"
-      },
-      "controlstate_602": {
+      "cts602_state": {
         "name": "Status",
         "state": {
           "state_0": "Slukket",
           "state_1": "Shift",
+          "state_10": "Legionella",
+          "state_11": "Nedkøling + varmtvand",
+          "state_12": "Central opvarmning",
+          "state_13": "De-icer",
+          "state_14": "Frostbeskyttelse",
+          "state_15": "Service",
+          "state_16": "Alarm",
+          "state_17": "Opvarmning + varmtvand",
           "state_2": "Stop",
           "state_3": "Start",
           "state_4": "Standby",
@@ -148,143 +195,123 @@
           "state_6": "Ventilations tilstand",
           "state_7": "Opvarmning",
           "state_8": "Nedkøling",
-          "state_9": "Varmtvands produktion.",
-          "state_10": "Legionella",
-          "state_11": "Nedkøling + Varmtvand",
-          "state_12": "Central opvarmning",
-          "state_13": "De-icer",
-          "state_14": "Frostbeskyttelse",
-          "state_15": "Service",
-          "state_16": "Alarm",
-          "state_17": "Opvarmning + Varmtvand"
+          "state_9": "Varmtvands produktion."
         }
       },
-      "alarm_optima270": {
+      "defrost_days_ago": {
+        "name": "Dage siden sidste afisning"
+      },
+      "efficiency": {
+        "name": "Effektivitet"
+      },
+      "fan_dutycycle_extract": {
+        "name": "Ventilator hastighed fraluft"
+      },
+      "fan_dutycycle_supply": {
+        "name": "Ventilator hastighed tilluft"
+      },
+      "fan_level_extract": {
+        "name": "Ventilator niveau fraluft"
+      },
+      "fan_level_supply": {
+        "name": "Ventilator niveau tilluft"
+      },
+      "fan_rpm_extract": {
+        "name": "Ventilator RPM fraluft"
+      },
+      "fan_rpm_supply": {
+        "name": "Ventilator RPM tilluft"
+      },
+      "filter_replace_days_ago": {
+        "name": "Dage siden filter skift"
+      },
+      "filter_replace_days_remain": {
+        "name": "Dage til filter skift"
+      },
+      "humidity": {
+        "name": "Luftfugtighed"
+      },
+      "optima270_alarms": {
         "name": "Alarm",
         "state": {
           "state_0": "Ingen alarmer",
-          "state_2": "Filter skift",
-          "state_4": "Stop Styring",
-          "state_8": "T1 Følerfejl",
-          "state_16": "T2 Følerfejl",
-          "state_32": "T3 Følerfejl",
-          "state_64": "T4 Følerfejl",
-          "state_128": "T5 Følerfejl",
-          "state_256": "T6 Følerfejl",
-          "state_512": "T7 Følerfejl",
           "state_1024": "T8 Følerfejl",
-          "state_2048": "T9 Følerfejl",
-          "state_4096": "Fugtføler",
-          "state_8192": "Brand fejl / ved test",
-          "state_16384": "Tilluft ventilator RPM ERR",
-          "state_32768": "Fraluft ventilator RPM ERR",
-          "state_65536": "Vandfrost fejl",
-          "state_131072": "Brand fejl spjæld 1",
-          "state_262144": "Brand fejl spjæld 2",
-          "state_524288": "Brand fejl spjæld 3",
           "state_1048576": "Brand fejl spjæld 4",
+          "state_128": "T5 Følerfejl",
+          "state_131072": "Brand fejl spjæld 1",
+          "state_16": "T2 Følerfejl",
+          "state_16384": "Tilluft ventilator RPM ERR",
+          "state_2": "Filter skift",
+          "state_2048": "T9 Følerfejl",
           "state_2097152": "Brand fejl - Brandboks 1",
-          "state_4194304": "Brand fejl - Brandboks 2",
+          "state_256": "T6 Følerfejl",
+          "state_262144": "Brand fejl spjæld 2",
+          "state_32": "T3 Følerfejl",
+          "state_32768": "Fraluft ventilator RPM ERR",
+          "state_4": "Stop Styring",
+          "state_4096": "Fugtføler",
+          "state_4194304": "Brand fejl - brandboks 2",
+          "state_512": "T7 Følerfejl",
+          "state_524288": "Brand fejl spjæld 3",
+          "state_64": "T4 Følerfejl",
+          "state_65536": "Vandfrost fejl",
+          "state_8": "T1 Følerfejl",
+          "state_8192": "Brand fejl / ved test",
           "state_8388608": "Rotor alarm"
         }
+      },
+      "preheat_pwm": {
+        "name": "Forvarme PWM"
+      },
+      "reheat_pwm": {
+        "name": "Eftervarme PWM"
+      },
+      "temp_condenser": {
+        "name": "Temperatur kondensator"
+      },
+      "temp_evaporator": {
+        "name": "Temperatur fordamper"
+      },
+      "temp_exhaust": {
+        "name": "Temperatur afkastluft"
+      },
+      "temp_extract": {
+        "name": "Temperatur fraluft"
+      },
+      "temp_hotwater_bottom": {
+        "name": "Temperatur varmtvand bund"
+      },
+      "temp_hotwater_top": {
+        "name": "Temperatur varmtvand top"
+      },
+      "temp_outside": {
+        "name": "Temperatur udeluft"
+      },
+      "temp_room": {
+        "name": "Temperatur rum"
+      },
+      "temp_supply": {
+        "name": "Temperatur tilluft"
       }
-    }, 
+    },
     "switch": {
-      "humidity_control": {
-        "name": "Fugtstyring"
+      "enable": {
+        "name": "Tænd"
       },
-      "reheating": {
-        "name": "Eftervarme"
-      },
-      "preheating": {
-        "name": "Forvarme"
+      "boost_enable": {
+        "name": "Boost"
       },
       "cooling_enable": {
         "name": "Kølning"
       },
-      "boost_enable": {
-        "name": "Boost"
-      }
-    },
-    "select": {
-      "fan_speed_select": {
-        "name": "Ventilator trin"
+      "humidity_control_enable": {
+        "name": "Fugtstyring"
       },
-      "antilegionella_day": {
-        "name": "Antilegionella"
+      "preheating_enable": {
+        "name": "Forvarme"
       },
-      "cooling_priority": {
-        "name": "Kølnings prioritet"
-      },
-      "cooling_offset": {
-        "name": "Kølning start offset"
-      }
-    },
-    "number": {
-      "temp_setpoint_slider": {
-        "name": "Temperatur mål"
-      },      
-      "bypass_openoffset": {
-        "name": "Bypass offset"
-      },
-      "supply_air_level1": {
-        "name": "Tilluft - Niveau 1"
-      },
-      "supply_air_level2": {
-        "name": "Tilluft - Niveau 2"
-      },
-      "supply_air_level3": {
-        "name": "Tilluft - Niveau 3"
-      },
-      "supply_air_level4": {
-        "name": "Tilluft - Niveau 4"
-      },
-      "extract_air_level1": {
-        "name": "Fraluft - Niveau 1"
-      },
-      "extract_air_level2": {
-        "name": "Fraluft - Niveau 2"
-      },
-      "extract_air_level3": {
-        "name": "Fraluft - Niveau 3"
-      },
-      "extract_air_level4": {
-        "name": "Fraluft - Niveau 4"
-      },
-      "boost_time": {
-        "name": "Boost tid"
-      },
-      "hotwater_temp": {
-        "name": "Varmtvands Temperatur"
-      },
-      "hotwater_boosttemp": {
-        "name": "Varmtvands Elpatron maks temperatur"
-      },
-      "filter_days_left": {
-        "name": "Dage per filter"
-      },
-      "supplyair_min_temp_summer": {
-        "name": "Sommer min tilluft temperatur"
-      },
-      "supplyair_max_temp_summer": {
-        "name": "Sommer maks tilluft temperatur"
-      },
-      "cooling_temperature": {
-        "name": "Nedlølning offset"
-      },
-      "filter_months_setting": {
-        "name": "Måneder mellem filterskift"
-      }
-    }
-  },
-  "selector": {
-    "set_fan_level":{
-      "options": {
-        "level_0": "Stop",
-        "level_1": "Niveau 1",
-        "level_2": "Niveau 2",
-        "level_3": "Niveau 3",
-        "level_4": "Niveau 4"
+      "reheating_enable": {
+        "name": "Eftervarme"
       }
     }
   }
