@@ -12,14 +12,16 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     genvexNabto: GenvexNabto = hass.data[DOMAIN][config_entry.entry_id]
 
     new_entities = []
-    if genvexNabto.providesValue(GenvexNabtoSetpointKey.REHEATING):
-        new_entities.append(GenvexConnectSwitch(genvexNabto, GenvexNabtoSetpointKey.REHEATING, "mdi:heating-coil"))
-    if genvexNabto.providesValue(GenvexNabtoSetpointKey.PREHEATING):
-        new_entities.append(GenvexConnectSwitch(genvexNabto, GenvexNabtoSetpointKey.PREHEATING, "mdi:heating-coil"))
+    if genvexNabto.providesValue(GenvexNabtoSetpointKey.ENABLE):
+        new_entities.append(GenvexConnectSwitch(genvexNabto, GenvexNabtoSetpointKey.ENABLE, "mdi:power"))
+    if genvexNabto.providesValue(GenvexNabtoSetpointKey.REHEATING_ENABLE):
+        new_entities.append(GenvexConnectSwitch(genvexNabto, GenvexNabtoSetpointKey.REHEATING_ENABLE, "mdi:heating-coil"))
+    if genvexNabto.providesValue(GenvexNabtoSetpointKey.PREHEATING_ENABLE):
+        new_entities.append(GenvexConnectSwitch(genvexNabto, GenvexNabtoSetpointKey.PREHEATING_ENABLE, "mdi:heating-coil"))
     if genvexNabto.providesValue(GenvexNabtoSetpointKey.COOLING_ENABLE):
         new_entities.append(GenvexConnectSwitch(genvexNabto, GenvexNabtoSetpointKey.COOLING_ENABLE, "mdi:coolant-temperature"))
-    if genvexNabto.providesValue(GenvexNabtoSetpointKey.HUMIDITY_CONTROL):
-        new_entities.append(GenvexConnectSwitch(genvexNabto, GenvexNabtoSetpointKey.HUMIDITY_CONTROL, "mdi:water-circle"))
+    if genvexNabto.providesValue(GenvexNabtoSetpointKey.HUMIDITY_CONTROL_ENABLE):
+        new_entities.append(GenvexConnectSwitch(genvexNabto, GenvexNabtoSetpointKey.HUMIDITY_CONTROL_ENABLE, "mdi:water-circle"))
     if genvexNabto.providesValue(GenvexNabtoSetpointKey.BOOST_ENABLE):
         new_entities.append(GenvexConnectSwitch(genvexNabto, GenvexNabtoSetpointKey.BOOST_ENABLE, "mdi:fan-chevron-up"))
 
@@ -27,16 +29,11 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
 
 
 class GenvexConnectSwitch(GenvexConnectEntityBase, SwitchEntity):
-    def __init__(self, genvexNabto, valueKey, icon):
+    def __init__(self, genvexNabto: GenvexNabto, valueKey, icon):
         super().__init__(genvexNabto, valueKey, valueKey)
         self._valueKey = valueKey
         self._attr_device_class = SwitchDeviceClass.SWITCH
-        self._icon = icon
-
-    @property
-    def icon(self):
-        """Return the icon of the switch."""
-        return self._icon
+        self._attr_icon = icon
 
     async def async_turn_on(self, **kwargs) -> None:
         """Turn the entity on."""

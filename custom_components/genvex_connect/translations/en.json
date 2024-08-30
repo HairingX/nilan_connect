@@ -10,148 +10,179 @@
       "unknown": "Unexpected error"
     },
     "step": {
-      "pick": {
-        "title": "Genvex Connect Setup",
-        "description": "Please select your Genvex Connect enabled device below.",
-        "data": {
-          "deviceID": "Device ID"
-        }
-      },
       "email": {
-        "title": "Genvex Connect Setup",
-        "description": "Please provide the email used for the Genvex Connect app.",
         "data": {
           "authenticatedEmail": "Email"
-        }
+        },
+        "description": "Please provide the email used for the Genvex Connect app.",
+        "title": "Genvex Connect Setup"
       },
       "manual": {
-        "title": "Genvex Connect Setup",
-        "description": "Please provide your gateway IP, port and email used for the Genvex Connect app.",
         "data": {
+          "authenticatedEmail": "Email",
           "deviceIP": "IP",
-          "devicePort": "Port",
-          "authenticatedEmail": "Email"
-        }
+          "devicePort": "Port"
+        },
+        "description": "Please provide your gateway IP, port and email used for the Genvex Connect app.",
+        "title": "Genvex Connect Setup"
+      },
+      "pick": {
+        "data": {
+          "deviceID": "Device ID"
+        },
+        "description": "Please select your Genvex Connect enabled device below.",
+        "title": "Genvex Connect Setup"
       }
     }
   },
   "entity": {
+    "binary_sensor": {
+      "bypass_active": {
+        "name": "Bypass"
+      },
+      "defrost_active": {
+        "name": "Defrost"
+      },
+      "sacrificial_anode_ok": {
+        "name": "Sacrificial anode"
+      },
+      "winter_mode_active": {
+        "name": "Winter mode"
+      }
+    },
     "button": {
-      "filter_reset": {
+      "filter_replace_reset": {
         "name": "Reset filter"
       }
     },
-    "binary_sensor": {
-      "bypass_active": {
-        "name": "Bypass active"
-      },
-      "summer_mode": {
-        "name": "Summer mode"
-      },
-      "sacrificial_anode": {
-        "name": "Sacrificial anode"
-      },      
-      "defrost_active": {
-        "name": "Defrost active"
+    "climate": {
+      "hvac": {
+        "name": "HVAC"
       }
     },
-    "climate": {
-      "ventilation": {
-        "name": "Ventilation"
+    "number": {
+      "boost_time_minutes": {
+        "name": "Boost time"
+      },
+      "temp_bypass_open_offset": {
+        "name": "Bypass offset"
+      },
+      "fan_level1_extract_preset": {
+        "name": "Extract air - Level 1"
+      },
+      "fan_level1_supply_preset": {
+        "name": "Supply air - Level 1"
+      },
+      "fan_level2_extract_preset": {
+        "name": "Extract air - Level 2"
+      },
+      "fan_level2_supply_preset": {
+        "name": "Supply air - Level 2"
+      },
+      "fan_level3_extract_preset": {
+        "name": "Extract air - Level 3"
+      },
+      "fan_level3_supply_preset": {
+        "name": "Supply air - Level 3"
+      },
+      "fan_level4_extract_preset": {
+        "name": "Extract air - Level 4"
+      },
+      "fan_level4_supply_preset": {
+        "name": "Supply air - Level 4"
+      },
+      "filter_replace_interval_days": {
+        "name": "Days per filter"
+      },
+      "filter_replace_interval_months": {
+        "name": "Months between filterchange"
+      },
+      "temp_hotwater": {
+        "name": "Hotwater temperature target"
+      },
+      "temp_hotwater_boost": {
+        "name": "Hotwater booster max temperature"
+      },
+      "temp_summer_supply_max": {
+        "name": "Summer max supply air temperature"
+      },
+      "temp_summer_supply_min": {
+        "name": "Summer min supply air temperature"
+      },
+      "temp_target": {
+        "name": "Target Temperature"
+      },
+      "temp_cooling_start_offset": {
+        "name": "Temperature"
+      }
+    },
+    "select": {
+      "antilegionella_day": {
+        "name": "Antilegionella",
+        "state": {
+          "0": "OFF",
+          "1": "Monday",
+          "2": "Tuesday",
+          "3": "Wednesday",
+          "4": "Thursday",
+          "5": "Friday",
+          "6": "Saturday",
+          "7": "Sunday"
+        }
+      },
+      "temp_cooling_start_offset": {
+        "name": "Cooling start offset",
+        "state": {
+          "0": "OFF",
+          "1": "+0 °C",
+          "2": "+1 °C",
+          "3": "+2 °C",
+          "4": "+3 °C",
+          "5": "+4 °C",
+          "6": "+5 °C",
+          "7": "+7 °C",
+          "8": "+10 °C"
+        }
+      },
+      "compressor_priority": {
+        "name": "Compressor priority",
+        "state": {
+          "0": "Hot water",
+          "1": "Inlet"
+        }
+      },
+      "fan_level": {
+        "name": "Fan level",
+        "state": {
+          "0": "Level 0",
+          "1": "Level 1",
+          "2": "Level 2",
+          "3": "Level 3",
+          "4": "Level 4",
+          "5": "Level 5",
+          "6": "Level 6",
+          "7": "Level 7",
+          "8": "Level 8",
+          "9": "Level 9",
+          "10": "Level 10"
+        }
       }
     },
     "sensor": {
-      "temp_supply": {
-        "name": "Temperature Supply air"
+      "alarmlist": {
+        "name": "Alarm list"
       },
-      "temp_outside": {
-        "name": "Temperature Outside air"
-      },
-      "temp_extract": {
-        "name": "Temperature Extract air"
-      },
-      "temp_exhaust": {
-        "name": "Temperature Exhaust air"
-      },
-      "temp_room": {
-        "name": "Temperature Room"
-      },
-      "temp_condenser": {
-        "name": "Temperature Condenser"
-      },
-      "temp_evaporator": {
-        "name": "Temperature Evaporator"
-      },
-      "hotwater_top": {
-        "name": "Temperature Hotwater Top"
-      },
-      "hotwater_bottom": {
-        "name": "Temperature Hotwater Bottom"
-      },
-      "humidity": {
-        "name": "Humidity"
-      },
-      "fan_level_supply": {
-        "name": "Fan Level Supply"
-      },
-      "fan_level_extract": {
-        "name": "Fan Level Extract"
-      },
-      "fan_speed_supply": {
-        "name": "Fan Speed Supply"
-      },
-      "fan_speed_extract": {
-        "name": "Fan Speed Extract"
-      },
-      "fan_rpm_supply": {
-        "name": "Fan RPM Supply"
-      },
-      "fan_rpm_extract": {
-        "name": "Fan RPM Extract"
-      },
-      "filter_days": {
-        "name": "Days since filter change"
-      },
-      "filter_months": {
-        "name": "Months since filter change"
-      },
-      "filter_days_left": {
-        "name": "Days left until filter change"
+      "alarmcount": {
+        "name": "Alarm count"
       },
       "co2_level": {
-        "name": "CO2 Sensor"
+        "name": "CO2 sensor"
       },
-      "defrost_timesincelast": {
-        "name": "Time since last defrost"
-      },
-      "efficiency": {
-        "name": "Efficiency"
-      },
-      "preheat_pwm": {
-        "name": "Preheating PWM"
-      },
-      "reheat_pwm": {
-        "name": "Reheating PWM"
-      },
-      "cts400_alarmlist": {
-        "name": "Active Alarm List"
-      },
-      "cts400_alarmcount": {
-        "name": "Active Alarm Count"
-      },
-      "controlstate_602": {
+      "cts602_state": {
         "name": "Status",
         "state": {
           "state_0": "Off",
           "state_1": "Shift",
-          "state_2": "Stop",
-          "state_3": "Start",
-          "state_4": "Standby",
-          "state_5": "Ventilation stop",
-          "state_6": "Ventilation mode",
-          "state_7": "Heating mode",
-          "state_8": "Cooling mode",
-          "state_9": "Hot water prod.",
           "state_10": "Legionella",
           "state_11": "Cooling + hot water",
           "state_12": "Central heating",
@@ -159,135 +190,131 @@
           "state_14": "Frost secure",
           "state_15": "Service",
           "state_16": "Alarm",
-          "state_17": "Heating + hot water"
+          "state_17": "Heating + hot water",
+          "state_2": "Stop",
+          "state_3": "Start",
+          "state_4": "Standby",
+          "state_5": "Ventilation stop",
+          "state_6": "Ventilation mode",
+          "state_7": "Heating mode",
+          "state_8": "Cooling mode",
+          "state_9": "Hot water prod."
         }
       },
-      "alarm_optima270": {
+      "defrost_days_ago": {
+        "name": "Days since last defrost"
+      },
+      "efficiency": {
+        "name": "Efficiency"
+      },
+      "fan_dutycycle_extract": {
+        "name": "Fan speed extract"
+      },
+      "fan_dutycycle_supply": {
+        "name": "Fan speed supply"
+      },
+      "fan_level_extract": {
+        "name": "Fan level extract"
+      },
+      "fan_level_supply": {
+        "name": "Fan level supply"
+      },
+      "fan_rpm_extract": {
+        "name": "Fan RPM extract"
+      },
+      "fan_rpm_supply": {
+        "name": "Fan RPM supply"
+      },
+      "filter_replace_days_ago": {
+        "name": "Days since filter change"
+      },
+      "filter_replace_days_remain": {
+        "name": "Days until filter change"
+      },
+      "humidity": {
+        "name": "Humidity"
+      },
+      "optima270_alarms": {
         "name": "Alarm",
         "state": {
-          "state_0": "No Alarms",
-          "state_2": "Change Filter",
-          "state_4": "External stop",
-          "state_8": "T1 Sensor error",
-          "state_16": "T2 Sensor error",
-          "state_32": "T3 Sensor error",
-          "state_64": "T4 Sensor error",
-          "state_128": "T5 Sensor error",
-          "state_256": "T6 Sensor error",
-          "state_512": "T7 Sensor error",
+          "state_0": "No alarms",
           "state_1024": "T8 Sensor error",
-          "state_2048": "T9 Sensor error",
-          "state_4096": "Humidity sensor",
-          "state_8192": "Fire error / test",
-          "state_16384": "Supply Fan RPM ERR",
-          "state_32768": "Extract Fan RPM ERR",
-          "state_65536": "Frost failure",
-          "state_131072": "Fire error damper 1",
-          "state_262144": "Fire error damper 2",
-          "state_524288": "Fire error damper 3",
           "state_1048576": "Fire error damper 4",
-          "state_2097152": "Fire Box 1 failure",
-          "state_4194304": "Fire Box 2 failure",
+          "state_128": "T5 Sensor error",
+          "state_131072": "Fire error damper 1",
+          "state_16": "T2 Sensor error",
+          "state_16384": "Supply fan RPM ERR",
+          "state_2": "Change filter",
+          "state_2048": "T9 Sensor error",
+          "state_2097152": "Fire box 1 failure",
+          "state_256": "T6 Sensor error",
+          "state_262144": "Fire error damper 2",
+          "state_32": "T3 Sensor error",
+          "state_32768": "Extract fan RPM ERR",
+          "state_4": "External stop",
+          "state_4096": "Humidity sensor",
+          "state_4194304": "Fire box 2 failure",
+          "state_512": "T7 Sensor error",
+          "state_524288": "Fire error damper 3",
+          "state_64": "T4 Sensor error",
+          "state_65536": "Frost failure",
+          "state_8": "T1 Sensor error",
+          "state_8192": "Fire error / test",
           "state_8388608": "Rotor alarm"
         }
-      }    
+      },
+      "preheat_pwm": {
+        "name": "Preheating PWM"
+      },
+      "reheat_pwm": {
+        "name": "Reheating PWM"
+      },
+      "temp_condenser": {
+        "name": "Temperature condenser"
+      },
+      "temp_evaporator": {
+        "name": "Temperature evaporator"
+      },
+      "temp_exhaust": {
+        "name": "Temperature exhaust air"
+      },
+      "temp_extract": {
+        "name": "Temperature extract air"
+      },
+      "temp_hotwater_bottom": {
+        "name": "Temperature hot water bottom"
+      },
+      "temp_hotwater_top": {
+        "name": "Temperature hot water Top"
+      },
+      "temp_outside": {
+        "name": "Temperature outside air"
+      },
+      "temp_room": {
+        "name": "Temperature room"
+      },
+      "temp_supply": {
+        "name": "Temperature supply air"
+      }
     },
     "switch": {
-      "humidity_control": {
-        "name": "Humidity Control"
+      "enable": {
+        "name": "Power"
       },
-      "reheating": {
-        "name": "Reheating"
-      },
-      "preheating": {
-        "name": "Preheating"
+      "boost_enable": {
+        "name": "Boost"
       },
       "cooling_enable": {
         "name": "Cooling"
       },
-      "boost_enable": {
-        "name": "Boost"
-      }
-    },
-    "select": {
-      "fan_speed_select": {
-        "name": "Fan level"
+      "humidity_control_enable": {
+        "name": "Humidity control"
       },
-      "antilegionella_day": {
-        "name": "Antilegionella"
+      "preheating_enable": {
+        "name": "Preheating"
       },
-      "cooling_priority": {
-        "name": "Cooling Priority"
-      },
-      "cooling_offset": {
-        "name": "Cooling start offset"
-      }
-    },
-    "number": {
-      "temp_setpoint_slider": {
-        "name": "Temperature target"
-      },
-      "bypass_openoffset": {
-        "name": "Bypass offset"
-      },
-      "supply_air_level1": {
-        "name": "Supply air - Level 1"
-      },
-      "supply_air_level2": {
-        "name": "Supply air - Level 2"
-      },
-      "supply_air_level3": {
-        "name": "Supply air - Level 3"
-      },
-      "supply_air_level4": {
-        "name": "Supply air - Level 4"
-      },
-      "extract_air_level1": {
-        "name": "Extract Air - Level 1"
-      },
-      "extract_air_level2": {
-        "name": "Extract Air - Level 2"
-      },
-      "extract_air_level3": {
-        "name": "Extract Air - Level 3"
-      },
-      "extract_air_level4": {
-        "name": "Extract Air - Level 4"
-      },
-      "boost_time": {
-        "name": "Boost time"
-      },
-      "hotwater_temp": {
-        "name": "Hotwater Temperature target"
-      },
-      "hotwater_boosttemp": {
-        "name": "Hotwater Booster max temperature"
-      },
-      "filter_days_left": {
-        "name": "Days per filter"
-      },
-      "supplyair_min_temp_summer": {
-        "name": "Summer min supply air temperature"
-      },
-      "supplyair_max_temp_summer": {
-        "name": "Summer max supply air temperature"
-      },
-      "cooling_temperature": {
-        "name": "Cooling offset"
-      },
-      "filter_months_setting": {
-        "name": "Months between filterchange"
-      }
-    }
-  },
-  "selector": {
-    "set_fan_level":{
-      "options": {
-        "level_0": "Stop",
-        "level_1": "Niveau 1",
-        "level_2": "Niveau 2",
-        "level_3": "Niveau 3",
-        "level_4": "Niveau 4"
+      "reheating_enable": {
+        "name": "Reheating"
       }
     }
   }
