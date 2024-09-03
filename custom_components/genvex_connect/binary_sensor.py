@@ -1,13 +1,10 @@
 """Platform for Binary Sensor integration."""
 
-import random
-
-from homeassistant.helpers.entity import Entity
 from homeassistant.components.binary_sensor import (
     BinarySensorDeviceClass,
     BinarySensorEntity,
 )
-from genvexnabto import GenvexNabto, GenvexNabto, GenvexNabtoDatapointKey
+from genvexnabto import GenvexNabto, GenvexNabtoDatapointKey
 from .entity import GenvexConnectEntityBase
 
 from .const import DOMAIN
@@ -18,7 +15,16 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     genvexNabto: GenvexNabto = hass.data[DOMAIN][config_entry.entry_id]
 
     new_entities = []
-    if genvexNabto.providesValue(GenvexNabtoDatapointKey.BYPASS_ACTIVE):
+    if genvexNabto.provides_value(GenvexNabtoDatapointKey.ALARM_STATUS):
+        new_entities.append(
+            GenvexConnectBinarySensor(
+                genvexNabto,
+                GenvexNabtoDatapointKey.ALARM_STATUS,
+                "mdi:alarm-bell",
+                type=BinarySensorDeviceClass.PROBLEM,
+            )
+        )
+    if genvexNabto.provides_value(GenvexNabtoDatapointKey.BYPASS_ACTIVE):
         new_entities.append(
             GenvexConnectBinarySensor(
                 genvexNabto,
@@ -27,7 +33,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
                 type=BinarySensorDeviceClass.OPENING,
             )
         )
-    if genvexNabto.providesValue(GenvexNabtoDatapointKey.DEFROST_ACTIVE):
+    if genvexNabto.provides_value(GenvexNabtoDatapointKey.DEFROST_ACTIVE):
         new_entities.append(
             GenvexConnectBinarySensor(
                 genvexNabto,
@@ -36,15 +42,17 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
                 type=BinarySensorDeviceClass.RUNNING,
             )
         )
-    if genvexNabto.providesValue(GenvexNabtoDatapointKey.WINTER_MODE_ACTIVE):
+    if genvexNabto.provides_value(GenvexNabtoDatapointKey.FILTER_OK):
         new_entities.append(
             GenvexConnectBinarySensor(
                 genvexNabto,
-                GenvexNabtoDatapointKey.WINTER_MODE_ACTIVE,
-                "mdi:sun-snowflake-variant",
+                GenvexNabtoDatapointKey.FILTER_OK,
+                "mdi:air-filter",
+                type=BinarySensorDeviceClass.PROBLEM,
+                inverted=True
             )
         )
-    if genvexNabto.providesValue(GenvexNabtoDatapointKey.SACRIFICIAL_ANODE_OK):
+    if genvexNabto.provides_value(GenvexNabtoDatapointKey.SACRIFICIAL_ANODE_OK):
         new_entities.append(
             GenvexConnectBinarySensor(
                 genvexNabto,
@@ -54,13 +62,21 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
                 inverted=True,
             )
         )
+    if genvexNabto.provides_value(GenvexNabtoDatapointKey.WINTER_MODE_ACTIVE):
+        new_entities.append(
+            GenvexConnectBinarySensor(
+                genvexNabto,
+                GenvexNabtoDatapointKey.WINTER_MODE_ACTIVE,
+                "mdi:sun-snowflake-variant",
+            )
+        )
 
     async_add_entities(new_entities)
 
 
 class GenvexConnectBinarySensor(GenvexConnectEntityBase, BinarySensorEntity):
-    def __init__(self, genvexNabto: GenvexNabto, valueKey, icon, type=None, inverted=False):
-        super().__init__(genvexNabto, valueKey, valueKey)
+    def __init__(self, genvexNabto: GenvexNabto, valueKey: GenvexNabtoDatapointKey, icon:str, type:BinarySensorDeviceClass|None=None, inverted:bool=False):
+        super().__init__(genvexNabto, valueKey.value, valueKey)
         self._valueKey = valueKey
         self._icon = icon
         self._attr_device_class = type
@@ -68,8 +84,8 @@ class GenvexConnectBinarySensor(GenvexConnectEntityBase, BinarySensorEntity):
         self._inverted = inverted
 
     @property
-    def is_on(self) -> None:
+    def is_on(self) -> bool|None:
         """Fetch new state data for the sensor."""
         if self._inverted:
-            return not self.genvexNabto.getValue(self._valueKey)
-        return self.genvexNabto.getValue(self._valueKey)
+            return not self.genvex_nabto.get_value(self._valueKey)
+        return self.genvex_nabto.get_value(self._valueKey)

@@ -10,25 +10,27 @@
       "unknown": "Unexpected error"
     },
     "step": {
-      "email": {
+      "device": {
         "data": {
-          "authenticatedEmail": "Email"
+          "authorized_email": "E-mail",
+          "device_id": "Device ID"
         },
         "description": "Please provide the email used for the Genvex Connect app.",
         "title": "Genvex Connect Setup"
       },
       "manual": {
         "data": {
-          "authenticatedEmail": "Email",
-          "deviceIP": "IP",
-          "devicePort": "Port"
+          "device_id": "Device ID",
+          "authorized_email": "E-mail",
+          "device_ip": "IP",
+          "device_port": "Port"
         },
         "description": "Please provide your gateway IP, port and email used for the Genvex Connect app.",
         "title": "Genvex Connect Setup"
       },
       "pick": {
         "data": {
-          "deviceID": "Device ID"
+          "device_id": "Device ID"
         },
         "description": "Please select your Genvex Connect enabled device below.",
         "title": "Genvex Connect Setup"
@@ -37,11 +39,14 @@
   },
   "entity": {
     "binary_sensor": {
+      "alarm_status": {
+        "name": "Alarm"
+      },
       "bypass_active": {
-        "name": "Bypass active"
+        "name": "Bypass"
       },
       "defrost_active": {
-        "name": "Defrost active"
+        "name": "Defrost"
       },
       "sacrificial_anode_ok": {
         "name": "Sacrificial anode"
@@ -53,6 +58,9 @@
     "button": {
       "filter_replace_reset": {
         "name": "Reset filter"
+      },
+      "alarm_reset": {
+        "name": "Nulstil alarm"
       }
     },
     "climate": {
@@ -61,11 +69,20 @@
       }
     },
     "number": {
-      "boost_time_minutes": {
+      "boost_time": {
         "name": "Boost time"
       },
-      "temp_bypass_open_offset": {
-        "name": "Bypass offset"
+      "co2_threshold": {
+        "name": "CO2 threshold"
+      },
+      "defrost_break_time": {
+        "name": "Defrost break time"
+      },
+      "defrost_max_time": {
+        "name": "Defrost max time"
+      },
+      "fan_level": {
+        "name": "Fan level"
       },
       "fan_level1_extract_preset": {
         "name": "Extract air - Level 1"
@@ -91,29 +108,98 @@
       "fan_level4_supply_preset": {
         "name": "Supply air - Level 4"
       },
-      "filter_replace_interval_days": {
-        "name": "Days per filter"
+      "fan_level_high_co2": {
+        "name": "Fan level high CO2"
       },
-      "filter_replace_interval_months": {
-        "name": "Months between filterchange"
+      "fan_level_high_humidity": {
+        "name": "Fan level high humidity"
+      },
+      "fan_level_high_humidity_time": {
+        "name": "Fan level high humidity time"
+      },
+      "fan_level_low_humidity": {
+        "name": "Fan level low humidity"
+      },
+      "filter_replace_interval": {
+        "name": "Filter replace interval"
+      },
+      "humidity_low_threshold": {
+        "name": "Humidity low threshold"
+      },
+      "preheat_cycle_time": {
+        "name": "Preheat cycle time"
+      },
+      "preheat_pid_d": {
+        "name": "Preheat PID D"
+      },
+      "preheat_pid_i": {
+        "name": "Preheat PID I"
+      },
+      "preheat_pid_p": {
+        "name": "Preheat PID P"
+      },
+      "reheat_cycle_time": {
+        "name": "Reheat cycle time"
+      },
+      "reheat_pid_d": {
+        "name": "Reheat PID D"
+      },
+      "reheat_pid_i": {
+        "name": "Reheat PID I"
+      },
+      "reheat_pid_p": {
+        "name": "Reheat PID P"
+      },
+      "temp_bypass_open_offset": {
+        "name": "Bypass offset"
+      },
+      "temp_cooling_start_offset": {
+        "name": "Cooling start offset"
+      },
+      "temp_defrost_high_threshold": {
+        "name": "Defrost high threshold"
+      },
+      "temp_defrost_low_threshold": {
+        "name": "Defrost low threshold"
       },
       "temp_hotwater": {
-        "name": "Hotwater temperature target"
+        "name": "Hotwater target temperature"
       },
       "temp_hotwater_boost": {
-        "name": "Hotwater booster max temperature"
+        "name": "Hotwater boost temperature"
+      },
+      "temp_regulation_dead_band": {
+        "name": "Temperature regulation dead band"
+      },
+      "temp_reheat_offset": {
+        "name": "Reheat temperature offset"
       },
       "temp_summer_supply_max": {
-        "name": "Summer max supply air temperature"
+        "name": "Summer supply max temperature"
       },
       "temp_summer_supply_min": {
-        "name": "Summer min supply air temperature"
+        "name": "Summer supply min temperature"
+      },
+      "temp_supply_max": {
+        "name": "Supply max temperature"
+      },
+      "temp_supply_min": {
+        "name": "Supply min temperature"
       },
       "temp_target": {
         "name": "Target Temperature"
       },
-      "temp_cooling_start_offset": {
-        "name": "Temperature"
+      "temp_winter_mode_threshold": {
+        "name": "Winter mode threshold temperature"
+      },
+      "temp_winter_supply_max": {
+        "name": "Winter supply max temperature"
+      },
+      "temp_winter_supply_min": {
+        "name": "Winter supply min temperature"
+      },
+      "voc_threshold": {
+        "name": "VOC Threshold"
       }
     },
     "select": {
@@ -128,20 +214,6 @@
           "5": "Friday",
           "6": "Saturday",
           "7": "Sunday"
-        }
-      },
-      "temp_cooling_start_offset": {
-        "name": "Cooling start offset",
-        "state": {
-          "0": "OFF",
-          "1": "+0 °C",
-          "2": "+1 °C",
-          "3": "+2 °C",
-          "4": "+3 °C",
-          "5": "+4 °C",
-          "6": "+5 °C",
-          "7": "+7 °C",
-          "8": "+10 °C"
         }
       },
       "compressor_priority": {
@@ -166,14 +238,46 @@
           "9": "Level 9",
           "10": "Level 10"
         }
+      },
+      "temp_cooling_start_offset": {
+        "name": "Cooling start offset",
+        "state": {
+          "0": "OFF",
+          "1": "+0 °C",
+          "2": "+1 °C",
+          "3": "+2 °C",
+          "4": "+3 °C",
+          "5": "+4 °C",
+          "6": "+5 °C",
+          "7": "+7 °C",
+          "8": "+10 °C"
+        }
       }
     },
     "sensor": {
-      "alarmlist": {
-        "name": "Alarm list"
+      "alarm_1_code": {
+        "name": "Alarm 1 code"
+      },
+      "alarm_1_info": {
+        "name": "Alarm 1 info"
+      },
+      "alarm_2_code": {
+        "name": "Alarm 2 code"
+      },
+      "alarm_2_info": {
+        "name": "Alarm 2 info"
+      },
+      "alarm_3_code": {
+        "name": "Alarm 3 code"
+      },
+      "alarm_3_info": {
+        "name": "Alarm 3 info"
       },
       "alarmcount": {
         "name": "Alarm count"
+      },
+      "alarmlist": {
+        "name": "Alarm list"
       },
       "co2_level": {
         "name": "CO2 sensor"
@@ -201,8 +305,8 @@
           "state_9": "Hot water prod."
         }
       },
-      "defrost_days_ago": {
-        "name": "Days since last defrost"
+      "defrost_time_ago": {
+        "name": "Last defrost"
       },
       "efficiency": {
         "name": "Efficiency"
@@ -212,6 +316,9 @@
       },
       "fan_dutycycle_supply": {
         "name": "Fan speed supply"
+      },
+      "fan_level_current": {
+        "name": "Fan level"
       },
       "fan_level_extract": {
         "name": "Fan level extract"
@@ -225,14 +332,23 @@
       "fan_rpm_supply": {
         "name": "Fan RPM supply"
       },
-      "filter_replace_days_ago": {
-        "name": "Days since filter change"
+      "filter_replace_time_ago": {
+        "name": "Last filter change"
       },
-      "filter_replace_days_remain": {
-        "name": "Days until filter change"
+      "filter_replace_time_remain": {
+        "name": "Next filter change"
       },
       "humidity": {
         "name": "Humidity"
+      },
+      "humidity_average": {
+        "name": "Humidity average"
+      },
+      "humidity_high_level": {
+        "name": "Humidity high level"
+      },
+      "humidity_high_level_time": {
+        "name": "Humidity high level time"
       },
       "optima270_alarms": {
         "name": "Alarm",
@@ -263,12 +379,6 @@
           "state_8388608": "Rotor alarm"
         }
       },
-      "preheat_pwm": {
-        "name": "Preheating PWM"
-      },
-      "reheat_pwm": {
-        "name": "Reheating PWM"
-      },
       "temp_condenser": {
         "name": "Temperature condenser"
       },
@@ -295,26 +405,32 @@
       },
       "temp_supply": {
         "name": "Temperature supply air"
+      },
+      "unknown_value_1": {
+        "name": "Unknown 1"
+      },
+      "voc_level": {
+        "name": "VOC sensor"
       }
     },
     "switch": {
-      "enable": {
-        "name": "Power"
-      },
       "boost_enable": {
         "name": "Boost"
       },
       "cooling_enable": {
         "name": "Cooling"
       },
+      "enable": {
+        "name": "Power"
+      },
       "humidity_control_enable": {
         "name": "Humidity control"
       },
-      "preheating_enable": {
-        "name": "Preheating"
+      "preheat_enable": {
+        "name": "Preheat"
       },
-      "reheating_enable": {
-        "name": "Reheating"
+      "reheat_enable": {
+        "name": "Reheat"
       }
     }
   }

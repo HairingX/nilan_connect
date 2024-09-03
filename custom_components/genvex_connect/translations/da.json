@@ -12,14 +12,16 @@
     "step": {
       "email": {
         "data": {
-          "authenticatedEmail": "Email"
+          "authorized_email": "E-mail",
+          "device_id": "Enheds ID"
         },
         "description": "Indtast den email du bruger i Genvex Connect appen",
         "title": "Genvex Connect Opsætning"
       },
       "manual": {
         "data": {
-          "authenticatedEmail": "Email",
+          "authenticatedEmail": "E-mail",
+          "device_id": "Enheds ID",
           "deviceIP": "IP",
           "devicePort": "Port"
         },
@@ -37,11 +39,14 @@
   },
   "entity": {
     "binary_sensor": {
+      "alarm_status": {
+        "name": "Alarm"
+      },
       "bypass_active": {
-        "name": "Bypass aktiv"
+        "name": "Bypass"
       },
       "defrost_active": {
-        "name": "Deice aktiv"
+        "name": "Afisning"
       },
       "sacrificial_anode_ok": {
         "name": "Offeranode"
@@ -53,6 +58,9 @@
     "button": {
       "filter_replace_reset": {
         "name": "Nulstil filter"
+      },
+      "alarm_reset": {
+        "name": "Nulstil alarm"
       }
     },
     "climate": {
@@ -61,11 +69,20 @@
       }
     },
     "number": {
-      "boost_time_minutes": {
+      "boost_time": {
         "name": "Boost tid"
       },
-      "temp_bypass_open_offset": {
-        "name": "Bypass forskydning"
+      "co2_threshold": {
+        "name": "CO2 grænse"
+      },
+      "defrost_break_time": {
+        "name": "Afisning pause tid"
+      },
+      "defrost_max_time": {
+        "name": "Afisning maks tid"
+      },
+      "fan_level": {
+        "name": "Ventilator trin"
       },
       "fan_level1_extract_preset": {
         "name": "Fraluft - Niveau 1"
@@ -91,17 +108,71 @@
       "fan_level4_supply_preset": {
         "name": "Tilluft - Niveau 4"
       },
-      "filter_replace_interval_days": {
-        "name": "Dage mellem filterskift"
+      "fan_level_high_co2": {
+        "name": "Ventilation trin høj CO2"
       },
-      "filter_replace_interval_months": {
-        "name": "Måneder mellem filterskift"
+      "fan_level_high_humidity": {
+        "name": "Ventilation trin høj fugt"
+      },
+      "fan_level_high_humidity_time": {
+        "name": "Ventilation trin høj fugt tid"
+      },
+      "fan_level_low_humidity": {
+        "name": "Ventilation trin lav fugt"
+      },
+      "filter_replace_interval": {
+        "name": "Filterskifte interval"
+      },
+      "humidity_low_threshold": {
+        "name": "Fugtighed lav grænseværdi"
+      },
+      "preheat_cycle_time": {
+        "name": "Forvarmer cyklus tid"
+      },
+      "preheat_pid_d": {
+        "name": "Forvarmer PID D"
+      },
+      "preheat_pid_i": {
+        "name": "Forvarmer PID I"
+      },
+      "preheat_pid_p": {
+        "name": "Forvarmer PID P"
+      },
+      "reheat_cycle_time": {
+        "name": "Eftevarmer cyklus tid"
+      },
+      "reheat_pid_d": {
+        "name": "Eftevarmer PID D"
+      },
+      "reheat_pid_i": {
+        "name": "Eftevarmer PID I"
+      },
+      "reheat_pid_p": {
+        "name": "Eftevarmer PID P"
+      },
+      "temp_bypass_open_offset": {
+        "name": "Bypass forskydning"
+      },
+      "temp_cooling_start_offset": {
+        "name": "Kølning startforskydning"
+      },
+      "temp_defrost_high_threshold": {
+        "name": "Afisning top grænseværdi"
+      },
+      "temp_defrost_low_threshold": {
+        "name": "Afisning lav grænseværdi"
       },
       "temp_hotwater": {
-        "name": "Varmtvands Temperatur"
+        "name": "Varmtvands temperatur"
       },
       "temp_hotwater_boost": {
-        "name": "Varmtvands Elpatron maks temperatur"
+        "name": "Varmtvands forstærkning temperatur"
+      },
+      "temp_regulation_dead_band": {
+        "name": "Temperatur regulering dødbånd"
+      },
+      "temp_reheat_offset": {
+        "name": "Eftervarme startforskydning"
       },
       "temp_summer_supply_max": {
         "name": "Sommer maks tilluft temperatur"
@@ -109,8 +180,26 @@
       "temp_summer_supply_min": {
         "name": "Sommer min tilluft temperatur"
       },
+      "temp_supply_max": {
+        "name": "Tilluft maks temperatur"
+      },
+      "temp_supply_min": {
+        "name": "Tilluft min temperatur"
+      },
       "temp_target": {
         "name": "Temperatur mål"
+      },
+      "temp_winter_mode_threshold": {
+        "name": "Vinter tilstand grænse temperatur"
+      },
+      "temp_winter_supply_max": {
+        "name": "Vinter maks tilluft temperatur"
+      },
+      "temp_winter_supply_min": {
+        "name": "Vinter min tilluft temperatur"
+      },
+      "voc_threshold": {
+        "name": "VOC grænseværdi"
       }
     },
     "select": {
@@ -125,20 +214,6 @@
           "5": "Fredag",
           "6": "Lørdag",
           "7": "Søndag"
-        }
-      },
-      "temp_cooling_start_offset": {
-        "name": "Kølning startforskydning",
-        "state": {
-          "0": "OFF",
-          "1": "+0 °C",
-          "2": "+1 °C",
-          "3": "+2 °C",
-          "4": "+3 °C",
-          "5": "+4 °C",
-          "6": "+5 °C",
-          "7": "+7 °C",
-          "8": "+10 °C"
         }
       },
       "compressor_priority": {
@@ -163,14 +238,46 @@
           "9": "Trin 9",
           "10": "Trin 10"
         }
+      },
+      "temp_cooling_start_offset": {
+        "name": "Kølning startforskydning",
+        "state": {
+          "0": "OFF",
+          "1": "+0 °C",
+          "2": "+1 °C",
+          "3": "+2 °C",
+          "4": "+3 °C",
+          "5": "+4 °C",
+          "6": "+5 °C",
+          "7": "+7 °C",
+          "8": "+10 °C"
+        }
       }
     },
     "sensor": {
-      "alarmlist": {
-        "name": "Alarm liste"
+      "alarm_1_code": {
+        "name": "Alarm 1 kode"
+      },
+      "alarm_1_info": {
+        "name": "Alarm 1 info"
+      },
+      "alarm_2_code": {
+        "name": "Alarm 2 kode"
+      },
+      "alarm_2_info": {
+        "name": "Alarm 2 info"
+      },
+      "alarm_3_code": {
+        "name": "Alarm 3 kode"
+      },
+      "alarm_3_info": {
+        "name": "Alarm 3 info"
       },
       "alarmcount": {
         "name": "Alarm antal"
+      },
+      "alarmlist": {
+        "name": "Alarm liste"
       },
       "co2_level": {
         "name": "CO2 Sensor"
@@ -198,8 +305,8 @@
           "state_9": "Varmtvands produktion."
         }
       },
-      "defrost_days_ago": {
-        "name": "Dage siden sidste afisning"
+      "defrost_time_ago": {
+        "name": "Sidste afisning"
       },
       "efficiency": {
         "name": "Effektivitet"
@@ -209,6 +316,9 @@
       },
       "fan_dutycycle_supply": {
         "name": "Ventilator hastighed tilluft"
+      },
+      "fan_level_current": {
+        "name": "Ventilator trin"
       },
       "fan_level_extract": {
         "name": "Ventilator niveau fraluft"
@@ -222,14 +332,23 @@
       "fan_rpm_supply": {
         "name": "Ventilator RPM tilluft"
       },
-      "filter_replace_days_ago": {
-        "name": "Dage siden filter skift"
+      "filter_replace_time_ago": {
+        "name": "Sidste filter skift"
       },
-      "filter_replace_days_remain": {
-        "name": "Dage til filter skift"
+      "filter_replace_time_remain": {
+        "name": "Næste filter skift"
       },
       "humidity": {
         "name": "Luftfugtighed"
+      },
+      "humidity_average": {
+        "name": "Luftfugtighed gennemsnit"
+      },
+      "humidity_high_level": {
+        "name": "Luftfugtighed højt niveau"
+      },
+      "humidity_high_level_time": {
+        "name": "Luftfugtighed højt niveau tid"
       },
       "optima270_alarms": {
         "name": "Alarm",
@@ -260,12 +379,6 @@
           "state_8388608": "Rotor alarm"
         }
       },
-      "preheat_pwm": {
-        "name": "Forvarme PWM"
-      },
-      "reheat_pwm": {
-        "name": "Eftervarme PWM"
-      },
       "temp_condenser": {
         "name": "Temperatur kondensator"
       },
@@ -292,25 +405,31 @@
       },
       "temp_supply": {
         "name": "Temperatur tilluft"
+      },
+      "unknown_value_1": {
+        "name": "Ukendt 1"
+      },
+      "voc_level": {
+        "name": "VOC sensor"
       }
     },
     "switch": {
-      "enable": {
-        "name": "Tænd"
-      },
       "boost_enable": {
         "name": "Boost"
       },
       "cooling_enable": {
         "name": "Kølning"
       },
+      "enable": {
+        "name": "Tænd"
+      },
       "humidity_control_enable": {
         "name": "Fugtstyring"
       },
-      "preheating_enable": {
+      "preheat_enable": {
         "name": "Forvarme"
       },
-      "reheating_enable": {
+      "reheat_enable": {
         "name": "Eftervarme"
       }
     }

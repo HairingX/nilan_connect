@@ -3,47 +3,47 @@
 from __future__ import annotations
 
 import logging
-from typing import Any
+from typing import Any, Dict
 
 import voluptuous as vol
 
 from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
-from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
-from genvexnabto import GenvexNabto, GenvexNabtoConnectionErrorType
+from genvexnabto import GenvexNabto, GenvexNabtoConnectionErrorType # type: ignore
 
-from .const import DOMAIN, CONF_DEVICE_ID, CONF_AUTHENTICATED_EMAIL, CONF_DEVICE_IP, CONF_DEVICE_PORT
+from .const import DOMAIN, CONF_DEVICE_ID, CONF_AUTHORIZED_EMAIL, CONF_DEVICE_IP, CONF_DEVICE_PORT
 
 _LOGGER = logging.getLogger(__name__)
 
 
-class ConfigFlow(ConfigFlow, domain=DOMAIN):
+class GenvexConnectConfigFlow(ConfigFlow, domain=DOMAIN):
     """Handle the config flow for Genvex Connect."""
 
     VERSION = 1
+    
+    _authorized_email:str = ""
+    _device_id:str|None = None
+    _device_ip:str|None = None
+    _device_port:int = 5570
 
     def __init__(self) -> None:
         """Initialize."""
         _LOGGER.info("Starting config flow")
-        self._genvexNabto = GenvexNabto()
-        self._genvexNabto.openSocket()
-        self._genvexNabto.startListening()
-        self._deviceID = None
-        self._deviceIP = None
-        self._devicePort = 5570
-        self._authenticatedEmail = None
+        self._genvex_nabto = GenvexNabto()
+        self._genvex_nabto.open_socket()
+        self._genvex_nabto.start_listening()
 
-    async def async_step_user(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
+    async def async_step_user(self, user_input: Dict[str, Any] | None = None) -> ConfigFlowResult:
         """Handle the initial step."""
-        devices = await self._genvexNabto.discoverDevices(True)
+        devices = await self._genvex_nabto.discover_devices(True)
         _LOGGER.info(devices)
         return self.async_show_select_form()
 
     def async_show_select_form(self):
         """Show the select device form."""
-        _LOGGER.info("Found %s on the network", self._genvexNabto._discovered_devices)
+        _LOGGER.info("Found %s on the network", self._genvex_nabto.get_discovered_devices())
 
-        deviceList = list(self._genvexNabto._discovered_devices.keys())
+        deviceList = list(self._genvex_nabto.get_discovered_devices().keys())
         deviceList += ["Manual"]
         _LOGGER.info(deviceList)
 
@@ -55,134 +55,134 @@ class ConfigFlow(ConfigFlow, domain=DOMAIN):
 
         return self.async_show_form(step_id="pick", data_schema=vol.Schema(data_schema), errors={})
 
-    async def async_step_pick(self, user_input=None) -> ConfigFlowResult:
+    async def async_step_pick(self, user_input:Dict[str, str]) -> ConfigFlowResult:
         """After user has picked a device"""
         _LOGGER.info("Async step user has picked {%s}", user_input)
 
-        self._deviceID = "Nilan";
+        self._device_id = "Nilan"
 
-        selectedDeviceID = user_input[CONF_DEVICE_ID]
-        if selectedDeviceID == "Manual":
+        selected_device_id = user_input[CONF_DEVICE_ID]
+        if selected_device_id == "Manual":
             return self.async_show_manual_form()
 
         _LOGGER.info(
             "Previously, the user selected device %s to configure, locate it in %s",
-            selectedDeviceID,
-            self._genvexNabto._discovered_devices,
+            selected_device_id,
+            self._genvex_nabto.get_discovered_devices(),
         )
-        selectedDevice = self._genvexNabto._discovered_devices[selectedDeviceID]
-        self._deviceIP = selectedDevice[0]
-        self._devicePort = selectedDevice[1]
-        self._genvexNabto.setDevice(selectedDeviceID)
+        selected_device = self._genvex_nabto.get_discovered_devices()[selected_device_id]
+        self._device_ip = selected_device[0]
+        self._device_port = selected_device[1]
+        self._genvex_nabto.set_device(selected_device_id)
         _LOGGER.info(
             "Selected %s with IP: %s and port: %s",
-            selectedDeviceID,
-            self._deviceIP,
-            self._devicePort,
+            selected_device_id,
+            self._device_ip,
+            self._device_port,
         )
 
         return self.async_show_device_form()
 
-    def async_show_device_form(self, invalidEmail=False, connectionTimeout=False):
+    def async_show_device_form(self, invalid_email:bool=False, connection_timeout:bool=False):
         """Show the device form."""
         data_schema = {
-            vol.Required(CONF_DEVICE_ID, default=self._deviceID): str,
-            vol.Required(CONF_AUTHENTICATED_EMAIL): str,
+            vol.Required(CONF_DEVICE_ID, default=self._device_id): str,
+            vol.Required(CONF_AUTHORIZED_EMAIL): str,
         }
 
-        errors = {}
-        if invalidEmail:
+        errors:Dict[str,str] = {}
+        if invalid_email:
             errors["base"] = "invalid_auth"
-        if connectionTimeout:
+        if connection_timeout:
             errors["base"] = "cannot_connect"
 
         return self.async_show_form(step_id="device", data_schema=vol.Schema(data_schema), errors=errors)
 
-    async def async_step_device(self, user_input=None) -> ConfigFlowResult:
+    async def async_step_device(self, user_input:Dict[str, str]) -> ConfigFlowResult:
         """After user has provided their email. Try to connect and see if email is correct."""
-        _LOGGER.info("Async step user has picked {%s}", user_input)
+        _LOGGER.info("Async step device - user has picked {%s}", user_input)
 
-        self._deviceID = user_input[CONF_DEVICE_ID]
-        self._authenticatedEmail = user_input[CONF_AUTHENTICATED_EMAIL]
+        self._device_id = user_input[CONF_DEVICE_ID]
+        self._authorized_email = user_input[CONF_AUTHORIZED_EMAIL]
         
-        _LOGGER.info("User provided email: %s", self._authenticatedEmail)
-        self._genvexNabto._authorized_email = self._authenticatedEmail
-        self._genvexNabto.connectToDevice()
-        await self._genvexNabto.waitForConnection()
-        if self._genvexNabto._connection_error is not False:
-            if self._genvexNabto._connection_error is GenvexNabtoConnectionErrorType.AUTHENTICATION_ERROR:
-                if self._authenticatedEmail.lower() == self._authenticatedEmail:
-                    return self.async_show_device_form(invalidEmail=True)
-                user_input[CONF_AUTHENTICATED_EMAIL] = self._authenticatedEmail.lower()
-                return await self.async_step_email(user_input)
-            if self._genvexNabto._connection_error is GenvexNabtoConnectionErrorType.TIMEOUT:
-                return self.async_show_device_form(connectionTimeout=True)
-            if self._genvexNabto._connection_error is GenvexNabtoConnectionErrorType.UNSUPPORTED_MODEL:
+        _LOGGER.info("User provided email: %s", self._authorized_email)
+        self._genvex_nabto.set_email(self._authorized_email)
+        self._genvex_nabto.connect_to_device()
+        await self._genvex_nabto.wait_for_connection()
+        if self._genvex_nabto.get_connection_error() is not None:
+            if self._genvex_nabto.get_connection_error() is GenvexNabtoConnectionErrorType.AUTHENTICATION_ERROR:
+                if self._authorized_email.lower() == self._authorized_email:
+                    return self.async_show_device_form(invalid_email=True)
+                user_input[CONF_AUTHORIZED_EMAIL] = self._authorized_email.lower()
+                return await self.async_step_device(user_input)
+            if self._genvex_nabto.get_connection_error() is GenvexNabtoConnectionErrorType.TIMEOUT:
+                return self.async_show_device_form(connection_timeout=True)
+            if self._genvex_nabto.get_connection_error() is GenvexNabtoConnectionErrorType.UNSUPPORTED_MODEL:
                 _LOGGER.warn(
-                    f"Tried to connect to device with unsupported model. Model no: {self._genvexNabto._device_model}, device number: {self._genvexNabto._device_number}, slavedevice number: {self._genvexNabto._slavedevice_number}, and slavedevice model: {self._genvexNabto._slavedevice_model}"
+                    f"Tried to connect to device with unsupported model. Model no: {self._genvex_nabto.get_device_model()}, device number: {self._genvex_nabto.get_device_number()}, slavedevice number: {self._genvex_nabto.get_slave_device_number()}, and slavedevice model: {self._genvex_nabto.get_slave_device_model()}"
                 )
                 return self.async_abort(reason="unsupported_model")
         _LOGGER.info("Is connected to Genvex device successfully.")
         config_data = {
-            CONF_DEVICE_ID: self._deviceID,
-            CONF_AUTHENTICATED_EMAIL: self._authenticatedEmail,
+            CONF_DEVICE_ID: self._device_id,
+            CONF_AUTHORIZED_EMAIL: self._authorized_email,
         }
-        return self.async_create_entry(title=self._deviceID, data=config_data)
+        return self.async_create_entry(title=self._device_id, data=config_data)
 
-    def async_show_manual_form(self, invalidEmail=False, connectionTimeout=False):
+    def async_show_manual_form(self, invalid_email:bool=False, connection_timeout:bool=False):
         """Show the manual form."""
         data_schema = {
-            vol.Required(CONF_DEVICE_ID, default=self._deviceID): str,
-            vol.Required(CONF_DEVICE_IP, default=self._deviceIP): str,
-            vol.Required(CONF_DEVICE_PORT, default=self._devicePort): int,
-            vol.Required(CONF_AUTHENTICATED_EMAIL, default=self._authenticatedEmail): str,
+            vol.Required(CONF_DEVICE_ID, default=self._device_id): str,
+            vol.Required(CONF_DEVICE_IP, default=self._device_ip): str,
+            vol.Required(CONF_DEVICE_PORT, default=self._device_port): int,
+            vol.Required(CONF_AUTHORIZED_EMAIL, default=self._authorized_email): str,
         }
 
-        errors = {}
-        if invalidEmail:
+        errors:Dict[str,str] = {}
+        if invalid_email:
             errors["base"] = "invalid_auth"
-        if connectionTimeout:
+        if connection_timeout:
             errors["base"] = "cannot_connect"
 
         return self.async_show_form(step_id="manual", data_schema=vol.Schema(data_schema), errors=errors)
 
-    async def async_step_manual(self, user_input=None) -> ConfigFlowResult:
+    async def async_step_manual(self, user_input:Dict[str, str]) -> ConfigFlowResult:
         """After user has provided their ip, port and email. Try to connect and see if email is correct."""
-        _LOGGER.info("Async step user has picked {%s}", user_input)
+        _LOGGER.info("Async step manual - user has picked {%s}", user_input)
 
-        self._deviceID = user_input[CONF_DEVICE_ID]
-        self._authenticatedEmail = user_input[CONF_AUTHENTICATED_EMAIL]
-        self._deviceIP = user_input[CONF_DEVICE_IP]
-        self._devicePort = user_input[CONF_DEVICE_PORT]
+        self._device_id = user_input[CONF_DEVICE_ID]
+        self._authorized_email = user_input[CONF_AUTHORIZED_EMAIL]
+        self._device_ip = user_input[CONF_DEVICE_IP]
+        self._device_port = int(user_input[CONF_DEVICE_PORT])
 
-        _LOGGER.info("User provided email: %s, ip: %s, port: %s", self._authenticatedEmail, self._deviceIP, self._devicePort)
+        _LOGGER.info("User provided email: %s, ip: %s, port: %s", self._authorized_email, self._device_ip, self._device_port)
 
-        self._genvexNabto._authorized_email = self._authenticatedEmail
-        self._genvexNabto.setDevice(self._deviceID, self._deviceIP, self._devicePort)
-        self._genvexNabto.connectToDevice()
-        await self._genvexNabto.waitForConnection()
-        if self._genvexNabto._connection_error is not False:
-            if self._genvexNabto._connection_error is GenvexNabtoConnectionErrorType.AUTHENTICATION_ERROR:
-                if self._authenticatedEmail.lower() == self._authenticatedEmail:
-                    return self.async_show_manual_form(invalidEmail=True)
-                user_input[CONF_AUTHENTICATED_EMAIL] = self._authenticatedEmail.lower()
+        self._genvex_nabto.set_email(self._authorized_email)
+        self._genvex_nabto.set_device(self._device_id, self._device_ip, self._device_port)
+        self._genvex_nabto.connect_to_device()
+        await self._genvex_nabto.wait_for_connection()
+        if self._genvex_nabto.get_connection_error() is not None:
+            if self._genvex_nabto.get_connection_error() is GenvexNabtoConnectionErrorType.AUTHENTICATION_ERROR:
+                if self._authorized_email.lower() == self._authorized_email:
+                    return self.async_show_manual_form(invalid_email=True)
+                user_input[CONF_AUTHORIZED_EMAIL] = self._authorized_email.lower()
                 return await self.async_step_manual(user_input)
-            if self._genvexNabto._connection_error is GenvexNabtoConnectionErrorType.TIMEOUT:
-                return self.async_show_manual_form(connectionTimeout=True)
-            if self._genvexNabto._connection_error is GenvexNabtoConnectionErrorType.UNSUPPORTED_MODEL:
+            if self._genvex_nabto.get_connection_error() is GenvexNabtoConnectionErrorType.TIMEOUT:
+                return self.async_show_manual_form(connection_timeout=True)
+            if self._genvex_nabto.get_connection_error() is GenvexNabtoConnectionErrorType.UNSUPPORTED_MODEL:
                 _LOGGER.warn(
-                    f"Tried to connect to device with unsupported model. Model no: {self._genvexNabto._device_model}, device number: {self._genvexNabto._device_number}, slavedevice number: {self._genvexNabto._slavedevice_number}, and slavedevice model: {self._genvexNabto._slavedevice_model}"
+                    f"Tried to connect to device with unsupported model. Model no: {self._genvex_nabto.get_device_model()}, device number: {self._genvex_nabto.get_device_number()}, slavedevice number: {self._genvex_nabto.get_slave_device_number()}, and slavedevice model: {self._genvex_nabto.get_slave_device_model()}"
                 )
                 return self.async_abort(reason="unsupported_model")
             
         _LOGGER.info("Is connected to Genvex device successfully.")
         config_data = {
-            CONF_DEVICE_ID: self._deviceID,
-            CONF_DEVICE_IP: self._deviceIP,
-            CONF_DEVICE_PORT: self._devicePort,
-            CONF_AUTHENTICATED_EMAIL: self._authenticatedEmail,
+            CONF_DEVICE_ID: self._device_id,
+            CONF_DEVICE_IP: self._device_ip,
+            CONF_DEVICE_PORT: self._device_port,
+            CONF_AUTHORIZED_EMAIL: self._authorized_email,
         }
-        return self.async_create_entry(title=self._deviceID, data=config_data)
+        return self.async_create_entry(title=self._device_id, data=config_data)
 
 
 class CannotConnect(HomeAssistantError):
