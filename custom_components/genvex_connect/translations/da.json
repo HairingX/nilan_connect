@@ -40,16 +40,22 @@
   "entity": {
     "binary_sensor": {
       "alarm_status": {
-        "name": "Alarm"
+        "name": "Alarm status"
       },
       "bypass_active": {
-        "name": "Bypass"
+        "name": "Bypass status"
       },
       "defrost_active": {
-        "name": "Afisning"
+        "name": "Afisning status"
+      },
+      "filter_ok": {
+        "name": "Filter status"
+      },
+      "humidity_high_active": {
+        "name": "Luftfugtighed status"
       },
       "sacrificial_anode_ok": {
-        "name": "Offeranode"
+        "name": "Offeranode status"
       },
       "winter_mode_active": {
         "name": "Vinter tilstand"
@@ -65,7 +71,24 @@
     },
     "climate": {
       "hvac": {
-        "name": "Ventilation"
+        "name": "Ventilation",
+        "state_attributes": {
+          "fan_mode": {
+            "state": {
+              "0": "Trin 0",
+              "1": "Trin 1",
+              "2": "Trin 2",
+              "3": "Trin 3",
+              "4": "Trin 4",
+              "5": "Trin 5",
+              "6": "Trin 6",
+              "7": "Trin 7",
+              "8": "Trin 8",
+              "9": "Trin 9",
+              "10": "Trin 10"
+            }
+          }
+        }
       }
     },
     "number": {
@@ -339,7 +362,7 @@
         "name": "Næste filter skift"
       },
       "humidity": {
-        "name": "Luftfugtighed"
+        "name": "Luftfugtighedsniveau"
       },
       "humidity_average": {
         "name": "Luftfugtighed gennemsnit"

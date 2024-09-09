@@ -1,71 +1,80 @@
 """Platform for Binary Sensor integration."""
 
-from homeassistant.components.binary_sensor import (
-    BinarySensorDeviceClass,
-    BinarySensorEntity,
-)
-from genvexnabto import GenvexNabto, GenvexNabtoDatapointKey
+from typing import List
+from genvexnabto import GenvexNabto, GenvexNabtoDatapointKey # type: ignore
+from homeassistant.components.binary_sensor import BinarySensorDeviceClass,BinarySensorEntity
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from .data import getHassData 
 from .entity import GenvexConnectEntityBase
 
-from .const import DOMAIN
-
-
-async def async_setup_entry(hass, config_entry, async_add_entities):
+async def async_setup_entry(hass: HomeAssistant, entry:ConfigEntry, async_add_entities:AddEntitiesCallback):
     """Add sensors for passed config_entry in HA."""
-    genvexNabto: GenvexNabto = hass.data[DOMAIN][config_entry.entry_id]
-
-    new_entities = []
-    if genvexNabto.provides_value(GenvexNabtoDatapointKey.ALARM_STATUS):
+    data = getHassData(hass, entry)
+    genvex_nabto = data["genvex_nabto"]
+    
+    new_entities:List[BinarySensorEntity] = []
+    if genvex_nabto.provides_value(GenvexNabtoDatapointKey.ALARM_STATUS):
         new_entities.append(
             GenvexConnectBinarySensor(
-                genvexNabto,
+                genvex_nabto,
                 GenvexNabtoDatapointKey.ALARM_STATUS,
                 "mdi:alarm-bell",
                 type=BinarySensorDeviceClass.PROBLEM,
             )
         )
-    if genvexNabto.provides_value(GenvexNabtoDatapointKey.BYPASS_ACTIVE):
+    if genvex_nabto.provides_value(GenvexNabtoDatapointKey.BYPASS_ACTIVE):
         new_entities.append(
             GenvexConnectBinarySensor(
-                genvexNabto,
+                genvex_nabto,
                 GenvexNabtoDatapointKey.BYPASS_ACTIVE,
                 "mdi:valve",
                 type=BinarySensorDeviceClass.OPENING,
             )
         )
-    if genvexNabto.provides_value(GenvexNabtoDatapointKey.DEFROST_ACTIVE):
+    if genvex_nabto.provides_value(GenvexNabtoDatapointKey.DEFROST_ACTIVE):
         new_entities.append(
             GenvexConnectBinarySensor(
-                genvexNabto,
+                genvex_nabto,
                 GenvexNabtoDatapointKey.DEFROST_ACTIVE,
                 "mdi:snowflake-melt",
                 type=BinarySensorDeviceClass.RUNNING,
             )
         )
-    if genvexNabto.provides_value(GenvexNabtoDatapointKey.FILTER_OK):
+    if genvex_nabto.provides_value(GenvexNabtoDatapointKey.FILTER_OK):
         new_entities.append(
             GenvexConnectBinarySensor(
-                genvexNabto,
+                genvex_nabto,
                 GenvexNabtoDatapointKey.FILTER_OK,
                 "mdi:air-filter",
                 type=BinarySensorDeviceClass.PROBLEM,
                 inverted=True
             )
         )
-    if genvexNabto.provides_value(GenvexNabtoDatapointKey.SACRIFICIAL_ANODE_OK):
+    if genvex_nabto.provides_value(GenvexNabtoDatapointKey.HUMIDITY_HIGH_ACTIVE):
         new_entities.append(
             GenvexConnectBinarySensor(
-                genvexNabto,
+                genvex_nabto,
+                GenvexNabtoDatapointKey.HUMIDITY_HIGH_ACTIVE,
+                "mdi:water-percent",
+                type=BinarySensorDeviceClass.MOISTURE,
+            )
+        )
+    if genvex_nabto.provides_value(GenvexNabtoDatapointKey.SACRIFICIAL_ANODE_OK):
+        new_entities.append(
+            GenvexConnectBinarySensor(
+                genvex_nabto,
                 GenvexNabtoDatapointKey.SACRIFICIAL_ANODE_OK,
                 "mdi:water-opacity",
                 type=BinarySensorDeviceClass.PROBLEM,
                 inverted=True,
             )
         )
-    if genvexNabto.provides_value(GenvexNabtoDatapointKey.WINTER_MODE_ACTIVE):
+    if genvex_nabto.provides_value(GenvexNabtoDatapointKey.WINTER_MODE_ACTIVE):
         new_entities.append(
             GenvexConnectBinarySensor(
-                genvexNabto,
+                genvex_nabto,
                 GenvexNabtoDatapointKey.WINTER_MODE_ACTIVE,
                 "mdi:sun-snowflake-variant",
             )
@@ -74,7 +83,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     async_add_entities(new_entities)
 
 
-class GenvexConnectBinarySensor(GenvexConnectEntityBase, BinarySensorEntity):
+class GenvexConnectBinarySensor(GenvexConnectEntityBase[GenvexNabtoDatapointKey], BinarySensorEntity): # type: ignore
     def __init__(self, genvexNabto: GenvexNabto, valueKey: GenvexNabtoDatapointKey, icon:str, type:BinarySensorDeviceClass|None=None, inverted:bool=False):
         super().__init__(genvexNabto, valueKey.value, valueKey)
         self._valueKey = valueKey
@@ -84,8 +93,8 @@ class GenvexConnectBinarySensor(GenvexConnectEntityBase, BinarySensorEntity):
         self._inverted = inverted
 
     @property
-    def is_on(self) -> bool|None:
+    def is_on(self) -> bool|None: # type: ignore
         """Fetch new state data for the sensor."""
         if self._inverted:
-            return not self.genvex_nabto.get_value(self._valueKey)
-        return self.genvex_nabto.get_value(self._valueKey)
+            return not self.genvex_nabto.get_value(self._valueKey) == 1
+        return self.genvex_nabto.get_value(self._valueKey) == 1

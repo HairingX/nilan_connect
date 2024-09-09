@@ -8,7 +8,9 @@ from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady, ConfigEntryAuthFailed
 
-from genvexnabto import GenvexNabto, GenvexNabtoConnectionErrorType # type: ignore
+from genvexnabto import GenvexNabto, GenvexNabtoConnectionErrorType
+
+from custom_components.genvex_connect.data import GenvexConnectHassData, getHassData, removeHassData, setHassData # type: ignore
 from .const import DOMAIN, CONF_DEVICE_ID, CONF_AUTHORIZED_EMAIL, CONF_DEVICE_IP, CONF_DEVICE_PORT
 
 _LOGGER = logging.getLogger(__name__)
@@ -62,7 +64,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             f"Timed out while trying to get data from {device_id} has loaded model for {genvex_nabto.get_loaded_model_name()}"
         )
 
-    hass.data[DOMAIN][entry.entry_id] = genvex_nabto
+    data = GenvexConnectHassData(genvex_nabto=genvex_nabto)
+    setHassData(hass, entry, data)
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     genvex_nabto.notify_all_update_handlers()
@@ -71,9 +74,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    genvexNabto = hass.data[DOMAIN][entry.entry_id]
-    genvexNabto.stop_listening()
-    hass.data[DOMAIN].pop(entry.entry_id)
+    data = getHassData(hass, entry)
+    data["genvex_nabto"].stop_listening()
+    removeHassData(hass, entry)
     return True
 
 

@@ -40,19 +40,25 @@
   "entity": {
     "binary_sensor": {
       "alarm_status": {
-        "name": "Alarm"
+        "name": "Alarm status"
       },
       "bypass_active": {
-        "name": "Bypass"
+        "name": "Bypass status"
       },
       "defrost_active": {
-        "name": "Defrost"
+        "name": "Defrost status"
+      },
+      "filter_ok": {
+        "name": "Filter status"
+      },
+      "humidity_high_active": {
+        "name": "Humidity status"
       },
       "sacrificial_anode_ok": {
-        "name": "Sacrificial anode"
+        "name": "Sacrificial anode status"
       },
       "winter_mode_active": {
-        "name": "Winter mode"
+        "name": "Winter mode status"
       }
     },
     "button": {
@@ -65,7 +71,24 @@
     },
     "climate": {
       "hvac": {
-        "name": "HVAC"
+        "name": "HVAC",
+        "state_attributes": {
+          "fan_mode": {
+            "state": {
+              "0": "Level 0",
+              "1": "Level 1",
+              "2": "Level 2",
+              "3": "Level 3",
+              "4": "Level 4",
+              "5": "Level 5",
+              "6": "Level 6",
+              "7": "Level 7",
+              "8": "Level 8",
+              "9": "Level 9",
+              "10": "Level 10"
+            }
+          }
+        }
       }
     },
     "number": {

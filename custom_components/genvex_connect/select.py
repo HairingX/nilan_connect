@@ -1,39 +1,40 @@
 """Platform for sensor integration."""
 
-import logging
-from homeassistant.helpers.entity import Entity
+from typing import List
+from genvexnabto import GenvexNabto, GenvexNabtoSetpointKey # type: ignore
 from homeassistant.components.select import SelectEntity
-from genvexnabto import GenvexNabto, GenvexNabtoDatapointKey, GenvexNabtoSetpointKey
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from .data import getGenvexNabto
 from .entity import GenvexConnectEntityBase
 
-from .const import DOMAIN
 
-_LOGGER = logging.getLogger(__name__)
+async def async_setup_entry(hass: HomeAssistant, entry:ConfigEntry, async_add_entities:AddEntitiesCallback):
+    """Add selects for passed config_entry in HA."""
+    genvex_nabto = getGenvexNabto(hass, entry)
 
-
-async def async_setup_entry(hass, config_entry, async_add_entities):
-    genvexNabto: GenvexNabto = hass.data[DOMAIN][config_entry.entry_id]
-
-    new_entities = []
-
-    if genvexNabto.provides_value(GenvexNabtoSetpointKey.FAN_LEVEL):
-        new_entities.append(GenvexConnectSelect(genvexNabto, GenvexNabtoSetpointKey.FAN_LEVEL, "mdi:fan"))
+    new_entities:List[SelectEntity] = []
+    if genvex_nabto.provides_value(GenvexNabtoSetpointKey.FAN_LEVEL):
+        new_entities.append(GenvexConnectSelect(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL, "mdi:fan"))
         
-    if genvexNabto.provides_value(GenvexNabtoSetpointKey.COMPRESSOR_PRIORITY):
-        new_entities.append(GenvexConnectSelect(genvexNabto, GenvexNabtoSetpointKey.COMPRESSOR_PRIORITY, "mdi:priority-high"))
-    if genvexNabto.provides_value(GenvexNabtoSetpointKey.TEMP_COOLING_START_OFFSET):
-        new_entities.append(GenvexConnectSelect(genvexNabto, GenvexNabtoSetpointKey.TEMP_COOLING_START_OFFSET, "mdi:snowflake-thermometer"))
-    if genvexNabto.provides_value(GenvexNabtoSetpointKey.ANTILEGIONELLA_DAY):
-        new_entities.append(GenvexConnectSelect(genvexNabto, GenvexNabtoSetpointKey.ANTILEGIONELLA_DAY, "mdi:bacteria"))
+    if genvex_nabto.provides_value(GenvexNabtoSetpointKey.COMPRESSOR_PRIORITY):
+        new_entities.append(GenvexConnectSelect(genvex_nabto, GenvexNabtoSetpointKey.COMPRESSOR_PRIORITY, "mdi:priority-high"))
+    if genvex_nabto.provides_value(GenvexNabtoSetpointKey.TEMP_COOLING_START_OFFSET):
+        new_entities.append(GenvexConnectSelect(genvex_nabto, GenvexNabtoSetpointKey.TEMP_COOLING_START_OFFSET, "mdi:snowflake-thermometer"))
+    if genvex_nabto.provides_value(GenvexNabtoSetpointKey.ANTILEGIONELLA_DAY):
+        new_entities.append(GenvexConnectSelect(genvex_nabto, GenvexNabtoSetpointKey.ANTILEGIONELLA_DAY, "mdi:bacteria"))
 
     async_add_entities(new_entities)
 
 
-class GenvexConnectSelect(GenvexConnectEntityBase, SelectEntity):
-    def __init__(self, genvexNabto: GenvexNabto, valueKey: GenvexNabtoSetpointKey, icon: str):
-        super().__init__(genvexNabto, valueKey.value, valueKey)
-        self._min = int(genvexNabto.get_setpoint_min_value(valueKey))
-        self._max = int(genvexNabto.get_setpoint_max_value(valueKey))
+class GenvexConnectSelect(GenvexConnectEntityBase[GenvexNabtoSetpointKey], SelectEntity): # type: ignore
+    def __init__(self, genvex_nabto: GenvexNabto, valueKey: GenvexNabtoSetpointKey, icon: str):
+        super().__init__(genvex_nabto, valueKey.value, valueKey)
+        min = genvex_nabto.get_setpoint_min_value(valueKey)
+        max = genvex_nabto.get_setpoint_max_value(valueKey)
+        if min is not None: self._min = int(min)
+        if max is not None: self._max = int(max)
         self._attr_icon = icon
         if self._min > self._max:
             self._attr_options = []
@@ -41,9 +42,8 @@ class GenvexConnectSelect(GenvexConnectEntityBase, SelectEntity):
             self._attr_options = list(map(str, range(self._min, self._max + 1)))
 
     @property
-    def current_option(self) -> str | None:
+    def current_option(self) -> str | None: # type: ignore
         """Return the selected entity option to represent the entity state."""
-        if self._value_key is None: return None
         val = self.genvex_nabto.get_value(self._value_key)
         if val is None: return None
         currentFanLevel = str(int(val))
@@ -52,9 +52,5 @@ class GenvexConnectSelect(GenvexConnectEntityBase, SelectEntity):
 
     async def async_select_option(self, option: str) -> None:
         """Change the selected option."""
-        # if option not in self._attr_options:
-        #     _LOGGER.info(f"Wanted to set {self._valueKey} to {option}, but failed as it is invalid")
-        #     return
-        if self._value_key is GenvexNabtoSetpointKey:
-            value = int(option)
-            self.genvex_nabto.set_setpoint(self._value_key, value)
+        value = int(option)
+        self.genvex_nabto.set_setpoint(self._value_key, value)
