@@ -16,98 +16,98 @@ async def async_setup_entry(hass: HomeAssistant, entry:ConfigEntry, async_add_en
 
     new_entities:List[NumberEntity] = []
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.BOOST_TIME):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.BOOST_TIME, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.BOOST_TIME, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.CO2_THRESHOLD):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.CO2_THRESHOLD, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.CO2_THRESHOLD, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.DEFROST_BREAK_TIME):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.DEFROST_BREAK_TIME, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.DEFROST_BREAK_TIME, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.DEFROST_MAX_TIME):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.DEFROST_MAX_TIME, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.DEFROST_MAX_TIME, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.FAN_LEVEL_LOW_HUMIDITY):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL_LOW_HUMIDITY, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL_LOW_HUMIDITY, EntityCategory.CONFIG, default_enabled=True, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.FAN_LEVEL_HIGH_CO2):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL_HIGH_CO2, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL_HIGH_CO2, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.FAN_LEVEL_HIGH_HUMIDITY):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL_HIGH_HUMIDITY, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL_HIGH_HUMIDITY, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.FAN_LEVEL_HIGH_HUMIDITY_TIME):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL_HIGH_HUMIDITY_TIME, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL_HIGH_HUMIDITY_TIME, EntityCategory.CONFIG, default_enabled=True, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.FAN_LEVEL1_SUPPLY_PRESET):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL1_SUPPLY_PRESET, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL1_SUPPLY_PRESET, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.FAN_LEVEL2_SUPPLY_PRESET):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL2_SUPPLY_PRESET, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL2_SUPPLY_PRESET, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.FAN_LEVEL3_SUPPLY_PRESET):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL3_SUPPLY_PRESET, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL3_SUPPLY_PRESET, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.FAN_LEVEL4_SUPPLY_PRESET):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL4_SUPPLY_PRESET, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL4_SUPPLY_PRESET, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.FAN_LEVEL1_EXTRACT_PRESET):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL1_EXTRACT_PRESET, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL1_EXTRACT_PRESET, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.FAN_LEVEL2_EXTRACT_PRESET):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL2_EXTRACT_PRESET, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL2_EXTRACT_PRESET, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.FAN_LEVEL3_EXTRACT_PRESET):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL3_EXTRACT_PRESET, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL3_EXTRACT_PRESET, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.FAN_LEVEL4_EXTRACT_PRESET):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL4_EXTRACT_PRESET, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL4_EXTRACT_PRESET, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.FILTER_REPLACE_INTERVAL):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FILTER_REPLACE_INTERVAL, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.FILTER_REPLACE_INTERVAL, EntityCategory.CONFIG, default_enabled=True, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.HUMIDITY_LOW_THRESHOLD):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.HUMIDITY_LOW_THRESHOLD, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.HUMIDITY_LOW_THRESHOLD, EntityCategory.CONFIG, default_enabled=True, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.PREHEAT_CYCLE_TIME):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.PREHEAT_CYCLE_TIME, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.PREHEAT_CYCLE_TIME, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.PREHEAT_PID_D):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.PREHEAT_PID_D, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.PREHEAT_PID_D, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.PREHEAT_PID_I):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.PREHEAT_PID_I, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.PREHEAT_PID_I, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.PREHEAT_PID_P):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.PREHEAT_PID_P, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.PREHEAT_PID_P, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.REHEAT_CYCLE_TIME):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.REHEAT_CYCLE_TIME, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.REHEAT_CYCLE_TIME, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.REHEAT_PID_D):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.REHEAT_PID_D, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.REHEAT_PID_D, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.REHEAT_PID_I):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.REHEAT_PID_I, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.REHEAT_PID_I, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.REHEAT_PID_P):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.REHEAT_PID_P, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.REHEAT_PID_P, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.TEMP_DEFROST_LOW_THRESHOLD):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_DEFROST_LOW_THRESHOLD, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_DEFROST_LOW_THRESHOLD, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.TEMP_DEFROST_HIGH_THRESHOLD):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_DEFROST_HIGH_THRESHOLD, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_DEFROST_HIGH_THRESHOLD, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.TEMP_BYPASS_OPEN_OFFSET):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_BYPASS_OPEN_OFFSET, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_BYPASS_OPEN_OFFSET, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.TEMP_COOLING_START_OFFSET):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_COOLING_START_OFFSET, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_COOLING_START_OFFSET, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.TEMP_HOTWATER):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_HOTWATER, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_HOTWATER, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.TEMP_HOTWATER_BOOST):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_HOTWATER_BOOST, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_HOTWATER_BOOST, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.TEMP_REGULATION_DEAD_BAND):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_REGULATION_DEAD_BAND, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_REGULATION_DEAD_BAND, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.TEMP_REHEAT_OFFSET):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_REHEAT_OFFSET, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_REHEAT_OFFSET, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.TEMP_SUMMER_SUPPLY_MIN):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_SUMMER_SUPPLY_MIN, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_SUMMER_SUPPLY_MIN, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.TEMP_SUMMER_SUPPLY_MAX):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_SUMMER_SUPPLY_MAX, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_SUMMER_SUPPLY_MAX, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.TEMP_SUPPLY_MAX):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_SUPPLY_MAX, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_SUPPLY_MAX, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.TEMP_SUPPLY_MIN):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_SUPPLY_MIN, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_SUPPLY_MIN, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.TEMP_TARGET):
         new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_TARGET, None))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.TEMP_WINTER_SUPPLY_MAX):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_WINTER_SUPPLY_MAX, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_WINTER_SUPPLY_MAX, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.TEMP_WINTER_SUPPLY_MIN):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_WINTER_SUPPLY_MIN, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_WINTER_SUPPLY_MIN, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.TEMP_WINTER_MODE_THRESHOLD):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_WINTER_MODE_THRESHOLD, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.TEMP_WINTER_MODE_THRESHOLD, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.VOC_THRESHOLD):
-        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.VOC_THRESHOLD, EntityCategory.CONFIG))
+        new_entities.append(GenvexConnectNumber(genvex_nabto, GenvexNabtoSetpointKey.VOC_THRESHOLD, EntityCategory.CONFIG, default_enabled=False, default_visible=False))
 
     async_add_entities(new_entities)
 
 
 class GenvexConnectNumber(GenvexConnectEntityBase[GenvexNabtoSetpointKey], NumberEntity): # type: ignore
-    def __init__(self, genvex_nabto: GenvexNabto, valueKey: GenvexNabtoSetpointKey, entityCategory: EntityCategory | None):
-        super().__init__(genvex_nabto, valueKey.value, valueKey)
+    def __init__(self, genvex_nabto: GenvexNabto, valueKey: GenvexNabtoSetpointKey, entityCategory: EntityCategory | None, default_enabled:bool = True, default_visible:bool = True):
+        super().__init__(genvex_nabto, valueKey.value, valueKey, default_enabled=default_enabled, default_visible=default_visible)
         self._valueKey = valueKey
         min_value = genvex_nabto.get_setpoint_min_value(valueKey)
         max_value = genvex_nabto.get_setpoint_max_value(valueKey)

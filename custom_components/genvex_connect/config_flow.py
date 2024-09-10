@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import logging
-from typing import Any, Dict
+from typing import Any, Dict, Mapping
 
 import voluptuous as vol
 
@@ -118,7 +118,7 @@ class GenvexConnectConfigFlow(ConfigFlow, domain=DOMAIN):
             if self._genvex_nabto.get_connection_error() is GenvexNabtoConnectionErrorType.TIMEOUT:
                 return self.async_show_device_form(connection_timeout=True)
             if self._genvex_nabto.get_connection_error() is GenvexNabtoConnectionErrorType.UNSUPPORTED_MODEL:
-                _LOGGER.warn(
+                _LOGGER.warning(
                     f"Tried to connect to device with unsupported model. Model no: {self._genvex_nabto.get_device_model()}, device number: {self._genvex_nabto.get_device_number()}, slavedevice number: {self._genvex_nabto.get_slave_device_number()}, and slavedevice model: {self._genvex_nabto.get_slave_device_model()}"
                 )
                 return self.async_abort(reason="unsupported_model")
@@ -131,7 +131,7 @@ class GenvexConnectConfigFlow(ConfigFlow, domain=DOMAIN):
 
     def async_show_manual_form(self, invalid_email:bool=False, connection_timeout:bool=False):
         """Show the manual form."""
-        data_schema = {
+        data_schema:Dict[vol.Required, type] = {
             vol.Required(CONF_DEVICE_ID, default=self._device_id): str,
             vol.Required(CONF_DEVICE_IP, default=self._device_ip): str,
             vol.Required(CONF_DEVICE_PORT, default=self._device_port): int,
@@ -170,13 +170,13 @@ class GenvexConnectConfigFlow(ConfigFlow, domain=DOMAIN):
             if self._genvex_nabto.get_connection_error() is GenvexNabtoConnectionErrorType.TIMEOUT:
                 return self.async_show_manual_form(connection_timeout=True)
             if self._genvex_nabto.get_connection_error() is GenvexNabtoConnectionErrorType.UNSUPPORTED_MODEL:
-                _LOGGER.warn(
+                _LOGGER.warning(
                     f"Tried to connect to device with unsupported model. Model no: {self._genvex_nabto.get_device_model()}, device number: {self._genvex_nabto.get_device_number()}, slavedevice number: {self._genvex_nabto.get_slave_device_number()}, and slavedevice model: {self._genvex_nabto.get_slave_device_model()}"
                 )
                 return self.async_abort(reason="unsupported_model")
             
         _LOGGER.info("Is connected to Genvex device successfully.")
-        config_data = {
+        config_data:Mapping[str, Any] = {
             CONF_DEVICE_ID: self._device_id,
             CONF_DEVICE_IP: self._device_ip,
             CONF_DEVICE_PORT: self._device_port,

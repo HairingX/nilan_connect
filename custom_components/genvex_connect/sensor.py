@@ -19,82 +19,82 @@ async def async_setup_entry(hass: HomeAssistant, entry:ConfigEntry, async_add_en
     new_entities:List[SensorEntity] = []
     
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.ALARM_1_CODE):
-        new_entities.append(GenvexConnectSensorMisc(genvex_nabto, GenvexNabtoDatapointKey.ALARM_1_CODE, "mdi:alarm-light"))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.ALARM_1_CODE, icon="mdi:alarm-light", default_enabled=False))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.ALARM_1_INFO):
-        new_entities.append(GenvexConnectSensorMisc(genvex_nabto, GenvexNabtoDatapointKey.ALARM_1_INFO, "mdi:alarm-light"))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.ALARM_1_INFO, icon="mdi:alarm-light", default_enabled=False))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.ALARM_2_CODE):
-        new_entities.append(GenvexConnectSensorMisc(genvex_nabto, GenvexNabtoDatapointKey.ALARM_2_CODE, "mdi:alarm-light"))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.ALARM_2_CODE, icon="mdi:alarm-light", default_enabled=False))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.ALARM_2_INFO):
-        new_entities.append(GenvexConnectSensorMisc(genvex_nabto, GenvexNabtoDatapointKey.ALARM_2_INFO, "mdi:alarm-light"))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.ALARM_2_INFO, icon="mdi:alarm-light", default_enabled=False))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.ALARM_3_CODE):
-        new_entities.append(GenvexConnectSensorMisc(genvex_nabto, GenvexNabtoDatapointKey.ALARM_3_CODE, "mdi:alarm-light"))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.ALARM_3_CODE, icon="mdi:alarm-light", default_enabled=False))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.ALARM_3_INFO):
-        new_entities.append(GenvexConnectSensorMisc(genvex_nabto, GenvexNabtoDatapointKey.ALARM_3_INFO, "mdi:alarm-light"))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.ALARM_3_INFO, icon="mdi:alarm-light", default_enabled=False))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.ALARM_BITS):
         new_entities.append(GenvexConnectSensorAlarmOptima270(genvex_nabto, GenvexNabtoDatapointKey.ALARM_BITS))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.CO2_LEVEL):
-        new_entities.append(GenvexConnectSensorCO2(genvex_nabto, GenvexNabtoDatapointKey.CO2_LEVEL))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.CO2_LEVEL, device_class=SensorDeviceClass.CO2))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.DEFROST_TIME_AGO):
-        new_entities.append(GenvexConnectSensorFilterDays(genvex_nabto, GenvexNabtoDatapointKey.DEFROST_TIME_AGO, icon="mdi:snowflake-melt"))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.DEFROST_TIME_AGO, icon="mdi:snowflake-melt"))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.FAN_DUTYCYCLE_EXTRACT):
-        new_entities.append(GenvexConnectSensorPercentage(genvex_nabto, GenvexNabtoDatapointKey.FAN_DUTYCYCLE_EXTRACT, "mdi:fan"))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.FAN_DUTYCYCLE_EXTRACT, icon="mdi:fan"))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.FAN_DUTYCYCLE_SUPPLY):
-        new_entities.append(GenvexConnectSensorPercentage(genvex_nabto, GenvexNabtoDatapointKey.FAN_DUTYCYCLE_SUPPLY, "mdi:fan"))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.FAN_DUTYCYCLE_SUPPLY, icon="mdi:fan"))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.FAN_LEVEL_CURRENT):
-        new_entities.append(GenvexConnectSensorMisc(genvex_nabto, GenvexNabtoDatapointKey.FAN_LEVEL_CURRENT, "mdi:fan"))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.FAN_LEVEL_CURRENT, icon="mdi:fan"))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.FAN_LEVEL_EXTRACT):
-        new_entities.append(GenvexConnectSensorMisc(genvex_nabto, GenvexNabtoDatapointKey.FAN_LEVEL_EXTRACT, "mdi:fan")) 
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.FAN_LEVEL_EXTRACT, icon="mdi:fan")) 
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.FAN_LEVEL_SUPPLY):
-        new_entities.append(GenvexConnectSensorMisc(genvex_nabto, GenvexNabtoDatapointKey.FAN_LEVEL_SUPPLY, "mdi:fan"))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.FAN_LEVEL_SUPPLY, icon="mdi:fan"))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.FAN_RPM_EXTRACT):
-        new_entities.append(GenvexConnectSensorFanRPM(genvex_nabto, GenvexNabtoDatapointKey.FAN_RPM_EXTRACT))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.FAN_RPM_EXTRACT, icon="mdi:fan", precision=0))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.FAN_RPM_SUPPLY):
-        new_entities.append(GenvexConnectSensorFanRPM(genvex_nabto, GenvexNabtoDatapointKey.FAN_RPM_SUPPLY))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.FAN_RPM_SUPPLY, icon="mdi:fan", precision=0))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.FILTER_REPLACE_TIME_AGO):
-        new_entities.append(GenvexConnectSensorFilterDays(genvex_nabto, GenvexNabtoDatapointKey.FILTER_REPLACE_TIME_AGO))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.FILTER_REPLACE_TIME_AGO, icon="mdi:air-filter"))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.FILTER_REPLACE_TIME_REMAIN):
-        new_entities.append(GenvexConnectSensorFilterDays(genvex_nabto, GenvexNabtoDatapointKey.FILTER_REPLACE_TIME_REMAIN))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.FILTER_REPLACE_TIME_REMAIN, icon="mdi:air-filter"))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.HUMIDITY):
-        new_entities.append(GenvexConnectSensorHumidity(genvex_nabto, GenvexNabtoDatapointKey.HUMIDITY))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.HUMIDITY, icon="mdi:water-percent", device_class=SensorDeviceClass.HUMIDITY))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.HUMIDITY_AVG):
-        new_entities.append(GenvexConnectSensorHumidity(genvex_nabto, GenvexNabtoDatapointKey.HUMIDITY_AVG))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.HUMIDITY_AVG, icon="mdi:water-percent", device_class=SensorDeviceClass.HUMIDITY))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.HUMIDITY_HIGH_LEVEL):
-        new_entities.append(GenvexConnectSensorMisc(genvex_nabto, GenvexNabtoDatapointKey.HUMIDITY_HIGH_LEVEL, "mdi:water-percent"))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.HUMIDITY_HIGH_LEVEL, icon="mdi:water-percent"))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.HUMIDITY_HIGH_LEVEL_TIME):
-        new_entities.append(GenvexConnectSensorMisc(genvex_nabto, GenvexNabtoDatapointKey.HUMIDITY_HIGH_LEVEL_TIME, "mdi:water-percent"))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.HUMIDITY_HIGH_LEVEL_TIME, icon="mdi:water-percent"))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.STATE_CODE):
         new_entities.append(GenvexConnectSensorControlState602(genvex_nabto, GenvexNabtoDatapointKey.STATE_CODE))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.TEMP_CONDENSER):
-        new_entities.append(GenvexConnectSensorTemperature(genvex_nabto, GenvexNabtoDatapointKey.TEMP_CONDENSER))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.TEMP_CONDENSER, device_class=SensorDeviceClass.TEMPERATURE))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.TEMP_EVAPORATOR):
-        new_entities.append(GenvexConnectSensorTemperature(genvex_nabto, GenvexNabtoDatapointKey.TEMP_EVAPORATOR))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.TEMP_EVAPORATOR, device_class=SensorDeviceClass.TEMPERATURE))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.TEMP_EXHAUST):
-        new_entities.append(GenvexConnectSensorTemperature(genvex_nabto, GenvexNabtoDatapointKey.TEMP_EXHAUST))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.TEMP_EXHAUST, device_class=SensorDeviceClass.TEMPERATURE))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.TEMP_EXTRACT):
-        new_entities.append(GenvexConnectSensorTemperature(genvex_nabto, GenvexNabtoDatapointKey.TEMP_EXTRACT))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.TEMP_EXTRACT, device_class=SensorDeviceClass.TEMPERATURE))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.TEMP_HOTWATER_BOTTOM):
-        new_entities.append(GenvexConnectSensorTemperature(genvex_nabto, GenvexNabtoDatapointKey.TEMP_HOTWATER_BOTTOM))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.TEMP_HOTWATER_BOTTOM, device_class=SensorDeviceClass.TEMPERATURE))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.TEMP_HOTWATER_TOP):
-        new_entities.append(GenvexConnectSensorTemperature(genvex_nabto, GenvexNabtoDatapointKey.TEMP_HOTWATER_TOP))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.TEMP_HOTWATER_TOP, device_class=SensorDeviceClass.TEMPERATURE))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.TEMP_OUTSIDE):
-        new_entities.append(GenvexConnectSensorTemperature(genvex_nabto, GenvexNabtoDatapointKey.TEMP_OUTSIDE))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.TEMP_OUTSIDE, device_class=SensorDeviceClass.TEMPERATURE))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.TEMP_ROOM):
-        new_entities.append(GenvexConnectSensorTemperature(genvex_nabto, GenvexNabtoDatapointKey.TEMP_ROOM))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.TEMP_ROOM, device_class=SensorDeviceClass.TEMPERATURE))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.TEMP_SUPPLY):
-        new_entities.append(GenvexConnectSensorTemperature(genvex_nabto, GenvexNabtoDatapointKey.TEMP_SUPPLY))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.TEMP_SUPPLY, device_class=SensorDeviceClass.TEMPERATURE))
     if genvex_nabto.provides_value(GenvexNabtoDatapointKey.VOC_LEVEL):
-        new_entities.append(GenvexConnectSensorVOC(genvex_nabto, GenvexNabtoDatapointKey.VOC_LEVEL))
+        new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.VOC_LEVEL, device_class=SensorDeviceClass.VOLATILE_ORGANIC_COMPOUNDS_PARTS))
         
         
-    if genvex_nabto.provides_value(GenvexNabtoDatapointKey.UNKNOWN_VALUE_1):
-        new_entities.append(GenvexConnectSensorMisc(genvex_nabto, GenvexNabtoDatapointKey.UNKNOWN_VALUE_1))
+    # if genvex_nabto.provides_value(GenvexNabtoDatapointKey.UNKNOWN_VALUE_1):
+    #     new_entities.append(GenvexConnectSensor(genvex_nabto, GenvexNabtoDatapointKey.UNKNOWN_VALUE_1))
 
-    if genvex_nabto.provides_value(GenvexNabtoDatapointKey.ALARM_1_CODE):
-        alarmHandler = GenvexConnectCTS400AlarmHandler(genvex_nabto)
-        new_entities.append(GenvexConnectSensorCTS400AlarmList(genvex_nabto, alarmHandler))
-        new_entities.append(GenvexConnectSensorCTS400AlarmCount(genvex_nabto, alarmHandler))
-        # Trigger the alarm handler to react on the starting state
-        alarmHandler.on_change(0, 0)
+    # if genvex_nabto.provides_value(GenvexNabtoDatapointKey.ALARM_1_CODE):
+    #     alarmHandler = GenvexConnectCTS400AlarmHandler(genvex_nabto)
+    #     new_entities.append(GenvexConnectSensorCTS400AlarmList(genvex_nabto, alarmHandler))
+    #     new_entities.append(GenvexConnectSensorCTS400AlarmCount(genvex_nabto, alarmHandler))
+    #     # Trigger the alarm handler to react on the starting state
+    #     alarmHandler.on_change(0, 0)
         
         
     if (
@@ -108,10 +108,22 @@ async def async_setup_entry(hass: HomeAssistant, entry:ConfigEntry, async_add_en
 
 
 class GenvexConnectSensor(GenvexConnectEntityBase[GenvexNabtoDatapointKey], SensorEntity): # type: ignore
-    def __init__(self, genvexNabto: GenvexNabto, name: str, valueKey: GenvexNabtoDatapointKey, useDefaultUpdateHandler: bool = True):
-        super().__init__(genvexNabto, name, valueKey, useDefaultUpdateHandler)
+    def __init__(self, 
+                 genvexNabto: GenvexNabto, 
+                 valueKey: GenvexNabtoDatapointKey, 
+                 name: str|None = None, 
+                 useDefaultUpdateHandler: bool = True, 
+                 icon:str|None = None, 
+                 device_class:SensorDeviceClass|None = None, 
+                 default_enabled:bool = True, 
+                 default_visible:bool = True,
+                 precision: int|None = None):
+        super().__init__(genvexNabto, name if name is not None else valueKey.value, valueKey, useDefaultUpdateHandler, default_enabled, default_visible)
         self._attr_state_class = SensorStateClass.MEASUREMENT
-
+        if icon is not None: self._attr_icon = icon
+        if device_class is not None: self._attr_device_class = device_class
+        if precision is not None: self._attr_suggested_display_precision = precision
+        
     def set_unit_of_measurement(self, uom: str|None):
         self._attr_native_unit_of_measurement = self.parse_unit_of_measure(uom)
 
@@ -120,57 +132,6 @@ class GenvexConnectSensor(GenvexConnectEntityBase[GenvexNabtoDatapointKey], Sens
         self._attr_native_value = self.genvex_nabto.get_value(self._value_key)
         if self._attr_native_value is float:
             self._attr_native_value = round(self._attr_native_value, 2)
-
-
-class GenvexConnectSensorMisc(GenvexConnectSensor):
-    def __init__(self, genvexNabto: GenvexNabto, valueKey:GenvexNabtoDatapointKey, icon:str|None = None):
-        super().__init__(genvexNabto, valueKey.value, valueKey)
-        if icon is not None:
-            self._attr_icon = icon
-
-class GenvexConnectSensorTemperature(GenvexConnectSensor):
-    def __init__(self, genvexNabto: GenvexNabto, valueKey:GenvexNabtoDatapointKey):
-        super().__init__(genvexNabto, valueKey.value, valueKey)
-        self._attr_device_class = SensorDeviceClass.TEMPERATURE
-
-
-class GenvexConnectSensorHumidity(GenvexConnectSensor):
-    def __init__(self, genvexNabto: GenvexNabto, valueKey:GenvexNabtoDatapointKey):
-        super().__init__(genvexNabto, valueKey.value, valueKey)
-        self._attr_device_class = SensorDeviceClass.HUMIDITY
-        self._attr_icon = "mdi:water-percent"
-
-
-class GenvexConnectSensorCO2(GenvexConnectSensor):
-    def __init__(self, genvexNabto: GenvexNabto, valueKey:GenvexNabtoDatapointKey):
-        super().__init__(genvexNabto, valueKey.value, valueKey)
-        self._attr_device_class = SensorDeviceClass.CO2
-
-
-class GenvexConnectSensorVOC(GenvexConnectSensor):
-    def __init__(self, genvexNabto: GenvexNabto, valueKey:GenvexNabtoDatapointKey):
-        super().__init__(genvexNabto, valueKey.value, valueKey)
-        self._attr_device_class = SensorDeviceClass.VOLATILE_ORGANIC_COMPOUNDS_PARTS
-
-
-class GenvexConnectSensorPercentage(GenvexConnectSensor):
-    def __init__(self, genvexNabto: GenvexNabto, valueKey:GenvexNabtoDatapointKey, icon: str | None = None):
-        super().__init__(genvexNabto, valueKey.value, valueKey)
-        self._attr_icon = icon if icon is not None else "mdi:percent"
-
-
-class GenvexConnectSensorFanRPM(GenvexConnectSensor):
-    def __init__(self, genvexNabto: GenvexNabto, valueKey:GenvexNabtoDatapointKey):
-        super().__init__(genvexNabto, valueKey.value, valueKey)
-        self._attr_suggested_display_precision = 0
-        self._attr_icon = "mdi:fan"
-
-
-class GenvexConnectSensorFilterDays(GenvexConnectSensor):
-    def __init__(self, genvexNabto: GenvexNabto, valueKey:GenvexNabtoDatapointKey, icon: str | None = None):
-        super().__init__(genvexNabto, valueKey.value, valueKey)
-        self._attr_icon = icon if icon is not None else "mdi:air-filter"
-
 
 class GenvexConnectSensorEfficiency(GenvexConnectEntityBase[None], SensorEntity): # type: ignore
     def __init__(self, genvexNabto:GenvexNabto):
@@ -199,7 +160,7 @@ class GenvexConnectSensorEfficiency(GenvexConnectEntityBase[None], SensorEntity)
 
 class GenvexConnectSensorControlState602(GenvexConnectSensor):
     def __init__(self, genvexNabto: GenvexNabto, valueKey:GenvexNabtoDatapointKey):
-        super().__init__(genvexNabto, "cts602_state", valueKey)
+        super().__init__(genvexNabto, valueKey, "cts602_state")
         self._attr_device_class = SensorDeviceClass.ENUM
         self._attr_options = [
             "state_0",
@@ -230,7 +191,7 @@ class GenvexConnectSensorControlState602(GenvexConnectSensor):
 
 class GenvexConnectSensorAlarmOptima270(GenvexConnectSensor):
     def __init__(self, genvexNabto: GenvexNabto, valueKey:GenvexNabtoDatapointKey):
-        super().__init__(genvexNabto, "optima270_alarms", valueKey)
+        super().__init__(genvexNabto, valueKey, "optima270_alarms")
         self._attr_device_class = SensorDeviceClass.ENUM
         self._attr_icon = "mdi:alarm-bell"
         self._attr_options = [

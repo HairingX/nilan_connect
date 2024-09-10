@@ -8,7 +8,7 @@ from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady, ConfigEntryAuthFailed
 
-from genvexnabto import GenvexNabto, GenvexNabtoConnectionErrorType
+from genvexnabto import GenvexNabto, GenvexNabtoConnectionErrorType # type: ignore
 
 from custom_components.genvex_connect.data import GenvexConnectHassData, getHassData, removeHassData, setHassData # type: ignore
 from .const import DOMAIN, CONF_DEVICE_ID, CONF_AUTHORIZED_EMAIL, CONF_DEVICE_IP, CONF_DEVICE_PORT

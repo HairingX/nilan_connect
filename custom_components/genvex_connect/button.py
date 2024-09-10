@@ -27,8 +27,8 @@ async def async_setup_entry(hass: HomeAssistant, entry:ConfigEntry, async_add_en
 
 
 class GenvexConnectButton(GenvexConnectEntityBase[GenvexNabtoSetpointKey], ButtonEntity): # type: ignore
-    def __init__(self, genvex_nabto:GenvexNabto, valueKey:GenvexNabtoSetpointKey, icon:str, category: EntityCategory):
-        super().__init__(genvex_nabto, valueKey.value, valueKey, False)
+    def __init__(self, genvex_nabto:GenvexNabto, valueKey:GenvexNabtoSetpointKey, icon:str, category: EntityCategory, default_enabled:bool|None = None, default_visible:bool|None = None):
+        super().__init__(genvex_nabto, valueKey.value, valueKey, False, default_enabled=default_enabled, default_visible=default_visible)
         self._attr_icon = icon
         self._attr_entity_category = category
 

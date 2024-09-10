@@ -16,7 +16,7 @@ async def async_setup_entry(hass: HomeAssistant, entry:ConfigEntry, async_add_en
 
     new_entities:List[SelectEntity] = []
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.FAN_LEVEL):
-        new_entities.append(GenvexConnectSelect(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL, "mdi:fan"))
+        new_entities.append(GenvexConnectSelect(genvex_nabto, GenvexNabtoSetpointKey.FAN_LEVEL, "mdi:fan", default_enabled=False))
         
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.COMPRESSOR_PRIORITY):
         new_entities.append(GenvexConnectSelect(genvex_nabto, GenvexNabtoSetpointKey.COMPRESSOR_PRIORITY, "mdi:priority-high"))
@@ -29,8 +29,8 @@ async def async_setup_entry(hass: HomeAssistant, entry:ConfigEntry, async_add_en
 
 
 class GenvexConnectSelect(GenvexConnectEntityBase[GenvexNabtoSetpointKey], SelectEntity): # type: ignore
-    def __init__(self, genvex_nabto: GenvexNabto, valueKey: GenvexNabtoSetpointKey, icon: str):
-        super().__init__(genvex_nabto, valueKey.value, valueKey)
+    def __init__(self, genvex_nabto: GenvexNabto, valueKey: GenvexNabtoSetpointKey, icon: str, default_enabled:bool|None = None, default_visible:bool|None = None):
+        super().__init__(genvex_nabto, valueKey.value, valueKey, default_enabled=default_enabled, default_visible=default_visible)
         min = genvex_nabto.get_setpoint_min_value(valueKey)
         max = genvex_nabto.get_setpoint_max_value(valueKey)
         if min is not None: self._min = int(min)

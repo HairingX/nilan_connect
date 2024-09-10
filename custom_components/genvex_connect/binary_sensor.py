@@ -84,8 +84,8 @@ async def async_setup_entry(hass: HomeAssistant, entry:ConfigEntry, async_add_en
 
 
 class GenvexConnectBinarySensor(GenvexConnectEntityBase[GenvexNabtoDatapointKey], BinarySensorEntity): # type: ignore
-    def __init__(self, genvexNabto: GenvexNabto, valueKey: GenvexNabtoDatapointKey, icon:str, type:BinarySensorDeviceClass|None=None, inverted:bool=False):
-        super().__init__(genvexNabto, valueKey.value, valueKey)
+    def __init__(self, genvexNabto: GenvexNabto, valueKey: GenvexNabtoDatapointKey, icon:str, type:BinarySensorDeviceClass|None=None, inverted:bool=False, default_enabled:bool|None = None, default_visible:bool|None = None):
+        super().__init__(genvexNabto, valueKey.value, valueKey, default_enabled=default_enabled, default_visible=default_visible)
         self._valueKey = valueKey
         self._icon = icon
         self._attr_device_class = type

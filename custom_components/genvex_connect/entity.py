@@ -27,7 +27,11 @@ class GenvexConnectEntityBase(Generic[VALUE_KEY_TYPE], Entity):
         name: str,
         value_key: VALUE_KEY_TYPE,
         use_default_update_handler: bool = True,
+        default_enabled:bool|None = None, 
+        default_visible:bool|None = None
     ) -> None:
+        if default_enabled is not None: self._attr_entity_registry_enabled_default = default_enabled
+        if default_visible is not None: self._attr_entity_registry_visible_default = default_visible
         self.genvex_nabto = genvex_nabto
         self._attr_translation_key = name
         self._attr_unique_id = f"{genvex_nabto.get_device_id()}_{self._attr_translation_key.split("__")[0]}"
