@@ -74,9 +74,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
+    await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
     data = getHassData(hass, entry)
     data["genvex_nabto"].stop_listening()
-    removeHassData(hass, entry)
+    removeHassData(hass, entry)    
     return True
 
 

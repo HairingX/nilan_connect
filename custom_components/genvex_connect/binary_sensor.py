@@ -96,5 +96,5 @@ class GenvexConnectBinarySensor(GenvexConnectEntityBase[GenvexNabtoDatapointKey]
     def is_on(self) -> bool|None: # type: ignore
         """Fetch new state data for the sensor."""
         if self._inverted:
-            return not self.genvex_nabto.get_value(self._valueKey) == 1
-        return self.genvex_nabto.get_value(self._valueKey) == 1
+            return not self._genvex_nabto.get_value(self._valueKey) == 1
+        return self._genvex_nabto.get_value(self._valueKey) == 1

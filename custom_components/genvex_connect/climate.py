@@ -82,30 +82,42 @@ class GenvexConnectClimate(GenvexConnectEntityBase[GenvexNabtoSetpointKey], Clim
             features |= ClimateEntityFeature.TARGET_TEMPERATURE
         if features > 0: self._attr_supported_features = features
 
-        genvex_nabto.register_update_handler(enable_key, self._on_change)
-        genvex_nabto.register_update_handler(fan_level_key, self._on_change)
-        genvex_nabto.register_update_handler(temp_target_key, self._on_change)
-        genvex_nabto.register_update_handler(temp_extract_key, self._on_change)
-        genvex_nabto.register_update_handler(humidity_key, self._on_change)
-        genvex_nabto.register_update_handler(defrost_active_key, self._on_change)
-        genvex_nabto.register_update_handler(bypass_active_key, self._on_change)
-        genvex_nabto.register_update_handler(humidity_high_active_key, self._on_change)
+    async def async_added_to_hass(self) -> None:
+        self._genvex_nabto.register_update_handler(self._fan_level_key, self._on_change)
+        self._genvex_nabto.register_update_handler(self._enable_key, self._on_change)
+        self._genvex_nabto.register_update_handler(self._temp_target_key, self._on_change)
+        self._genvex_nabto.register_update_handler(self._temp_extract_key, self._on_change)
+        self._genvex_nabto.register_update_handler(self._humidity_key, self._on_change)
+        self._genvex_nabto.register_update_handler(self._defrost_active_key, self._on_change)
+        self._genvex_nabto.register_update_handler(self._bypass_active_key, self._on_change)
+        self._genvex_nabto.register_update_handler(self._humidity_high_active_key, self._on_change)
+
+    async def async_will_remove_from_hass(self) -> None:
+        self._genvex_nabto.deregister_update_handler(self._fan_level_key, self._on_change)
+        self._genvex_nabto.deregister_update_handler(self._enable_key, self._on_change)
+        self._genvex_nabto.deregister_update_handler(self._temp_target_key, self._on_change)
+        self._genvex_nabto.deregister_update_handler(self._temp_extract_key, self._on_change)
+        self._genvex_nabto.deregister_update_handler(self._humidity_key, self._on_change)
+        self._genvex_nabto.deregister_update_handler(self._defrost_active_key, self._on_change)
+        self._genvex_nabto.deregister_update_handler(self._bypass_active_key, self._on_change)
+        self._genvex_nabto.deregister_update_handler(self._humidity_high_active_key, self._on_change)
+        
 
     @property
     def hvac_action(self): # type: ignore
-        if self.genvex_nabto.get_value(self._fan_level_key) == 0 or self.genvex_nabto.get_value(self._enable_key) == 0:
+        if self._genvex_nabto.get_value(self._fan_level_key) == 0 or self._genvex_nabto.get_value(self._enable_key) == 0:
             return HVACAction.OFF
-        if self.genvex_nabto.get_value(self._defrost_active_key) == 1:
+        if self._genvex_nabto.get_value(self._defrost_active_key) == 1:
             return HVACAction.DEFROSTING
-        if self.genvex_nabto.get_value(self._humidity_high_active_key) == 1:
+        if self._genvex_nabto.get_value(self._humidity_high_active_key) == 1:
             return HVACAction.DRYING
-        if self.genvex_nabto.get_value(self._bypass_active_key) == 1:
+        if self._genvex_nabto.get_value(self._bypass_active_key) == 1:
             return HVACAction.COOLING
         return HVACAction.FAN
 
     @property
     def hvac_mode(self): # type: ignore
-        if self.genvex_nabto.get_value(self._enable_key) == 0:
+        if self._genvex_nabto.get_value(self._enable_key) == 0:
             return HVACMode.OFF
         return self._hvacMode
 
@@ -119,7 +131,7 @@ class GenvexConnectClimate(GenvexConnectEntityBase[GenvexNabtoSetpointKey], Clim
     @property
     def fan_mode(self): # type: ignore
         if self._attr_fan_modes is not None:
-            currentFanLevel = str(int(self.genvex_nabto.get_value(self._fan_level_key) or -1))
+            currentFanLevel = str(int(self._genvex_nabto.get_value(self._fan_level_key) or -1))
             if currentFanLevel in self._attr_fan_modes:
                 return currentFanLevel
             # elif len(self._attr_fan_modes) > 0:
@@ -129,37 +141,37 @@ class GenvexConnectClimate(GenvexConnectEntityBase[GenvexNabtoSetpointKey], Clim
     async def async_set_fan_mode(self, fan_mode: str) -> None:
         _LOGGER.info(f"Wanted to set fan mode to {fan_mode}")
         fanLevel = int(fan_mode)
-        self.genvex_nabto.set_setpoint(self._fan_level_key, fanLevel)
+        self._genvex_nabto.set_setpoint(self._fan_level_key, fanLevel)
 
     @property
     def current_temperature(self) -> float|None: # type: ignore
-        if self.genvex_nabto.provides_value(self._temp_extract_key):
-            return self.genvex_nabto.get_value(self._temp_extract_key)
+        if self._genvex_nabto.provides_value(self._temp_extract_key):
+            return self._genvex_nabto.get_value(self._temp_extract_key)
         return None
     
     @property
     def current_humidity(self) -> float|None: # type: ignore
-        if self.genvex_nabto.provides_value(self._humidity_key):
-            return self.genvex_nabto.get_value(self._humidity_key)
+        if self._genvex_nabto.provides_value(self._humidity_key):
+            return self._genvex_nabto.get_value(self._humidity_key)
         return None
 
     @property
     def target_temperature(self): # type: ignore
-        return self.genvex_nabto.get_value(self._temp_target_key)
+        return self._genvex_nabto.get_value(self._temp_target_key)
 
     @property
     def min_temp(self): # type: ignore
-        return self.genvex_nabto.get_setpoint_min_value(self._temp_target_key)
+        return self._genvex_nabto.get_setpoint_min_value(self._temp_target_key)
 
     @property
     def max_temp(self): # type: ignore
-        return self.genvex_nabto.get_setpoint_max_value(self._temp_target_key)
+        return self._genvex_nabto.get_setpoint_max_value(self._temp_target_key)
 
     def _turn_on(self):
-        self.genvex_nabto.set_setpoint(self._enable_key, 1)
+        self._genvex_nabto.set_setpoint(self._enable_key, 1)
 
     def _turn_off(self):
-        self.genvex_nabto.set_setpoint(self._enable_key, 0)
+        self._genvex_nabto.set_setpoint(self._enable_key, 0)
 
     async def async_turn_on(self):
         """Turn the entity on."""
@@ -175,4 +187,4 @@ class GenvexConnectClimate(GenvexConnectEntityBase[GenvexNabtoSetpointKey], Clim
         """Set the target temperature"""
         temp = kwargs["temperature"]
         if temp is not None:
-            self.genvex_nabto.set_setpoint(self._temp_target_key, float(temp))
+            self._genvex_nabto.set_setpoint(self._temp_target_key, float(temp))

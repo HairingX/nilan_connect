@@ -44,7 +44,7 @@ class GenvexConnectSelect(GenvexConnectEntityBase[GenvexNabtoSetpointKey], Selec
     @property
     def current_option(self) -> str | None: # type: ignore
         """Return the selected entity option to represent the entity state."""
-        val = self.genvex_nabto.get_value(self._value_key)
+        val = self._genvex_nabto.get_value(self._value_key)
         if val is None: return None
         currentFanLevel = str(int(val))
         if currentFanLevel not in self._attr_options: return None
@@ -53,4 +53,4 @@ class GenvexConnectSelect(GenvexConnectEntityBase[GenvexNabtoSetpointKey], Selec
     async def async_select_option(self, option: str) -> None:
         """Change the selected option."""
         value = int(option)
-        self.genvex_nabto.set_setpoint(self._value_key, value)
+        self._genvex_nabto.set_setpoint(self._value_key, value)

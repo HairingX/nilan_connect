@@ -41,13 +41,13 @@ class GenvexConnectSwitch(GenvexConnectEntityBase[GenvexNabtoSetpointKey], Switc
 
     async def async_turn_on(self, **kwargs:Any) -> None:
         """Turn the entity on."""
-        self.genvex_nabto.set_setpoint(self._valueKey, 1)
+        self._genvex_nabto.set_setpoint(self._valueKey, 1)
 
     async def async_turn_off(self, **kwargs:Any) -> None:
         """Turn the entity on."""
-        self.genvex_nabto.set_setpoint(self._valueKey, 0)
+        self._genvex_nabto.set_setpoint(self._valueKey, 0)
 
     @property
     def is_on(self) -> bool|None: # type: ignore
         """Fetch new state data for the switch."""
-        return self.genvex_nabto.get_value(self._valueKey) == 1
+        return self._genvex_nabto.get_value(self._valueKey) == 1

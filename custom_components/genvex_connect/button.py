@@ -33,4 +33,4 @@ class GenvexConnectButton(GenvexConnectEntityBase[GenvexNabtoSetpointKey], Butto
         self._attr_entity_category = category
 
     async def async_press(self) -> None:
-        self.genvex_nabto.set_setpoint(self._value_key, 1)
+        self._genvex_nabto.set_setpoint(self._value_key, 1)

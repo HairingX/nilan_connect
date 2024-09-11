@@ -122,11 +122,11 @@ class GenvexConnectNumber(GenvexConnectEntityBase[GenvexNabtoSetpointKey], Numbe
 
     async def async_set_native_value(self, value: float) -> None:
         """Update the current value."""
-        self.genvex_nabto.set_setpoint(self._valueKey, value)
+        self._genvex_nabto.set_setpoint(self._valueKey, value)
 
     def update(self) -> None:
         """Fetch new state data for the number."""
-        self._attr_native_value = self.genvex_nabto.get_value(self._valueKey)
+        self._attr_native_value = self._genvex_nabto.get_value(self._valueKey)
 
     def parse_device_class(self, uom:str|None, default:NumberDeviceClass|None=None) -> NumberDeviceClass|None:
         match uom:
