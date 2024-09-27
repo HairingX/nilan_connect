@@ -10,7 +10,7 @@ from homeassistant.exceptions import ConfigEntryNotReady, ConfigEntryAuthFailed
 
 from genvexnabto import GenvexNabto, GenvexNabtoConnectionErrorType # type: ignore
 
-from custom_components.genvex_connect.data import GenvexConnectHassData, getHassData, removeHassData, setHassData # type: ignore
+from custom_components.genvex_connect.data import GenvexConnectHassData, get_hass_data, remove_hass_data, set_hass_data # type: ignore
 from .const import DOMAIN, CONF_DEVICE_ID, CONF_AUTHORIZED_EMAIL, CONF_DEVICE_IP, CONF_DEVICE_PORT
 
 _LOGGER = logging.getLogger(__name__)
@@ -31,53 +31,53 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.data.setdefault(DOMAIN, {})
 
     authorized_email = str(entry.data.get(CONF_AUTHORIZED_EMAIL))
-    genvex_nabto = GenvexNabto(authorized_email)
+    genvexnabto = GenvexNabto(authorized_email)
     device_id = str(entry.data.get(CONF_DEVICE_ID))
     device_ip = str(entry.data.get(CONF_DEVICE_IP))
     device_port = int(entry.data.get(CONF_DEVICE_PORT, 0))
-    genvex_nabto.set_device(device_id, device_ip, device_port)
+    genvexnabto.set_device(device_id, device_ip, device_port)
 
-    discoveryResult = await genvex_nabto.wait_for_discovery()
+    discoveryResult = await genvexnabto.wait_for_discovery()
     if discoveryResult is False:  # Waits for GenvexNabto to discover the current device IP
         raise ConfigEntryNotReady(f"Timed out while trying to discover {device_id}")
-    genvex_nabto.connect_to_device()
-    await genvex_nabto.wait_for_connection()
-    _LOGGER.info(f"Controller model: {genvex_nabto.get_device_model()}")
-    if genvex_nabto.get_connection_error() is not False:
-        if genvex_nabto.get_connection_error() is GenvexNabtoConnectionErrorType.AUTHENTICATION_ERROR:
+    genvexnabto.connect_to_device()
+    await genvexnabto.wait_for_connection()
+    _LOGGER.info(f"Controller model: {genvexnabto.get_device_model()}")
+    if genvexnabto.get_connection_error() is not False:
+        if genvexnabto.get_connection_error() is GenvexNabtoConnectionErrorType.AUTHENTICATION_ERROR:
             raise ConfigEntryAuthFailed(f"Credentials expired for {device_id}")
-        if genvex_nabto.get_connection_error() is GenvexNabtoConnectionErrorType.TIMEOUT:
+        if genvexnabto.get_connection_error() is GenvexNabtoConnectionErrorType.TIMEOUT:
             raise ConfigEntryNotReady(f"Timed out while trying to connect to {device_id}")
-        if genvex_nabto.get_connection_error() is GenvexNabtoConnectionErrorType.UNSUPPORTED_MODEL:
+        if genvexnabto.get_connection_error() is GenvexNabtoConnectionErrorType.UNSUPPORTED_MODEL:
             raise ConfigEntryNotReady(
-                f"Timed out while trying to get data from {device_id} did not correctly load a model for Model no: {genvex_nabto.get_device_model()}, device number: {genvex_nabto.get_device_number()} and slavedevice number: {genvex_nabto.get_slave_device_number()}"
+                f"Timed out while trying to get data from {device_id} did not correctly load a model for Model no: {genvexnabto.get_device_model()}, device number: {genvexnabto.get_device_number()} and slavedevice number: {genvexnabto.get_slave_device_number()}"
             )
 
-    dataResult = await genvex_nabto.wait_for_data()
+    dataResult = await genvexnabto.wait_for_data()
     if dataResult is False:  # Waits for GenvexNabto to get fresh data
-        if genvex_nabto.get_loaded_model_name() is None:
+        if genvexnabto.get_loaded_model_name() is None:
             raise ConfigEntryNotReady(
-                f"Timed out while trying to get data from {device_id} did not correctly load a model for Model no: {genvex_nabto.get_device_model()}, device number: {genvex_nabto.get_device_number()} and slavedevice number: {genvex_nabto.get_slave_device_number()}"
+                f"Timed out while trying to get data from {device_id} did not correctly load a model for Model no: {genvexnabto.get_device_model()}, device number: {genvexnabto.get_device_number()} and slavedevice number: {genvexnabto.get_slave_device_number()}"
             )
-        _LOGGER.error(f"Could not get data from {device_id} has loaded model for {genvex_nabto.get_loaded_model_name()}")
+        _LOGGER.error(f"Could not get data from {device_id} has loaded model for {genvexnabto.get_loaded_model_name()}")
         raise ConfigEntryNotReady(
-            f"Timed out while trying to get data from {device_id} has loaded model for {genvex_nabto.get_loaded_model_name()}"
+            f"Timed out while trying to get data from {device_id} has loaded model for {genvexnabto.get_loaded_model_name()}"
         )
 
-    data = GenvexConnectHassData(genvex_nabto=genvex_nabto)
-    setHassData(hass, entry, data)
+    data = GenvexConnectHassData(genvexnabto=genvexnabto)
+    set_hass_data(hass, entry, data)
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
-    genvex_nabto.notify_all_update_handlers()
+    genvexnabto.notify_all_update_handlers()
     return True
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
-    data = getHassData(hass, entry)
-    data["genvex_nabto"].stop_listening()
-    removeHassData(hass, entry)    
+    data = get_hass_data(hass, entry)
+    data["genvexnabto"].stop_listening()
+    remove_hass_data(hass, entry)    
     return True
 
 

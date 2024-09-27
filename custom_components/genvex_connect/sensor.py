@@ -8,13 +8,13 @@ from homeassistant.const import PERCENTAGE
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from genvexnabto import GenvexNabto, GenvexNabtoDatapointKey, GenvexNabtoSetpointKey # type: ignore
-from .data import getGenvexNabto
+from .data import get_genvexnabto
 from .entity import GenvexConnectEntityBase
 
 
 async def async_setup_entry(hass: HomeAssistant, entry:ConfigEntry, async_add_entities:AddEntitiesCallback):
     """Add sensors for passed config_entry in HA."""
-    genvex_nabto = getGenvexNabto(hass, entry)
+    genvex_nabto = get_genvexnabto(hass, entry)
 
     new_entities:List[SensorEntity] = []
     

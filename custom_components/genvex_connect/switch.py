@@ -6,13 +6,13 @@ from homeassistant.components.switch import SwitchDeviceClass, SwitchEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from .data import getGenvexNabto 
+from .data import get_genvexnabto 
 from .entity import GenvexConnectEntityBase
 
 
 async def async_setup_entry(hass: HomeAssistant, entry:ConfigEntry, async_add_entities:AddEntitiesCallback):
     """Add switches for passed config_entry in HA."""
-    genvex_nabto = getGenvexNabto(hass, entry)
+    genvex_nabto = get_genvexnabto(hass, entry)
     
     new_entities:List[SwitchEntity] = []
     

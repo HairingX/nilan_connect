@@ -22,8 +22,8 @@ class GenvexConnectConfigFlow(ConfigFlow, domain=DOMAIN):
     VERSION = 1
     
     _authorized_email:str = ""
-    _device_id:str|None = None
-    _device_ip:str|None = None
+    _device_id:str = ""
+    _device_ip:str = ""
     _device_port:int = 5570
 
     def __init__(self) -> None:
@@ -34,7 +34,7 @@ class GenvexConnectConfigFlow(ConfigFlow, domain=DOMAIN):
         self._genvex_nabto.start_listening()
 
     async def async_step_user(self, user_input: Dict[str, Any] | None = None) -> ConfigFlowResult:
-        """Handle the initial step."""
+        """Invoked when a user initiates a flow via the user interface."""
         devices = await self._genvex_nabto.discover_devices(True)
         _LOGGER.info(devices)
         return self.async_show_select_form()
@@ -48,9 +48,7 @@ class GenvexConnectConfigFlow(ConfigFlow, domain=DOMAIN):
         _LOGGER.info(deviceList)
 
         data_schema = {
-            vol.Required(
-                CONF_DEVICE_ID,
-            ): vol.In(deviceList),
+            vol.Required(CONF_DEVICE_ID): vol.In(deviceList),
         }
 
         return self.async_show_form(step_id="pick", data_schema=vol.Schema(data_schema), errors={})
@@ -146,14 +144,14 @@ class GenvexConnectConfigFlow(ConfigFlow, domain=DOMAIN):
 
         return self.async_show_form(step_id="manual", data_schema=vol.Schema(data_schema), errors=errors)
 
-    async def async_step_manual(self, user_input:Dict[str, str]) -> ConfigFlowResult:
+    async def async_step_manual(self, user_input:Dict[str, Any]) -> ConfigFlowResult:
         """After user has provided their ip, port and email. Try to connect and see if email is correct."""
         _LOGGER.info("Async step manual - user has picked {%s}", user_input)
-
-        if self._device_id is None or len(self._device_id.strip()) == 0: return self.async_abort(reason="Device ID must be set")
-        if self._device_ip is None or len(self._device_ip.strip()) == 0: return self.async_abort(reason="Device IP must be set")
         
         connection_error = await self._async_connect_with_settings(user_input)
+        
+        if len(self._device_id.strip()) == 0: return self.async_abort(reason="Device ID must be set")
+        if len(self._device_ip.strip()) == 0: return self.async_abort(reason="Device IP must be set")
         
         if connection_error is not None:
             if connection_error is GenvexNabtoConnectionErrorType.AUTHENTICATION_ERROR:
@@ -175,7 +173,7 @@ class GenvexConnectConfigFlow(ConfigFlow, domain=DOMAIN):
         }
         return self.async_create_entry(title=self._device_id, data=config_data)
 
-    async def _async_connect_with_settings(self, user_input:Dict[str, str]) -> GenvexNabtoConnectionErrorType|None:
+    async def _async_connect_with_settings(self, user_input:Dict[str, Any]) -> GenvexNabtoConnectionErrorType|None:
         
         self._device_id = user_input.get(CONF_DEVICE_ID, self._device_id) or ""
         self._authorized_email = user_input.get(CONF_AUTHORIZED_EMAIL, self._authorized_email)
@@ -184,13 +182,12 @@ class GenvexConnectConfigFlow(ConfigFlow, domain=DOMAIN):
         
         self._authorized_email = self._authorized_email.strip()
         self._device_id = self._device_id.strip()
-        if self._device_ip is not None:
-            self._device_ip = self._device_ip.strip()
+        self._device_ip = self._device_ip.strip()
             
         _LOGGER.info("User provided id: %s, email: %s, ip: %s, port: %s", self._device_id, self._authorized_email, self._device_ip, self._device_port)
             
         self._genvex_nabto.set_email(self._authorized_email)
-        if self._device_ip is not None:
+        if self._device_ip != "":
             self._genvex_nabto.set_device(self._device_id, self._device_ip, self._device_port)
         self._genvex_nabto.connect_to_device()
         await self._genvex_nabto.wait_for_connection()
@@ -237,9 +234,9 @@ class GenvexConnectConfigFlow(ConfigFlow, domain=DOMAIN):
         
         # user has just initiated reconfigure
             
-        self._device_id = data[CONF_DEVICE_ID]
-        self._authorized_email = data[CONF_AUTHORIZED_EMAIL]
-        self._device_ip = data.get(CONF_DEVICE_IP, None)
+        self._device_id = data.get(CONF_DEVICE_ID, "").strip()
+        self._authorized_email = data.get(CONF_AUTHORIZED_EMAIL, "").strip()
+        self._device_ip = data.get(CONF_DEVICE_IP, "").strip()
         self._device_port = int(data.get(CONF_DEVICE_PORT, self._device_port))
         
         return self.async_show_reconfigure_form()
@@ -247,7 +244,7 @@ class GenvexConnectConfigFlow(ConfigFlow, domain=DOMAIN):
     def async_show_reconfigure_form(self, invalid_email:bool=False, connection_timeout:bool=False) -> ConfigFlowResult:
         """Show the reconfig form."""
         # process user input
-        if self._device_ip is None: #device picked
+        if self._device_ip == "": #device picked
             data_schema:Dict[vol.Required|vol.Optional, type] = {
                 vol.Required(CONF_AUTHORIZED_EMAIL, default=self._authorized_email): str,
                 vol.Optional(CONF_DEVICE_IP, default=self._device_ip): str,

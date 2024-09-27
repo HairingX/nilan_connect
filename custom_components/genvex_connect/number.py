@@ -5,14 +5,14 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import EntityCategory
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from .data import getHassData
+from .data import get_hass_data
 from .entity import GenvexConnectEntityBase
 
 
 async def async_setup_entry(hass: HomeAssistant, entry:ConfigEntry, async_add_entities:AddEntitiesCallback):
     """Add numbers for passed config_entry in HA."""
-    data = getHassData(hass, entry)
-    genvex_nabto = data["genvex_nabto"]
+    data = get_hass_data(hass, entry)
+    genvex_nabto = data["genvexnabto"]
 
     new_entities:List[NumberEntity] = []
     if genvex_nabto.provides_value(GenvexNabtoSetpointKey.BOOST_TIME):
