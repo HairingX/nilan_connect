@@ -27,8 +27,7 @@ PLATFORMS: list[Platform] = [
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Genvex Connect from a config entry."""
-    if hass.data.get(DOMAIN) is None:
-        hass.data.setdefault(DOMAIN, {})
+    hass.data.setdefault(DOMAIN, {})
 
     authorized_email = str(entry.data.get(CONF_AUTHORIZED_EMAIL))
     genvexnabto = GenvexNabto(authorized_email)

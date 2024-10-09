@@ -70,7 +70,7 @@ class GenvexConnectClimate(GenvexConnectEntityBase[GenvexNabtoSetpointKey], Clim
         
         features:ClimateEntityFeature = ClimateEntityFeature(0)
         if genvex_nabto.provides_value(enable_key):
-            features |= ClimateEntityFeature.TURN_ON | ClimateEntityFeature.TURN_OFF
+            # features |= ClimateEntityFeature.TURN_ON | ClimateEntityFeature.TURN_OFF
             self._attr_hvac_modes.append(HVACMode.OFF)
         if genvex_nabto.provides_value(fan_level_key):
             min = int(genvex_nabto.get_setpoint_min_value(fan_level_key) or 0)
@@ -173,15 +173,15 @@ class GenvexConnectClimate(GenvexConnectEntityBase[GenvexNabtoSetpointKey], Clim
     def _turn_off(self):
         self._genvex_nabto.set_setpoint(self._enable_key, 0)
 
-    async def async_turn_on(self):
-        """Turn the entity on."""
-        _LOGGER.info(f"Wanted to turn on")
-        self.set_hvac_mode(HVACMode.AUTO)
+    # async def async_turn_on(self):
+    #     """Turn the entity on."""
+    #     _LOGGER.info(f"Wanted to turn on")
+    #     self.set_hvac_mode(HVACMode.AUTO)
 
-    async def async_turn_off(self):
-        """Turn the entity off."""
-        _LOGGER.info(f"Wanted to turn off")
-        self.set_hvac_mode(HVACMode.OFF)
+    # async def async_turn_off(self):
+    #     """Turn the entity off."""
+    #     _LOGGER.info(f"Wanted to turn off")
+    #     self.set_hvac_mode(HVACMode.OFF)
 
     async def async_set_temperature(self, **kwargs:Any) -> None:
         """Set the target temperature"""
