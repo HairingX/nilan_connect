@@ -1,8 +1,8 @@
-# Genvex Connect
-Component to directly integrate Genvex Connect and Nilan Gateway devices into Home Assistant.
-The integrationen uses a custom libary [GenvexNabto](https://github.com/HairingX/genvexnabto) which handles all communication with the devices locally. Have a look in that repo for more information about the more technical side of the project.
+# Nilan Connect
+Component to directly integrate Nilan Gateway and Genvex Connect devices into Home Assistant.
+The integrationen uses a custom libary [Nilan Proxy](https://github.com/HairingX/nilan_proxy) which handles all communication with the devices locally. Have a look in that repo for more information about the more technical side of the project.
 
-This integration needs the user to have an Genvex Connect or Nilan gateway connected to their device or own the newer Optima devices, which already have integrated gateways.
+This integration needs the user to have a Nilan Gateway or Genvex Connect connected to their device or own the newer Optima devices, which already have integrated gateways.
 
 ### Supported controller models
 |Controller         | Gateway requiured     | Supported       | Tested  |
@@ -21,7 +21,7 @@ This integration needs the user to have an Genvex Connect or Nilan gateway conne
 
 ## Installation (HACS)
 
-The preferred method to install is to use HACS. You need to add this repo https://github.com/HairingX/genvexconnect as a custom repo. See https://hacs.xyz/docs/faq/custom_repositories for details.
+The preferred method to install is to use HACS. You need to add this repo https://github.com/HairingX/nilan_connect as a custom repo. See https://hacs.xyz/docs/faq/custom_repositories for details.
 
 ## Installation (No HACS)
 
@@ -32,8 +32,8 @@ If you don't have/want HACS installed, you will need to manually install the int
 3. Restart Home Assistant
 
 ## Setup
-To setup the integration, go into "Configuration" -> "Integrations" and press on the "+" button. Find Genvex Connect from the list.
-The integration should search for your device and let you choose which one to use. You then need to provide it with the same email as used in the Genvex Connect app. This is case sensitive.
+To setup the integration, go into "Configuration" -> "Integrations" and press on the "+" button. Find Nilan Connect from the list.
+The integration should search for your device and let you choose which one to use. You then need to provide it with the same email as used in the Nilan or Genvex Connect app. This is case sensitive.
 Then if all goes well, your device should be added and working in Home Assistant.
 
 ## Warning
