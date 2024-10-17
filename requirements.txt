@@ -1,0 +1,10 @@
+async-retrying~=0.2
+colorlog~=6.8
+homeassistant~=2024.10
+pip~=24.2
+python-dateutil~=2.9
+numpy~=2.1
+mutagen~=1.47
+
+#to upgrade existing venv, run the follwing in the terminal (followed by 2 restarts of HA):
+#          pip install --upgrade --force-reinstall -r requirements.txt

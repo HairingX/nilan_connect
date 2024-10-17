@@ -1,5 +1,5 @@
 {
-  "name": "Genvex Connect",
-  "homeassistant": "2024.8.0",
+  "name": "Nilan Connect",
+  "homeassistant": "2024.10.0",
   "render_readme": true
 }

@@ -33,7 +33,7 @@ If you don't have/want HACS installed, you will need to manually install the int
 
 ## Setup
 To setup the integration, go into "Configuration" -> "Integrations" and press on the "+" button. Find Genvex Connect from the list.
-The integration should search for your device and let you choose which one to use. You then need to provide it with the same email as used in the Genvex Connect app. This is case sensitive. 
+The integration should search for your device and let you choose which one to use. You then need to provide it with the same email as used in the Genvex Connect app. This is case sensitive.
 Then if all goes well, your device should be added and working in Home Assistant.
 
 ## Warning
@@ -43,13 +43,13 @@ I cannot confirm the validity of the posts, but to avoid getting into that situa
 **Block all internet access for your Nilan Gateway, and only access it through the Home Assistant integration, if you choose to use that.**
 
 ## A little note to Genvex/Nilan
-I know fully well that you have the ability to remotely update your devices and closing local connections are quite simple to do. 
-Please do not use that power irresponsibly. 
-The method of connecting locally does require you to know the exact email used in the app and the capabilities are the same as the ones your users connecting directly through Modbus have. 
+I know fully well that you have the ability to remotely update your devices and closing local connections are quite simple to do.
+Please do not use that power irresponsibly.
+The method of connecting locally does require you to know the exact email used in the app and the capabilities are the same as the ones your users connecting directly through Modbus have.
 This shouldn't be a security concern and only gives your Gateway solutions much more value to the end user.
 
 # Obligatory statement
-I am not personally or in any way responsible for any damages should you choose to use the integration. No warranty provided. 
+I am not personally or in any way responsible for any damages should you choose to use the integration. No warranty provided.
 Be especially observant when trying the integration with untested controller models and settings values.
 
 ## Credit
