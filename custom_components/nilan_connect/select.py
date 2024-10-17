@@ -16,8 +16,8 @@ async def async_setup_entry(hass: HomeAssistant, entry:ConfigEntry, async_add_en
 
     new_entities:List[SelectEntity] = []
     if proxy.provides_value(NilanProxySetpointKey.FAN_LEVEL):
-        new_entities.append(NilanConnectSelect(proxy, NilanProxySetpointKey.FAN_LEVEL, "mdi:fan", default_enabled=False))
-        
+        new_entities.append(NilanConnectSelect(proxy, NilanProxySetpointKey.FAN_LEVEL, "mdi:fan", default_visible=False))
+
     if proxy.provides_value(NilanProxySetpointKey.COMPRESSOR_PRIORITY):
         new_entities.append(NilanConnectSelect(proxy, NilanProxySetpointKey.COMPRESSOR_PRIORITY, "mdi:priority-high"))
     if proxy.provides_value(NilanProxySetpointKey.TEMP_COOLING_START_OFFSET):
