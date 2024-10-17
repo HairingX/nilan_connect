@@ -36,8 +36,17 @@ To setup the integration, go into "Configuration" -> "Integrations" and press on
 The integration should search for your device and let you choose which one to use. You then need to provide it with the same email as used in the Genvex Connect app. This is case sensitive. 
 Then if all goes well, your device should be added and working in Home Assistant.
 
+## Warning
+Some users have posted, that Nilan have locked them out of their gateway after accessing it with other devices than their app.
+I cannot confirm the validity of the posts, but to avoid getting into that situation i recommend that you
+
+**Block all internet access for your Nilan Gateway, and only access it through the Home Assistant integration, if you choose to use that.**
+
 ## A little note to Genvex/Nilan
-I know fully well that you have the ability to remotely update your devices and closing local connections are quite simple to do. Please do not use that power irresponsibly. The method of connecting locally does require you to know the exact email used in the app and the capabilities are the same as the ones your users connecting directly through Modbus have. This shouldn't be a security concern and only gives your Gateway solutions much more value to the end user.
+I know fully well that you have the ability to remotely update your devices and closing local connections are quite simple to do. 
+Please do not use that power irresponsibly. 
+The method of connecting locally does require you to know the exact email used in the app and the capabilities are the same as the ones your users connecting directly through Modbus have. 
+This shouldn't be a security concern and only gives your Gateway solutions much more value to the end user.
 
 # Obligatory statement
 I am not personally or in any way responsible for any damages should you choose to use the integration. No warranty provided. 
