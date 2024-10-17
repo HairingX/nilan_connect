@@ -60,14 +60,24 @@ For more info see his library here: https://github.com/superrob/genvexconnect
 # Example Card
 The device can be displayed in many ways. Here is an example of how I like it displayed for inspiration:
 
-![Image of the example card](https://github.com/user-attachments/assets/7fbe22bf-658b-4156-90ff-8c4dc70a880e)
+![image](https://github.com/user-attachments/assets/446f2ad9-af58-4585-ad68-cb884363be71)
 
+Explanations on the values in the card:
+- At the inlets and outlets the temperature and fan speed % is displayed.
+- In the center of the unit, bypass/defrost/ventilation state is displayed by 3 different icons.
+- Above the unit the efficiency percentage is displayed.
+- Below the unit the active state (Auto/OFF) and active level is displayed.
+- Below that is the humidity %
+- In the bottom the filter change is displayed.
+- When an alarm is active a big red alert icon will be displayed beside the filter change.
+
+Below the house i have placed general controls to handle the unit.
 
 Note that the card needs two background images for it to be displayed correctly in both light and dark modes. The images should be copied into the `www` folder of Home Assistant to be accessed by the card.
 
 The `www` folder is typically located in the config directory where you find `configuration.yaml`, `automations`, `blueprints`, etc. If the `www` folder does not exist, you can create it and place the images inside.
 
-You find the background images in the `assets` folder.
+You find the background images in the `assets` folder of this repository.
 - assets/hvac_background_dark.png
 - assets/hvac_background_light.png
 
