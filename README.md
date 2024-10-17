@@ -75,141 +75,161 @@ Here is the code for the card above:
 ```yaml
 type: vertical-stack
 cards:
-    - type: picture-elements
+  - type: picture-elements
+    elements:
+      - entity: sensor.nilan_temperature_outside_air
+        style:
+          color: var(--primary-text-color)
+          font-size: 150%
+          left: 30.5%
+          top: 7.0%
+        type: state-label
+      - entity: sensor.nilan_temperature_exhaust_air
+        style:
+          color: var(--primary-text-color)
+          font-size: 150%
+          left: 71.5%
+          top: 7.0%
+        type: state-label
+      - entity: sensor.nilan_temperature_extract_air
+        style:
+          color: var(--primary-text-color)
+          font-size: 150%
+          left: 30.5%
+          top: 66.5%
+        type: state-label
+      - entity: sensor.nilan_temperature_supply_air
+        style:
+          color: var(--primary-text-color)
+          font-size: 150%
+          left: 71.5%
+          top: 66.5%
+        type: state-label
+      - entity: sensor.nilan_humidity
+        style:
+          color: var(--primary-text-color)
+          font-size: 130%
+          left: 51.0%
+          top: 79.2%
+        type: state-label
+      - entity: select.nilan_fan_level
+        style:
+          color: var(--primary-text-color)
+          font-size: 100%
+          left: 50.0%
+          top: 60.0%
+        type: state-label
+      - entity: sensor.nilan_fan_speed_supply
+        style:
+          color: var(--primary-text-color)
+          font-size: 100%
+          left: 76.0%
+          top: 55.0%
+        type: state-label
+      - entity: sensor.nilan_fan_speed_extract
+        style:
+          color: var(--primary-text-color)
+          font-size: 100%
+          left: 24.0%
+          top: 55.0%
+        type: state-label
+      - entity: sensor.nilan_efficiency
+        style:
+          color: var(--primary-text-color)
+          font-size: 100%
+          left: 50.0%
+          top: 25.2%
+        type: state-label
+      - entity: climate.nilan_hvac
+        style:
+          color: var(--primary-text-color)
+          font-size: 100%
+          left: 50.0%
+          top: 55.2%
+        type: state-label
+      - entity: sensor.nilan_next_filter_change
+        style:
+          color: var(--primary-text-color)
+          font-size: 130%
+          left: 51.0%
+          top: 91%
+        type: state-label
+      - type: icon
+        icon: mdi:air-filter
+        style:
+          left: 42.0%
+          top: 91%
+      - type: conditional
+        conditions:
+          - entity: binary_sensor.nilan_defrost_active
+            state: "on"
         elements:
-            - entity: sensor.nilan_temperature_outside_air
-                style:
-                    color: var(--primary-text-color)
-                    font-size: 150%
-                    left: 30.5%
-                    top: 7.0%
-                type: state-label
-            - entity: sensor.nilan_temperature_exhaust_air
-                style:
-                    color: var(--primary-text-color)
-                    font-size: 150%
-                    left: 71.5%
-                    top: 7.0%
-                type: state-label
-            - entity: sensor.nilan_temperature_extract_air
-                style:
-                    color: var(--primary-text-color)
-                    font-size: 150%
-                    left: 30.5%
-                    top: 66.5%
-                type: state-label
-            - entity: sensor.nilan_temperature_supply_air
-                style:
-                    color: var(--primary-text-color)
-                    font-size: 150%
-                    left: 71.5%
-                    top: 66.5%
-                type: state-label
-            - entity: sensor.nilan_humidity
-                style:
-                    color: var(--primary-text-color)
-                    font-size: 130%
-                    left: 51.0%
-                    top: 79.2%
-                type: state-label
-            - entity: select.nilan_fan_level
-                style:
-                    color: var(--primary-text-color)
-                    font-size: 100%
-                    left: 50.0%
-                    top: 60.0%
-                type: state-label
-            - entity: sensor.nilan_fan_speed_supply
-                style:
-                    color: var(--primary-text-color)
-                    font-size: 100%
-                    left: 76.0%
-                    top: 55.0%
-                type: state-label
-            - entity: sensor.nilan_fan_speed_extract
-                style:
-                    color: var(--primary-text-color)
-                    font-size: 100%
-                    left: 24.0%
-                    top: 55.0%
-                type: state-label
-            - entity: sensor.nilan_efficiency
-                style:
-                    color: var(--primary-text-color)
-                    font-size: 100%
-                    left: 50.0%
-                    top: 25.2%
-                type: state-label
-            - entity: climate.nilan_hvac
-                style:
-                    color: var(--primary-text-color)
-                    font-size: 100%
-                    left: 50.0%
-                    top: 55.2%
-                type: state-label
-            - entity: sensor.nilan_next_filter_change
-                style:
-                    color: var(--primary-text-color)
-                    font-size: 130%
-                    left: 51.0%
-                    top: 91%
-                type: state-label
-            - type: icon
-                icon: mdi:air-filter
-                style:
-                    left: 42.0%
-                    top: 91%
-            - type: conditional
-                conditions:
-                    - entity: binary_sensor.nilan_defrost_active
-                        state: "on"
-                elements:
-                    - entity: binary_sensor.nilan_defrost_active
-                        type: icon
-                        icon: mdi:snowflake-melt
-                        style:
-                            background-color: var(--card-background-color)
-                            border-radius: 50%
-                            color: var(--primary-text-color)
-                            left: 49.7%
-                            top: 40.3%
-                            transform: translate(-50%, -50%) scale(3,3)
-            - type: conditional
-                conditions:
-                    - entity: binary_sensor.nilan_defrost_active
-                        state: "off"
-                    - entity: binary_sensor.nilan_bypass_active
-                        state: "on"
-                elements:
-                    - entity: binary_sensor.nilan_bypass_active
-                        type: icon
-                        icon: mdi:valve-open
-                        style:
-                            background-color: var(--card-background-color)
-                            border-radius: 50%
-                            color: var(--primary-text-color)
-                            left: 49.7%
-                            top: 40.3%
-                            transform: translate(-50%, -50%) scale(3,3) rotate(90deg)
-            - type: conditional
-                conditions:
-                    - entity: binary_sensor.nilan_bypass_active
-                        state: "on"
-                elements:
-                    - type: icon
-                        icon: hidden
-                        style:
-                            background-color: var(--card-background-color)
-                            left: 49.7%
-                            top: 25%
-                            transform: translate(-50%, -50%) scale(3,1)
-        image: /local/hvac_background_light.png
-        dark_mode_image: /local/hvac_background_dark.png
-    - type: entities
-        entities:
-            - entity: climate.nilan_hvac
-            - entity: button.nilan_reset_filter
-                secondary_info: none
-        show_header_toggle: false
-        state_color: false
+          - entity: binary_sensor.nilan_defrost_active
+            type: icon
+            icon: mdi:snowflake-melt
+            style:
+              background-color: var(--card-background-color)
+              border-radius: 50%
+              color: var(--primary-text-color)
+              left: 49.7%
+              top: 40.3%
+              transform: translate(-50%, -50%) scale(3,3)
+        title: Defrost Indicator
+      - type: conditional
+        conditions:
+          - entity: binary_sensor.nilan_defrost_active
+            state: "off"
+          - entity: binary_sensor.nilan_bypass_active
+            state: "on"
+        elements:
+          - entity: binary_sensor.nilan_bypass_active
+            type: icon
+            icon: mdi:valve-open
+            style:
+              background-color: var(--card-background-color)
+              border-radius: 50%
+              color: var(--primary-text-color)
+              left: 49.7%
+              top: 40.3%
+              transform: translate(-50%, -50%) scale(3,3) rotate(90deg)
+        title: Bypass indicator
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: binary_sensor.nilan_bypass_active
+            state: "on"
+        elements:
+          - type: icon
+            icon: hidden
+            style:
+              background-color: var(--card-background-color)
+              left: 49.7%
+              top: 25%
+              transform: translate(-50%, -50%) scale(3,1)
+        title: Bypass hide efficiency
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: binary_sensor.nilan_alarm_status
+            state: "on"
+        elements:
+          - type: icon
+            icon: mdi:alert
+            style:
+              color: red
+              right: 25%
+              bottom: 12%
+              transform: translate(-50%, -50%) scale(2.5)
+            entity: binary_sensor.nilan_alarm_status
+        title: Alarm ON
+    image: /local/hvac_background_light.png
+    dark_mode_image: /local/hvac_background_dark.png
+  - type: entities
+    entities:
+      - entity: climate.nilan_hvac
+      - entity: button.nilan_reset_filter
+        secondary_info: none
+      - entity: button.nilan_reset_alarm
+    show_header_toggle: false
+    state_color: false
 ```
