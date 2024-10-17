@@ -60,7 +60,8 @@ For more info see his library here: https://github.com/superrob/genvexconnect
 # Example Card
 The device can be displayed in many ways. Here is an example of how I like it displayed for inspiration:
 
-![IMAGE HERE]
+![Image of the example card](https://github.com/user-attachments/assets/7fbe22bf-658b-4156-90ff-8c4dc70a880e)
+
 
 Note that the card needs two background images for it to be displayed correctly in both light and dark modes. The images should be copied into the `www` folder of Home Assistant to be accessed by the card.
 
