@@ -68,7 +68,7 @@
         "name": "Reset filter"
       },
       "alarm_reset": {
-        "name": "Nulstil alarm"
+        "name": "Reset alarm"
       }
     },
     "climate": {
