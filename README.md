@@ -54,8 +54,11 @@ Be especially observant when trying the integration with untested controller mod
 
 ## Credit
 This library would not be possible without the time and effort put in by superrob, who initiated this integration.
-I branched out this codebase for development practice purpose, to tailor the CTS 400 model to my needs.
-For more info see his library here: https://github.com/superrob/genvexconnect
+I branched out this codebase to tailor it mainly towards Nilan units. It ended up being a big code overhaul to get it where I wanted it.
+
+In the end the solution provided an improved home assistant device for Nilan and Genvex units.
+
+For more info on the original solution, you can find superrob's repository here: https://github.com/superrob/genvexconnect
 
 # Example Card
 The device can be displayed in many ways. Here is an example of how I like it displayed for inspiration:
