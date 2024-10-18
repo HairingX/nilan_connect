@@ -3,6 +3,8 @@ name: Code validation
 on:
   push:
   pull_request:
+  schedule:
+    - cron:  '0 0 * * *'
 
 jobs:
   validate-hassfest:

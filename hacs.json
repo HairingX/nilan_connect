@@ -1,5 +1,8 @@
 {
   "name": "Nilan Connect",
   "homeassistant": "2024.10.0",
-  "render_readme": true
+  "hacs": "2.0.0",
+  "render_readme": true,
+  "zip_release": true,
+  "filename": "nilan_connect.zip"
 }
