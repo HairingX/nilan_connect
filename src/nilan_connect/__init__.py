@@ -3,6 +3,8 @@
 Everything a user of a Nilan controller needs is here, so that nothing has to be imported from
 modbus_event_connect: the client and its values, what a point is, the errors, and discovery.
 """
+from importlib.metadata import version as _installed_version
+
 from modbus_event_connect import (
     AuthenticationError,
     CannotConnectError,
@@ -34,7 +36,7 @@ from modbus_event_connect.micro_nabto import DiscoveredDevice, discover
 from ._model import CTS400, PointKey, select_model
 from ._nilan import create_client
 
-__version__ = "0.2.0rc1"
+__version__ = _installed_version("nilan_connect")
 __all__ = [
     "AuthenticationError",
     "CannotConnectError",

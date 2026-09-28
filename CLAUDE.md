@@ -44,9 +44,10 @@ obvious from the name - one or two lines, no narrative.
 
 ## Releasing
 
-**Never edit the version by hand, and never publish the draft release by hand.** Publishing the
-draft creates the tag at whatever `main` points to, before the version is set; every tag of
-`modbus_event_connect` up to `v0.1.8` carries the previous version for that reason.
+**The version is the release's tag, and the draft release is never published by hand.** The
+package has no version in a file: setuptools-scm works it out from the tags when it is built, so a
+checkout between releases says a development version such as `0.2.1.dev3+g1a2b3c4`, and
+`__version__` reads it from the installed package.
 
 1. Merge pull requests into `main`. Release Drafter keeps a draft release proposing the next
    version: a minor bump for the label `breaking-change` or `minor`, a patch otherwise.
@@ -63,10 +64,10 @@ final release, the final release before it: a change pushed straight to `main` i
 to release.
 
 Release refuses any version not higher than every version tagged or on PyPI, yanked ones
-included. It runs the tests on the commit it releases, sets `__version__`, builds, installs the
+included. It runs the tests on the commit it releases, tags that commit, builds, installs the
 wheel and checks that `__version__` and the metadata say the version, and only then pushes the
-version commit and the tag together - a fast-forward of `main` from the tested commit, refused
-if `main` moved. Then PyPI, then the GitHub release, marked as a pre-release where it is one.
+tag - nothing is pushed to `main`. Then PyPI, then the GitHub release, marked as a pre-release
+where it is one.
 
 A release candidate's notes are written by GitHub from the pull requests merged since the
 previous release candidate or final release, grouped by label as `.github/release.yml` says. A
