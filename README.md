@@ -51,7 +51,7 @@ asyncio.run(main())
 ```
 
 With only a `device_id`, the gateway is found by discovery. `discover()` lists the gateways that
-answer.
+answer. `port` reaches a gateway that does not answer on micro_nabto's standard port.
 
 ## How often values are read
 

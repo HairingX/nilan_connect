@@ -17,7 +17,7 @@ from modbus_event_connect.micro_nabto import (
 )
 from modbus_event_connect.testing import assert_models_valid
 
-from nilan_connect import CTS400, PointKey, select_model
+from nilan_connect import CTS400, PointKey, create_client, select_model
 from nilan_connect._model import CTS400_POINTS
 from nilan_connect.testing import SimulatedMicroNabtoDevice
 
@@ -181,6 +181,16 @@ async def test_a_value_outside_the_manuals_limits_is_refused(gateway: SimulatedM
         with pytest.raises(InvalidValueError):
             await client.write(PointKey.TEMP_TARGET, 30.5)
         assert not gateway.received(SETPOINT_WRITE)
+    finally:
+        await client.disconnect()
+
+
+async def test_a_client_reaches_a_gateway_on_the_port_it_is_given(gateway: SimulatedMicroNabtoDevice) -> None:
+    host, port = gateway.address
+    client = create_client(EMAIL, host=host, port=port, read_only=True)
+    await client.connect()
+    try:
+        assert client.model is CTS400
     finally:
         await client.disconnect()
 
