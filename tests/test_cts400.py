@@ -259,6 +259,18 @@ async def test_a_filter_interval_reads_the_days_left_again_two_seconds_later(
         await client.disconnect()
 
 
+async def test_a_write_the_gateway_keeps_refusing_is_not_reported_taken(
+        gateway: SimulatedMicroNabtoDevice) -> None:
+    """A CTS400's gateway answered 0x63 to writes it did not take."""
+    client = await _connected(gateway)
+    try:
+        gateway.write_statuses = [0x63, 0x63, 0x63]
+        assert await client.write(PointKey.FAN_LEVEL, 2) is False
+        assert gateway.setpoint_registers[(0, 69)] == 1
+    finally:
+        await client.disconnect()
+
+
 async def test_a_value_outside_the_manuals_limits_is_refused(gateway: SimulatedMicroNabtoDevice) -> None:
     client = await _connected(gateway)
     try:
