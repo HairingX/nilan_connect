@@ -60,8 +60,7 @@ checkout between releases says a development version such as `0.2.1.dev3+g1a2b3c
    override one worked out wrongly: canonical PEP 440, of the kind chosen.
 
 Release refuses a version with no pull request merged since the release before it - for a
-final release, the final release before it: a change pushed straight to `main` is nothing
-to release.
+final release, the final release before it.
 
 Release refuses any version not higher than every version tagged or on PyPI, yanked ones
 included. It runs the tests on the commit it releases, tags that commit, builds, installs the
@@ -85,10 +84,9 @@ Dependabot proposes a new major, and updates to the test tools, as pull requests
 
 ## Branches and pull requests
 
-- Process changes - CI, tests and test tools, the release, the release draft, these
-  conventions - go straight to `main`: they change nothing a user of the library gets. A change
-  to what a user gets - the library's code or documentation - goes through a branch and a pull
-  request, with its tests.
+- Every change goes through a branch and a pull request: `main` takes no push. A ruleset
+  enforces it; its only bypass is the owner's, and only for merging a pull request. A change
+  to what a user gets - the library's code or documentation - comes with its tests.
 - Name every branch by the kind of change, as the release draft's labels follow the name:
   `feature/<what>` is labelled `feature request`, `fix/<what>` is labelled `bug`, and
   `chore/<what>` - CI, tooling, documentation - is labelled `chore`.
