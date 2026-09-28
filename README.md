@@ -71,6 +71,11 @@ await client.write(PointKey.FILTER_REPLACE_RESET, True)   # an action: nothing t
 A value outside the limits Nilan's manual gives is refused before anything is sent.
 `create_client(..., read_only=True)` refuses every write.
 
+A CTS400's gateway answered some writes with a status saying it did not take them, and took the
+same write on a later try. Such a write is sent again until `create_client(...,
+write_retry_for=...)` seconds have passed since it was first sent - `WRITE_RETRY_FOR` unless
+given; 0 sends every write once. A newer value for the same setting takes over from it.
+
 ## Keys
 
 A key is the stable name of a point, and carries the type of its value. A key string never

@@ -34,7 +34,7 @@ from modbus_event_connect import (
 from modbus_event_connect.micro_nabto import DiscoveredDevice, discover
 
 from ._model import CTS400, PointKey, select_model
-from ._nilan import create_client
+from ._nilan import WRITE_RETRY_FOR, create_client
 
 __version__ = _installed_version("nilan_connect")
 __all__ = [
@@ -66,6 +66,7 @@ __all__ = [
     "discover",
     "CTS400",
     "PointKey",
+    "WRITE_RETRY_FOR",
     "create_client",
     "select_model",
 ]

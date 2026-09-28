@@ -259,13 +259,30 @@ async def test_a_filter_interval_reads_the_days_left_again_two_seconds_later(
         await client.disconnect()
 
 
-async def test_a_write_the_gateway_keeps_refusing_is_not_reported_taken(
+async def test_a_created_client_sends_a_write_again_until_the_gateway_takes_it(
         gateway: SimulatedMicroNabtoDevice) -> None:
-    """A CTS400's gateway answered 0x63 to writes it did not take."""
-    client = await _connected(gateway)
+    """A CTS400's gateway answered 0x63 and 0x85 to writes it took on a later try."""
+    host, port = gateway.address
+    client = create_client(EMAIL, host=host, port=port)
+    await client.connect()
     try:
-        gateway.write_statuses = [0x63, 0x63, 0x63]
+        gateway.write_statuses = [0x63, 0x85]
+        assert await client.write(PointKey.FAN_LEVEL, 2) is True
+        assert len(gateway.received(SETPOINT_WRITE)) == 3
+        assert gateway.setpoint_registers[(0, 69)] == 2
+    finally:
+        await client.disconnect()
+
+
+async def test_a_created_client_with_write_retry_for_0_sends_a_write_once(
+        gateway: SimulatedMicroNabtoDevice) -> None:
+    host, port = gateway.address
+    client = create_client(EMAIL, host=host, port=port, write_retry_for=0)
+    await client.connect()
+    try:
+        gateway.write_statuses = [0x63]
         assert await client.write(PointKey.FAN_LEVEL, 2) is False
+        assert len(gateway.received(SETPOINT_WRITE)) == 1
         assert gateway.setpoint_registers[(0, 69)] == 1
     finally:
         await client.disconnect()
