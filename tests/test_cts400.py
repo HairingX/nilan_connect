@@ -8,7 +8,7 @@ from typing import Any
 
 import pytest
 import pytest_asyncio
-from modbus_event_connect import Client, DataType, InvalidValueError, Key, Point, Quality, ReadOnlyError, Transforms, Unit
+from modbus_event_connect import Client, DataType, DataValue, InvalidValueError, Key, Point, Quality, ReadOnlyError, Transforms, Unit
 from modbus_event_connect.micro_nabto import (
     DatapointRegister,
     MicroNabtoConnection,
@@ -19,7 +19,7 @@ from modbus_event_connect.testing import assert_models_valid
 
 from nilan_connect import CTS400, PointKey, create_client, select_model
 from nilan_connect._model import CTS400_POINTS
-from nilan_connect.testing import SimulatedMicroNabtoDevice
+from nilan_connect.testing import FakeClock, SimulatedMicroNabtoDevice
 
 EMAIL = "user@example.invalid"
 SETPOINT_WRITE = 0x2B
@@ -171,6 +171,90 @@ async def test_a_write_reaches_its_setpoint(gateway: SimulatedMicroNabtoDevice, 
         write = _point(key).write
         assert isinstance(write, SetpointRegister)
         assert (0, write.address, register) in await _written(gateway)
+    finally:
+        await client.disconnect()
+
+
+def _value[T](client: Client, key: Key[T]) -> T | None:
+    current = client.value(key)
+    return current.value if current is not None else None
+
+
+def _polled(key: Key[Any], old: DataValue[Any] | None, new: DataValue[Any]) -> None:
+    """A subscriber that only makes its key read."""
+
+
+async def _clocked(gateway: SimulatedMicroNabtoDevice) -> tuple[Client, FakeClock]:
+    """A client on the gateway whose time moves only when the test advances it."""
+    clock = FakeClock()
+    host, port = gateway.address
+    connection = MicroNabtoConnection(EMAIL, host=host, port=port, timeout=0.2, retries=1, clock=clock)
+    client = Client(MicroNabtoDevice(connection, owns_connection=True), select_model, clock=clock)
+    await client.connect()
+    return client, clock
+
+
+async def test_a_filter_reset_reads_the_filters_status_and_timers_again_two_seconds_later(
+        gateway: SimulatedMicroNabtoDevice) -> None:
+    """A CTS400 was seen changing them all within 1.0 s of the reset."""
+    client, clock = await _clocked(gateway)
+    try:
+        client.subscribe(PointKey.FILTER_OK, _polled)
+        client.subscribe(PointKey.ALARM_STATUS, _polled)
+        client.subscribe(PointKey.FILTER_REPLACE_TIME_AGO, _polled)
+        client.subscribe(PointKey.FILTER_REPLACE_TIME_REMAIN, _polled)
+        await client.write(PointKey.FILTER_REPLACE_RESET, True)
+        # What the controller does once it has taken the reset.
+        gateway.datapoint_registers.update({(0, 49): 0, (0, 50): 0, (0, 77): 0, (0, 110): 90})
+        clock.advance(1.9)
+        await client.poll()
+        assert _value(client, PointKey.FILTER_OK) is False
+        clock.advance(0.1)
+        await client.poll()
+        assert [_value(client, PointKey.FILTER_OK), _value(client, PointKey.ALARM_STATUS),
+                _value(client, PointKey.FILTER_REPLACE_TIME_AGO),
+                _value(client, PointKey.FILTER_REPLACE_TIME_REMAIN)] == [True, False, 0.0, 90]
+    finally:
+        await client.disconnect()
+
+
+async def test_a_fan_level_reads_the_fans_level_and_speeds_again_three_seconds_later(
+        gateway: SimulatedMicroNabtoDevice) -> None:
+    """A CTS400 was seen changing them 1.3 to 1.8 s after the level was written."""
+    client, clock = await _clocked(gateway)
+    try:
+        client.subscribe(PointKey.FAN_LEVEL_CURRENT, _polled)
+        client.subscribe(PointKey.FAN_DUTYCYCLE_EXTRACT, _polled)
+        client.subscribe(PointKey.FAN_DUTYCYCLE_SUPPLY, _polled)
+        await client.write(PointKey.FAN_LEVEL, 2)
+        # What the controller does once it has taken the level.
+        gateway.datapoint_registers.update({(0, 63): 2, (0, 24): 410, (0, 25): 400})
+        clock.advance(2.9)
+        await client.poll()
+        assert _value(client, PointKey.FAN_LEVEL_CURRENT) == 1
+        clock.advance(0.1)
+        await client.poll()
+        assert [_value(client, PointKey.FAN_LEVEL_CURRENT), _value(client, PointKey.FAN_DUTYCYCLE_EXTRACT),
+                _value(client, PointKey.FAN_DUTYCYCLE_SUPPLY)] == [2, 41.0, 40.0]
+    finally:
+        await client.disconnect()
+
+
+async def test_a_filter_interval_reads_the_days_left_again_two_seconds_later(
+        gateway: SimulatedMicroNabtoDevice) -> None:
+    """A CTS400 was seen changing them 1.0 s after the interval was written."""
+    client, clock = await _clocked(gateway)
+    try:
+        client.subscribe(PointKey.FILTER_REPLACE_TIME_REMAIN, _polled)
+        await client.write(PointKey.FILTER_REPLACE_INTERVAL, 91)
+        # What the controller does once it has taken the interval.
+        gateway.datapoint_registers[(0, 110)] = 91
+        clock.advance(1.9)
+        await client.poll()
+        assert _value(client, PointKey.FILTER_REPLACE_TIME_REMAIN) == 0
+        clock.advance(0.1)
+        await client.poll()
+        assert _value(client, PointKey.FILTER_REPLACE_TIME_REMAIN) == 91
     finally:
         await client.disconnect()
 

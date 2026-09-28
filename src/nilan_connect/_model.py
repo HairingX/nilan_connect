@@ -22,6 +22,7 @@ from modbus_event_connect import (
     Model,
     Point,
     PollRate,
+    Refresh,
     Section,
     Transform,
     Transforms,
@@ -139,10 +140,10 @@ def _state(key: Key[bool], address: int, *, transform: Transform | None = None) 
 
 
 def _setting[T](key: Key[T], address: int, limits: Limits, *, data_type: DataType = DataType.UINT16,
-                scale: float = 1, unit: Unit | None = None) -> Point[T]:
+                scale: float = 1, unit: Unit | None = None, on_write: Refresh | None = None) -> Point[T]:
     """A setpoint: a holding register of the controller, read and written at one address."""
     return Point(key, read=SetpointRegister(address), write=SetpointRegister(address), data_type=data_type,
-                 scale=scale, unit=unit, limits=limits, poll_rate=PollRate.SLOW)
+                 scale=scale, unit=unit, limits=limits, poll_rate=PollRate.SLOW, on_write=on_write)
 
 
 def _temperature_setting(key: Key[float], address: int, minimum: float, maximum: float) -> Point[float]:
@@ -155,12 +156,26 @@ def _switch(key: Key[bool], address: int) -> Point[bool]:
                  poll_rate=PollRate.SLOW)
 
 
-def _command(key: Key[bool], address: int) -> Point[bool]:
+def _command(key: Key[bool], address: int, *, on_write: Refresh | None = None) -> Point[bool]:
     """A holding register written to make the controller act; nothing to show once it has."""
-    return Point(key, write=SetpointRegister(address), data_type=DataType.BOOL, write_kind=WriteKind.COMMAND)
+    return Point(key, write=SetpointRegister(address), data_type=DataType.BOOL, write_kind=WriteKind.COMMAND,
+                 on_write=on_write)
 
 
 # ================================================================================= CTS400
+
+FILTER_RESET_REREADS = Refresh(
+    [PointKey.FILTER_OK, PointKey.ALARM_STATUS, PointKey.FILTER_REPLACE_TIME_AGO, PointKey.FILTER_REPLACE_TIME_REMAIN],
+    after=2.0)
+"""What a filter reset changes, read again once the controller has taken the reset; the wait leaves
+room for a unit slower than the one it was measured on."""
+
+FILTER_INTERVAL_REREADS = Refresh([PointKey.FILTER_REPLACE_TIME_REMAIN], after=2.0)
+"""The days left until the filter change follow the interval, once the controller has taken it."""
+
+FAN_LEVEL_REREADS = Refresh(
+    [PointKey.FAN_LEVEL_CURRENT, PointKey.FAN_DUTYCYCLE_EXTRACT, PointKey.FAN_DUTYCYCLE_SUPPLY], after=3.0)
+"""The level the fans run at, and their speeds, follow the chosen level, once the controller has taken it."""
 
 CTS400_POINTS: tuple[Point[Any], ...] = (
     _state(PointKey.BYPASS_ACTIVE, 23),
@@ -205,8 +220,9 @@ CTS400_POINTS: tuple[Point[Any], ...] = (
     _setting(PointKey.DEFROST_MAX_TIME, 41, Limits(5, 60, step=1), unit=Unit.MINUTES),
     _setting(PointKey.DEFROST_BREAK_TIME, 43, Limits(15, 760, step=1), unit=Unit.MINUTES),
     _temperature_setting(PointKey.TEMP_WINTER_MODE_THRESHOLD, 45, 5, 20),
-    _setting(PointKey.FILTER_REPLACE_INTERVAL, 50, Limits(0, 360, step=1), unit=Unit.DAYS),
-    _command(PointKey.FILTER_REPLACE_RESET, 51),
+    _setting(PointKey.FILTER_REPLACE_INTERVAL, 50, Limits(0, 360, step=1), unit=Unit.DAYS,
+             on_write=FILTER_INTERVAL_REREADS),
+    _command(PointKey.FILTER_REPLACE_RESET, 51, on_write=FILTER_RESET_REREADS),
     _temperature_setting(PointKey.TEMP_SUPPLY_MIN, 57, 10, 20),
     _temperature_setting(PointKey.TEMP_SUPPLY_MAX, 58, 10, 50),
     _setting(PointKey.FAN_LEVEL1_SUPPLY_PRESET, 59, Limits(20, 100, step=1), scale=0.1, unit=Unit.PERCENT),
@@ -217,7 +233,7 @@ CTS400_POINTS: tuple[Point[Any], ...] = (
     _setting(PointKey.FAN_LEVEL2_EXTRACT_PRESET, 64, Limits(20, 100, step=1), scale=0.1, unit=Unit.PERCENT),
     _setting(PointKey.FAN_LEVEL3_EXTRACT_PRESET, 65, Limits(20, 100, step=1), scale=0.1, unit=Unit.PERCENT),
     _setting(PointKey.FAN_LEVEL4_EXTRACT_PRESET, 66, Limits(20, 100, step=1), scale=0.1, unit=Unit.PERCENT),
-    _setting(PointKey.FAN_LEVEL, 69, Limits(1, 4, step=1)),
+    _setting(PointKey.FAN_LEVEL, 69, Limits(1, 4, step=1), on_write=FAN_LEVEL_REREADS),
     _switch(PointKey.ENABLE, 70),                                                   # 1 = operation
     _setting(PointKey.FAN_LEVEL_HIGH_CO2, 80, Limits(2, 4, step=1)),
 )
