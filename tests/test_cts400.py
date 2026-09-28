@@ -8,7 +8,7 @@ from typing import Any
 
 import pytest
 import pytest_asyncio
-from modbus_event_connect import Client, DataType, InvalidValueError, Key, Point, Quality, ReadOnlyError, Transforms, Unit
+from modbus_event_connect import Client, DataType, DataValue, InvalidValueError, Key, Point, Quality, ReadOnlyError, Transforms, Unit
 from modbus_event_connect.micro_nabto import (
     DatapointRegister,
     MicroNabtoConnection,
@@ -19,7 +19,7 @@ from modbus_event_connect.testing import assert_models_valid
 
 from nilan_connect import CTS400, PointKey, create_client, select_model
 from nilan_connect._model import CTS400_POINTS
-from nilan_connect.testing import SimulatedMicroNabtoDevice
+from nilan_connect.testing import FakeClock, SimulatedMicroNabtoDevice
 
 EMAIL = "user@example.invalid"
 SETPOINT_WRITE = 0x2B
@@ -171,6 +171,43 @@ async def test_a_write_reaches_its_setpoint(gateway: SimulatedMicroNabtoDevice, 
         write = _point(key).write
         assert isinstance(write, SetpointRegister)
         assert (0, write.address, register) in await _written(gateway)
+    finally:
+        await client.disconnect()
+
+
+def _value[T](client: Client, key: Key[T]) -> T | None:
+    current = client.value(key)
+    return current.value if current is not None else None
+
+
+def _polled(key: Key[Any], old: DataValue[Any] | None, new: DataValue[Any]) -> None:
+    """A subscriber that only makes its key read."""
+
+
+async def test_a_filter_reset_reads_the_filters_status_and_timers_again_two_seconds_later(
+        gateway: SimulatedMicroNabtoDevice) -> None:
+    """A CTS400 was seen changing them all within 1.0 s of the reset."""
+    clock = FakeClock()
+    host, port = gateway.address
+    connection = MicroNabtoConnection(EMAIL, host=host, port=port, timeout=0.2, retries=1, clock=clock)
+    client = Client(MicroNabtoDevice(connection, owns_connection=True), select_model, clock=clock)
+    await client.connect()
+    try:
+        client.subscribe(PointKey.FILTER_OK, _polled)
+        client.subscribe(PointKey.ALARM_STATUS, _polled)
+        client.subscribe(PointKey.FILTER_REPLACE_TIME_AGO, _polled)
+        client.subscribe(PointKey.FILTER_REPLACE_TIME_REMAIN, _polled)
+        await client.write(PointKey.FILTER_REPLACE_RESET, True)
+        # What the controller does once it has taken the reset.
+        gateway.datapoint_registers.update({(0, 49): 0, (0, 50): 0, (0, 77): 0, (0, 110): 90})
+        clock.advance(1.9)
+        await client.poll()
+        assert _value(client, PointKey.FILTER_OK) is False
+        clock.advance(0.1)
+        await client.poll()
+        assert [_value(client, PointKey.FILTER_OK), _value(client, PointKey.ALARM_STATUS),
+                _value(client, PointKey.FILTER_REPLACE_TIME_AGO),
+                _value(client, PointKey.FILTER_REPLACE_TIME_REMAIN)] == [True, False, 0.0, 90]
     finally:
         await client.disconnect()
 

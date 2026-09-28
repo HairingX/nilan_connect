@@ -22,6 +22,7 @@ from modbus_event_connect import (
     Model,
     Point,
     PollRate,
+    Refresh,
     Section,
     Transform,
     Transforms,
@@ -155,12 +156,19 @@ def _switch(key: Key[bool], address: int) -> Point[bool]:
                  poll_rate=PollRate.SLOW)
 
 
-def _command(key: Key[bool], address: int) -> Point[bool]:
+def _command(key: Key[bool], address: int, *, on_write: Refresh | None = None) -> Point[bool]:
     """A holding register written to make the controller act; nothing to show once it has."""
-    return Point(key, write=SetpointRegister(address), data_type=DataType.BOOL, write_kind=WriteKind.COMMAND)
+    return Point(key, write=SetpointRegister(address), data_type=DataType.BOOL, write_kind=WriteKind.COMMAND,
+                 on_write=on_write)
 
 
 # ================================================================================= CTS400
+
+FILTER_RESET_REREADS = Refresh(
+    [PointKey.FILTER_OK, PointKey.ALARM_STATUS, PointKey.FILTER_REPLACE_TIME_AGO, PointKey.FILTER_REPLACE_TIME_REMAIN],
+    after=2.0)
+"""What a filter reset changes, read again once the controller has taken the reset; the wait leaves
+room for a unit slower than the one it was measured on."""
 
 CTS400_POINTS: tuple[Point[Any], ...] = (
     _state(PointKey.BYPASS_ACTIVE, 23),
@@ -206,7 +214,7 @@ CTS400_POINTS: tuple[Point[Any], ...] = (
     _setting(PointKey.DEFROST_BREAK_TIME, 43, Limits(15, 760, step=1), unit=Unit.MINUTES),
     _temperature_setting(PointKey.TEMP_WINTER_MODE_THRESHOLD, 45, 5, 20),
     _setting(PointKey.FILTER_REPLACE_INTERVAL, 50, Limits(0, 360, step=1), unit=Unit.DAYS),
-    _command(PointKey.FILTER_REPLACE_RESET, 51),
+    _command(PointKey.FILTER_REPLACE_RESET, 51, on_write=FILTER_RESET_REREADS),
     _temperature_setting(PointKey.TEMP_SUPPLY_MIN, 57, 10, 20),
     _temperature_setting(PointKey.TEMP_SUPPLY_MAX, 58, 10, 50),
     _setting(PointKey.FAN_LEVEL1_SUPPLY_PRESET, 59, Limits(20, 100, step=1), scale=0.1, unit=Unit.PERCENT),
