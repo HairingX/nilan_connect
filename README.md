@@ -140,7 +140,7 @@ setpoint):
 
 ## Documentation
 
-[docs/models](https://github.com/HairingX/nilan_connect_lib/tree/main/docs/models) holds the
+[docs/models](https://github.com/HairingX/nilan_connect/tree/main/docs/models) holds the
 manufacturers' manuals for every controller, with every register extracted to CSV.
 
 ## A note to Nilan
@@ -161,4 +161,4 @@ Not affiliated with Nilan or Genvex. Use at your own risk; no warranty.
 
 ## License
 
-MIT. See [LICENSE](https://github.com/HairingX/nilan_connect_lib/blob/main/LICENSE).
+MIT. See [LICENSE](https://github.com/HairingX/nilan_connect/blob/main/LICENSE).
