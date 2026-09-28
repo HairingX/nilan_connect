@@ -1,0 +1,5 @@
+# What the tests and the type check run with. Pinned, so a new release of a tool cannot turn a
+# build red by itself; Dependabot proposes each update as a pull request.
+pytest==9.1.1
+pytest-asyncio==1.4.0
+pyright==1.1.414

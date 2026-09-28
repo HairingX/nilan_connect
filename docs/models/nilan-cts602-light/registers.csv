@@ -1,0 +1,183 @@
+table,address,name,unit,scale,decimals,default,min,max,data_type,plants,description,page
+IR,0,Bus.Version,,,,,,,,,Protocol version number,6
+IR,1,App.VersionMajor,,text,,,,,,,Software version - major (2 character ascii text),6
+IR,2,App.VersionMinor,,text,,,,,,,Software version - minor (2 character ascii text),6
+IR,3,App.VersionRelease,,text,,,,,,,Software version - release (2 character ascii text),6
+IR,100,Input.UserFunc,,,,,,,,,User function,6
+IR,101,Input.AirFilter,,,,,,,,,Air filter alarm,6
+IR,103,Input.Smoke,,,,,,,,,Smoke alarm,6
+IR,105,Input.Frost_Overht,,,,,,,,,Heating surface frost / overheat,6
+IR,113,Input.UserFunc_2,,,,,,,,,User function 2,6
+IR,114,Input.DamperClosed,,,,,,,,,Air damper closed position switch,6
+IR,115,Input.DamperOpened,,,,,,,,,Air damper opened position switch,6
+IR,200,Input.T0_Controller,°C,100,,,,,,,Controller board temperature,6
+IR,203,Input.T3_Exhaust,°C,100,,,,,,,Room exhaust temperature,6
+IR,204,Input.T4_Outlet,°C,100,,,,,,,Outlet temperature,6
+IR,207,Input.T7_Inlet,°C,100,,,,,,,Inlet temperature (after heater),6
+IR,208,Input.T8_Outdoor,°C,100,,,,,,,Outdoor temperature,6
+IR,209,Input.T9_Heater,°C,100,,,,,,,Heating surface temperature,6
+IR,221,AirQual.RH,%,100,,,,,,,Humidity sensor value,6
+IR,222,AirQual.CO2,ppm,,,,,,,,Carbon dioxide sensor value,6
+IR,400,Alarm.Status,,,,,,,,,Alarm state bit mask 0x80 : Active alarm(s) are present 0x03 : Number of alarms listed,7
+IR,401,Alarm.List_1_ID,,,,,,,,,Alarm 1 - Code 0x80 : (reserved future use) 0x7F : Display code 1..99,7
+IR,402,Alarm.List_1_Date,,,,,,,,,Alarm 1 - Date Bit word packed in DOS date format Year 0 = 1980 15 8 7 0 YYYYYYYM MMMDDDDD,7
+IR,403,Alarm.List_1_Time,,,,,,,,,Alarm 1 - Time Bit word packed in DOS time format Seconds are in scale 2 (0..29 = 0..58 seconds) 15 8 7 0 HHHHHMMM MMMSSSSS,7
+IR,404,Alarm.List_2_ID,,,,,,,,,Alarm 2 - Code,7
+IR,405,Alarm.List_2_Date,,,,,,,,,Alarm 2 - Date,7
+IR,406,Alarm.List_2_Time,,,,,,,,,Alarm 2 - Time,7
+IR,407,Alarm.List_3_ID,,,,,,,,,Alarm 3 - Code,7
+IR,408,Alarm.List_3_Date,,,,,,,,,Alarm 3 - Date,7
+IR,409,Alarm.List_3_Time,,,,,,,,,Alarm 3 - Time,7
+IR,1000,Control.RunAct,,,,,,,,,Actual on/off state 0 : Off 1 : On,7
+IR,1001,Control.ModeAct,,,,,,,,,Actual operation mode 0 : Off 1 : Heat 2 : Cool 3 : Auto 4 : Service,7
+IR,1002,Control.StateDisplay,,,,,,,,,Actual control state 0 : Off 1 : Shift 2 : Stop 3 : Start 4 : Standby 5 : Ventilation stop 6 : Ventilation 7 : Heating 8 : Cooling 9 : Hot water 10 : Legionella 11 : Cooling + hot water 12 : Central heating 13 : Defrost 14 : Frost sequre 15 : Service 16 : Alarm 17 : Heating + hot water,7
+IR,1003,Control.SecInState,Sec,,,,,,,,Actual time in state,7
+IR,1100,AirFlow.VentSet,Step,,,,,,,,Actual ventilation step set point 0 : Off 1..4 : Step number,7
+IR,1101,AirFlow.InletAct,Step,,,,,,,,Actual inlet fan speed step 0 : Off 1..4 : Step number,7
+IR,1102,AirFlow.ExhaustAct,Step,,,,,,,,Actual exhaust fan speed step 0 : Off 1..4 : Step number,7
+IR,1103,AirFlow.SinceFiltDay,Days,,,,,,,,Days since last air filter change alarm One day is measured as 24 hours of active running time,7
+IR,1104,AirFlow.ToFiltDay,Days,,,,,,,,Days to next air filter change alarm One day is measured as 24 hours of active running time,7
+IR,1200,AirTemp.IsSummer,,,,,,,,,Summer state 0 : Off 1 : On,8
+IR,1201,AirTemp.TempInletSet,°C,100,,,,,,,Inlet temperature request (T7 setpoint),8
+IR,1202,AirTemp.TempControl,°C,100,,,,,,,Actual value for controlled temperature,8
+IR,1203,AirTemp.TempRoom,°C,100,,,,,,,Actual room temperature (T15 or T10),8
+IR,1204,AirTemp.EffPct,%,100,,,,,,,Passive heat exchanger efficiency calculation,8
+IR,1205,AirTemp.CapSet,%,100,,,,,,,Requested capacity,8
+IR,1206,AirTemp.CapAct,%,100,,,,,,,Actual capacity,8
+IR,3000,AirBypass.IsOpen,,,,,,,,,Bypass damper 0: Closed 1: Open,9
+IR,3001,Output.AirHeatCap,%,100,,,,,,,After heating element 0.00 – 100.00%,9
+IR,3003,AirQual.CO2_Enable,,,,,,,,,CO2 sensor present in the system or not 0: Off 1: On,9
+IR,3004,AirFlow.RoomReduce,,,,,,,,,Stop at low room temperature 0-4,9
+IR,3005,AirFlow.LastTestDay,,,,,,,,,Date for last air damper self-test Runtime hours is counted and formatted to days 0 - 65535,9
+IR,3006,AirFlow.SinceFiltDay,,,,,,,,,Days since last air filter change One day is measured as 24 hours of active running time. 0-9999,9
+IR,3007,AirFLow.WinterReduce,,,,,,,,,Low fan speed at low outdoor temperature Level 0-4,9
+IR,3008,AirTemp.TempSet,°C,100,,,,,,,Actual resulting set-point for room temperature 5.00°C - 50.00°C,9
+IR,3009,AirTemp.TempControl,°C,100,,,,,,,Master sensor for the controlled temperature (room / inlet) -40.00°C – 99.00°C,9
+IR,3050,Alarm.LogEventID,,,,,,,,,Event log ID (alarm code) 0 – 255,9
+IR,3051,Alarm.LogDate,,DATE_DOS,,,,,,,Date of actual indexed event log,9
+IR,3052,Alarm.LogTime,,TIME_DOS,,,,,,,Time of actual indexed event log,9
+IR,3053,Alarm.LogT1,°C,,,,,,,,Log item temperatures -127 - 127,9
+IR,3054,Alarm.LogT3,,,,,,,,,,9
+IR,3055,Alarm.LogT4,,,,,,,,,,9
+IR,3056,Alarm.LogT5,,,,,,,,,,9
+IR,3057,Alarm.LogT6,,,,,,,,,,9
+IR,3058,Alarm.LogT7,,,,,,,,,,9
+IR,3059,Alarm.LogT8,,,,,,,,,,9
+IR,3060,Alarm.LogT9,,,,,,,,,,9
+IR,3061,Alarm.LogT10,,,,,,,,,,9
+IR,3062,Alarm.LogT11,,,,,,,,,,9
+IR,3063,Alarm.LogT12,,,,,,,,,,9
+IR,3064,Alarm.LogT13,,,,,,,,,,9
+IR,3065,Alarm.LogT14,,,,,,,,,,9
+IR,3066,Alarm.LogT15,,,,,,,,,,9
+IR,3067,Alarm.LogDI_1_8i,,,,,,,,,Log item digital input 1-8: bit 0 = input 1 bit 8 = input 8,10
+IR,3068,Alarm.LogDI_9_16,,,,,,,,,Log item digital input 9-16: bit 0 = input 9 bit 8 = input 16,10
+IR,3069,Alarm.LogDO_1_8,,,,,,,,,Log item digital output 1-8: bit 0 = output 1 bit 8 = output 8,10
+IR,3070,Alarm.LogDO_9_16,,,,,,,,,Log item digital output 9-16: bit 0 = output 9 bit 8 = output 16,10
+IR,3071,Alarm.LogAO_1,%,,,,,,,,Log item analoge output 1 0 - 100,10
+IR,3072,Alarm.LogAO_2,%,,,,,,,,Log item analoge output 2 0 – 100,10
+IR,3073,Alarm.LogAO_3,%,,,,,,,,Log item analoge output 3 0 – 100,10
+IR,3074,Alarm.LogAO_4,%,,,,,,,,Log item analoge output 4 0 - 100,10
+IR,3075,Alarm.LogCtrState,,,,,,,,,Operation states for Control module 0: OFF 1: SHIFTING 2: STOPPING 3: STARTING 4: STANDBY 5: VENT_STOP 6: AIR_EXCH 7: AIR_HEAT 8: AIR_COOL 9: HOTWATER 10: LEGIONELLA 11: AIR_COOL_HOT_WATER 12: CENT_HEAT 13: DEFROST 14: FROST 15: SERVICE 16: ALARM_SHUTDOWN 17: AIR_HEAT_HOT_WATER,10
+IR,3100,AirQual.RH_Avg,%,100,,,,,,,Humidity average value. Range: 0..100.00,10
+IR,3101,Opt9_1.BoardId,,,,,,,,,If expansion I/O board is present the value must be 12.,10
+IR,3102,AirFlow.VentState,,,,,,,,,Ventilation state 0: OFF 1: NORMAL 2: LOW_HUMIDITY 3: HIGH_HUMIDITY 4: HIGH_CO2 5: LOW_ROOM_TEMP 6: LOW_OUTDOOR_TEMP,10
+HR,0,Bus.Address,,,,,,,,,Protocol node address (default = 30),11
+HR,100,Output.AirFlap,,,,,,,,,Air flap,11
+HR,101,Output.SmokeFlap,,,,,,,,,Smoke flap,11
+HR,102,Output.BypassOpen,,,,,,,,,Bypass flap open,11
+HR,103,Output.BypassClose,,,,,,,,,Bypass flap close,11
+HR,104,Output.AirCircPump,,,,,,,,,Air heat circulation pump,11
+HR,105,Output.AirHeatAllow,,,,,,,,,Air heating selected,11
+HR,122,Output.CenHeatExt,,,,,,,,,External radiator heat,11
+HR,126,Output.AlarmRelay,,,,,,,,,Alarm relay state,11
+HR,200,Output.ExhaustSpeed,%,100,,,,,,,Exhaust fan speed,11
+HR,201,Output.InletSpeed,%,100,,,,,,,Inlet fan speed,11
+HR,202,Output.AirHeatCap,%,100,,,,,,,Air heater capacity,11
+HR,300,Time.Second,ss,,,,,,,,Second,12
+HR,301,Time.Minute,nn,,,,,,,,Minute,12
+HR,302,Time.Hour,hh,,,,,,,,Hour,12
+HR,303,Time.Day,dd,,,,,,,,Day,12
+HR,304,Time.Month,mm,,,,,,,,Month,12
+HR,305,Time.Year,yyyy,,,,,,,,Year,12
+HR,400,Alarm.Reset,,,,,,,,,Clear one specific alarm code or all 0 : No command 1..99 : (reserved internal commands) 101..199 : Clear alarm display code 1..99 255 : Clear all alarms,12
+HR,500,Program.Select,,,,,,,,,Week program nb. select 0 : None 1 : Program 1 2 : Program 2 3 : Program 3 4 : Erase,12
+HR,600,Program.UserFuncAct,,,,,,,,,User function active (See “UserFuncSet”),12
+HR,601,Program.UserFuncSet,,,,,,,,,User function select 0 : None 1 : Extend 2 : Inlet 3 : Exhaust 4 : External heater offset 5 : Ventilate 6 : Cooker Hood,12
+HR,602,Program.UserTimeSet,Min,,,,,,,,User function period,12
+HR,603,Program.UserVentSet,Step,,,,,,,,User function ventilation step select 0 : Off 1..4 : Step number,12
+HR,604,Program.UserTempSet,°C,,,,,,,,User function temperature (Extend function only),12
+HR,605,Program.UserOffsSet,°C,,,,,,,,User function temperature offset (Offset function only),12
+HR,610,Program.User2FuncAct,,,,,,,,,Same as user function 1 above,12
+HR,611,Program.User2FuncSet,,,,,,,,,--,12
+HR,612,Program.User2TimeSet,,,,,,,,,--,12
+HR,613,Program.User2VentSet,,,,,,,,,--,12
+HR,614,Program.User2TempSet,,,,,,,,,--,12
+HR,615,Program.User2OffsSet,,,,,,,,,--,12
+HR,700,Log.Interval,Min,,,,,,,,Periodic data log interval select 0: Off 1..120: Time between periodic loggings,12
+HR,1000,Control.Type,,,,,,,,,Machine type select (factory setting),13
+HR,1001,Control.RunSet,,,,,,,,,User on / off select (equal to ON/OFF keys) 0 : Off (user input functions can still activate operation) 1 : On,13
+HR,1002,Control.ModeSet,,,,,,,,,User operation mode select 0 : Off 1 : Heat (no cooling active) 2 : Cool (no heating active) 3 : Auto 4 : Service (readonly - write to register 1005),13
+HR,1003,Control.VentSet,Step,,,,,,,,User ventilation step select 0 : Off 1..4 : Step number,13
+HR,1004,Control.TempSet,°C,100,,,,,,,User temperature setpoint,13
+HR,1005,Control.ServiceMode,,,,,,,,,Service mode select 0 : Off 1 : Defrost 2 : Flaps 3 : Inlet 4 : Exhaust 5 : Compressor 6 : Heating 7 : Hot water 8 : Central heat,13
+HR,1006,Control.ServicePct,%,100,,,,,,,Service mode capacity setpoint,13
+HR,1007,Control.Preset,,,,,,,,,Request preset to default settings 0 : Ready 1 : Standard (to factory defaults) 2 : Backup (to user file) 3 : Restore (from user file),13
+HR,1102,AirFlow.TestSelect,,,,,,,,,"Select a day for weekly air damper position self-test The test runs at 10 in the morning on the selected day Once enabled, the function cannot be deactivated 0: Off 1: Monday 2: Tuesday 3: Wednesday 4: Thursday 5: Friday 6: Saturday 7: Sunday",13
+HR,1103,AirFlow.LastTestDay,,,,,,,,,Date of last air damper position test Bit word packed in DOS date format (see IR 402 format),13
+HR,1104,AirFlow.TestState,,,,,,,,,Actual air damper position test state 0: Off 1: Standby 2: Start (Set to Start to run manual test) 3: Closing 4: Opening 5: OK 6: Error,13
+HR,1105,AirFlow.FiltAlmType,,,,,,,,,Air filter monitoring alarm type and period select 0: Pressure guard (input) 1: 30 days 2: 90 days 3: 180 days 4: 360 days 5: 70 days and pressure guard,14
+HR,1200,AirTemp.CoolSet,,,,,,,,,Cooling temperature setpoint select 0 : Off (No cooling allowed) 1 : Set + 0 °C (User setpoint plus 0 degrees) 2 : Set + 1 °C 3 : Set + 2 °C 4 : Set + 3 °C 5 : Set + 4 °C 6 : Set + 5 °C 7 : Set + 7 °C 8 : Set + 10 °C,14
+HR,1201,AirTemp.TempMinSum,°C,100,,,,,,,Inlet temp. min. summer,14
+HR,1202,AirTemp.TempMinWin,°C,100,,,,,,,Inlet temp. min. winter,14
+HR,1203,AirTemp.TempMaxSum,°C,100,,,,,,,Inlet temp. max. summer,14
+HR,1204,AirTemp.TempMaxWin,°C,100,,,,,,,Inlet temp. max. winter,14
+HR,1205,AirTemp.TempSummer,°C,100,,,,,,,Summer/winter limit,14
+HR,1206,AirTemp.NightDayLim,°C,100,,,,,,,"Outdoor day temperature for night cooling activation [0:Off, 20..40]",14
+HR,1207,AirTemp.NightSet,°C,100,,,,,,,Free energy night cooling room setpoint [10..30],14
+HR,1800,CentralHeat.HeatExtern,°C,100,,,,,,,External heating offset from room temperature setpoint,14
+HR,1910,AirQual.RH_VentLo,Step,,,,,,,,Humidity low winter step select,14
+HR,1911,AirQual.RH_VentHi,Step,,,,,,,,Humidity high step select,14
+HR,1912,AirQual.RH_LimLo,%,100,,,,,,,Humidity limit for low ventilation,14
+HR,1913,AirQual.RH_TimeOut,min,,,,,,,,Humidity max. time on high ventilation,14
+HR,1920,AirQual.CO2_VentHi,Step,,,,,,,,CO2 high step select,14
+HR,1921,AirQual.CO2_LimLo,ppm,,,,,,,,CO2 limit for normal ventilation,14
+HR,1922,AirQual.CO2_LimHi,ppm,,,,,,,,CO2 limit for high ventilation,14
+HR,2002,User.UserMenuOpen,,,,,,,,,"Menu is open: 0=Closed, 1=Open, 2=No OFF key",14
+HR,2200,DPT.DoCalibrate,"0,1",,,,,,,,Calibrate DPT. 1: Start calibration,14
+HR,4000,CentralHeat.HeatExtern,°C,100,,,,,,,Regulation deadband external room heating -5.00°C – 5.00°C,15
+HR,4002,AirFlow.WinterTemp,°C,,,,,,,,Low outdoor temperature -20°C - 10°C,15
+HR,4003,AirFlow.WinerVent,,,,,,,,,Fan speed at low outdoor temperature 0: OFF 1 - 3: Level,15
+HR,4004,AirFlow.TestSelect,,,,,,,,,Day for automatic test 0: OFF 1: Mo 2: Tu 3: We 4: Th 5: Fr 6: Sa 7: Su,15
+HR,4005,AirHeat.Type,,,,,,,,,After heating type 0: No additional heat 1: Electrical 2: Electric on binary relays 3: Water,15
+HR,4006,AirHeat.Delay,min,,,,,,,,Delay timer for after-heat activation 0-60 min.,15
+HR,4007,AirTemp.TempMinSum,°C,100,,,,,,,Summer minimum supply air temperature MinSum: 5.00-14.00,15
+HR,4008,AirTemp.TempMaxSum,°C,100,,,,,,,Summer maximum supply air temperature MaxSum: 5.00-25.00,15
+HR,4009,AirTemp.TempMinWin,°C,100,,,,,,,Winter minimum supply air temperature MinWin: 5.00-16.00,15
+HR,4010,AirTemp.TempMaxWin,°C,100,,,,,,,Winter maximum supply air temperature MaxWin: 5.00-35.00,15
+HR,4011,AirTemp.RoomNZ,,100,,,,,,,Room temperature regulation deadband 0.20 – 10.00,15
+HR,4012,AirTemp.TempRoomLow,°C,100,,,,,,,Low room temperature for stepwise reduced ventilation 0: OFF 1.00°C – 20.00°C,15
+HR,4013,AirHeat.SelectSet,,,,,,,,,After heating activation: 0: Off 1: On (No effect is AirHeat.Type (H4005) is 0.),15
+HR,4030,Program.EditIndex,,,,,,,,,Week program Index: 0-41 (7 days multiply by 6 functions each day),16
+HR,4031,Program.EditPeriod,,,,,,,,,Week program Day index: 0-6 (0=Monday..),16
+HR,4032,Program.EditPeriodNx,,,,,,,,,Week program Next day index: 0-6 (0=Monday..),16
+HR,4033,Program.EditFunc,,,,,,,,,Week program Day function 0-5.,16
+HR,4034,Program.EditTimeStar,,,,,,,,,"Week program Start time: 0000 – 2345: 0800 = 8:00, 1215 = 12:15",16
+HR,4035,Program.EditVent,,,,,,,,,"Week program Fan settings: 0-4 0=Off, 1-4 Level",16
+HR,4036,Program.EditTemp,°C,,,,,,,,Week program Temperature: 5°C - 50°C,16
+HR,4040,Control.RestartMode,,,,,,,,,External fire alarm auto reset 0: OFF 1: HPLP 2: CONTINUE 3: SELF_CLEAR,16
+HR,4041,Control.PowerSave,,,,,,,,,Enable power saving features 0: OFF 1: ON,16
+HR,4050,Alarm.LogIndex,,,,,,,,,Alarm log index 0 - 15,16
+HR,4098,AirFlow.InletScale,%,,,,,,,,Scaling of inlet fan control voltage for max. air volume Range: 50..100,16
+HR,4099,AirFlow.ExhaustScale,%,,,,,,,,Scaling of exhaust fan control voltage for max. air volume Range: 50..100,16
+HR,4100,AirFlow.InletSpd_1,,,,,,,,,Inlet step 1 speed setup Range: 20..100,17
+HR,4101,AirFlow.InletSpd_2,,,,,,,,,Inlet step 2 speed setup Range: 20..100,17
+HR,4102,AirFlow.InletSpd_3,,,,,,,,,Inlet step 3 speed setup Range: 20..100,17
+HR,4103,AirFlow.InletSpd_4,,,,,,,,,Inlet step 4 speed setup Range: 20..100,17
+HR,4104,AirFlow.ExhaustSpd_1,,,,,,,,,Exhaust step 1 speed setup Range: 20..100,17
+HR,4105,AirFlow.ExhaustSpd_2,,,,,,,,,Exhaust step 2 speed setup Range: 20..100,17
+HR,4106,AirFlow.ExhaustSpd_3,,,,,,,,,Exhaust step 3 speed setup Range: 20..100,17
+HR,4107,AirFlow.ExhaustSpd_4,,,,,,,,,Exhaust step 4 speed setup Range: 20..100,17
+HR,4108,AirQual.Type,,,,,,,,,"Enable Indoor Air Quality (IAQ) control function Range: 0..2 0: OFF, 1: HUMIDITY, 2: HUM+CO2",17
+HR,4109,Control.AnaOutType,,,,,,,,,Heater output signal type (if not air channel type) Range: 0..4 0: PERIOD 1: 0-10 V 2: 0/5/10 V 3: RELAY 3 4: RELAY 7,17
+HR,4110,AirTemp.RoomResponse,,,,,,,,,"Room temperature controller response type Select predefined or user adjustable parameters Range: 0..3 0: SLOW, 1: NORMAL, 2: FAST, 3: USER",17

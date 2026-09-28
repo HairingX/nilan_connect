@@ -1,0 +1,22 @@
+code,name,panel,action,page
+1,Change filter,The yellow diode emits light,Clean/ replace filters. Reset alarm.,23
+15,De-icing time out,None,No resetting and rectification,23
+16,Outdoor air temperature T1 disconnected,The yellow diode emits light; Green D1 is flashing,Register the error and contact service. Reset the alarm once the error has been rectified.,23
+17,Outdoor air temperature T1 short-circuited,The yellow diode emits light; Green D1 is flashing,Register the error and contact service. Reset the alarm once the error has been rectified.,23
+18,Supply air temperature sensor T2 disconnected,The yellow diode emits light; Green D1 is flashing,Register the error and contact service. Reset the alarm once the error has been rectified.,23
+19,Supply air temperature sensor T2 short-circuited,The yellow diode emits light; Green D1 is flashing,Register the error and contact service. Reset the alarm once the error has been rectified.,23
+20,Extract air temperature sensor T3 disconnected,The yellow diode emits light; Green D1 is flashing,Register the error and contact service. Reset the alarm once the error has been rectified.,23
+21,Extract air temperature sensor T3 short-circuited,The yellow diode emits light; Green D1 is flashing,Register the error and contact service. Reset the alarm once the error has been rectified.,23
+22,Discharge air temperature sensor T4 disconnected,The yellow diode emits light; Green D1 is flashing,Register the error and contact service. Reset the alarm once the error has been rectified.,23
+23,Discharge air temperature sensor T4 short-circuited,The yellow diode emits light; Green D1 is flashing,Register the error and contact service. Reset the alarm once the error has been rectified.,23
+24,Supply air temperature sensor T7 disconnected,The yellow diode emits light; Green D1 is flashing,Register the error and contact service. Reset the alarm once the error has been rectified.,23
+25,Supply air temperature sensor T7 short-circuited,The yellow diode emits light; Green D1 is flashing,Register the error and contact service. Reset the alarm once the error has been rectified.,23
+26,Humidity sensor (RH) error,The yellow diode emits light; Green D2 is flashing,Register the error and contact service. Reset the alarm once the error has been rectified.,23
+27,CO2 sensor is signaling an error,The yellow diode emits light; Green D2 is flashing,Register the error and contact service. Reset the alarm once the error has been rectified.,23
+28,Frost thermostat in after-heating disconnected or short-circuited,The yellow diode emits light; Green D3 is flashing,Check that the water after-heating element and its connections have been insulated correctly. Reset the alarm once the error has been rectified.,24
+29,Risk of frost in after-heating element,The yellow diode emits light; Green D3 is flashing,Check that the water after-heating element and its connections have been insulated correctly. Reset the alarm once the error has been rectified.,24
+48,Activating fire input,The yellow diode emits light; Green D1 + D2 are flashing,"If there has been no fire, check the connection to the fire thermostat. If it is working, contact service.",24
+49,Fire,The yellow diode emits light; Green D1 + D2 are flashing,Extinguish the fire and reset the alarm.,24
+50,Frost in after-heating,The yellow diode emits light; Green D3 + D4 are flashing,Check that the water after-heating element and its connections have been insulated correctly. Reset the alarm once the error has been rectified.,24
+51,The room temperature is too low,The yellow diode emits light; Green D3 + D4 are flashing,"When the room temperature falls below the set value (default set at 10 °C), the unit will stop in order to avoid further cooling of the dwelling. This may, for instance, be because the heating system in the dwelling has stopped. Heat the dwelling and reset the alarm.",24
+52,Emergency stop,The yellow diode emits light; Green D3 + D4 are flashing,,24

@@ -1,0 +1,68 @@
+code,text,type,subsystem,function,page
+0,NONE,NONE,System,No alarm,15
+1,HARDWARE,CRITICAL,System,"Electrical faults (eg, Ur-circuit)",15
+2,TIMEOUT,CRITICAL,System,A WARNING has been critically,15
+3,FIRE,CRITICAL,AirFlow,Fire thermostat,15
+4,PRESSURE,CRITICAL + RS,Compressor,High or low pressure pressure switch,15
+5,DOOR,CRITICAL + SC,AirFlow,Inspection door open,15
+6,DEFROST,INFO,Defrost,Defrosting time exceeded (compressor),15
+7,FROST,CRITICAL,AirTemperature,Plants without T9 sensor: - Water coil freeze thermostat triggered Systems with T9 sensor - Water surface could not reach 20 ° C within 6 min.,15
+8,FROST,CRITICAL + SC,AirTemperature,Only plants with T9 sensor - Water coil freeze thermostat triggered,15
+9,OVERTEMP,INFO + SC,CentralHeat,Kettle over temperature (TMax +10 ° C),15
+10,OVERHEAT,INFO + SC,AirHeat,Electric reheating overheating,15
+11,AIRFLOW,INFO + SC,AirHeat,Electric reheating lack of air flow,15
+12,THERMO,CRITICAL,AirFlow,Ventilation Motor thermal switch,15
+13,BOILING,CRITICAL,HotWater,DHW Water boiling,15
+14,SENSOR,CRITICAL,AirTemperature,Elected steered sensor is defect,15
+15,ROOM LOW,CRITICAL,AirFlow,Room temperature below the set minimum. Winter protection (reduced ventilation) is without effect.,15
+16,SOFTWARE,INFO,System,Program startup / main loop,15
+17,WATCHDOG,INFO,System,Program execution errors,15
+18,CONFIG,INFO,System,Database content changed - check settings (eg after software update),15
+19,FILTER,INFO,AirFlow,Air filter pressure switch or timer,15
+20,LEGIONEL,INFO,HotWater,Legionella Function not executed within the time limit for the allowed number of attempts,15
+21,POWER,INFO,System,Power outage longer than the backup time on clock circuit,15
+22,T AIR,INFO,AirTemperature,Air temperature errors,15
+23,T WATER,INFO,HotWater,DHW temperature errors,15
+24,T HEAT,INFO,CentralHeat,Central heating temperature errors,15
+25,MODEM,INFO,System,Communication error modem (only CTS 600 G1),15
+26,INSTABUS,INFO,System,Communication errors network (CTS 600 G1),16
+27,T1SHORT,CRITICAL,System,Temperature sensor shorted,16
+28,T1OPEN,CRITICAL,System,Temperature sensor disconnected,16
+29,T2SHORT,CRITICAL,System,Temperature sensor shorted,16
+30,T2OPEN,CRITICAL,System,Temperature sensor disconnected,16
+31,T3SHORT,CRITICAL,System,Temperature sensor shorted,16
+32,T3OPEN,CRITICAL,System,Temperature sensor disconnected,16
+33,T4SHORT,CRITICAL,System,Temperature sensor shorted,16
+34,T4OPEN,CRITICAL,System,Temperature sensor disconnected,16
+35,T5SHORT,CRITICAL,System,Temperature sensor shorted,16
+36,T5OPEN,CRITICAL,System,Temperature sensor disconnected,16
+37,T6SHORT,CRITICAL,System,Temperature sensor shorted,16
+38,T6OPEN,CRITICAL,System,Temperature sensor disconnected,16
+39,T7SHORT,CRITICAL,System,Temperature sensor shorted,16
+40,T7OPEN,CRITICAL,System,Temperature sensor disconnected,16
+41,T8SHORT,CRITICAL,System,Temperature sensor shorted,16
+42,T8OPEN,CRITICAL,System,Temperature sensor disconnected,16
+43,T9SHORT,CRITICAL,System,Temperature sensor shorted,16
+44,T9OPEN,CRITICAL,System,Temperature sensor disconnected,16
+45,T10SHORT,CRITICAL,System,Temperature sensor shorted,16
+46,T10OPEN,CRITICAL,System,Temperature sensor disconnected,16
+47,T11SHORT,CRITICAL,System,Temperature sensor shorted,16
+48,T11OPEN,CRITICAL,System,Temperature sensor disconnected,16
+49,T12SHORT,CRITICAL,System,Temperature sensor shorted,16
+50,T12OPEN,CRITICAL,System,Temperature sensor disconnected,16
+51,T13SHORT,CRITICAL,System,Temperature sensor shorted,16
+52,T13OPEN,CRITICAL,System,Temperature sensor disconnected,16
+53,T14SHORT,CRITICAL,System,Temperature sensor shorted,16
+54,T14OPEN,CRITICAL,System,Temperature sensor disconnected,16
+55,T15SHORT,CRITICAL,System,Temperature sensor shorted,16
+56,T15OPEN,CRITICAL,System,Temperature sensor disconnected,16
+57,T16SHORT,CRITICAL,System,Temperature sensor shorted,16
+58,T16OPEN,CRITICAL,System,Temperature sensor disconnected,16
+70,ANODE,INFO + SC,HotWater,DHW tank anode corroded and needs replacing (The alarm is deactivated by lice or disconnection),16
+71,EXCH INFO,INFO,Defrost,Defrost time exceeded (exchanger),16
+72,EVAP LOW,CRITICAL,Compressor,"Unexpected low evaporator temp T6, due to too low airflow (only for Compact / Combi plants)",16
+90,SLAVE IO,CRITICAL + SC,System,(not relevant for the CTS 602),16
+91,OPT IO,INFO + SC,System,Options Module missing,16
+92,PRESET,INFO,System,Error while writing or reload installer settings (PRESET menu),16
+95,SW RJECT,INFO,System,Software update is rejected due to missing Support for newer hardware in older software Version (SW2.30+),16
+96,DAMPTEST,CRITICAL,Air Flow,"Self-test of damper moving time has failed. Check power for damper, opening/ closing contacts and setting of operation time.",16

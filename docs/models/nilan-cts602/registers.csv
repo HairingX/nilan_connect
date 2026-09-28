@@ -1,0 +1,166 @@
+table,address,name,unit,scale,decimals,default,min,max,data_type,plants,description,page
+IR,0,Bus.Version,,,,,,,,All plants,Protocol version number,5
+IR,1,App.VersionMajor,text,,,,,,,All plants,Software version - major (2 character ascii text),5
+IR,2,App.VersionMinor,text,,,,,,,All plants,Software version - minor (2 character ascii text),5
+IR,3,App.VersionRelease,text,,,,,,,All plants,Software version - release (2 character ascii text),5
+IR,100,Input.UserFunc,,,,,,,,All plants,User function,5
+IR,101,Input.AirFilter,,,,,,,,VPM-Comfort-Comforti,Air filter alarm,5
+IR,102,Input.DoorOpen,,,,,,,,VPM-Comforti,Door contact,5
+IR,103,Input.Smoke,,,,,,,,All plants,Fire/Smoke alarm,5
+IR,104,Input.MotorThermo,,,,,,,,VPM-Comforti,Motor thermo fuse,5
+IR,105,Input.Frost_Overht,,,,,,,,VPL-VPM-Compact-Comfort-Comforti,Heating surface frost / overheat,5
+IR,106,Input.AirFlow,,,,,,,,VPL-VPM-Compact-Comfort-Comforti,Airflow monitor (guard),5
+IR,107,Input.P_HI,,,,,,,,All Plants,High pressure switch,5
+IR,108,Input.P_LO,,,,,,,,Not in use,Low pressure switch,5
+IR,109,Input.Boil,,,,,,,,VGU-VP-Compact,Hot water boiling,5
+IR,110,Input.3WayPos,,,,,,,,Not in use,Hot water 3-way valve position,5
+IR,111,Input.DefrostHG,,,,,,,,Not in use,Hotgas defrost type selection,5
+IR,112,Input.Defrost,,,,,,,,VPL-VPM-VGU-VP-Compact,Defrost thermostat,5
+IR,113,Input.UserFunc_2,,,,,,,,VPL-VGU-VP-Compact-Comfort,User function 2,5
+IR,114,Input.DamperClosed,,,,,,,,Comfort-COMFORTi,Air damper closed position,5
+IR,115,Input.DamperOpen,,,,,,,,Comfort-COMFORTi,Air damper opened position,5
+IR,200,Input.T0_Controller,°C,100,,,,,,All plants,Controller board temperature,5
+IR,201,Input.T1_Intake,°C,100,,,,,,VPL-VPM-VGU-VP-Compact,Fresh air intake temperature,5
+IR,202,Input.T2_Inlet,°C,100,,,,,,VPL-VPM-VP-Compact-Comfort-Comforti,Inlet temperature (before heater),5
+IR,203,Input.T3_Exhaust,°C,100,,,,,,Comfort-Comforti,Room exhaust temperature,5
+IR,204,Input.T4_Outlet,°C,100,,,,,,Compact-Comfort-Comforti,Outlet temperature,5
+IR,205,Input.T5_Cond,°C,100,,,,,,VPL-VPM-VP-Compact,Condenser temperature,5
+IR,206,Input.T6_Evap,°C,100,,,,,,VPL-VPM-VGU-VP-Compact,Evaporator temperature,5
+IR,207,Input.T7_Inlet,°C,100,,,,,,VPL-VPM-VP-Compact-Comfort-Comforti,Inlet temperature (after heater),5
+IR,208,Input.T8_Outdoor,°C,100,,,,,,Comfort-Comforti,Outdoor temperature,5
+IR,209,Input.T9_Heater,°C,100,,,,,,,Heating surface temperature VPL-VPM-Comfort-,6
+IR,210,Input.T10_Extern,°C,100,,,,,,All plants,External room temperature,6
+IR,211,Input.T11_Top,°C,100,,,,,,VGU-VP-Compact,Hot water top temperature,6
+IR,212,Input.T12_Bottom,°C,100,,,,,,VGU-VP-Compact,Hot water bottom temperature,6
+IR,213,Input.T13_Return,°C,100,,,,,,VGU-VP,EK return temperature,6
+IR,214,Input.T14_Supply,°C,100,,,,,,VGU-VP,EK supply temperature,6
+IR,215,Input.T15_Room,°C,100,,,,,,All plants,User panel room temperature,6
+IR,216,Input.T16,°C,100,,,,,,VGU-VP-Compact,AUX temperature (sacrificial anode),6
+IR,217,Input.T17,°C,100,,,,,,,Preheater or earth tube air intake temperature,6
+IR,221,Input.RH,%,100,,,,,,All plants,Humidity,6
+IR,222,Input.CO2,ppm,,,,,,,All plants,Carbon dioxide,6
+IR,400,Alarm.Status,,,,,,,,All,Alarm state bit mask 0x80 : Active alarm(s) present 0x03 : Nb. of alarms listed,6
+IR,401,Alarm.List_1_ID,,,,,,,,All,Alarm 1 – Code 0x80 : (reserved future use) 0x7F : Display code 1..99,6
+IR,402,Alarm.List_1_Date,,,,,,,,All,Alarm 1 – Date Bit word packed in DOS date format. Year 0 = 1980 15 8 7 0 HHHHHMMM MMMSSSSS,6
+IR,403,Alarm.List_1_Time,,,,,,,,All,Alarm 1 – Time Bit word packed in DOS time format. Seconds are in scale 2 (0..29=0..58 seconds) 15 8 7 0 HHHHHMMM MMMSSSSS,6
+IR,404,Alarm.List_2_ID,,,,,,,,All,Alarm 2 - Code,6
+IR,405,Alarm.List_2_Date,,,,,,,,All,Alarm 2 - Date,6
+IR,406,Alarm.List_2_Time,,,,,,,,All,Alarm 2 - Time,6
+IR,407,Alarm.List_3_ID,,,,,,,,All,Alarm 3 - Code,6
+IR,408,Alarm.List_3_Date,,,,,,,,All,Alarm 3 - Date,6
+IR,409,Alarm.List_3_Time,,,,,,,,All,Alarm 3 - Time,6
+IR,1000,Control.RunAct,,,,,,,,All,Actual on/off state 0 : Off 1 : On,6
+IR,1001,Control.ModeAct,,,,,,,,All,Actual operation mode 0 : Off 1 : Heat 2 : Cool 3 : Auto 4 : Service,6
+IR,1002,Control.State,,,,,,,,All,Actual control state 0 : Off 1 : Shift 2 : Stop 3 : Start 4 : Standby 5 : Ventilation stop 6 : Ventilation 7 : Heating 8 : Cooling 9 : Hot water 10 : Legionella 11 : Cooling + hot water 12 : Central heating 13 : Defrost 14 : Frost secure 15 : Service 16 : Alarm 17: Heating + hot water,7
+IR,1003,Control.SecInState,Sec,,,,,,,All,Actual time in state,7
+IR,1100,AirFlow.VentSet,Step,,,,,,,All,Actual ventilation step set point 0 : Off 1..4 : Step number,7
+IR,1101,AirFlow.InletAct,Step,,,,,,,All,Actual ventilation step set point 0 : Off 1..4 : Step number,7
+IR,1102,AirFlow.ExhaustAct,Step,,,,,,,All,Actual ventilation step set point 0 : Off 1..4 : Step number,7
+IR,1103,AirFlow.SinceFiltDay,Days,,,,,,,All,Days since last air filter change alarm One day is measured as 24 hours of active running time,7
+IR,1104,AirFlow.ToFiltDay,Days,,,,,,,All,Days to next air filter change alarm One day is measured as 24 hours of active running time,7
+IR,1200,AirTemp.IsSummer,,,,,,,,All,Summer state 0 : Off 1 : On,7
+IR,1201,AirTemp.TempInletSet,°C,100,,,,,,All,Inlet temperature request (T7 setpoint),7
+IR,1202,AirTemp.TempControl,°C,100,,,,,,All,Actual value for controlled temperature,7
+IR,1203,AirTemp.TempRoom,°C,100,,,,,,All,Actual room temperature (T15 or T10),7
+IR,1204,AirTemp.EffPct,%,100,,,,,,Compact-Comfort-Comforti,Passive heat exchanger efficiency,7
+IR,1205,AirTemp.CapSet,%,100,,,,,,All plants,Requested capacity,7
+IR,1206,AirTemp.CapAct,%,100,,,,,,All plants,Actual capacity,7
+IR,2000,Display.LED_1,,,,,,,,All plants,User panel indicator light,8
+IR,2001,Display.LED_2,,,,,,,,All plants,(reserved future use),8
+IR,2002,Display.Text_1_2,ascii,,,,,,,All plants,Text line 1 character 1-2,8
+IR,2003,Display.Text_3_4,ascii,,,,,,,All plants,,8
+IR,2004,Display.Text_5_6,ascii,,,,,,,All plants,,8
+IR,2005,Display.Text_7_8,ascii,,,,,,,All plants,,8
+IR,2006,Display.Attr_1_8,,,,,,,,All plants,Text line 1 flags,8
+IR,2007,Display.Text_9_10,ascii,,,,,,,All plants,Text line 2 character 9-16,8
+IR,2008,Display.Text_11_12,ascii,,,,,,,All plants,,8
+IR,2009,Display.Text_13_14,ascii,,,,,,,All plants,,8
+IR,2010,Display.Text_15_16,ascii,,,,,,,All plants,,8
+IR,2011,Display.Attr_9_16,,,,,,,,All plants,Text line 2 flags,8
+HR,0,Bus.Address,,,,,,,,All plants,Protocol node address (default = 30),9
+HR,100,Output.AirFlap,,,,,,,,VPL-VPM-VGU-VP-Comfort-Comforti,Air flap,9
+HR,101,Output.SmokeFlap,,,,,,,,VPM-Comforti,Fire/Smoke flap,9
+HR,102,Output.BypassOpen,,,,,,,,Compact-Comfort-Comforti,Bypass flap open,9
+HR,103,Output.BypassClose,,,,,,,,Compact-Comfort-Comforti,Bypass flap close,9
+HR,104,Output.AirCircPump,,,,,,,,VPM-Comfort-Comforti,Air heat circulation pump,9
+HR,105,Output.AirHeatAllow,,,,,,,,VPL-VPM-Compact-Comfort-Comfortit,Air heating selected,9
+HR,106,Output.AirHeat_1,,,,,,,,VPM-Comforti,Air heater relays,9
+HR,107,Output.AirHeat_2,,,,,,,,VPM-Comforti,--,9
+HR,108,Output.AirHeat_3,,,,,,,,VPM-Comforti,--,9
+HR,109,Output.Compressor,,,,,,,,VPL-VPM-VGU-VP-Compact,Compressor,9
+HR,110,Output.Compressor_2,,,,,,,,Not in use,Compressor 2,9
+HR,111,Output.4WayCool,,,,,,,,VPL-VPM-VGU-Compact,4-way valve,9
+HR,112,Output.HotgasHeat,,,,,,,,VPM,Hotgas valve - heat,9
+HR,113,Output.HotgasCool,,,,,,,,VPM,Hotgas valve - cool,9
+HR,114,Output.CondOpen,,,,,,,,Compact,Air condenser active,9
+HR,115,Output.CondClose,,,,,,,,Compact,Air condenser inactive,9
+HR,116,Output.WaterHeat,,,,,,,,VGU-VP-Compact,Hot water heater,9
+HR,117,Output.3WayValve,,,,,,,,Not in use,Hot water 3-way valve,9
+HR,118,Output.CenCircPump,,,,,,,,VGU-VP,EK circulation pump,9
+HR,119,Output.CenHeat_1,,,,,,,,VGU-VP,EK heater relays,9
+HR,120,Output.CenHeat_2,,,,,,,,VGU-VP,--,9
+HR,121,Output.CenHeat_3,,,,,,,,VGU-VP,--,9
+HR,122,Output.CenHeatExt,,,,,,,,VPL-VP-Compact-Comfort,External radiator heat,9
+HR,123,Output.UserFunc,,,,,,,,All plants,User function active,9
+HR,124,Output.UserFunc_2,,,,,,,,VPL-VGU-VP-Compact-Comfort,--,9
+HR,125,Output.Defrosting,,,,,,,,All plants,Defrost function active,9
+HR,126,Output.AlarmRelay,,,,,,,,All plants,Alarm relay state,9
+HR,127,Output.PreHeat,,,,,,,,VPL-VGU-VP-Compact-Comfort,Preheater or earth tube activation,9
+HR,200,Output.ExhaustSpeed,%,100,,,,,,All plants,Exhaust fan speed,9
+HR,201,Output.InletSpeed,%,100,,,,,,VPL-VPM-VP-Compact-Comfort-Comforti,Inlet fan speed,9
+HR,202,Output.AirHeatCap,%,100,,,,,,VPL-VPM-Compact-Comfort-Comforti,Air heater capacity,9
+HR,203,Output.CenHeatCap,%,100,,,,,,VGU-VP,Central heater capacity,10
+HR,204,Output.CprCap,%,100,,,,,,VPL-VPM-VGU-VP-Compact,Compresor capacity,10
+HR,205,Output.PreHeatCap,%,100,,,,,,VPcCoB,Preheater capacity or earth tube air intake fan speed,10
+HR,300,Time.Second,ss,,,,,,,All plants,Second,10
+HR,301,Time.Minute,nn,,,,,,,All plants,Minute,10
+HR,302,Time.Hour,hh,,,,,,,All plants,Hour,10
+HR,303,Time.Day,dd,,,,,,,All plants,Day,10
+HR,304,Time.Month,mm,,,,,,,All plants,Month,10
+HR,305,Time.Year,yyyy,,,,,,,All plants,Year,10
+HR,400,Alarm.Reset,,,,,,,,All plants,Clear one specific alarm code or all 0 : No command 1..99 : (reserved internal commands) 101..199 : Clear alarm display code 1..99 255 : Clear all alarms,10
+HR,500,Program.Select,,,,,,,,All plants,Week program nb. select 0 : None 1 : Program 1 2 : Program 2 3 : Program 3 4 : Erase,10
+HR,600,Program.UserFuncAct,,,,,,,,All plants,User function active (See “UserFuncSet”),10
+HR,601,Program.UserFuncSet,,,,,,,,All plants,User function select 0 : None 1 : Extend 2 : Inlet 3 : Exhaust 4 : External heater offset 5 : Ventilate 6 : Cooker Hood,10
+HR,602,Program.UserTimeSet,Min,,,,,,,All plants,Min User function period,10
+HR,603,Program.UserVentSet,Step,,,,,,,All plants,Step User function ventilation 0 : Off 1..4 : Step number,10
+HR,604,Program.UserTempSet,°C,100,,,,,,All plants,User function temperature (Extend function only),10
+HR,605,Program.UserOffsSet,°C,100,,,,,,All plants,User function temperature(Offset function only),10
+HR,610,Program.User2FuncAct,,,,,,,,VPL-VGU-VP-Compact-Comfort,Same as user function 1 above,10
+HR,611,Program.User2FuncSet,,,,,,,,VPL-VGU-VP-Compact-Comfort,--,11
+HR,612,Program.User2TimeSet,,,,,,,,VPL-VGU-VP-Compact-Comfort,--,11
+HR,613,Program.User2VentSet,,,,,,,,VPL-VGU-VP-Compact-Comfort,--,11
+HR,614,Program.User2TempSet,,,,,,,,VPL-VGU-VP-Compact-Comfort,--,11
+HR,615,Program.User2OffsSet,,,,,,,,VPL-VGU-VP-Compact-Comfort,--,11
+HR,1000,Control.Type,,,,,,,,Do not use,Machine type select,11
+HR,1001,Control.RunSet,,,,,,,,All plants,User on / off select (=ON/OFF keys) 0 : Off (user functions can still activate operation) 1 : On,11
+HR,1002,Control.ModeSet,,,,,,,,All plants,User operation mode select 0 : Off 1 : Heat (no cooling active) 2 : Cool (no heating active) 3 : Auto 4 : Service (read only – write to register 1005),11
+HR,1003,Control.VentSet,Step,,,,,,,All plants,User ventilation step select 0 : Off 1..4 : Step number,11
+HR,1004,Control.TempSet,°C,100,,,,,,All plants,User temperature setpoint,11
+HR,1005,Control.ServiceMode,,,,,,,,All plants,Service mode select 0 : Off 1 : Defrost 2 : Flaps 3 : Inlet 4 : Exhaust 5 : Compressor 6 : Heating 7 : Hot water 8 : Central heat,11
+HR,1006,Control.ServicePct,%,100,,,,,,All plants,Service mode capacity,11
+HR,1007,Control.Preset,,,,,,,,All plants,Request preset to factory settings 0 : Ready 1 : Standard (to factory default) 2 : Backup (to user file) 3 : Restore (from user file),11
+HR,1100,AirFlow.AirExchMode,,,,,,,,VPL-VPM-VGU-VP-,Air exchange mode 0 : Energy 1 : Comfort 2 : Comfort Water,11
+HR,1101,AirFlow.CoolVent,Step,,,,,,,VPL-VPM-VP-Compact-Comfort-Comforti,Cooling high ventilation step,12
+HR,1102,AirFlow.TestSelect,,,,,,,,Comfort-Comforti,"Select weekly air damper position self-test Once enabled, the function cannot be deactivated 0: Off 1: Wednesday 0400 2: Wednesday 1200",12
+HR,1103,AirFlow.LastTestDay,,,,,,,,Comfort-Comforti,Date of last air damper position test Bit word packed in DOS date format (see IR 402 format),12
+HR,1104,AirFlow.TestState,,,,,,,,Comfort-Comforti,Actual air damper position test state 0: Off 1: Standby 2: Start(Set to Start to run manual test) 3: Closing 4: Opening 5: OK 6: Error,12
+HR,1200,AirTemp.CoolSet,°C,100,,,,,,VPL-VPM-VP-Compact-Comfort-Comforti,Cooling temperature setpoint select 0 : Off (No cooling allowed) 1 : Set + 0 °C (User setpoint plus 0 degrees) 2: Set + 1 °C 3: Set + 2 °C 4: Set + 3 °C 5: Set + 4 °C 6: Set + 5 °C 7: Set + 7 °C 8 : Set + 10 °C,12
+HR,1201,AirTemp.TempMinSum,°C,100,,,,,,VPL-VPM-VP-Compact-Comfort-Comforti,Inlet temp. min. summer,12
+HR,1202,AirTemp.TempMinWin,°C,100,,,,,,VPL-VPM-VP-Compact-Comfort-Comforti,Inlet temp. min. winter,12
+HR,1203,AirTemp.TempMaxSum,°C,100,,,,,,VPL-VPM-Comfort-Comforti,Inlet temp. max. summer,12
+HR,1204,AirTemp.TempMaxWin,°C,100,,,,,,VPL-VPM-Comfort-Comforti,Inlet temp. max. winter,12
+HR,1205,AirTemp.TempSummer,°C,100,,,,,,VPL-VPM-VP-Compact-Comfort-Comforti,Summer/winter limit,12
+HR,1206,AirTemp.NightDayLim,°C,100,,,,,,,"Outdoor day temperature for night cooling activation [0:Off, 20..40]",12
+HR,1207,AirTemp.NightSet,°C,100,,,,,,,Free energy night cooling room setpoint [10..30],12
+HR,1700,HotWater.TempSet_T11,°C,100,,,,,,VGU-VP-Compact,Top temperature setpoint (electric),13
+HR,1701,HotWater.TempSet_T12,°C,100,,,,,,VGU-VP-Compact,Bottom temperature setpoint (compressor),13
+HR,1800,CentralHeat.HeatExtern,°C,100,,,,,,VPL-VP-Compact-VPcCoB-,External heating offset from room temperature setpoint,13
+HR,1910,AirQual.RH_VentLo,Step,,,,,,,All plants,Humidity low winter step select,13
+HR,1911,AirQual.RH_VentHi,Step,,,,,,,All plants,Humidity high step select,13
+HR,1912,AirQual.RH_LimLo,%,100,,,,,,,Humidity limit for low ventilation,13
+HR,1913,AirQual.RH_TimeOut,min,,,,,,,All plants,Humidity max. time on high ventilation,13
+HR,1920,AirQual.CO2_VentHi,Step,,,,,,,All plants,CO2 high step select,13
+HR,1921,AirQual.CO2_LimLo,ppm,,,,,,,All plants,CO2 limit for normal ventilation,13
+HR,1922,AirQual.CO2_LimHi,ppm,,,,,,,All plants,CO2 limit for high ventilation,13
+HR,2000,Display.KeyCode,,,,,,,,All plants,User panel keypress Repeated if not cleared within 400 ms Combined value with one bit for each key 0x01 : ESCAPE 0x02 : UP 0x04 : DOWN 0x08 : ENTER 0x10 : OFF 0x20 : ON,13

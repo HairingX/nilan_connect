@@ -1,0 +1,76 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  # The Release workflow runs these on the exact commit it is about to release.
+  workflow_call:
+    inputs:
+      ref:
+        description: The commit to test.
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.workflow }}-${{ github.event_name }}-${{ inputs.ref || github.ref }}
+  cancel-in-progress: true
+
+# The shell given explicitly, so GitHub runs every step with pipefail.
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  test:
+    name: Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12", "3.13", "3.14"]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.ref }}
+          persist-credentials: false
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # main, pull requests and a release are tested against the published library this package
+      # declares, so nothing merges or is released on an unreleased one. A push to a development
+      # branch whose name the library also has is tested against that branch, as the two are
+      # developed together.
+      - name: Install the package and the test tools
+        env:
+          LIBRARY: https://github.com/HairingX/modbus_event_connect
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "push" ] && [ "$GITHUB_REF_NAME" != "main" ] \
+              && git ls-remote --exit-code --heads "$LIBRARY" "$GITHUB_REF_NAME" > /dev/null; then
+            echo "Library: branch $GITHUB_REF_NAME, in development"
+            git clone --depth 1 --branch "$GITHUB_REF_NAME" "$LIBRARY" "$RUNNER_TEMP/modbus_event_connect"
+            python -m pip install "$RUNNER_TEMP/modbus_event_connect"
+          else
+            echo "Library: the published version this package declares"
+          fi
+          python -m pip install . -r requirements-test.txt
+          python -m pip show modbus_event_connect | grep -E '^(Name|Version):'
+
+
+      - name: Type check (pyright strict)
+        run: |
+          pyright
+          pyright -p .github/scripts
+
+      # Live tests need a real device; they skip themselves without one, and are excluded here.
+      - name: Test
+        run: |
+          python -m pytest -m "not live" -q -o log_cli=false
+          python -m pytest .github/scripts -q -o log_cli=false

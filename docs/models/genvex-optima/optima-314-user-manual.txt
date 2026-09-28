@@ -1,0 +1,1511 @@
+ OPERATING
+ INSTRUCTIONS
+
+                 OPTIMA 314
+
+                                    SW 1.4
+
+THE AIR WE BREATHE
+TABLE OF CONTENTS
+
+1. Installation..............................................................................................................................................................................3
+2. Programming the Optima 314 controller....................................................................................................................4
+3. Display......................................................................................................................................................................................5
+4. Start-up...................................................................................................................................................................................6
+5. Controller menu....................................................................................................................................................................7
+6. Controller settings..............................................................................................................................................................8
+7. Further explanations of humidity and district heating control.......................................................................24
+8. Maintenance........................................................................................................................................................................25
+9. Troubleshooting.................................................................................................................................................................26
+
+2 		
+ 1. INSTALLATION
+
+   1.1 Installation of the Optima Touch control
+   panel
+
+    The control panel is designed to be mounted onto a flat
+    wall.
+
+   1.2 Mounting
+
+    Find the location on the wall where you will fix the control
+    panel and mark the screw-hole positions. A min. of four
+    screws must be used to fix the display fixture to the wall.
+    Drilling of holes, hole size and the corresponding screws for
+    fixing the panel depends on the wall material.
+
+    When the display fixture has been securely installed to the
+    wall. Take the Optima Touch display which comes with a
+    preinstalled wire connected and clip the display carefully
+    on the fixture. Ensure that the cable is carefully positioned
+    as indicated on the picture before fitting the display.
+
+    NOTE: if the preinstalled 1,8 meter length is not sufficient,
+    it is possible to replace this with a 4 wire twisted pairs 0,25
+    mm2 cable with a maximum length of 50 meters.
+
+    To remove the display , carefully push the plastic clip
+    (locking mechanism) as indicated on the picture.
+
+    For additional information on connecting the control panel
+    to Optima 314 – please refer to the electrical diagram in
+    the installation manual.
+
+    Important information
+
+       Safety information
+
+        This appliance can be used by children aged from 8
+        years and above and persons with reduced physical,
+        sensory or mental capabilities or lack of experience
+        and knowledge if they have been given supervision or
+        instruction concerning use of the appliance in a safe
+        way and understand the hazards involved. Children
+        shall not play with the appliance. Cleaning and user
+        maintenance shall not be made by children without
+        supervision. Rights to make any design or technical
+        modifications are reserved.
+
+		3
+2. PROGRAMMING THE OPTIMA 314
+
+         CONTROLLER                                                                                                                                                   141
+                                                                                                                                                                            303
+                                                                                       25                                                                                       106                  A                                                                        A
+
+         The control system comes factory-preset, which means                                                                                                                                       Exhaust1a6i0r          170                  170                       S1u6p0ply air
+
+        that the unit can beAp(ut1in:to6o)peration without changing the                                                                                                                                                  4                       5                         6                       1157
+                                                                                                                                                                                                                                    Bypass motor
+         operating settings. The factory setting is only a basic
+         setting that can be adapted to t1he operating de2 sires and 3                                                                                                                                                                                                          Internet           302
+         demands for the dwelling in question to make it possible to                                                                                                                                                                                                          Cocaorsne/nGe4c-tiEoxntract air filter
+         achieve optimal utilisation and operation for the system.
+         Depending on the product configuration it will be possible                                                                                                                                                                                                             Display
+ating c3o/i4l "tcinooRleGnetnitehcetrocroonnnteocpt othfethOepmtiamAcahidniespolra(ycdoinrneecctlH3tey/oPe4Matr”1tosi/RnFmt7Ggh-caeSouripDklpoeliyusdatpilrelftialteyr                                                                                                          connection
+         with “display”) or directly on the Optima 314 Controller
+         PCB.
+
+The Optima 314 controller PCB connection inter9f0aWcSeupply air fan                                                                                                                                                                                                           90W Extract air fan
+
+includes terminals for connecting both Modbus MasterB(yfpoasrs                                                                                                                                      Ou1t6d0oor air                                                           Extract 1a6ir0
+                                                                                                                                                                                                         5
+example building management systems) and1M200oWdEblecutrsic Sprelahevateer
+devices (for example mixing valve controller - or fire b(Oopxtional)
+
+PCB).
+
+2.3. Installation w5i0th50OB ptima Touch display Counterflow heat exchanger                                                                                                                                                 142                  142
+
+23Ho1.3t4.w1aa.tnCe3dro/4oan”udntRljeeGutcsttasne1Ot5t0pintgims aasT1on5ue0cchescsoaC3n/ort4ylrd”.oRwlGlaeterrtinoletthe Optima                                                                                                                                  Sverigesvej 6, DK-6100 Haderslev, Denmar
+                                                                                                                                                                                                                                                                 Tel: (+45) 73 53 27 00
+
+NOTE: The Optima 314 coHonttwroalteler rciprcaurlaatimoneters can be saved                                                                                                                                                  Project number/name                               CondeDnessiegnre-d Hbyeating moSdheeet number
+
+to  the  Optima  Touch  for  13/v4"eRnGtilation  unit  aEnCvodanpdoberanetsoerr                                                                                          -           Heating  mode                          Combi Blueline                                    Evapokrgatthomr - Cooling mo1de/2
+                                                                                                                                                                         -           Cooling  mode                          Part stock number Part name:                      Rev. Approved by           Approved date
+                                                                                                                                                                                                                            013014               Combi Blueline
+transferred to a similar system by using the                                                                                                                                                                                                                                          CLA                28-09-20
+
+“EA1 Save“ and “EA2 load settings”.                                                                                                                                                                                         General Tolerances   Projection      Material                  Weight        Scale        A
+                                                                                                                                                                                                                            DIN 2768-1 m
+                             3                                                                                                                                                                                                                                                             210,000 kg 1 : 6
+         2                                                                                                                                                            4                                                               6                                    7                                    8
+
+                             C
+                                                                             Drain - Exhaust air
+                                                                               Drain - Supply air
+
+                                                                                                                                                                                                                                                                              Optima 314 controller
+
+                                                                                                                                                                                                                   5/4” anode
+                             D
+
+                                                                                                                                                                                                                   1 kW electric heating element
+
+                                                                                                                                                                                                                   185 L. tank
+                             E
+
+4 	 F 	
+3. DISPLAY
+
+Userinterface Optima Touch – main screen                      Touch to activate green light       Touch to access
+                                                              indicating that active cooling      the status
+  Touch to change room temperature setpoint (influences       operation is allowed if required.   information,
+  opening of summer bypass for room cooling etc.)             If no green light is shown active   alarms and
+  If menu EI5 is set to zone 2 and 3, the zonecontrol         cooling is disabled. If EH2 is set  event log menu.
+  temperature setpoint will be indicated next to the general  to 0 the icon will be removed
+  room temperature setpoint.                                  from the display.
+
+  Touch to change fan speed
+  The actual fan speed will be
+  indicated by colored fans
+  indicating fan speed 1-4
+  Standby will only be shown
+  when menu EC3 is set to ON.
+  Please notice that fans will
+  have a delay of 3-4 minutes
+  until they are switched off.
+
+Touch to increase fan speed to
+step 3 for 30 minutes (time
+adjustable in menu A5).
+
+Touch to access filter menu.       Touch to activate green light     Touch to access the          Touch to go
+Here the filter timer can be       indicating that DHW electrical    user and service             back to
+reset and the actual number of     heating operation is allowed if   menu.                        previous menu.
+hours the filters has been in      required. If no green light is
+operation can be read.             shown the DHW electrical
+Note - the filter timer will only  heating is disabled.
+be shown if D3 lockscreen
+time has been set to 0,            If EH5 is set to 0 the icon will
+otherwise lockscreen timer         be removed from the display.
+will be visible.
+
+Tap to change the room temperature                                   At the bottom of the display:
+setting (affects the opening of the                                  *Micro USB interface for PC
+bypass for room cooling, etc.).                                      programming of Optima 314
+                                                                     controller parameters.
+
+                                                                     *micro sd card – card reader for
+                                                                     firmware update of controller and
+                                                                     display.
+
+		5
+4. START-UP
+
+4.1 Userinterface Optima Touch – initial start up           4.2 Userinterface Optima Touch – screen saver
+
+During initial start up of the Optima 314 ventilation       Depending on the screen saver settings in menu D – display.
+controller and with the Optima Touch connected to the       The current screen displayed will switch back to screen
+controller, the following information will be shown.        saver mode after 2 minutes. If D2 is set to 0 then the
+                                                            screensaver will be permanently active. If a time is set in
+Please wait approximately 1 minute for the initial boot     D2 the screensaver will switch to blank screen according to
+sequence to complete.                                       the time set.
+
+Software version controller: actual software version of     To reenter the main menu – touch the screen gently for 2
+Optima 314 controller.                                      seconds until the screen reactivates.
+
+Software version display: actual software version of
+display.
+
+Device ID: the ID of the internet connection secure         Current time  Current indoor and outdoor
+protocol device in the controller.                          and date      temperature. Based on
+                                                                          measurements locally in
+IP address: will only be shown if the ventilation unit has                ventilation unit (fresh air
+been connected to a router via RJ45 connection                            and extract air sensors)
+
+Internet connection status: will indicate whether internet
+connection status is connected or disconnected. If status
+indicates “disconnected” no connection through Genvex
+Connect app or remote monitoring/ remote service can be
+done.
+
+                                                            Screen saver
+
+6 		
+ 5. CONTROLLER MENU
+
+   5.1Structure, user and service menu in Optima
+       Touch
+
+    The user and service menu structure in the Optima Touch
+    display is organized in the following sections
+    A. User: main user settings
+    B.	Scheduler: calendar schedules for change of fan speeds
+
+         and temperature setpoints
+    C.	Date/time: date and time settings for info screen and
+
+         for time stamping event log
+    D.	Display: settings related to display and access to
+
+         parameters
+    E.	Service: service menu – please note that this menu
+
+         should primarily be used by technicians with knowledge
+         of the machine operation.
+
+		7
+6. CONTROLLER SETTINGS
+
+Menu                 Description                                                                 Factory setting and
+A1 - Reheating                                                                                   (max./min. values)
+
+A2 - Humidity        If there is a reheater fitted to the system, you can choose if the          A1: On
+control              reheater should operate. If the set point is set to OFF, the heater will    (On/Off)
+A3 – DHW             not operate, even when this is necessary. If the set point is set to ON,
+temperature          the heater will start, as required. It regulates in accordance with the
+A4 – DHW element     temperature set in item 1 of the User Menu.
+
+A5 - Boost time      Here you turn on humidity control. It must be set to ON in order to be      A2: On
+                     active.                                                                     (On/Off)
+
+                     Here the domestic hot water temperature controlled by the heat              A3: 52 °C
+                     pump can be set. The temperature setpoint is related to the bottom          (0-60 °C)
+                     temperature sensor of the DHW cylinder
+
+                     Here the domestic hot water temperature controlled by the electrical A4: 50 °C
+                     immersion heater can be set. The temperature setpoint is related to the (0-65 °C)
+                     temperature sensor located in the middle of the DHW cylinder.
+
+                     Set the desired time for temporarily increased fan speed, activated via A5: 30 min.
+
+                     the boost button on the main display.                                       (1-120 min.)
+
+A6 - Timer levels 3  When switching the ventilation unit to fan speed 3 and 4, the system        A6 : On
+and 4                will automatically return to fan speed 2 after the number of hours set      (On/Off)
+- On/Off             in A5 when adjusting this set point to ON. If the set point is set to Off,
+                     the system will run at speed 3 or 4 until the fan speeds are manually
+                     changed.
+
+A7 - Timer levels 3 If A6 is set to on , you can enter how many hours the system should run A7: 2 hours
+
+and 4 - hours        on level 3 or 4 before it automatically returns to level 2.                 (1-9 hours)
+
+B1- Fan scheduler    Here four separate timers per day can be set for change of fan speeds.      B1: Not used
+                     The scheduler can be adjusted separately for each weekday if required.      (Not used/level 1-4 /
+                     If the same values shall be used for all weekdays - the schedule can be     Standby)
+                     copied by touching the button "apply to all days"
+
+B2 - Temperature     Here four separate timers per day can be set for change to a low-ered       B2: Not used
+scheduler            setpoint temperature (eg. for earlier opening of bypass in summertime       (Not used/Alternative
+                     in nighttime). The scheduler can be adjusted separately for each            temp (B5) Normal)
+                     weekday if required. If the same values shall be used for all weekdays -
+                     the schedule can be copied by touching the button "apply to all days"
+
+B3 – DHW scheduler   Here four separate timers per day can be set for change to a lowered        B3: Not used
+                     setpoint temperature. The scheduler can be adjusted separately for          (Not used/Alternative
+                     each weekday if required. If the same values shall be used for all          DHW temp (B6)/
+                     weekdays - the schedule can be copied by touching the button "apply to      Normal)
+                     all days"
+
+8 		
+Menu               Description                                                                Factory setting and
+                                                                                              (max. / min. values)
+B4 - Enable
+scheduler          Here it is possible to activate/deactivate the fan schedule set in B1 the  B1 Fan scheduler: Off
+                   temp schedule set in B2 and DHW scheduler set in B3                        (On-Off)
+                                                                                              B2 Temp. scheduler:
+                                                                                              Off (On-Off)
+                                                                                              B3 DHW scheduler:
+                                                                                              Off (On-Off)
+
+B5 – Alternative   Here it is possible to adjust the lowered temperature setpoint             B5: 0 °C
+temperature        selected in B2. The temperature selected here will be an off-set to the    (-10 °C to +10 °C)
+                   temperature selected in the main menu “requested temperature”
+
+B6 – Alternative   Here it is possible to adjust the lowered temperature setpoint             B6: -10 °C
+DHW temperature    selected in B3. The temperature selected here will be an off-set to the    (-50 °C to +50 °C)
+                   temperature selected in the main menu “requested temperature”
+
+C1 - Time          Adjustment of actual time (important for error handling)                   -
+                                                                                              -
+C2 - Date          Adjustment of actual date (important for error handling)                   C3: On
+
+C3 - Daylight saving Automatic switch over from summer/winter time ON/OFF                     D1 : English (English/
+timer                                                                                         Dansk/Deutsch/
+                                                                                              Dutch )
+D1- Language       Display language can be changed
+
+D2 - Screensaver   Idle time before screensaver activate. 0 = screensaver off                 D2: 10 min.
+time                                                                                          (0-600 min.)
+
+D3 - Display lock  Lock time active when touching lock symbol on main screen                  D3: 5 sec.
+time
+                   If set to 0 seconds – the filtermenu will be displayed instead of the lock (0-120 sec.)
+
+                   screen icon on the main screen.
+
+D4 - Password      Main menu password:                                                        D4: 0000
+                   Choose password for locking main menu access. If password is               (0000-9999)
+                   selected - the next time the user trying to access the main menu will be
+                   prompted for entry of password. To deactivate password prompt use
+                   0000 as password
+
+                   Service menu password:
+                   Choose password for locking service menu access. If password is
+                   selected - the next time the user trying to access the Service menu will
+                   be prompted for entry of password. To deactivate password prompt
+                   use 0000 as password
+
+D5 - Firmware      Optima 314 controller and display can be firmware updated by use           -
+update
+                   of a micro-SD card inserted into the SD card reader of the Optima
+
+                   touch display. Touch "start update" when the SD card containing the
+
+                   latest firmware has been inserted into the card reader to update the
+
+                   controller and display.
+
+		9
+Menu            Description                                                                     Factory setting and
+EA - Save/load                                                                                  (max./min. values)
+settings        EA1 - Save settings
+                Saves the settings from the Optima314 controller to the display                 -
+EB - Fan speed
+levels          EA2 - Load settings
+                Loads settings stored in EA1 and transfers data to a new Optima 314
+                PCB
+
+                EB1 - Level 1 Supply air                                                        EB1: 15%
+                Level 1, which is the lowest speed, is usually used when there is nobody        (0-100%)
+                home. Both fans can be configured independently of each other for all
+                levels so that the air flow in the supply air and in the extract air is equal,
+                which provides optimal operation.
+                The adjustment of the system must be performed with specialised
+                air measuring equipment and can be done without using the main
+                regulating damper.
+                Configuring the air flows without expert advice is not recommended.
+                Incorrect configuration can lead to major energy consumption or
+                unpleasant indoor climate.
+                Setting option: between 0 and 100%.
+
+                EB2 - Level 2 Supply air                                                        EB2: 30%
+                Level 2 is the recommended speed of the system for providing optimal            (0-100%)
+                indoor climate. It should be adjusted to the ventilation requirement of
+                the dwelling.
+                Setting option: between 0 and 100%.
+
+                EB3 - Level 3 Supply air is typically configured to a level with high           EB3: 45%
+                activity in the house                                                           (0-100%)
+
+                EB 4 - Level 4 supply air is typically configured to 100 % airflow for a        EB4: 60%
+                quick replacement of air in the entire house.                                   (0-100%)
+                Remember that a higher air exchange rate increases energy
+                consumption.
+
+                EB5 - Level 1 Extract air                                                       EB5: 15%
+                The fan speed is adjusted until the same air flow is achieved as the            (0-100%)
+                supply air on level 1.
+
+                EB6 - Level 2 Extract air                                                       EB6: 30%
+                The fan speed is adjusted until the same air flow is achieved as the            (0-100%)
+                supply air on level 2.
+
+                EB7 - Level 3 extract air                                                       EB7: 45%
+                The air flow of level 3 is adjusted to the same air flow as the supply air      (0-100%)
+                on levels 3 .
+
+                EB8 - Level 4 Extract air                                                       EB8: 60%
+                The fan speed is adjusted until the same air flow is achieved as the            (0-100%)
+                supply air on level 4.
+
+                EB9 – min. air volume mode                                                      EB9: On
+                If set to on, the supply and extract fans will automatically increase           (On/Off)
+                fan speed to the values set in EB10 and EB11 - when the heat pump
+                activates. This function will ensure that the Combi unit will have the
+                most optimal operating conditions.
+                If EB9 is set to off - the fans will not automatically increase fan speed
+                and if a fan speed is selected which has lower fan speed values than
+                EB10 and EB11 - the heat pump will not activate.
+
+10 		
+Menu            Description                                                                        Factory setting and
+EB - Fan speed                                                                                     (max./min. values)
+levels          EB10 – min. air volume extract
+                Minimum fan speed % for extract air fan.                                           EB10: 50%
+EC - Regulator  If EB9 is on then this will be the fan speed when the heat pump is running.        (0-100 %)
+                If EB9 is off then lower fan speeds than this value will prevent the heat
+                pump from starting.
+
+                EB11 – min. air volume supply                                                      EB11: 50%
+                Minimum fan speed % for supply air fan.                                            (0-100 %)
+                If EB9 is on then this will be the fan speed when the heat pump is running.
+                If EB9 is off then lower fan speeds than this value will prevent the heat
+                pump from starting.
+
+                EB12 - RPM Alarm                                                                   EB12: On
+
+                Off = RPM feedback from fans are not used actively                                 (On/Off)
+
+                On = If RPM feedback from fans reach 0 and fans are expected to run , the
+
+                MVHR unit will shut down and show alarm.
+
+                EB13 - Reset RPM Alarm                                                             EB13: Off
+                Activate this function to reset RPM alarm once the problem has been                (On/Off)
+                fixed
+
+                EB14 - Balancing mode                                                              EB14: Off
+                If activated the fans will run in the set fan speed 1 to 4 continuously            (Off/Fan speed 1/
+                which is useful during commissioning of airflow to ensure stable                   Fan speed 2/Fan
+                operating conditions.                                                              speed 3/ Fan speed 4)
+                The Fan level service mode activation will automatically deactivate after
+                approx 6 hours. if 0 is not selected by the user.                                  EC1: T3 Preheat
+                                                                                                   (Off/T3 Preheat/
+                EC1 - Frost protection                                                             T5 Preheat/
+                Off = no frost protection active                                                   Fan reduction)
+                T3 preheat = electrical preheater controlled by fresh air temperature
+                sensor (T3)
+                T5 preheat = electrical preheater controlled by temperature sensor
+                (T5) mounted in the discharge of the heatexchanger
+                Fan reduction = supply air fan speed is reduced gradualy to maintain
+                discharge air temperature sensor (T5) at setpoint value EC2
+
+                EC2 - Frost reduction                                                              EC2: 8 °C
+                Adjustable setpoint for frost protection strategy EC1                              (-10 to +10 °C)
+
+                EC3 – Release system stop                                                          EC3: Off
+                If this setpoint is set to off, it will not be possible to switch off the fans of  (On/Off)
+                the machines. If the setpoint is on , the fans can be switched off. Please be
+                aware that shutting off the ventilation for longer periods of time in cold
+                ambient temperatures, can lead to condensation in the ductwork
+
+                EC4 – Factory reset                                                                EC4: Off
+                Reset (-fans) = reset all controller values to factory settings except fan         (Reset fans/
+                speeds                                                                             Reset all)
+                Reset all = reset all controller values to factory settings.
+
+		11
+Menu            Description                                                                 Factory setting and
+EC - Regulator                                                                              (max./min. values)
+                EC5 – H3 relay options.
+                Preheat = the relay will activate a preheater connected to the relay H3.    EC5: Preheat
+                Adjust setpoint EC1 to T3 preheat or T5 preheat.                            (Preheat/Reheat/
+                Reheat = the relay will activate a reheater connected to the relay H3.      Always on)
+                The reheater connected to H3 will activate if the extract air
+                temperature is setpoint – 1 °C and keep running until the extract air
+                temperature reaches the setpoint temperature.
+                Please be aware that the H3 relay will switch off when the units is in
+                heat pump deicing mode.
+                Always on = the relay will be on continuously.
+
+                EC6 – AUX Relay H9                                                          EC6: 2
+                0 : off                                                                     (0-13)
+
+                1 : The relay is on when the fans are active.
+
+                2: The relay is on when there is a need for additional roomheating.
+                Please note that Menu A1 needs to be on as well.
+
+                3: The relay is on when a filterchange is required.
+
+                4: The relay is on when additional cooling is required. Please note that
+                Menu EH2 needs to be on as well. To enable cooling activate the green
+                light in the cooling icon on the main screen.
+
+                5: The control unit can handle an earth heat exchanger using a damper
+                or brine circuit. The relay will be on in case of one of the following two
+                conditions:
+
+                If The outdoor temperature, sensor T9, is lower than 5 °C. (preheating of
+                air by brine)
+
+                Or if the outdoor temperature, sensor T9 > 15 °C and the room
+                temperature is > setpoint + 1°C (precooling of air)
+
+                6: Floor heating control – The relay is switched on when the sensor in
+                the tank bottom (T8) is greater than 30°C
+
+                7: Floor heating control – The relay is switched on when the sensor in
+                the tank bottom (T8) is greater than 40°C
+
+                8: The relay is switched on when the L1 terminal is short-circuited/
+                activated (e.g. kitchen hood). This feature can be used with an
+                on/off damper connected to the H9 relay which shuts off towards
+                the bathroom when the kitchen hoods is activated to direct the airflow
+                on the kitchen hood.
+
+                9: It is possible to connect a solar pump controlled according to EC8 to
+                the relay H9. The relay is off when T8 domestic hot water temperature
+                reaches 52 °C.
+
+                10: It is possible to connect a solar pump controlled according to EC8 to
+                the relay H9. The relay is off when T8 domestic hot water temperature
+                reaches 65 °C
+
+                11: The relay is on if there is no error on the fire control system set in
+                menu EJ1 connected to the Combi unit.
+
+12 		
+Menu            Description                                                                  Factory setting and
+EC - Regulator                                                                               (max./min values)
+
+                12: Zone control valve for zone 2. ; when activated the relay will turn on/
+                off according to the requested temperature in Zone 2. This function may
+                be used to control a zone valve.
+
+                13: Zone control valve for zone 3 ; when activated the relay will turn on/
+                off according to the requested temperature in Zone 3. This function may
+                be used to control a zone valve.
+
+                EC7 – AUX Relay H10                                                          EC7: 12
+                0 : off                                                                      (0-13)
+
+                1 : The relay is on when the fans are active.
+
+                2: The relay is on when there is a need for additional roomheating.
+                Please note that Menu A1 needs to be on as well.
+
+                3: The relay is on when a filterchange is required.
+
+                4: The relay is on when additional cooling is required. Please note that
+                Menu EH2 needs to be on as well. To enable cooling activate the green
+                light in the cooling icon on the main screen.
+
+                5: The control unit can handle an earth heat exchanger using a damper
+                or brine circuit. The relay will be on in case of one of the following two
+                conditions:
+
+                If the outdoor temperature, sensor T9, is lower than 5 °C. (preheating of
+                air by brine). Or if the outdoor temperature, sensor T9 > 15 °C and the
+                room temperature is > setpoint + 1°C (precooling of air)
+
+                6: Floor heating control – The relay is switched on when the sensor in
+                the tank bottom (T8) is greater than 30°C
+
+                7: Floor heating control – The relay is switched on when the sensor in
+                the tank bottom (T8) is greater than 40°C
+
+                8: The relay is switched on when the L1 terminal is short-circuited/
+                activated (e.g. kitchen hood). This feature can be used with an on/
+                off damper connected to the H9 relay which shuts off towards the
+                bathroom when the kitchen hoods is activated to direct the airflow on
+                the kitchen hood.
+
+                9: It is possible to connect a solar pump controlled according to EC8 to
+                the relay H10. The relay is off when T8 domestic hot water temperature
+                reaches 52 °C
+
+                10: It is possible to connect a solar pump controlled according to EC8 to
+                the relay H9. The relay is off when T8 domestic hot water temperature
+                reaches 65 °C
+
+                11: The relay is on if there is no error on the fire control system set in
+                menu EJ1 connected to the Combi unit.
+
+                12: Zone control valve for zone 2. ; when activated the relay will turn on/
+                off according to the requested temperature in Zone 2. This function may
+                be used to control a zone valve.
+
+                13: Zone controlv valve for zone 3 ; when activated the relay will turn on/
+                off according to the requested temperature in Zone 3. This function may
+                be used to control a zone valve.
+
+		13
+Menu             Description                                                                   Factory setting and
+EC – Regulator                                                                                 (max./min. values)
+                 EC8 – Solar Hysteresis
+ED - Electrical  If a solar collector is connected to the coil of the boiler, use this option  EC8 : 5
+heating          to input the temperature difference between the temperature in the            (0-5 °C)
+                 solar collector (T9) and the domestic water temperature (T8) that
+                 should be reached before the solar pump starts. The solar pump will
+                 not stop until T9 is equal to T8. The solar pump will stop under all
+                 circumstances once T8 has reached a temperature of 60 °C.
+
+                 ED1 - Regulation electricity                                                  ED1: 3 min.
+
+                 If an electrical preheater or an electrical reheater is installed, it may be (1-30 min.)
+
+                 necessary to adjust the regulation time.
+
+                 ED2 - Preheating temperature                                                  ED2: +3 °C
+                 Setpoint temperature for frost protection preheater - see menu EC1            (-15 to +10°C)
+                 for reference temperature sensor
+
+                 ED3 - Preheat PI P                                                            ED3: 5
+                 P-band for the PI controller for the electrical modulating preheater. The     (1-255)
+                 P-band controls the amplification of the controller following a deviation
+                 from the set point (speeder)
+
+                 ED4 - Preheat PI I                                                            ED4: 200
+                 I-band for the PI controller for the electrical modulating preheater. The     (1-255)
+                 function controls how quickly the controller adapts to a deviation of the
+                 set point (brake).
+
+                 ED5 - Preheat Reg                                                             ED5: 40 sec.
+                 The Preheat Cycle function works, as follows: E.g. necessary output           (10-120 sec.)
+                 50% and cycle = 60 sec. means that the controller will switch the
+                 preheater on for 30 sec. and off for 30 sec.
+                 Note: Please refer to your country-specific regulations on limitations
+                 when adjusting this function. The modulating preheater function refers
+                 to the value adjusted in set point EC1.The preheater will try to maintain
+                 a steady fresh air temperature according to this set point.
+                 When the modulating preheater is used, the existing fresh air
+                 temperature sensor (T3), which is built into the ventilation unit, can be
+                 used as reference. No extra temperature sensor is required.
+
+                 ED6 - Reheat offset                                                           ED6: -2 °C
+                 Offset for reheater with reference to the set point for the requested         (-10 to +10°C)
+                 temperature.
+                 E.g. requested temp = 20°C
+                 Offset value = 2 reheater aims to maintain a supply temperature of
+                 18°C
+
+                 ED7 - Reheat PI P                                                             ED7: 5
+                 P-band for the PI controller for the electrical modulating reheater. The      (1-255)
+                 P-band controls the amplification of the controller following a deviation
+                 from the set point (speeder).
+
+                 ED8 - Reheat PI I                                                             ED8: 200
+                 I-band for the PI controller for the electrical modulating preheater. The     (1-255)
+                 function controls how quickly the controller adapts to a deviation of the
+                 set point (brake).
+
+14 		
+Menu             Description                                                                 Factory setting and
+ED - Electrical                                                                              (max./min. values)
+heating
+                 ED9 - Reheat reg.                                                           ED9: 40 sec.
+EE - Bypass      The Reheat Cycle function works, as follows: E.g. necessary output 50%      (10-120 sec.)
+                 and cycle = 60 sec. means that the controller will switch the reheater on
+EF - Filter      for 30 sec. and off for 30 sec.
+                 Note: Please refer to your country-specific regulations on limitations
+                 when adjusting this function.
+                 The modulating reheater function refers to the value
+                 adjusted in selected temperature and chosen sensor for control (see
+                 EC3). To allow the reheater to operate adjust set point A1=on;The
+                 reheater will try to
+                 maintain a steady supply air temperature according to this set point.
+                 When using the modulating reheater, it will be necessary to replace
+                 the inlet air temperature sensor (T1) in the ventilation unit with a new
+                 temperature sensor installed upstream of the reheater.
+
+                 EE1 - Bypass open offset                                                    EE1: 2 °C
+                 Here you set the temperature at which the bypass should open. You set       (1-10 °C)
+                 a temperature differential, which means that if you want the bypass to
+                 be 100% open at e.g. 23°C and if the room set temperature is
+                 20°C, this menu item should be set to 3°C. The bypass will open,
+                 provided that:
+                 1. The extract air temperature is higher than the outdoor air
+                 temperature.
+                 2. The outdoor air temperature is above the set temperature in EE2.
+
+                 The bypass opens when the temperature reaches the requested
+                 temperature + the temperature differential
+                 set in this menu item.
+
+                 EE2 - Turn off bypass                                                       EE2: 4°C
+                 To prevent the bypass damper from opening at low outdoor air                (0-20°C)
+                 temperatures and from blowing cold, unheated air into the dwelling, use
+                 this function to configure the lowest outdoor air temperature, at which
+                 the damper must be closed. The value is an expression of the greatest
+                 difference that may exist between the requested temperature and the
+                 lowest outdoor air temperature (offset).
+                 Setting option: Between 0 and 20 °C. If 0°C is selected, the function is
+                 disabled.
+
+                 EE3 – Bypass time minimum on                                                EE3: 5 min.
+                 Bypass will be open minimum according to the setpoint                       (0-60 min.)
+
+                 EF1 - Reset filter timer                                                    EF1: Reset filter
+
+                 select this option to reset filter timer to 0 days
+
+                 The current counter value will display current days since last filterreset
+
+                 EF2 - Filter timer                                                          EF2: 3 months
+
+                 Setpoint for adjusting months until filteralarm will activate 0 months = (0-12 months)
+
+                 filter timer deactivated.
+
+		15
+Menu            Description                                                                  Factory setting and
+EF - Filter                                                                                  (max./min. values)
+
+                EF3 - Filter/stop                                                            EF3: Off
+                To ensure that the filters are changed when the filter change alarm          (On/Off)
+                is active, the set point can be set to ON. The system will then stop
+                automatically after 14 days if the filters have not been changed in
+                the meantime.
+                If this precaution is not required, the set point can be set to OFF and the
+                system will continue to operate.
+
+EG - Humidity   EG1 - Humidity max temperature                                               EG1: 15 °C
+control         Setting the end point for outside temperature compensation (T3), see         (0-25 °C)
+                the X-axis on the graph.
+EH – Heat pump
+settings        EG2 - Humidity max value                                                     EG2: 60 %
+                Setting the end point for outside temperature compensation, see the          (35-85 %)
+                Y-axis on the graph (desired max. humidity value).
+
+                EG3 - Humidity fan speed                                                     EG3: 15 %
+                Setting of how much the fan speed may differ in relation to the desired      (5-30 %)
+                fan speed.
+                Examples
+                Set point fan speed level 2 (EB2 / EB6) = ± 15%
+
+                EG4 - Humidity regulation frequency                                          EG4: 10 min.
+                Setting of desired frequency for how often the fan speed may be              (1-60 min.)
+                changed.
+                The function is defined as 1% per unit of time.                              EH1: Water
+                When humidity regulation is activated, the current humidity is               (Water/Air)
+                continuously measured via the integrated humidity sensor in the
+                ventilation unit, which is placed in the extract air duct.
+
+                EH1 – Priority water/air
+                Choosing water will prioritize water heating first before switching to
+                room heating and vice versa.
+
+                EH2 – Release cooling                                                        EH2 : On
+                Choosing on will enable the cooling icon on the display from where the       (On/Off)
+                cooling can be activated. (green light in the cooling icon on the main
+                screen means automatic activation of cooling enabled)
+                Note: Choosing off will remove the cooling icon from the main menu.
+
+                EH3 – Cooling activation                                                     EH3: 2 °C
+                Additional offset to EE1 (bypass offset) from when active cooling will       (0-5 °C)
+                start.
+
+                e.g. requested room temperature 20 °C
+                EE1 set to 20 + 3 °C the active cooling will turn on when the extract air
+                temperature reaches 20 + 3 + 3 = 26 °C
+
+                Please notice that the bypass damper will close when running active
+                cooling to maximize efficiency.
+
+16 		
+Menu            Description                                                                 Factory setting and
+                                                                                            (max./min. values)
+EH – Heat pump
+settings        EH4 – Min. outdoor cooling                                                  EH4: 15 °C
+
+                To prevent the cooling function to activate at low fresh air temperatures (0-20 °C)
+
+                and from blowing cold, unheated air into the dwelling, use this function
+
+                to configure the lowest fresh air temperature at which cooling may be
+
+                enabled.
+
+                EH5 – DHW element                                                           EH5: On
+                Enable the DHW element icon on the main screen of the touch panel.          (On/Off)
+                (green light in the DHW icon on the main screen means automatic
+                activation of DHW element enabled).
+                Note: Choosing off will remove the DHW icon from the main menu.
+
+                EH6 – Legionella On/Off                                                     EH6: On
+                Selecting on will enable automatic legionella protection which will heat    (On/Off)
+                up the DHW cylinder to 65 °C once a week, according to the calendar
+                EH7, EH8
+
+                EH7 – Legionella start day                                                  EH7: Monday
+                Choose day to start legionella disinfection                                 (Monday-Sunday)
+
+                EH8 – Legionella start hour                                                 EH8: 01
+                Choose hour to start legionella disinfection                                (00-23)
+
+                EH9 – stop defrost temp                                                     EH9: 10 °C
+                The defrosting period ends by default when the evaporator reaches a         (0-15 °C)
+                temperature of 10 °C, which is the standard setting. Setting this value
+                lower will reduce the deicing cycle but may lead to build-up of ice on the
+                evaporator.
+
+                EH10 – Balanced defrost                                                     EH10: off
+                Choosing on will maintain the current fan speed on both supply and          (On/Off)
+                extract air fans – but may lead to longer deicing periods. Choosing off
+                will stop the supply air fan during the deicing cycle which will typically
+                be the most efficient deicing strategy.
+
+                EH11 – Constant On/Off                                                      EH11: off
+                If the home's other heating systems are not connected to the heat           (On/Off)
+                pump system, the home's other heating systems, e.g. a wood-burning
+                stove, can stop the heat pump so that the heat pump system with heat
+                exchanger only blows preheated air into all rooms. This may cause
+                increasing problems with draught as the temperature drops outside.
+                Setting EH11 will run the heat pump continuously independent of the
+                extract air temperature.
+                Choosing on, will switch off the heat pump when the desired room
+                temperature has been reached.
+
+                EH12 – Constant @ temp                                                      EH12: 5 °C
+                If EH11 is set to on, set the outdoor air temperature here to when the      (0-10 °C)
+                heat pump will need to run continuously to heat the supply air.
+
+		17
+Menu            Description                                                             Factory setting and
+                                                                                        (max./min. values)
+EH – Heat pump  EH13 – External override
+settings        • Scheduler = the calendar programme will determine the operation of   EH13: Scheduler
+                                                                                        (Scheduler/Solar
+                  the Combi unit.                                                       panel/Smart grid)
+                • Solar Panel = the solar panel input determines the operation of the
+
+                  Combi unit.
+                • Smart grid = the smart grid input determines the operation of the
+
+                  Combi unit.
+
+                See SG functions below
+
+                OFF         The SG ready function can be activated by the
+                            installer here. Three possible modes can be
+                (SG BOOST)  selected. This function allows the start of the heat
+                (SG ECO)    pump from an external access (terminal L9 on PCB).
+                (SG BLOCK)  SG ready is not active if there is not external input
+                            (SG1 OFF, SG2 OFF).
+
+                            The heat pump and electric heater must start, if
+                            below the max water temperature allowed in the
+                            tank. Both Heat Pump end Electric heater are
+                            forced to operate (SG1 ON and SG2 ON).
+
+                            The heat pump operates minimizing costs, only the
+                            heat pump is activated (SG1 OFF, SG2 ON).
+
+                            The unit can be stopped even if there is a need for
+                            hot water (SG1ON, SG2 OFF).
+
+                EH14 – PV panel low set                                                 EH14: 1V
+                Set voltage input from solar inverter where surplus electricity will    (0.1-10V)
+                activate the heat pump to produce DHW to a higher temperature
+                setpoint according to setpoint B6.
+
+                EH15 – PV panel high set                                                EH15: 5 V
+                Set voltage input from solar inverter where surplus electricity will    (1-10V)
+                activate both the heat pump and immersion heater to produce DHW to a
+                higher temperature setpoint according to B6.
+
+                EH16 – PV panel delay                                                   EH16: 15 min.
+                Time delay before switching between operating modes when signal         (0-60 min.)
+                from solar inverter fades/increases above threshold value.
+
+                EH17 – Compressor hysteresis                                            EH17: 0.4 °C
+                The default temperature difference between start/stop compressor        (0,1–1,0 °C)
+                is ± 0.4 °C. Changing the temperature difference is recommended only
+                under special operating conditions
+
+                EH18 – Compressor mode                                                  EH18: Auto
+                Choose Auto to let the Combi automatically switch on/off the heat       (Auto/Off)
+                pump. Choose off to enable ventilation and DHW production with
+                immersion heater (e.g. when compressor is damaged and awaits service).
+
+18 		
+Menu            Description                                                                    Factory setting and
+EH – Heat pump                                                                                 (max./min. values)
+settings
+                EH19 – Regulation sensor (zone 1)                                              EH19: T2
+EI - Demand     Select the temperature sensor controlling the main heat pump operation         (T2/CO2 sensor 1-5/
+control         and climate control. Factory setting is the built in T2 temperature sensor in  MB1-MB3/T9)
+                the extract air duct.
+
+                CO2 1-5 are optional Modbus/Wireless sensors containing also a
+                temperaturesensor. MB1-MB3 are sensors connected to the Multibox for
+                zone 1,2 and 3. T9 is the free optional temperature sensor input on the
+                main PCB.
+
+                EH20 - Temperature min.                                                        EH20: 10 °C
+
+                Limitation for lowest allowed temperature setting in the temperature setting (10-20 °C)
+
+                menu on main screen.
+
+                EH21 - temperature limit max.                                                  EH21: 30 °C
+                Limitation for highest allowed temperature setting in the temperature          (20-30 °C)
+                setting menu on main screen.
+
+                EH22 - Domestic hot water hysteresis                                           EH22: 5 °C
+                Adjustable hystereses for activation of heat pump                              (1-20 °C)
+
+                for example
+                EH22 = 5 °C
+                Setpoint DHW = 50
+
+                Heat pump will start heating hot water when temperature in tank reaches
+                50-5 = 45 °C
+
+                Heat pump will stop heating hot water when reaching setpoint temperature       EI1: Off
+                50 °C.                                                                         (On/Off)
+
+                EI1 - CO2 control
+                On = activates external sensors for demand control (if available)
+                Off = no external sensors for demand control available
+
+                EI2 - CO2 setpoint                                                             EI2: 800 PPM
+                Setpoint for desired CO2 level in PPM.                                         (400-2000 PPM)
+                If CO2 level increase above setpoint, the fans will increase speed in steps
+                to maintain CO2 level at setpoint.
+
+                EI3 - CO2 level time                                                           EI3: 30 min.
+                Setpoint in minutes for time between increase/decrease fan speed               (0-1000 min.)
+                in steps according to CO2 level (see setpoint EI2)
+
+                EI4 - Number of RF CO2 sensors                                                 EI4: 0
+                Select number of wireless CO2 sensors connected.                               (0-5)
+                Make sure that the dip switches in the CO2 sensors are set correct
+                according to separate documentation.
+
+		19
+Menu         Description                                                                    Factory setting and
+                                                                                            (max./min. values)
+EI - Demand  EI5 - Zone temperature control
+control      If set to Zone 1 the temperature control see the entire house as one           EI5: Zone 1
+             temperature zone and no relays for damper controls will be active.             (Zone 1/Zone 1+2/
+                                                                                            Zone 1+2+3)
+
+             If set to Zone 1+2 the temperature control will add one extra temperature
+             zone to the controller which enables different temperatures for zone 1 and
+             2. typically an air damper connected for zone 2 will switch between heating
+             and cooling for zone 2. (see also EC06 / EC07).
+
+             It will also be possible to control an external 230 volt heating source
+             connected to a multibox independently of the damper controls (see EI9)
+
+             If set to Zone 1+2+3 the temperature control will add two extra
+             temperature zones to the controller which enables different temperatures
+             for zone 1 , 2 and 3. typically an air damper connected for zone 2 and 3 will
+             switch between heating and cooling for the zones. (see also EC06 / EC07).
+
+             It will also be possible to control an external 230 volt heating source
+             connected to a multibox independently of the damper controls (see EI9).
+
+             Each Zone will have an individual adjustable requested room temperature
+             setpoint.
+
+             EI6: Zone temperature hysteresis                                               EI6: 0.4 °C
+             Hysteresis for control of the temperature in the selected zone.                (0.1-2 °C)
+
+             EI7: Zone 2 temperature sensor                                                 EI7: MB2
+             Select which type of temperature sensor is active for zone 2.                  (CO2 sensor 1-5/
+                                                                                            MB1-MB3/T9)
+             The following options are available:
+             Combined CO2 and temperature sensor (to be activated in EI4). Please be
+             aware that the DIP switch setting in the sensor shall be identical to the
+             value selected.
+
+             If MB1-3 is selected ensure that the Multibox is activated in menu EI9.
+             The Multibox contains temperature sensor inputs for three different wired
+             temperature sensors. select the sensor input terminal which is used for
+             zone 2.
+
+             If T9 is selected the T9 temp sensor input on the main PCB is used to
+             measure the temperature in Zone 2.
+
+20 		
+Menu               Description                                                                          Factory setting and
+EI - Demand                                                                                             (max./min. values)
+control            EI8: Zone 3 temperature sensor
+                   Select which type of temperature sensor is active for zone 3.                        EI8: MB3
+EJ - Fire control                                                                                       (CO2 sensor 1-5/
+                   The following options are available:                                                 MB1-3/T9)
+                   Combined CO2 and temperature sensor (to be activated in EI4). Please be
+                   aware that the DIP switch setting in the sensor shall be identical to the
+                   value selected.
+
+                   If MB1-3 is selected ensure that the Multibox is activated in menu EI9.
+                   The Multibox contains temperature sensor inputs for three different wired
+                   temperature sensors. Select the sensor input terminal which is used for
+                   zone 3.
+
+                   If T9 is selected the T9 temp sensor input on the main PCB is used to
+                   measure the temperature in Zone 3.
+
+                   EI9: Enable Multibox                                                                 EI9: Off
+
+                   If a Multibox is connected via the modbus communication system on the main (Off/On)
+
+                   PCB, activate communication by selecting ON in the menu.
+
+                   EI10: Heat pump temperature activation                                               EI10: Off
+                   If set to off - the unit will heat using the compressor according to the             (Off/One of the
+                   temperature selected in EH19                                                         zones/All zones)
+
+                   If set to one of zones - the unit will heat using the compressor if there is a
+                   heatdemand from any of the activated zones in EI5
+
+                   If set to all of zones - the unit will only heat using the compressor if all of the
+                   activated zones selected in EI5 has a heatdemand.
+
+                   EJ1 - Number of fire dampers                                                         EJ1: 0
+                   Setpoint for number for fire dampers connected to the system which need              (0-4)
+                   to be monitored
+                   0 = fire control system inactive
+                   1-4 = number of dampers connected
+
+                   EJ2 - Fire test/Reset                                                                EJ2: Off
+                   Off = automatic mode, damper will be tested once a month according to                (Off/Test/Reset)
+                   schedule
+                   Test = test system now, with this function a function test of the fire damper
+                   will be force started and the result shown in the display (N.B. there will be
+                   a delay of up to 240 seconds from when the test is started until the test is
+                   carried out).
+                   Reset = reset fire alarm, in case of error during damper test, error in
+                   damper/smoke detector or lack of communication, the ventilation unit will
+                   shut down and an alarm symbol will be shown on the display.
+                   To restart the unit, a reset of the fire automation must be carried out.
+
+                   EJ3 - Fire test date                                                                 EJ3: 1
+                   Schedule for when automatic monthly fire/smoke damper test shall be                  (1-31 day)
+                   conducted
+
+                   EJ4 - Fire test hour                                                                 EJ4: 12
+
+                   Schedule for when automatic fire/smoke damper test shall be conducted. (0-23 hour)
+
+		21
+Menu               Description                                                              Factory setting and
+                                                                                            (max./min. values)
+EK - Mixing valve  PLEASE NOTE:
+control            If no external outdoor air temperature sensor has been connected the
+                   controller, the built in fresh air temperature sensor in the MVHR is
+                   used as reference for calculating weathercompensation temperature
+                   setpoints.
+
+                   EK1 - Heating mode                                                       EK1: Off
+                   Off = no external heating circuit connected                              (Off/Floor/Radiator)
+                   Floor = underfloor heating circuit connected
+                   Radiator = radiator heating circuit connected
+
+                   EK2 - Outdoor temp. Comp. At -12 °C                                      EK2: 45 °C
+                   Setpoint for flow temperature at -12 °C outdoor temperature              (20-90 °C)
+
+                   EK3 - Outdoor temp comp at 20 °C                                         EK3: 20 °C
+                   Setpoint for outdoor temperature when flow temperature is 20 °C An       (15-25 °C)
+                   outdoor air temperature exceeding the setpoint in EK3 will close the
+                   heating circuit (summer stop)
+
+                   EK4 - Compensation curve offset                                          EK4: 2 °C
+                   Setpoint in °C where heating curve compensation set in EK5 will have     -10 to +10 °C)
+                   maximum influence
+
+                   EK5 - Compensation curve                                                 EK5: 2 °C
+                   Heating curve can be increased in steps of 0-5 °C with max influence     (0 - 5 °C)
+                   according to value set in EK4
+
+                   EK6 - Max flow temperature                                               EK6: 45 °C
+                   Flow temperature will be limited to maximum 45 °C if underfloor          (20-65 °C)
+                   heating is selected in EK1
+                   Flow temperature will be limited to 90 °C if radiator heating is
+                   selected in EK1
+
+                   EK7 - Valve time (sec.)                                                  EK7: 150 sec.
+                   Time for 3-point control valve from fully closed to fully open (depends  (1-255 sec.)
+                   on actuator and valve stem configuration). Please refer
+                   to valve supplier manual for this information.
+
+                   EK8 - Max return temperature                                             EK8: 50°C
+                   If max return temperature exceeds the temperature setpoint, then the     (25-70°C)
+                   valve will close incrementally until the return temperature
+                   setpoint is achieved.
+
+                   EK9 - Neutral Zone                                                       EK9: 1°C
+                   Hysteresis for temperature control via PID.                              (0-10°C)
+
+22 		
+Menu                Description                                                             Factory setting and
+                                                                                            (max./min. values)
+EK - Space heating  EK10 - Heating PI P                                                     EK10: 20
+control             PI controller P-band                                                    (0-255)
+                    By increasing this value the controller will try to reach the setpoint
+                    temperature faster (with a risk of overshooting the setpoint)           EK11: 50
+                                                                                            (0-255)
+                    EK11 - Heating PI I (x10)
+                    PI controller I-band                                                    EK12: 5 sec.
+                    By increasing this value the controller will try to reduce              (1-120 sec.)
+                    overshooting / offset of temperatures (with a risk of slowing the
+                    controller down)                                                        EL1: 20
+                                                                                            (1-247)
+EL – Modbus         EK12 - Heating regulation time                                          EL2: 19200 baud
+                    PI controller regulation time                                           (9600 baud/19200
+                    By increasing this value the controller will be slowed down as time     baud)
+                    between recalculation of valve position will be increased               EL3: Even
+                                                                                            (None/Even/Odd)
+                    EL1 - Modbus adress                                                     EL4: On
+                    Modbus slave adress of unit                                             (On/Off)
+
+                    EL2 - Modbus baud rate
+                    choose either 9600 or 19200 baud depending on the application type
+
+                    EL3 - Modbus Parity
+                    choose odd or even depending on the application type
+
+                    EL4 - Modbus Modify
+                    choose off or on depending on the application type
+
+EM - Manual         Enter password for entering relay test program (only for installers)
+overridel           Enter password for entering OEM program (only for installers)
+
+OEM
+
+		23
+7. FURTHER EXPLANATIONS OF HUMIDITY
+AND DISTRICT HEATING CONTROL
+
+7.1 Humidity control explanation                                                                                                   Example 1:
+                                                                                                                                   At a fresh air temperature of 10°C the RH-
+                      90                                                                                                           control aims for 55 % humidity measured
+                                                                                                                                   in the extract air.
+                      80                        EG1Setting range EG1
+                                                                                                                                   Example 2:
+                                                                   and EG2                                                         At a fresh air temperature of 20°C the
+                                                                                                                                   RH-control aims for 60 % humidity
+                      70                                                                                                           measured in the extract air.
+
+                    EG2 60                                                                                                         EG1 and EG2 is used to change the
+                                                                                                                                   characteristics of the humidity control
+                             50                                                                                                    values by moving the compensation curve
+RH %                                                                                                                               (indicated by the green line on the graph).
+                                                                                                                              EG240
+
+                      30
+
+                      20
+
+                      10
+
+-15  -10        -5    0          0  5       10       15                     20  25        30
+
+                                    Outdoor air temperature ᵒC EG1
+
+Level 4 = 100%
+
+Level 3 = 75%                          65%                                                                                         Example:
+Level 2 = 50%                                                                                                                      Set point = ± 15% (EG3)
+Level 1 = 30%                       ±15%        EG3                                                                                With a desired fan speed of 2 set to 50
+                                                                                                                                   %, the fan speed will be able to fluctuate
+                                       35%                                                                                         from 35 % to 65 % Humidity control
+                                                                                                                                   is only available in fan speed 2 and will
+                                                                                                                                   automatically be deactivated running in
+                                                                                                                                   any other fan speed mode.
+
+                                                                                                                                   Regulation of the fan speed takes place
+                                                                                                                                   ±1% for every 10 min. (factory setting
+                                                                                                                                   EG4).
+
+7.2 Mixing valve control explanation                                EK5 set = 5°C                                                                  The district heating control system will
+                                                                    EK5 set = 4°C                                                                  automatically adjust the flow temperature
+             Setpoint, flow temp.                                   EK5 set = 3°C                                                                  of the heating system according to the
+                                                                    EK5 set = 2°C                                                                  outdoor air temperature.
+                  EK6 Max. flow temp.                               EK5 set = 1°C                                                                  The characterstic of the heating curve can
+                             (45°C Floor)                           EK5 set = 0°C                                                                  be adjusted by EK2 and EK3
+
+                  EK6 Max. flow temp.                                          20°C                                                                EK2 adjust the requested flow
+                        (65°C Radiator)                                                                                                            temperature at outdoor air temperature
+                                                                                     EK3                                                           -12 °C
+                20°C
+                                                                                                                                                   EK3 adjust the requested outdoor
+                                    -12°C       2°C                                                                                                temperature when the flow temperature
+                                                                                                                                                   is 20 °C
+
+                                                                                                                                                   To increase heating capacity of the
+                                                                                                                                                   heating system at a specific outdoor air
+                                                                                                                                                   temperature. EK4 and EK5 can be used to
+                                                                                                                                                   offset the heating curve characterstics
+
+                                                                                                                                   Outdoor air temp.
+
+                                    EC2         EK4
+
+24 		
+8. MAINTENANCE
+
+8.1 Replacing Filters                                           8.2 Dismantling/taking the system out of service
+
+When the filteralarm is displayed, the filters must be          Generally it is recommended to maintain a constant airflow
+changed. Stop the system by the circuit breaker of the unit     through the ventilation unit at all times to prevent
+or by the circuit breaker on the terminal board. Open the       condensation in the ductwork.
+front cover/filter drawers and remove the filters. After        In case of the ventilation system not being used for weeks.
+having changed the filters, reset the filter timer. The time    The following must be done: The power supply, i.e. the
+interval for cleaning/ changing the filters can be adjusted in  power cables, must be disconnected. Disconnect the
+the operating menu. Based on normal environmental               condensation outlet and power cables for any reheater/
+conditions with clean air – a filter change is recommended      preheater. Disconnect cables for the control panel and
+every 6 months for optimal working conditions.                  dismantle ducts. If the system should to be taken out of
+Vacuum cleaning or using pressurised air on the filters is      service, the ducts must be dismantled to avoid condensed
+not recommended.                                                water in the system and in the ducts. Close all supply air
+Recommended filters to be used: Original Genvex filters in      and extract air valves.
+quality Coarse / G4 = Standard filter (typically used on
+extract air side) ; ePM10 / F5 = Fine filter ; ePM1 / F7 =
+Pollen filter (typically used on fresh air side)
+
+Please note that the following recommended annual
+service of the ventilation unit internal components should
+be done by an installer.
+
+Condensation drain
+When changing the filter in August/September before the
+outside temperature falls to 5 °C, check that the
+condensation drain is not blocked with dirt and make sure
+that there is water in the water trap. Pour 1 litre of water
+into the condensation tray and make sure it runs off freely.
+If the condensation drain does not work, this could lead to
+water damage in the home.
+
+Heat exchanger
+Inspect the heat exchanger every year. If it is dirty, remove
+it and: - Alu-exchanger: Wash in lukewarm soapy water and
+rinse using a hand shower if necessary. - Plastic exchanger:
+No cleaning with solvents - use only clean water carefully
+only careful dust removal from air intake surfaces with a
+household vacuum cleaner.
+
+Fans
+Inspect the two fan wheels for dirt each year. If they are
+dirty, they can be washed using a brush, bottle cleaner, etc.
+Supply air and extract air valves: Clean the valves by wiping
+with a dry cloth. Be careful that the valves do not turn, so
+that the air volume changes.
+
+		25
+9. TROUBLESHOOTING
+
+9.1Safety thermostat in electrical heater                    9.2 Error codes
+    (optional equipment)
+                                                              Error messages will be written in clear text on the Optima
+If an error occurs on an electrical heater, the safety        Touch display.
+thermostat will disconnect. The heater
+is equipped with a fire thermostat that automatically cuts    In case of the error message "defrost alarm," it indicates
+off the power supply, if the temperature exceeds 50 °C.       that the defrosting process is taking longer than expected.
+If the temperature decreases, the heater automatically        Check the placement of temperature sensor T6 on the
+re-engages. As an additional security there is a built-in     evaporator surface.
+thermal cut-out, which disengages if the temperature
+exceeds 100 °C. Re-engaging must be done manually. Does       In case of low pressure alarm the compressor will stop and
+not apply to PTC electrical heaters.                          restart after 10 minutes. If low pressure alarm reoccur
+                                                              within 24 hours the machine will stop and indicate the
+The system is not running. Unit stopped                       alarm "low pressure transmitter". The same features apply
+Possible error                                                for the high pressure switch
+• Fuse in main board has blown, no power to unit.
+• One of the fuses on the circuit board of the unit isblown.  If the zone control feature is active and the Combi unit will
+• Loose wire, no power to unit.                               not be able to read a temperature from the zone control
+• Loose wire between unit and control panel.                  sensor - an alarm will be displayed and the Combi will fall
+• Faulty or incorrectly set week program.                     back to T2 temperature control. If the signal to the external
+•	Filter timer has switched the system off. Condensed        sensor is restored that error will automatically be cleard
+                                                              and the Combi will run according to the external sensor.
+   water is leaking from the unit Possible error:
+• Condensation outlet blocked by dirt.
+•	The condensation outlet is not adequately protected
+
+   against freezing at low outdoor temperatures.
+•	If EB10 = on, check fans to ensure operation. If fans are
+
+   expected to run and RPM feedback = 0 then ventilation
+   unit will shut down and indicate alarm
+
+No supply air
+Possible error
+• Faulty supply air fan
+• Clogged supply air filter
+•	Clogged fresh air grill due to dirt and leaves during the
+
+   fall and snow and ice during the winter.
+• Fuse on the circuit board is blown.
+• The unit is in defrost mode (supply air fan stops)
+
+No extract air
+Possible error
+• Faulty extract air fan
+• Clogged extract air filter.
+• Fuse on the circuit board is blown
+
+Cold supply air
+Possible error
+• Clogged heat changer.
+• Faulty extract air fan.
+• Clogged extract air filter.
+•	Electrical reheater is disconnected at the over heating
+
+   thermostat (only units with electrical reheater
+   installed).
+•	Air in the heating pipes, faulty thermostat / motorvalve,
+   incorrect setting of control panel.
+
+26 		
+Main menu                                             Optima 314  Possible settings
+A – User                        Factory settings
+A1 – Reheating                                                          On/Off
+A2 – Humidity control                    On                             On/Off
+A3 – DHW temperature                     On                             0-60 °C
+A4 – DHW Element Temp                  52 °C                            0-65 °C
+A5 – Boost time                        50 °C                          1-120 min.
+A6 – Timer levels 3 and 4             30 min.                           On/Off
+A7 – Timer levels 3 and 4                On                            1-9 hours
+                                      2 hours
+B - Schedulers
+B1 – Fan Scheduler              Not used                                      Not used/level 1-4/standby
+B2 – Temperature scheduler      Not used                             Not used/Alternative temp (B5)/Normal
+B3 – DHW scheduler              Not used                          Not used/Alternative DHW temp (B6)/Normal
+B4 – Enable scheduler
+B5 – Alternative Temp.             Off                                             On/Off (B1-B2-B3)
+B6 – Alternative DHW Temp         0,0 °C                                             -10 °C to +10 °C
+                                 -10 °C                                              -50 °C to +50 °C
+C – Date / Time
+C1 – Time                          On                                            On/Off
+C2 – Date
+C3 – Daylight Saving Time       English                           English/Dansk/Deutsch/Dutch
+                                10 min.                                        0-600 min.
+D – Display                      5 sec.                                        0-120 sec.
+D1 – Language                    0000                                         0000-9999
+D2 – Screensaver time
+D3 – Display Lock time          15%                                                              0-100%
+D4 – Password                   30%                                                              0-100%
+D5 – Firmware Update            45%                                                              0-100%
+                                60%                                                              0-100%
+EA - Save/Load Setting          15%                                                              0-100%
+EA1 – Save settings             30%                                                              0-100%
+EA2 – Load settings             45%                                                              0-100%
+                                60%                                                              0-100%
+EB – Fan level                   On                                                               On/Off
+EB1 – Level 1 Supply air        50%                                                              0 - 100%
+EB2 – Level 2 Supply air        50%                                                              0 - 100%
+EB3 – Level 3 Supply air         On                                                               On/Off
+EB4 – Level 4 Supply air
+EB5 – Level 1 Extract air       Off                                                               On/Off
+EB6 – Level 2 Extract air       Off                               Off/Fan speed 1/Fan speed 2/Fan speed 3/Fan speed 4
+EB7 – Level 3 Extract air
+EB8 – Level 4 Extract air
+EB9 – Min. air volume mode
+EB10 – Min. air volume extract
+EB11 – Min. air volume supply
+EB12 – RPM Alarm
+EB13 – Reset RPM Alarm
+EB14 - Balancing mode
+
+		27
+Main menu                                           Optima 314                   Possible settings
+EC – Regulator                Factory settings
+EC1 – Frost protection                                          Off/T3 Preheat/T5 Preheat/Fan Reduction
+EC2 – Frost reduction            T3 preheat                                       -10 °C to +10 °C
+EC3 – Release system stop             8 °C                                              On/Off
+EC4 – Factory reset                   Off
+EC5 – H3 relay options                Off                                Off/ Reset (%fans)/ Reset all
+EC6 – AUX Relay H9                                                        Preheat/Reheat/Always on
+EC7 – AUX Relay H10                Preheat
+EC8 – Solar Hysteresis                  2                                                0-13
+                                       12                                                0-13
+ED – Electric heating                                                                   0-5 °C
+ED1 – Regulation electricity          5 °C
+ED2 – Preheating temperature
+ED3 – Preheat PI P            3 min.                                1-30 min.
+ED4 – Preheat PI I              3 °C                            -15 °C to +10 °C
+ED5 – Preheat reg.
+ED6 – Reheat offset              5                                    1-255
+ED7 – Reheat PI P               200                                   1-255
+ED8 – Reheat PI I             40 sec.                             10-120 sec.
+ED9 – Reheat reg.              -2 °C                            -10 °C to +10 °C
+                                                                      1-255
+EE – Bypass                      5                                    1-255
+EE1 – Bypass open offset        200                               10-120 sec.
+EE2 – Turn off bypass         40 sec.
+EE3 – Bypass Time min. on
+                               3 °C                              1-10 °C
+EF – Filter                    4 °C                              0-20 °C
+EF1 – Reset filter timer      5 min.                            0-60 min.
+EF2 – Filter timer
+EF3 – Filter/stop              3 mth                              0-12 month
+                                 Off                                  On/Off
+EG – Humidity control
+EG1 – Humidity max temp        15 °C                                 0-25 °C
+EG2 – Humidity max value       60 %                                 35-85 %
+EG3 – Humidity fan speed       15 %                                  5-30 %
+EG4 – Humidity reg. Freq.     10 min.                               1-60 min.
+
+EH – Combi Settings            Water                                Water/Air
+EH1 – Priority water / air       On                                   On/Off
+EH2 – Release cooling           2 °C                                  0-5 °C
+EH3 – Cooling activation                                             0-20 °C
+EH4 – Min. outdoor cooling     15 °C                                  On/Off
+EH5 – DHW element                On                                   On/Off
+EH6 – Legionella On/Off          On
+EH7 – Legionella start day                                      Monday-Sunday
+EH8 – Legionella start hour   Monday                                  00-23
+EH9 – Stop defrost temp          01                                  0-15 °C
+
+                               10 °C
+
+28 		
+Main menu                                             Optima 314             Possible settings
+EH – Combi Settings                      Factory settings
+EH10 – Balanced defrost                                                             On/Off
+EH11 – Constant On/Off                           Off                                On/Off
+EH12 – Constant @ temp                           Off                                0-10°C
+EH13 – External override                         5°C              Scheduler/Solar Panel/Smart Grid
+EH14 – PV panel low set                      Scheduler                             0.1-10V
+EH15 – PV panel high set                          1V                                1-10V
+EH16 – PV panel delay                             5V                              0-60 min.
+EH17 – Compressor hysteresis                   15 min.                            0.1-1.0°C
+EH18 – Compressor mode                          0.4°C                             Auto/Off
+EH19 - Regulation sensor (zone 1)               Auto              T2/CO2 sensor 1-5/MB1-MB3/ T9
+EH20 - Temperature min.                           T2                               10-20 °C
+EH21 - Temperature limit max.                   10 °C                              20-30 °C
+EH22 - Domestic hot water hysteresis            30 °C                               1-20 °C
+                                                 5 °C
+EI – Demand Control                                                                 On/Off
+EI1 – CO2 control                                Off                          400 - 2000 PPM
+EI2 – CO2 setpoint                           800 PPM
+EI3 – CO2 level time                           30 min.                          0-1000 min.
+EI4 – no. CO2 Sensors                                                                 0-5
+EI5 – Zone temperature control                     0
+EI6 – Zone temperature hysteresis              Zone 1               Zone 1/Zone 1+2/Zone 1+2+3
+EI7 – Zone temperature sensor                   0.4 °C                             0.1-2 °C
+EI8 - Zone 3 temperature sensor                  MB2
+EI9 - Enable Multibox                            MB3                CO2 sensor 1-5/MB1-MB3/T9
+EI10 - Heat pump temperature activation                              CO2 sensor 1-5/MB1-MB3/T9
+                                                 Off
+                                                 Off                                Off/On
+                                                                    Off/One of the zones/All zones
+
+		29
+EJ – Fire Control                                    Optima 314            0-4
+EJ1 – No. Of fire dampers                                          Off/Test/Reset
+EJ2 – Fire test/reset                           0                1-31 day in month
+EJ3 – Fire test date                          Off
+EJ4 – Fire test hour                            1                      0-23 time
+                                               12
+EK – Mixing valve                                                Off/Floor/Radiator
+EK1 – Heating mode                            Off                       20-90 °C
+EK2 – Temperature compensation at -12°C      45 °C                      15-25 °C
+EK3 – Temperature compensation at 20°C       20 °C
+EK4 – Compensation curve offset               2 °C                 -10 °C to +10 °C
+EK5 – Compensation curve                      2 °C                        0-5°C
+EK6 – Max flow temp.                         45 °C
+EK7 – Valve time                           150 sec.                     20-65 °C
+EK8 – Max Return temperature                 50 °C                    1-255 sec.
+EK9 – Neutral Zone                            1 °C                      25-70 °C
+EK10 – Heating PI P
+EK11 – Heating PI I (x10)                      20                       0-10 °C
+EK12 – Heating regulation time                 50                        0-255
+                                             5 sec.                      0-255
+EL – Modbus                                                           1-120 sec.
+EL1 – Modbus address                           20
+EL2 – Modbus baud rate                   19200 baud                      1-247
+EL3 – Modbus parity                                              9600/19200 baud
+EL4 – Modbus modify                          Even
+EM – Manually override                         On                  None/Even/Odd
+OEM                                                                      On/Off
+
+30 		
+		31
+THE AIR WE BREATHE                                   All
+                                                  Genvex
+    As of 1 January 2025, Genvex has           systems are
+    merged with our parent company              rated with
+    METRO THERM into one company under         energy label
+    the name METRO THERM A/S.
+                                                 A
+    With the merger, both physical addres-
+    ses will be retained: The head office and
+    production for METRO THERM will
+    remain in Helsinge, while administration
+    and production for Genvex and KVM-
+    Conheat will remain at the Haderslev
+    address as a subdivision.
+
+    The three strong brands – METRO
+    THERM, Genvex and KVM-Conheat –
+    remain unchanged and will continue to
+    be treated as independent brands under
+    METRO THERM A/S.
+
+ Genvex – the original Danish ventilation system                          08:931-2609
+
+ Genvex is a true Danish original. We started producing ventilation
+ systems in 1978 and are still the front runners when it comes to
+ development and production of the most innovative and durable ven-
+ tilation systems on the market.
+
+ Our units are installed in thousands of homes, providing clean, fresh
+ air free from pollen, dust and harmful particles. They help lots of
+ families with maintaining a healthy and comfortable indoor climate
+ and prolong the longevity of the house itself. With very high heat
+ recovery rates, a Genvex system lets you recover and reuse up to 95
+ % of the heat inside your home. As a result, our units provide a
+ strong contribution to energy savings in both in family homes and in
+ society as a whole.
+
+Please visit www.genvex.com to see a list of our distributors
+
+METRO THERM A/S • Tel.: +45 48 77 00 00 • sos@genvex.dk • www.genvex.com
+

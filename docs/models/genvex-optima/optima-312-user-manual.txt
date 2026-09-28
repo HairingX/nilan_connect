@@ -1,0 +1,1244 @@
+ OPERATING
+ INSTRUCTIONS
+
+               OPTIMA 312 –
+          ES960C circuit board
+
+THE AIR WE BREATHE
+TABLE OF CONTENTS
+
+1. Installation of Optima Design........................................................................................................................................ 3
+       1.1 Installation of the Control Panel...................................................................................................................... 3
+       1.2 Mounting................................................................................................................................................................... 3
+
+2. Control Panel........................................................................................................................................................................ 4
+3. Installation............................................................................................................................................................................. 4
+4. Start-up.................................................................................................................................................................................. 5
+5. Operation............................................................................................................................................................................... 6
+
+       5.1 Operating and Changing Data in the Operating Menu.............................................................................. 6
+       5.2 Main Menu................................................................................................................................................................ 7
+       5.3 Date and Time.......................................................................................................................................................... 7
+       5.4 Calendar.................................................................................................................................................................... 8
+       5.5 User Menu................................................................................................................................................................. 8
+       5.6 Display Menu........................................................................................................................................................... 9
+       5.7 Info Menu............................................................................................................................................................... 10
+       5.8 Service Menu........................................................................................................................................................ 11
+       5.9 Schedule for Week Program........................................................................................................................... 17
+       5.10 Defrosting Schedule....................................................................................................................................... 17
+       5.11 Set Point Schedule.......................................................................................................................................... 18
+
+6. Function............................................................................................................................................................................... 20
+       6.1 Operation of Optima 312................................................................................................................................. 20
+       6.2 Extra Capacity...................................................................................................................................................... 20
+       6.3 Operating Reliability.......................................................................................................................................... 20
+
+7. Maintenance....................................................................................................................................................................... 21
+       7.1 Unit........................................................................................................................................................................... 21
+       7.2 Water Circuit and Boiler................................................................................................................................... 21
+       7.3 Dismantling/Taking the System Out of Service...................................................................................... 21
+
+8. Troubleshooting................................................................................................................................................................ 22
+       8.1 High-Pressure Pressure Switch...................................................................................................................... 22
+       8.2 Immersion Heater's Safety Thermostat..................................................................................................... 22
+       8.3 System Is Not in Operation............................................................................................................................. 22
+       8.4 Air Faults................................................................................................................................................................ 22
+
+2
+1. INSTALLATION OF OPTIMA DESIGN
+
+1.1 Installation of the Control Panel                         Underneath the control panel there is access for the:
+                                                              A: Terminal block. Connection to main circuit board
+The control panel is designed to be mounted onto a level      Fit a 4 x 0.25 mm2 low-current cable between the unit and
+wall.                                                         the control panel. The maximum cable length is 50 m. The
+                                                              voltage drop for cable lengths over 50 m is too high and can
+1.2 Mounting                                                  cause operating trouble.
+
+Find the installation place for the control panel, mark off   Method of Installation of the Wall Fixture:
+the holes and screw the fixture securely onto the wall. Use
+at least 4 screws for securing the panel, two at the top and  First screw the fixture securely onto a level wall and then
+two at the bottom.                                            guide the cable visibly up from below.
+
+Obligatory screw     Obligatory screw                         Connect the low-current cable to the terminal block. Check
+                                                              that the cable is connected to the same numbers at both
+Screw                Screw                                    ends (between the control panel and the main circuit board
+                                                              in the unit.)
+Obligatory screw     Obligatory screw
+                                                              Clip the control panel to the wall fixture by guiding it down
+                                                              from above, slightly slanting out at the bottom. Finish by
+                                                              pressing it in at the bottom so that it is flat against the
+                                                              wall. To disassemble, pull the control panel slightly slanting
+                                                              out at the bottom and lift up.
+
+Hold up the wall frame against the wall and mark off the
+holes for fastening the frame. Drilling of holes, hole size
+and suitable screws for fixing the panel all depend on the
+wall material.
+
+Place the control panel in the fixtures and tilt it in
+against the wall. The four support points in the corners of
+the display must touch the wall to keep the display stable.
+
+Support              Support
+point                point
+
+Support              Support                                  Position  Description
+point                point                                    1         Panel casing
+                                                              2         Front of panel
+                                                              3         Display pressure plate
+                                                              4         Wall fixture
+                                                              5         Display glass
+
+                  A
+
+		3
+2. CONTROL PANEL 3. INSTALLATION
+
+The control panel must be mounted on an interior wall that
+is centrally located in the home. Since the control panel
+can simultaneously function as a room thermostat, it is
+important to observe, as follows (unless extract air
+temperature control unit is used):
+
+• Do not expose the control panel to direct sunlight
+• Do not place the control panel on an outer wall
+• Do not recess the control panel in the wall
+• Do not place the control panel over a heat source
+
+A lamp close to the control panel can affect the light sen-
+sor and prevent the control panel from regulating the light
+intensity as intended.
+
+7 keys used for operating the panel are placed on the front
+of the control panel in the ring. The function
+of the keys changes depending on the menu selected.
+(More information is available under Operation.)
+
+There is an infrared movement sensor located under the
+glass screen.
+You can bring up the menu for the daily operating options
+by just waving your hand by the control panel (it is possible
+to turn this function off: See under Main menu/Display/
+Menu item 5).
+
+The following components are placed at the bottom of the
+control panel:
+
+1. SD card
+2. Room sensor
+3. Light sensor
+4. Mini USB port for connection to computer
+
+1: The removable SD card contains all the control models
+and versions, which makes the control panel compatible
+with older versions. The SD card also contains all the
+languages, menus, help texts, symbols and collected data
+logs. The current versions are installed in the control panel
+during the start-up procedure so that the control unit can
+function without the SD card. However, the help texts will
+not appear in the display, and the data logs will not be
+saved.
+
+4: In order for a computer to be able to read the data logs,
+the computer must have the Genvex data logger program
+installed.
+
+See the installation guide.
+
+4
+ 4. START-UP
+
+    The first time the system is started, the control panel dis-
+    play will show: “Choose language”.
+    Click “Next” to switch among Danish, English, German and
+    French. Press “Enter” when your desired language is shown
+    in the display. The control panel will now load the current
+    program version in the selected language.
+    The display will show:
+    • Updating model (loading the current model)
+    • Wait 1.5 minutes (It takes approximately 1.5 minutes to
+
+      load the current version)
+    • Language load (91)
+    • Language OK
+    • Menu load (84)
+    • Menu OK
+    • Icon load (369)
+    • Menu OK
+    • Reset to default
+    • Restarting……..
+    • Optima 312 UK
+    The display will then change to:
+    • Genvex logo
+    • Optima 312 UK
+    • Version number
+    D (Control panel): X.X
+    C (Main board): X.X
+    Finally, the display changes to daily operation, and the
+    system is now in operation with the factory setting, which
+    is only a basic setting.
+    The system is now ready to be fine-tuned with the most
+    optimal air flows and operational desires and demands
+    for the dwelling in question, e.g. weekly operation,
+    temperatures, etc. to ensure that the system is used and
+    operated as optimally as possible.
+
+		5
+5. OPERATION
+
+Optima 312                                                   K3 – Immersion heater
+All Genvex combined ventilation units and domestic hot       Use the key next to the symbol “Immersion heater” to
+water heat pumps of the Combi 185 BP type for dwellings      change between + and ÷. If the symbol is set to “+”, the
+are supplied with the Optima 312 control unit, which has a   immersion heater will automatically engage, as required. If
+factory setting, which means that the system can be put      the symbol is set to “÷”, the immersion heater will not
+into operation without further setup.                        engage, even if required. It is a precondition that item 3 in
+                                                             the User Menu is set to ON.
+The factory setting is a basic setting that should be
+adapted to the operating desires and demands for the         K4 – Main Menu
+home in question to ensure that the system is used and       Use this function to enter the main menu and access the
+operated as optimally as possible.                           sub-items Date and time, Calendar, User menu, Display,
+                                                             Info menu and Service menu.
+5.1 Operating and Changing Data in the
+Operating Menu                                               K5 – Filter
+                                                             Use this function to reset the filter alarm.
+Normally the symbols for the daily operating options are     The key next to the “Filter” symbol resets the alarm for
+displayed, and the following keys are visible:               filter change. To reset the filter alarm, first change the
+                                                             filters and press and hold the key with the “Filter” symbol
+   K1         K7                                             until the exclamation mark in the symbol disappears.
+
+   K2         K6                                             K6 – Information
+                                                             Use this function to get an overview of the current operat-
+                           K3 K4 K5                          ing condition of the unit, e.g. temperatures, fan settings,
+                                                             relay status/function ON/OFF, alarms, timers, etc. Use the
+K1 – Speed                                                   key next to the symbol “Info” to read off the operating con-
+Use this function to set the fan speed                       dition of the unit. More information can be found in the
+to levels 0-1-2-3-4.                                         main menu section under the item Info operation.
+
+Use the key next to the “Speed” symbol to change among       K7 – Temperature
+the 4 speeds. It is also possible to stop the system by      Use this function to set the room temperature. Press the
+pressing and holding the key for 3-4 seconds on condition    key next to the “Temperature” symbol to enter a desired
+that item 28 of the Service menu is set to ON.               temperature between 10 and 30 °C.
+                                                             The current temperature will be displayed in the centre of
+K2 – Forced operation (Party mode)                           the screen.
+This feature makes it possible to set the timer for forced
+operation to between 0 and 9 hours.                          Press the K4 key to enter the main menu and sub-menus,
+                                                             where the following keys will change function:
+Use pushbutton K2 to switch from 0 to 9 hours.
+If the number of hours is set to 0, speeds 3 and 4 will run  K3 c hanges to “Arrow down ” and when the setting is
+until the speed is changed manually. If the number of hours      changed to “÷”.
+is set to between 1 and 9 hours, speeds 3 and 4 will auto-
+matically reconnect to speed 2 after the set number of       K4 c hanges to “Enter”. Press “Enter” to proceed through
+hours.                                                           the menus and sub-menus.
+
+                                                             K5 c hanges to “Arrow up” and when the setting is changed
+                                                                 to “+”..
+
+                                                             K6 c hanges to “Exit”. Press “Exit” to return to the previous
+                                                                 screen.
+
+                                                             K7 changes to “Help”. Press “Help” to view a short
+                                                                 description of the current menu item.
+
+                                                             The horizontal arrow in the menu shows the current
+                                                             location. To save changes to a menu item, finish by
+                                                             pressing “Enter”.
+
+6
+5.2 Main Menu                                                5.3 Date and Time
+
+There is a “Book” K4 symbol lowermost in the centre of       Use this function to set and change the date and time.
+the screen underneath the daily operating options. It
+provides access to the main menu. Press this key to          01 Timer
+enter the main menu.                                         Use this field to input the current hour. When switching
+                                                             between summer and winter time, you have to set the
+Date and time (item 4.3)                                     time one hour forward or back manually.
+
+Calendar   (item 4.4)                                        02 Minutes
+                                                             Use this field to input the current minute.
+User menu  (item 4.5)
+                                                             03 Weekday
+Display    (item 4.6)                                        Use this field to input the current weekday.
+                                                             04 Date
+Info operation (item 4.7)                                    Use this field to input the current date.
+
+Service menu (item 4.8)                                      05 Month
+                                                             Use this field to input the current month.
+“Arrow down” or “Arrow up” will change the symbol to a
+horizontal arrow that indicates the current location.        06 Year
+                                                             Use this field to input the current year.
+
+Press “Enter” to access the sub-items of the current         Weekday       Month
+menu. Press “Arrow down” or “Arrow up” again to select
+the required sub-menu item. When the horizontal arrow        Monday     1  January    1
+is next to a sub-menu item, the 2 lines will change place,
+the font sizes will change, and the text “Set” will be add-  Tuesday    2  February   2
+ed. Pressing ”Enter” next to the selected sub-menu item
+will change the background of the item to grey. Use the      Wednesday  3  March      3
+“+” and “÷” keys to change the current value. Press “Enter”
+again to save the change. If no changes are required,        Thursday   4  April      4
+press “Exit” to go back out of the menus.
+                                                             Friday     5  May        5
+Press “Help” to view a short help text about the menu
+item on the screen. Press one of the keys to exit the help   Saturday   6  June       6
+program.
+                                                             Sunday     7  July       7
+If none of the keys is pressed within a short period
+of time, the control unit will automatically exit the                      August     8
+programs.
+                                                                           September  9
+
+                                                                           October    10
+
+                                                                           November   11
+
+                                                                           December   12
+
+		7
+5.4 Calendar                                                      5.5 User Menu
+
+Use this function to configure and change the setting of          01 – Temperature
+each day of the week. Each day can be configured to run at        Use this field to set the room temperature. The room
+different fan speeds, as required. It is possible to copy the     sensor is installed in the control panel.
+configuration from one weekday to another. Here it is also
+possible to choose ON or OFF, i.e. if there is nobody home        Setting range: between 10 and 30 °C.
+for a period of time, the daily settings can be turned off,       Factory setting: 21 °C.
+and the system will run according to a manual setting, for
+example, level 1.                                                 02 – Domestic water
+                                                                  Use this field to set the desired domestic hot water
+01 – Calendar                                                     temperature.
+Choose between controlling the system manually or
+controlling the speed (air exchange) and temperature              Setting range: between 0 and 55 °C.
+automatically, according to a fixed weekday program.              Factory setting: 52 °C.
+
+If the menu item is set to OFF, the system will be controlled     03 – Immersion heater
+manually according to the selected speed and temperature.         By configuring the set point to “ON”, the immersion heater
+If the menu item is set to ON, the system will be controlled      will automatically engage, if necessary. If the set point is
+according to the weekday programs entered in menu items           configured to “OFF”, the immersion heater will not engage,
+02 to 08.                                                         even if there is a need for this.
+
+Setting range: ON/OFF.                                            When the fresh air temperature is below 0 °C, it is recom-
+Factory setting: OFF.                                             mended to connect the immersion heater as a supplement
+                                                                  to the heating of the domestic hot water, thereby reducing
+02 – Monday                                                       the heating time.
+Up to 10 switching times can be entered for one day. The          Setting range: ON/OFF.
+times can be input in a random order. Enter the hours in the      Factory setting: OFF.
+first column, the minutes in the second and the speed in the
+third column. Use the fourth column to input the tempera-         04 – Timer levels 3 and 4
+ture difference by which the temperature should be lowered.       If the unit runs at speed 3 and 4 and the set point is set to
+                                                                  ON, the unit will automatically reconnect to speed 2 after
+Example: If the temperature is set to 21 ºC and you               the number of hours set in item 17 of the Service Menu. If
+enter – 2.0 °C, the system will aim at 19 °C.                     the set point is set to OFF, the system will run at speed 3 or
+                                                                  4 until it is manually changed to another speed. The timer
+If the speed has been changed manually with the key during        can also be operated directly, with the key next to the sym-
+the daily operation, the program will return to the weekday       bol for “Party mode” on the screen for daily operating
+program when the next switching time passes.                      options.
+
+   Examples of a weekday program:                                 Setting range: ON/OFF.
+   01 07:30 H3 - 0.0                                              Factory setting: OFF.
+   02 09:15 H1 -1.0
+   03 17:00 H3 - 0.0                                              05 – Filter change
+   04 18:00 H2 - 0.0                                              There is a built-in filter timer that counts how long the sys-
+   05 23:30 H2 - 2.0                                              tem has been running since the most recent filter change.
+
+It is not necessary to use all switching times.                   The set point can be set to between 1 and 12 months.We
+If there is 0 in the entire line, the control unit will skip it.  recommend that the set point be initially set at 3 (3
+                                                                  months).
+03 to 08
+These days can be filled in individually in the same way as       If the filters are too dirty after the set period, it is possible
+under item 02.                                                    to set the set point to a lower number of months. If it is not
+                                                                  necessary to change the filters after the set period, the set
+09 – Copy day                                                     point can be set to a higher number of months.
+Use this menu item to copy one day of the week to another,
+where the same switching times, speeds and temperature            When the timer reaches the set value for filter change, the
+lowering are required. Example: From Thursday to Tuesday          “Change filter” alarm will flash at the top of the screen saver.
+
+8
+Once the filters are changed, return to the screen with daily   to 10 minutes. The other automatic return connections can-
+operating options and press and hold the key for the “Filter”   not be adjusted. If no key has been pressed within the time
+symbol until the exclamation mark disappears and the sys-       intervals indicated below, it will automatically return to the
+tem returns to normal operation.                                previous screen:
+
+Setting range: Between 1 and 6 months. Input 0 in the filter    • Change in menu item back to menu item = 30 seconds
+alarm to deactivate it. Note: Genvex assumes no responsibil-    • From menu item to main menu = 2 minutes
+ity for damage that can be traced back to a deactivated filter  • From menu item to daily menu = 2 minutes
+timer and lack of service that follows from it.
+Factory setting: 3.                                             Setting range: between 1 and 10 minutes.
+                                                                Factory setting: 10 min.
+
+06 - Fugtighedsstyring                                          05 – Auto wake-up
+                                                                It is possible to disengage the “Auto wake-up” function,
+Her slås fugtighedsstyringen til. Den skal være indstillet til  where you can change from the screen saver to the screen
+ON for at være aktiveret.                                       with the symbols for the daily operating options by waving
+                                                                your hand past the control panel.
+NB: fugtstyring er kun aktiv i trin 2 og trin 3 og kun når
+varmepumpen ikke er aktiv. Funktionen er kun mulig på           Setting range: between 0 and 4.
+Combi med fugtføler.                                            Factory setting: 1.
+
+Indstillingsmulighed: ON/OFF.                                                       “0” OFF
+                                                                                    “1” Max sensitive
+5.6 Display Menu                                                                    “2” Level 2
+                                                                                    “3” Level 3
+Use the Display menu to set and change the following sub-                           “4” Least sensitive
+menu items:
+                                                                06 – Auto lightness
+01 – Language                                                   The display is fitted with a motion sensor.
+Use this option to choose among several different languag-      Setting range: ON/OFF.
+es in the display.                                              Factory setting: ON.
+
+02 – Program info                                               07 – Lightness day
+Use this option to view what Optima is installed on the unit    Use this option to enter the maximum brightness level for
+and what is its version number:                                 the control panel when the room is fully lit.
+
+Example: Optima 312 UK D: 3.1 C: 1.0                            Setting range: between 0 and 100%.
+D stands for the version number of the control panel.           Factory setting: 100%.
+C stands for the version number of the main board.
+                                                                08 – Lightness night
+03 – Screen saver                                               Use this option to enter the minimum brightness level
+Use this option to select the following settings:               required for the control panel when the room is completely
+0: Screen saver off.                                            dark.
+(ON and displaying daily operating options)
+1: Screen saver off, but with light dimming                     Setting range: between 0 and 100%.
+2: Room temperature + light dimming                             Factory setting: 30%.
+3: Clock + light dimming
+4: Clock and room temperature + light dimming                   09 – Lightness day screen saver
+5: Black screen + light dimming
+
+Setting range: between 0 and 5.
+Factory setting: 3.
+
+04 – Pause time
+Use this option to set how long it should go from no opera-
+tion of the symbols on the screen for daily operation until
+the screen automatically returns to the screen saver. The
+time to go from daily menu to screen saver can vary from 1
+
+		9
+Use this option to enter the maximum brightness level for       User menu without the password selected in item 18.
+the screen saver when the room is completely lit.
+                                                                Setting range: ON/OFF.
+Setting range: between 0 and 100%.                              Factory setting: OFF.
+Factory setting: 50%.
+                                                                16 – Display
+10 – Lightness night screen saver                               If this item is set to ON, you will not be able to access the
+Use this to enter the minimum brightness level for the          Display menu without the password selected in item 18.
+screensaver when the room is completely dark.
+                                                                Setting range: ON/OFF.
+Setting range: between 0 and 100%.                              Factory setting: OFF.
+Factory setting: 0%.
+11 – Reset to factory settings                                  17 – Service menu
+If the set points are so configured that the system does not    If this item is set to ON, you will not be able to access the
+function as expected and the reason for this cannot be          Service menu without the password selected in item 18.
+established, there are 2 different options for resetting the
+menu items to the factory settings:                             Setting range: ON/OFF.
+                                                                Factory setting: OFF.
+Press 1 to change all menu items
+except the menu items for Speed (Level), Filter timer,          18 – Password
+Calendar and Defrost temperatures to the factory settings.      Use this field to enter the selected password. In the future,
+                                                                you will also have to use it in item 12 to access items 13 to
+Press 2 to change all menu items to the factory settings.       18. If you forget your password, contact Genvex Service
+                                                                department for assistance. To change the password, enter
+Note: Before carrying out a reset, make sure that the           a new password in this item and press “Enter”. The password
+current input values are noted down in the “Set Point           will now change.
+Schedule”.
+                                                                5.7 Info Menu
+Setting range: between 0 and 2.
+Factory setting: 0 mode.                                        I The “Info operation menu” provides an overview of the
+                                                                current operating status of the unit.
+12 – Safety menu                                                If you want to see the operating status of the system over a
+It is possible to prevent access to selected main menu          period of operation, connect the control panel to a com-
+items so that they can only be changed with a password,         puter and use the Optima data logger program.
+which is a 4-digit figure. The first time, press 4 times 0 and  The system monitors the operating status every minute and
+then “Enter”. This will open items 13 to 18. Select a pass-     stores the data on the SD card for up to one year..
+word in item 18. This will be the password for accessing
+menu items 13 to 18 in future.                                  Current temperature
+                                                                Press “Enter” next to the Info menu. The first screen to be
+13 – Date and time                                              displayed shows the current temperatures..
+If this item is set to ON, you will not be able to access the
+Date and time menu without the password selected in item        T1  Supply air
+18.
+                                                                T2 Room
+Setting range: ON/OFF.
+Factory setting: OFF.                                           T3 Fresh air
+
+14 – Calendar                                                   T4 Discharge air
+If this item is set to ON, you will not be able to access the
+Calendar menu without the password selected in item 18.         T5 Before cooling coil
+
+Setting range: ON/OFF.                                          T6 Cooling coil
+Factory setting: OFF.
+                                                                T7 Boiler, top
+
+                                                                T8 Boiler, bottom
+
+                                                                T9 Auxiliary sensor
+
+15 – User menu
+If this item is set to ON, you will not be able to access the
+
+10
+Current fan speed                                                       Hour counters (2 pages)
+Press “Arrow down” to display the current fan speeds in per             Press “Arrow down” again to display the hour counters,
+cent and the opening of the bypass damper and of the                    which count from the day the system is put into operation.
+water valve.                                                            The figures displayed should be multiplied by 10. This is
+                                                                        where you can see how many hours the system has been
+              Supply air              in %                              running, how many hours the system has run at various
+                                                                        speeds and how many hours the relays have been
+              Extract air             in %                              connected (ON).
+
+              Bypass damper           in %                                  Total time
+                                                                            Level 0
+              Water valve             in %                                  Level 1
+                                                                            Level 2
+Current setup of operating relays                                           Level 3
+Press “Arrow down” again to display the current status of                   Level 4
+the operating relays.                                                       Relay 1 Compressor
+                                                                            Relay 2 Immersion heater
+              R1 Compressor                                                 Relay 3 Electrical reheater
+              R2 Immersion heater                                           New page comes up in the
+              R3 Electrical reheater                                        display
+              R4 Defrosting                                                 Relay 8 Help function
+              R5 Domestic water
+              R6 Room                                                       Relay 9 Help function
+              R7 Extra cooling
+              R8 Auxiliary relay 8
+              R9 Auxiliary relay 9
+
+Current list of alarms                                                  Press Exit to return to the main menu.
+Press “Arrow down” once again to display the current
+alarms. An alarm is activated If there is ON next to the                5.8 Service Menu
+alarm.
+                                                                        Use this function to set and change the following sub-menu
+There is an alarm next to ON, which can also be seen on the             items.
+screen saver and the display for daily operating options.               10 – Level 1 Supply air
+                                                                        Level 1, which is the lowest speed, is usually used when
+Which alarm it is is displayed in the “Info operation” menu.            there is nobody home. Both fans can be configured in-
+When the timer reaches the set value for filter change, the             dependently of each other so that there is equal air flow in
+“Change filter” alarm will flash at the top of the screen sav-          the supply air and in the extract air, which ensures optimal
+er. Once the error has been corrected or the filter changed             operation. The system must be fine-tuned using specialised
+and the alarm reset, the alarm will read OFF.                           air-measuring equipment. Such fine-tuning is possible
+                                                                        without using the main regulating damper. It is not recom-
+Error         Status       Error next to ”ON”                           mended to configure the air flows without expert advice.
+reporting                                                               An incorrect configuration can lead to higher energy
+              ON/          Filter not changed after 14 days./Frost      consumption or to an unpleasant indoor climate.
+Control unit  OFF          protection error/The system is equipped
+stopped                    with an external switch between terminals    Setting range: between 0 and 100%.
+                           28 and 29.                                   Factory setting: 30%.
+Change filter ON/          When these have short-circuited and the
+                    OFF    system has stopped,                          11 – Level 2 Supply air
+                           “Alarm” will be displayed.                   Level 2 is the recommended speed of the system for
+Pressure      ON/                                                       providing optimal indoor climate, which should be adjusted
+                           The filters must be changed                  to the ventilation needs of the home.
+switch        OFF
+                           The high-pressure pressure switch is         Setting range: between 0 and 100%.
+Frost         ON/          disconnected due to excessive pressure in    Factory setting: 50%.
+                           the cooling system.
+protection OFF
+                           The temperature of the water after the
+Com error ON/              heater is too low (frost danger).
+                    OFF
+                           The control panel cannot communicate with
+                           the main board (between the display and the
+                           printed circuit board).
+
+		11
+12 – Levels 3 and 4 Supply air                                   18 – Filter/stop
+Level 3 is the highest speed that can be configured. It is       To make sure that the filters are changed when the “Change
+used, e.g. if there are many guests or a lot of activity in the  Filter” alarm flashes on the screen of the control panel, the
+kitchen.                                                         set point can be set to ON. If the filters are not changed,
+                                                                 the system will stop automatically after 14 days. If this
+Setting range for level 3: between 0 and 100%.                   precaution is not required, the set point can be configured
+Factory setting for level 3: 75%.                                to OFF, and the system will continue to operate.
+
+Level 4 is used, in particular, in the summer in order to lower  Setting range: ON/OFF.
+the indoor temperature. Remember that a higher air               Factory setting: OFF.
+exchange rate increases energy consumption.
+                                                                 19 – Immersion heater
+Setting range for level 4: cannot be set                         If item 3 in the Service menu is set to ON and the key on
+Factory setting for level 4: 100%.                               the control panel for the immersion heater is activated, the
+                                                                 immersion heater will heat up the domestic water
+13 – Level 1 Extract air                                         in the upper part of boiler to the set temperature.
+The fan speed is adjusted until the air flow is the same as
+the supply air in level 1.                                       Setting range: between 0 and 65 °C.
+                                                                 Factory setting: 50 °C.
+Setting range: between 0 and 100%.
+Factory setting: 30%.                                            20 – Disinfection
+14 – Level 2 Extract air                                         If the item is configured to ON, the immersion heater will
+The fan speed is adjusted until the air flow is the same as      heat the domestic water up to 65 °C once a week in order to
+the supply air in level 2.                                       disinfect the boiler regardless of the temperature setting.
+
+Setting range: between 0 and 100%.                               Setting range: ON/OFF.
+Factory setting: 50%.                                            Factory setting: OFF.
+15 – Levels 3 and 4 Extract air
+The air flow at level 3 is adjusted to the same air flow as      21 – Heating air
+the supply air at levels 3 and 4 (item 12).                      The default setting of the control unit is OFF in order to
+                                                                 give priority to domestic water heating before room
+Setting range for level 3: between 0 and 100%                    heating. To change the priority, the set point must be
+Factory setting for level 3: 75%.                                configured to ON.
+
+Setting range for level 4: cannot be set                         Factory setting: OFF.
+Factory setting for level 4: 100%.
+                                                                 22 – Regulation water
+16 – T2 Fine-tuning                                              If a water reheater with a motor-operated valve is installed
+It is possible to fine-tune the room sensor of the control       in the system, it may be necessary to adjust the regulation
+panel                                                            time. The less the regulation time, the faster the motor-
+to make it possible to view the correct current room tem-        operated valve will regulate.
+perature on the display.                                         Setting range: between 1 and 250 sec.
+                                                                 Factory setting: 20 sec.
+Setting range: between 0 and -5 °C.
+Factory setting: -3 °C.                                          23 – Regulation power
+                                                                 If an electric preheater or an electric reheater is installed,
+17 – Timer levels 3 and 4                                        it may be necessary to adjust the regulation time.
+If automatic reconnection is used for speeds 3                   Setting range: between 1 and 30 minutes.
+or 4, it is possible to enter how many hours the system
+should run at level 3 or 4 before it automatically returns to    Factory setting: 3 min.
+level 2.
+                                                                 24 – Minimum extract air
+Setting range: between 1 and 9 hours.                            This is where the minimum extract air flow is set. The heat
+Factory setting: 3 hours.                                        pump will not start with extract air flow below this setting.
+
+                                                                 Setting range: between 0 and 100%.
+                                                                 Factory setting: 30%.
+
+12
+25 – Electric heating coil                                                28 – System stop
+Use this option to input if the installation is fitted with an            Use this option to choose if the system can be stopped by
+electric heating coil:                                                    pressing the key for speed (K1) in the operating menu for
+                                                                          3-4 seconds. If the value is OFF, the system cannot be
+0 = No electric heating coil installed                                    turned off.
+1 = Electric reheater installed
+2 = Electric preheater installed                                          Setting range: ON/OFF.
+                                                                          Factory setting: OFF.
+Setting range: 0-2.
+Factory setting: 0.                                                       29 – Stop defrosting
+                                                                          The defrosting period ends by default when the evaporator
+26 – Solar collector hysteresis (ºC)                                      reaches a temperature of 5 °C, which is the standard
+If a solar collector is connected to the coil of the boiler, use          setting. Under special operating conditions where the
+this option to input the temperature difference between the               evaporator is not completely defrosted, it may be neces-
+temperature in the solar collector (T9) and the domestic                  sary to change this temperature to a higher value.
+water temperature (T8) that should be reached before the
+solar pump starts. The solar pump will not stop until T9 is               Setting range: between 0 and 15 °C.
+equal to T8. The solar pump will stop under all circum-                   Factory setting: 5 °C
+stances once T8 has reached a temperature of 60 °C.
+Note: Only relevant for Combi with solar coil.                            Note: Changing this parameter without expert advice is not
+                                                                          recommended.
+Setting range: between 0 and 5 °C.
+Factory setting: 5 °C.                                                    30 – Compressor start/stop
+                                                                          The default temperature difference between start/stop
+27 – Help function (Terminal H17 on the ES960 circuit                     compressor is ± 0.4 °C. Changing the temperature differ-
+board) This function can be used for, as follows:                         ence is recommended under special operating conditions.
+
+Set    Function                                                           Setting range: between 0.1 and 1.0 °C.
+point                                                                     Factory setting: 0.4 °C.
+0      The relay is off
+1                                                                         Note: Changing this parameter without expert advice is not
+2      The relay is on when the system is in operation. This option can   recommended.
+3      be used, e.g. in order to open and close the fresh air damper and
+4      the discharge air damper.                                          31 – Constant ON
+5                                                                         If the home's other heating systems are not connected
+       The relay is on when extra heat is required or when the circu-     to the heat pump system, the home's other heating sys-
+6      lating pump should run when heating with water reheater is         tems, e.g. a wood-burning stove, can stop the heat pump so
+7      required.                                                          that the heat pump system with heat exchanger only blows
+8                                                                         preheated air into all rooms. This will cause increasing
+       The relay is on when the “Change filter” alarm is active.          problems with draught as the temperature falls outside.
+       This option can be used to activate an external alarm.             Systems without heat exchangers will blow fresh air
+                                                                          directly inside.
+       The relay is on when extra cooling is required. This function is
+       used if the system is also fitted with a                           Setting the set point to ON will disconnect the room
+       preheater.                                                         sensor. The unit will always operate and blow warm air in
+                                                                          when the fresh air temperature is below the temperature
+       The control unit can handle an earth heat exchanger using a        set in item 32. If the set point is configured to OFF, the
+       damper. The relay will be on in case of one of the following two   room sensor will regulate the unit regardless of the fresh
+       conditions:                                                        air temperature.
+       The outdoor temperature, sensor T9, is lower than the value set
+       in item 37 (frost protection temperature, typically set at 5 °C).  Setting range: ON/OFF.
+       The outdoor temperature, sensor T9, exceeds by more than 1°        Factory setting: OFF.
+       the temperature configured in item 1 and by more than 1° the
+       current room temperature.                                          32 – Constant
+                                                                          Use this option to set the desired fresh air temperature
+       Floor heating control – The relay is switched on when the sen-     if constant ON is selected in item 31.
+       sor in the tank bottom (T8) is greater than 30°C
+                                                                          Setting range: between 0 and 10 °C.
+       Floor heating control – The relay is switched on when the sen-     Factory setting: 5 °C.
+       sor in the tank bottom (T8) is greater than 40°C
+
+       The relay is switched on when the L1 terminal is short-circuit-
+       ed/activated (extractor fan). This feature can be used e.g. in
+       conjunction with a shut-off damper connected to the H17 relay
+       which shuts off towards the bathroom when the extractor fan
+       is activated.
+
+Setting range: between 0 and 5.
+Factory setting: 0.
+
+		13
+33 – Reduction                                                         37 – Earth heat exchanger
+Lowering the supply air flow is recommended at very low                If an earth heat exchanger is fitted to the system and set
+fresh air temperatures in order to improve the operating               point 5 in menu item 27 has been selected, it is possible to
+conditions of the unit and to also achieve a higher supply air         configure the lowest temperature at which the earth heat
+temperature, even though the same air flow continues to be             exchanger is to operate.
+extracted.                                                             Setting range: between 0 and 10 °C.
+Setting the set point to ON will lower the supply air flow             Factory setting: 0 °C.
+when the fresh air temperature falls below the set
+temperature. If the set point is set to OFF, there will be no          38 – Changing temperature scale
+reduction in the supply air flow. This setting should be used          The menu is not in use.
+with care if there is a wood-burning stove installed in the
+home.                                                                  39 – Minimum air supply
+                                                                       Use this option to set the minimum air flow for supply air.
+Setting range: ON/OFF.                                                 The heat pump will not start with supply air flow below this
+Factory setting: OFF.                                                  setting.
+
+34 – Reduced supply air flow                                           Setting range: between 0 and 100%.
+When the set point is set to ON in item 33, we recommend               Factory setting: 30%.
+that
+the fresh air temperature be set to -10 °C.                            40 – Minimum Air Mode
+                                                                       0 = Off: If the value set for extract air or supply air is below
+Setting range: between -15 and 0 °C.                                   the values set in items 24 and 39, respectively, the heat
+Factory setting: -10 °C.                                               pump will not start when there is a need for air or water
+                                                                       heating.
+
+35 – Supply air speed                                                  1 = Winter: Should the actual operational settings for
+When the set point in item 33 is set to ON, we recommend               extract air or supply air flow fall below the minimum set-
+that the reduced supply air flow be configured to 20% low-             tings in items 24 and 39, respectively, and there is a need
+er than the value set in item 11.                                      for the heat pump to operate, the extract air volume and
+                                                                       supply air volume will rise to the set minimum air flow rates.
+Setting range: between 0 and 100%.
+Factory setting: 20%.                                                  On heat pump STOP, air volumes return to the values they
+                                                                       had before the heat pump was started.
+
+36 – Auxiliary relay 8 – (terminal H16 on the ES960 circuit            2 = Summer: When the heat pump operates in conjunction
+board)                                                                 with air heating, the control unit responds as described in
+Relay 8 can be used for the following functions:                       “1”.
+                                                                       When the heat pump operates in conjunction with water
+Set    Function                                                        heating
+point                                                                  and the extract air flow falls below the setting in item 24, it
+0      It is possible to connect the solar pump regulated in item 26.  will go up to the setting in item 24.
+       The pump will stop when the T8 domestic hot water tempera-      The supply air volume will not change, but will remain at the
+1      ture reaches 60 °C.                                             current setting.
+2
+       It is possible to connect a water reheater circulation pump.    On heat pump STOP, the extract air volume will return to the
+3      The pump will only run when heat is required.                   setting it had before “Heat pump on”.
+
+       The relay is on when the system is running.                     3 = Auto: When T3 (Fresh air) > 15 °C, regulation will be as if
+       Can be used, e.g. in order to open and close the fresh air      the setting in this item was 2 “Summer”.
+       damper and the discharge air damper.
+                                                                       When T3 (fresh air) ≤ 15 °C, regulation will be as if the set-
+       It is possible to connect the solar pump regulated in item 26.  ting in this item was 1 “Winter”.
+       The pump will stop when the T8 domestic hot water tempera-      Setting range: 0-3
+       ture reaches 52 °C.                                             Factory setting: 0
+
+Setting range: between 0 and 3.                                        41 – Modbus Mode
+Factory setting: 0.                                                    See a separate description of MODBUS
+                                                                       Setting range: 0-2
+                                                                       Factory setting: 0
+
+14
+42 – Modbus address                                            50 – Reheat Reg
+See a separate description of MODBUS                           The reheat cycle function works, as follows: For example,
+Setting range: 1-247                                           necessary output 50% and cycle = 60 sec means that the
+Factory setting: 1                                             controller will switch the preheater on for 30 sec and off
+                                                               for another 30 seconds.
+43 – Electric preheater
+If an electric preheater has been installed and Service menu   Note: Please refer to your country-specific regulations on
+item 25 has been set to 2, use this option to input below the  limitations when adjusting this function.
+fresh air temperature at which the electric preheater is
+supposed to switch on.                                         The modulating reheater function refers to the value
+                                                               adjusted in set point no. 01. The reheater will try to main-
+Setting range: between -15 and 0 °C.                           tain a steady supply air temperature according to this set
+Factory setting: 0 °C.                                         point.
+
+44 – Preheat PI P                                              When using the modulating reheater, it will be necessary to
+P-band for the PI controller for the electrical modulating     replace the inlet air temperature sensor (T1) in the ventila-
+preheater.                                                     tion unit with a new temperature sensor installed upstream
+The P-band controls the amplification of the controller fol-   of the reheater.
+lowing a deviation from the set point (speeder)
+                                                               51 – Bypass max
+45 – Preheat PI I                                              Use this option to set the temperature at which the bypass
+I-band for the PI controller for the electrical modulating     should
+preheater. The function controls how quickly the controller    be 100% open. You set a temperature differential, which
+adapts to a deviation of the set point (brake).                means that if you want the bypass to be 100% open, at e.g.
+                                                               23 °C and if the set temperature in User menu item 1 is 20
+46 – Preheat Reg                                               °C, this menu item should be set to 3 °C.
+The preheat cycle function works, as follows: E.g. necessary
+output 50% and cycle = 60 sec means that the controller        The bypass will open, provided that:
+will switch the preheater on for 30 sec and then off for       1. The extract air temperature is higher than the fresh air
+another 30 sec.
+                                                                   temperature.
+
+Note: Please refer to your country-specific regulations on     2. The fresh air temperature is above the temperature set
+limitations when adjusting this function.                          in the Service menu menu 52.
+
+The modulating preheater function refers to the value          The bypass opens when the temperature reaches the set
+adjusted in set point no. 43. The preheater will try to main-  point in User menu item 1 + the temperature differential
+tain a steady outdoor air temperature according to this set    set in this menu item.
+point. When the modulating preheater is used, the existing
+outdoor air temperature sensor (T3), which is built into the   Note. The bypass and reheater cannot run simultaneously.
+ventilation unit, can be used as reference. No extra temper-
+ature sensor is required.                                      52 – Close bypass at low fresh air
+                                                               To prevent the bypass damper from opening at fresh air
+47 – Reheat offset                                             temperatures and from blowing cold, unheated air into the
+Offset for reheater with reference to the set point for the    dwelling, use this function to configure the lowest fresh air
+requested temperature on the display (user menu 01).           temperature at which the damper must be closed. The value
+For example, the desired temperature = 20 °C offset val-       is an expression of the greatest difference that may exist
+ue=2 the reheater will try to maintain a supply air tempera-   between the temperature configured in item 1 and the low-
+ture of 18 °C.                                                 est fresh air temperature. Setting range: Between 0 and 20
+                                                               °C. If 0 °C is selected, the function is turned completely off.
+
+48 – Reheat PI P                                               53 – Method of regulation
+P-band for the PI controller for the electrical modulating     Use this option to set which sensor will be used as a refer-
+reheater. The P-band controls the amplification of the con-    ence point for the desired set point temperature.
+troller following a deviation from the set point (speeder).
+                                                               There are 2 options:
+49 – Reheat PI I                                               1. Extract air sensor in unit (T2S)
+I-band for the PI controller for the electrical modulating     2. Sensor in display (T2)
+preheater. The function controls how quickly the controller
+adapts to a deviation of the set point (brake).
+
+		15
+If it is not possible to place the display with the built-in   Options:
+temperature sensor in a room that is “representative” for      0 = the function is disabled
+the overall temperature in the entire home, we recommend       1 = 1 damper is connected
+that you use the T2S extract air sensor as reference sensor.   2 = 2 dampers are connected
+                                                               3 = 3 dampers are connected
+54 – Demand control                                            4 = 4 dampers are connected
+This feature allows the connection of an external 0–10 volt
+signal which can be used to force-control fans to a higher     60 – Fire test now*
+speed as a result of an intensification of the signal.         0 = auto, dampers are tested 1 time per week in accordance
+                                                               with the schedule.
+The function is only active in fan steps 2 and 3 and requires
+the humidity control to be disabled (user menu 06).            1 = Fire test now, this function force starts a functional
+                                                               test of fire dampers. The result will appear on the display
+The factory setting is 0%, which disables the demand           and be logged on the SD card (note: there will be a delay of
+control. The working range of the allowable increase in        up to 240 seconds from when the test starts to when the
+fan speed can be limited by setting it from 0–100%             test has been performed).
+
+Example: working range of 100%. Here, 5 volts will increase    2 = reset fire alarm, in case of errors during damper test,
+the speed by +50%                                              triggered damper/smoke detector or a lack of commu-
+                                                               nication, the ventilation unit will be shut down and an alarm
+Example: working range of 50%. Here, 5 volts will increase     symbol will appear on the display. In order to restart the
+the speed by +25%                                              system, perform a reset of the fire control system.
+
+55 – Humidity max. temperature**                               61 – Fire test day*
+Sets the end point for the outdoor temperature                 Calendar of when the automatic weekly fire/smoke damper
+compensation (T3).                                             test will be performed
+                                                               1 = Monday
+Options: 5–25°C.                                               2 = Tuesday
+                                                               3 = Wednesday
+56 – Humidity max. value**                                     4 = Thursday
+Setting the end point of the outdoor temperature               5 = Friday
+compensation, (desired max. humidity value).                   6 = Saturday
+                                                               7 = Sunday
+Options: 35–85 %.
+                                                               62 – Fire test hour*
+57 – Humidity fan speed**                                      schedule for when the automatic fire/smoke damper test
+Sets how much the fan speed can deviate from the desired       will be performed.
+fan speed.
+                                                               Options: 1–24
+
+Options: 5–30 %.                                               *NOTE – This function can only be used in conjunction with
+                                                               the ES960CC PCB and ES1048 firebox.
+58 – Humidity control frequency**
+Sets the desired frequency for how often the fan speed         When activating menu 59, under the Info menu, a ‘FireTST’
+can be changed.                                                point will be added which indicates the time when the last
+                                                               fire test was performed, as well as the status of this test.
+The function is defined as 1% per unit of time.
+                                                               Furthermore, there will be a ‘Fire alarm’ point which, if listed
+Options: 1–60 mins.                                            as ON, will indicate damper errors and simultaneously iden-
+                                                               tify which damper is failing. If Fire alarm is OFF after per-
+59 – Fire damper*                                              forming ‘fire test now point 60’ and setting the correct
+If the Genvex Optima controller is used in a fire and smoke    number of dampers, the installation has been done
+safety system, this menu allows the setting of the number      correctly.
+of dampers which are connected to the Optima controller
+and need to be monitored.
+
+                                                               ** Humidity control parameters are only relevant to Combi
+                                                               models with humidity sensors.
+
+16
+5.9 Schedule for Week Program
+
+                   Monday                                         Tuesday                                    Wednesday
+
+            Hours  Minutes Speed  Red. T2                  Hours  Minutes Speed  Red. T2              Hours  Minutes Speed  Red. T2
+
+ 1)                                             1)                                         1)
+ 2)                                             2)                                         2)
+ 3)                                             3)                                         3)
+ 4)                                             4)                                         4)
+ 5)                                             5)                                         5)
+ 6)                                             6)                                         6)
+ 7)                                             7)                                         7)
+ 8)                                             8)                                         8)
+ 9)                                             9)                                         9)
+10)                                            10)                                        10)
+
+            Hours  Thursday       Red. T2                  Hours   Friday        Red. T2              Hours  Saturday       Red. T2
+
+ 1)                Minutes Speed                1)                Minutes Speed            1)                Minutes Speed
+ 2)                                             2)                                         2)
+ 3)                                             3)                                         3)
+ 4)                                             4)                                         4)
+ 5)                                             5)                                         5)
+ 6)                                             6)                                         6)
+ 7)                                             7)                                         7)
+ 8)                                             8)                                         8)
+ 9)                                             9)                                         9)
+10)                                            10)                                        10)
+
+5.10 Defrosting Schedule                                                                                     Sunday
+
+                                                                                                      Hours  Minutes Speed  Red. T2
+
+Sensor TP before        Sensor TP cooling                                                  1)
+cooling surface °C      surface °C                                                         2)
+                                                                                           3)
+                    15                     -2                                              4)
+                                                                                           5)
+                    14                     -2                                              6)
+                                                                                           7)
+                    13                     -2                                              8)
+                                                                                           9)
+                    12                     -2                                             10)
+
+                    11                     -2
+
+                    10                     -2
+
+                    9                      -2
+
+                    8                      -2
+
+                    7                      -2
+
+                    6                      -2
+
+                    5                      -2                                             Red. T2 = Reduced room temperature
+                                                                                          (Night set-back)
+                    4                      -2
+
+                    3                      -3
+
+                    2                      -4
+
+                    1                      -4
+
+                    0                      -5
+
+                    -1                     -6
+
+                    -2                     -6
+
+                    -3                     -7
+
+                    -4                     -7
+
+		17
+5.11 Set Point Schedule                  Factory setting:     Configuration area   Date  Date  Date  Date
+                                                      21 °C          10 - 30 °C
+   Item Heading                                       52 °C            0 - 55 °C
+   (5.5) 1 Temperature                                 OFF             ON/OFF
+                                                       OFF             ON/OFF
+           2 Domestic water
+           3 Immersion heater                   3 months      0 to 12 months
+           4 Timer levels 3 and 4                      OFF             ON/OFF
+           5 Filter change                            30%             0 - 100%
+           6 Humidity control                         50%             0 - 100%
+  (5.8) 10 Level 1 Supply air                                         0 - 100%
+          11 Level 2 Supply air                75/100%                0 - 100%
+          12 Levels 3 and 4 Supply air                30%             0 - 100%
+          13 Level 1 Extract air                      50%             0 - 100%
+          14 Level 2 Extract air                                      ÷ 5 - 0 °C
+          15 Levels 3 and 4 Extract air        75/100%
+          16 T2 Fine-tuning                           ÷3 °C         1 - 9 hours
+          17 Timer levels 3 and 4                                      ON/OFF
+          18 Filter / stop                         3 hours             0 - 65 °C
+          19 Immersion heater                          OFF             ON/OFF
+          20 Disinfection                                             ON / OFF
+          21 Heating air                              50 °C
+          22 Regulation water                          OFF         1 - 250 sec.
+          23 Regulation power                          OFF          1 - 30 min.
+          24 Min extract air                                          0 - 100%
+          25 Electric heating coil                 20 sec.
+          26 Solar collector                         3 min.                   0-2
+          27 Help functions                           30%                0 - 5 °C
+          28 System stop
+          29 Stop defrosting                               0                0-8
+          30 Compressor start/stop                     5 °C            ON/OFF
+          31 Constant ON                                               0 - 15 °C
+          32 Constant                                      0        0.1 - 1.0 °C
+          33 Reduction                                 OFF             ON/OFF
+          34 Reduced supply air flow                   5 °C            0 - 10 °C
+          35 Supply air speed                        0.4 °C            ON/OFF
+          36 Auxiliary relay 8                         OFF           ÷15 - 0 °C
+          37 Earth heat exchanger                      5 °C           0 - 100%
+          38 Changing temperature scale                OFF         0/1/2/3
+          39 Minimum supply air                     ÷10 °C             0 - 10 °C
+          40 Minimum Air Mode                         20%              ON/OFF
+          41 Modbus Mode                                              0 - 100%
+          42 Modbus Address                                0           0/1/2/3
+          43 Electric preheater                        0 °C
+          44 Preheat PI (P)                            OFF                0/1/2
+          45 Preheat PI (I)                           30%                 1-247
+          46 Preheat Reg. (s)                                         -15 - 0 °C
+          47 Reheat offset (-)                             0             1 - 255
+          48 Reheat PI (P)                                 0              1-255
+          49 Reheat PI (I)                                 1            10-120
+          50 Reheat Reg. (s)                           0 °C             0-20 °C
+                                                           5             1 - 255
+18                                                     200                1-255
+                                                         40             10-120
+                                                           2
+                                                           5
+                                                       200
+                                                         40
+51 Bypass maximum                         3        1-10
+52 Close bypass at low fresh air          4    0-20 °C
+53 Reg. form (1=T2S 2=T2D)                2
+54 Demand control                         0          1-2
+55 Humidity max. temperature         15°C     0-100%
+56 Humidity max. value              60 %
+57 Humidity fan speed               15 %        5-25°C
+58 Humidity control frequency     10 min.    35-85 %
+59 Fire damper                            0
+60 Fire test now                          0    5-30 %
+61 Fire test day                          3  1-60 min.
+62 Fire test hour                       12
+                                                     0-4
+                                                     0-2
+                                                     1-7
+                                                   1-24
+
+		19
+6. FUNCTION
+
+6.1 Operation of Optima 312                                   6.3 Operational Reliability
+
+A Combi unit is used for heating domestic water and supply    High-pressure pressure switch
+air in order to cover the ventilation needs of the home and   In order to prevent the compressor from exceeding its
+partial basic heating.                                        range of application, there is a built-in high-pressure
+                                                              pressure switch that will disconnect when the pressure
+Domestic water heating                                        becomes too high. Activate the red reset button on the
+The temperature of the domestic water is controlled by        pressure switch
+sensor T8, which is fitted at the bottom of the boiler. When  once the cause of the fault has been established.
+the domestic water needs to be heated, the compressor
+starts, solenoid valves MA 3 and MA 6 open, and the           Safety thermostat
+domestic water is heated to the configured domestic water     If a fault occurs in the immersion heater for heating of
+temperature.                                                  domestic water, the safety thermostat will disconnect. To
+                                                              reconnect the safety thermostat, press the small button in
+Room heating                                                  the middle of the thermostat.
+Solenoid valves MA 2 and MA 5 are activated for room
+heating. Room temperature is controlled by room sensor        The thermostat is located in the middle of the boiler.
+T2, which is fitted in the control panel, or by extract air   Remember to disconnect the power to the system
+sensor T2S, which is fitted in Combi 185. If this tempera-    before engaging in an intervention. Such intervention may
+ture has been set to, e.g. 2 °C, the compressor will start    only be performed by
+when the room temperature falls to 20.6 °C. The compres-      authorised personnel.
+sor will stop when it has increased the room temperature to
+21.4 °C. If the compressor cannot maintain the room           Overriding the supply air fan
+temperature, the motor-operated valve (systems with           If the supply air temperature exceeds 45 °C, the speed
+water reheaters) will begin to regulate (PI regulation) once  of the supply air fan will begin to increase.
+the room temperature has fallen to 20 °C.                     The supply air temperature will be maintained at 45 °C, if
+                                                              possible.
+For systems with electrical reheaters, level 1 will engage
+when the room temperature falls to 20 °C. When the room
+temperature again reaches 21 °C, the electrical heater will
+disengage.
+
+No heat requirement
+When neither domestic water heating nor room heating is
+required, the compressor stops, but the fans continue to
+run and the heat of the extract air is recovered in the
+counter current heat exchanger and transferred to the
+supply air.
+
+Defrosting
+The system begins to defrost when the difference between
+the temperature before the cooling coil and the tempera-
+ture of the cooling coil becomes too big, which occurs when
+ice forms on the cooling coil. Solenoid valve MA 4 opens,
+the supply air fan and the electrical heaters stop until the
+ice has melted and the cooling coil has reached a tempera-
+ture of about 5 °C (depends on the value set in menu 29).
+The solenoid valve then closes again, and the supply air fan
+and the electrical heating coils start again.
+
+6.2 Extra Capacity
+
+Immersion heater
+If the heat requirement exceeds the capacity of the Combi
+unit, the immersion heater can be configured to ON using
+the shortcut key in the main menu. When the immersion
+heater is set to ON, sensor T7, which is mounted in the
+middle of the boiler, will heat the upper part of the DHW
+boiler to the temperature that is set.
+
+20
+7. MAINTENANCE
+
+To achieve optimal performance, follow the instructions            7.2 Water Circuit and Boiler
+below:
+                                                                   Safety valve
+       Before opening the unit, disconnect power / pull out the    In connection with the domestic water boiler, the installer
+       plug and wait until the fans have stopped completely.       has fitted a safety valve next to the cold water tap. The
+                                                                   function of this valve is to protect the boiler against
+Check that the condensation outlet is working a couple of          overpressure when domestic water expands under heating.
+days after the primary installation.
+                                                                   The non-return (check) valve that is fitted before the safety
+Environmental requirements                                         valve on the cold water pipe prevents the water from flow-
+When repairing or dismantling the unit, observe the statu-         ing back into the cold water pipe. The pressure increases to
+tory and environmental regulations and requirements                the maximum of the safety valve. Then the safety valve
+regarding recycling and destruction of various materials.          opens, and the excess water flows away. If the safety valve
+                                                                   does not open, the boiler will burst. To ensure that the safe-
+7.1 Unit                                                           ty valve is functional, it should be inspected several times a
+                                                                   year. To test it, press the handle on the safety valve and
+Filters                                                            ensure that the water can drain away. Damage that has
+Change the filters when the “change filter” alarm flashes on       occurred due to a blocked safety valve is not covered by
+the display of the control panel. Stop the unit using the          the guarantee.
+circuit breaker of the unit or the circuit breaker of the
+terminal board. Open the front cover/filter drawers and            7.2.1 Anode (only relevant to Combi with enamelled tank)
+remove the filters. After changing the filters, reset the filter   In order to prevent corrosion of the enamelled hot water
+timer. The time interval for cleaning/changing the filters can     tank, it has been equipped with a magnesium anode which
+be adjusted in the operating menu.                                 is mounted in the middle of the tank.
+
+       The discs are sharp, be careful not to cut yourself.        The anode has a life expectancy of around 2–5 years. How-
+       Do not damage the discs. Vacuum cleaning or using           ever, caution should be taken to ensure that the anode is
+       pressurised air on the filters is not recommended as it     intact. Every two years, it is recommended that the anode
+       may impair filter performance.                              is inspected and replaced if it has been corroded and shows
+                                                                   a diameter of around 6–10 mm.
+                        G4 = Standard filter (Coarse filter class
+                                G4)                                When the anode is to be inspected, the voltage must be dis-
+                                                                   connected before removing the front cover.
+                        F5 = Fine filter (Fine filter class F5)
+                        F7 = Pollen filter (Fine filter class F7)  The hot water tank must be emptied of water before it is
+                                                                   possible to remove the anode. To do this, turn off the cold
+Condensed water and condensation outlet                            water supply and attach a hose to the drain valve so that
+The condensation trays must be cleaned of dirt every               water from the tank can run out into the nearest drain.
+autumn. Fill the condensation trays with water and check           When draining the water, open a hot water tap in order to
+that the water drains away. If not, the outlets must be            prevent negative pressure in the tank. When the tank has
+cleaned. Also check that the evaporator discs are clean.           been emptied, the anode can be unscrewed and serviced.
+                                                                   Once the anode has been fitted again, close the drain valve,
+Heat exchanger                                                     reactivate the cold water supply, and the tank will be filled
+Inspect the heat exchanger every year. If it is dirty,             with water and emptied of air again.
+take it out and wash it in warm water with soap and
+rinse it with a hand shower.                                       When the tank has been filled with water, reinstall the front
+                                                                   cover, and the voltage can be switched back on.
+
+Fans                                                               7.3 Dismantling/Taking the System Out of
+Inspect the fans for dirt in the fan wheels every year.            Service
+
+Remove the front cover of the unit. Clean the fans with a          Do as follows:
+brush, a bottle cleaner or a paint brush. Be careful not to        Disconnect the power supply, i.e. the electric cables.
+remove the counterbalancing weights on the fan wheels as           Disconnect the condensation outlet and the power cables
+this will lead to disequilibrium and cause a higher level of       to any reheater/preheater Disconnect the wires to the
+noise and also wear the fans.                                      panel and dismantle the ducts. If the system needs to be
+                                                                   taken out of service, dismantle the ducts to avoid con-
+Supply air and extract air valves                                  densed water in the system and in the ducts. Close all
+Clean the valves by drying with a dry cloth. Make sure that the    supply air and extract air valves.
+valves do not turn around, causing a change in the air flow.
+
+		21
+8. TROUBLESHOOTING
+
+8.1 High-Pressure Pressure Switch                              8.3 System Is Not in Operation
+
+The high-pressure pressure switch protects the heat pump       The system has stopped.
+from excessive pressure in the cooling circuit. In the event
+of disturbances, the high-pressure pressure switch will        Check the following:
+stop the compressor.
+The system will restart when the high-pressure pressure        • Is the display illuminated?
+switch is reset manually.                                      • Is the system disconnected via the clock program?
+                                                               • Is the high-pressure pressure switch disengaged?
+Before unscrewing the front cover, disconnect power to         • Is the cable between the control unit and the control panel
+the system.
+                                                                 attached?
+Take off the front cover by removing the screws.               • Has the filter been changed? (“Change filter” alarm)
+                                                               • Frost protection error.
+
+                                                               Condensed water is leaking from the unit
+                                                               Error possibility:
+                                                               • The condensation outlet is blocked by dirt.
+                                                               • The condensation outlet is not adequately protected
+
+                                                                 against freezing at low outdoor temperatures.
+                                                               • The drain trap is not installed correctly.
+
+                                                               8.4 Air Faults
+
+                                                               No supply air to the living rooms.
+
+                                                               Error possibility:
+
+                                                               • Blocked fresh air filter.
+                                                               • The fresh air filter is blocked by dirt and leaves
+
+                                                                 in the autumn or by snow and ice in the winter.
+                                                               • Unit is defrosting.
+
+To RESET, press the red button.                                No extract air from the wet rooms
+                                                               Error possibility:
+                                                               • Blocked extract air filter.
+
+8.2 Immersion Heater's Safety Thermostat                       Cold supply air
+                                                               Error possibility:
+If sensor T7 of the immersion heater is defective, the         • The heat exchanger is blocked by dirt or ice.
+safety thermostat ensures that the temperature of the          • Blocked extract air filter.
+domestic hot water does not exceed 90 °C.                      • “Opening bypass” incorrectly set in the control unit or a
+Before unscrewing the front cover, disconnect power to
+the system.                                                      defective bypass.
+
+Unscrew the cover plate in front of the immersion heater         If it is not one of the faults above, contact:
+and reset the safety thermostat, as indicated in the picture.  • During the warranty period (0-2 years):
+
+                                                                 the fitter that the unit was bought from.
+
+                                                               • After the end of the warranty period (2 years ->):
+                                                                 the fitter that the unit was bought from or Genvex cus-
+                                                                 tomer centre (tel.: +45 7353 2700).
+                                                                 Have the data from the rating plate readily available (silver
+
+                                                                 plate on the unit).
+
+To RESET,
+press the white button
+
+22
+23
+THE AIR WE BREATHE                                   All
+                                                  Genvex
+    As of 1 January 2025, Genvex has           systems are
+    merged with our parent company              rated with
+    METRO THERM into one company under         energy label
+    the name METRO THERM A/S.
+                                                 A
+    With the merger, both physical addres-
+    ses will be retained: The head office and
+    production for METRO THERM will
+    remain in Helsinge, while administration
+    and production for Genvex and KVM-
+    Conheat will remain at the Haderslev
+    address as a subdivision.
+
+    The three strong brands – METRO
+    THERM, Genvex and KVM-Conheat –
+    remain unchanged and will continue to
+    be treated as independent brands under
+    METRO THERM A/S.
+
+ Genvex – the original Danish ventilation system                          08:126-2511
+
+ Genvex is a true Danish original. We started producing ventilation
+ systems in 1978 and are still the front runners when it comes to
+ development and production of the most innovative and durable
+ ventilation systems on the market.
+
+ Our units are installed in thousands of homes, providing clean, fresh
+ air free from pollen, dust and harmful particles. They help lots of
+ families with maintaining a healthy and comfortable indoor climate
+ and prolong the longevity of the house itself. With very high heat
+ recovery rates, a Genvex system lets you recover and reuse up to
+ 95 % of the heat inside your home. As a result, our units provide a
+ strong contribution to energy savings in both in family homes and in
+ society as a whole.
+
+Please visit www.genvex.com to see a list of our distributors
+
+METRO THERM A/S • Tel.: +45 48 77 00 00 • sos@genvex.dk • www.genvex.com
+

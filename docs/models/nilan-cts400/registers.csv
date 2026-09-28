@@ -1,0 +1,89 @@
+table,address,name,unit,scale,decimals,default,min,max,data_type,plants,description,page
+IR,20,Current status of digital input D1,OnOff,,0,,,,Unsigned 16bit,,,5
+IR,21,Current status of digital input D2,OnOff,,0,,,,Unsigned 16bit,,,5
+IR,22,Current status of digital input D3,OnOff,,0,,,,Unsigned 16bit,,,5
+IR,23,Bypass damper status (1=Open),OnOff,,0,,,,Unsigned 16bit,,,5
+IR,24,Extract air (%),%,,1,,,,Unsigned 16bit,,,5
+IR,25,Supply air (%),%,,1,,,,Unsigned 16bit,,,5
+IR,26,Status after heating element (%),%,,1,,,,Unsigned 16bit,,,5
+IR,27,T1,Temp,,1,,,,Signed 16bit,,,5
+IR,28,T2,Temp,,1,,,,Signed 16bit,,,5
+IR,29,T3,Temp,,1,,,,Signed 16bit,,,5
+IR,30,T4,Temp,,1,,,,Signed 16bit,,,5
+IR,31,RH%,%,,1,,,,Unsigned 16bit,,,5
+IR,32,Current status of analog input (Volt),Volt,,2,,,,Unsigned 16bit,,,5
+IR,45,T7,Temp,,1,,,,Signed 16bit,,,5
+IR,46,Calculated average air humidity,%,,1,,,,Unsigned 16bit,,,5
+IR,47,CO2,ppm,,0,,,,Unsigned 16bit,,,5
+IR,48,VOC,ppm,,0,,,,Unsigned 16bit,,,5
+IR,49,Filter change status (1=Filter change must be made),OnOff,,0,,,,Unsigned 16bit,,,5
+IR,50,Alarm status (0=No alarm),OnOff,,0,,,,Unsigned 16bit,,,5
+IR,51,Alarm code 1,,,0,,,,Unsigned 16bit,,,5
+IR,52,Alarm code 2,,,0,,,,Unsigned 16bit,,,5
+IR,53,Alarm code 3,,,0,,,,Unsigned 16bit,,,5
+IR,56,Info alarm 1,,,0,,,,Unsigned 16bit,,,5
+IR,57,Info alarm 2,,,0,,,,Unsigned 16bit,,,5
+IR,58,Info alarm 3,,,0,,,,Unsigned 16bit,,,5
+IR,63,Level,,,0,,,,Unsigned 16bit,,,5
+IR,64,Average level humidity 24 hours OK,OnOff,,0,,,,Unsigned 16bit,,,5
+IR,65,Fan speed level override,Binary,,0,,,,Unsigned 16bit,,,5
+IR,66,High level humidity,,,1,,,,Unsigned 16bit,,,5
+IR,70,Time of high humidity (S),,,0,,,,Unsigned 16bit,,,5
+IR,72,Mode (Summer=0/Winter=1),,,0,,,,Unsigned 16bit,,,5
+IR,74,After heating (On/Off),,,0,,,,Unsigned 16bit,,,5
+IR,77,Timer used filter,,,0,,,,Unsigned 16bit,,,5
+IR,87,Time since last fire damper test (Hours),,,0,,,,Unsigned 16bit,,,5
+IR,91,"De-icing (0=Off, 1=On)",,,0,,,,Unsigned 16bit,,,5
+IR,96,User D1 active time (S),Sec,,0,,,,Unsigned 16bit,,,5
+IR,97,Fan speed level room temperature,,,0,,,,Unsigned 16bit,,,5
+IR,100,Fire damper open (1=Fully open),,,0,,,,Unsigned 16bit,,,5
+IR,106,Fire damper closed (1=Fully closed),OnOff,,0,,,,Unsigned 16bit,,,5
+IR,108,Fire input,OnOff,,0,,,,Unsigned 16bit,,,5
+IR,110,Filter Time back (Days),,,0,,,,Unsigned 16bit,,,5
+HR,30,Reset alarm,OnOff,,0,0,0,1,Unsigned 16bit,,,6
+HR,31,Low level humidity (%),%,,1,300,150,450,Unsigned 16bit,,,6
+HR,32,Fan speed level by low level humidity,,,0,1,0,3,Unsigned 16bit,,,6
+HR,33,Fan speed level by high level humidity,,,0,3,2,4,Unsigned 16bit,,,6
+HR,34,Timeout high level humidity,Min.,,0,60,0,180,Unsigned 16bit,,,6
+HR,35,High level CO2,ppm,,0,800,500,2000,Unsigned 16bit,,,6
+HR,36,High level VOC,ppm,,0,800,500,2000,Unsigned 16bit,,,6
+HR,37,Wanted room temperature,°C,,1,220,100,300,Signed 16bit,,,6
+HR,38,Regulatory dead band,°C,,1,10,0,40,Signed 16bit,,,6
+HR,39,Start de-icing T4,°C,,1,30,10,50,Signed 16bit,,,6
+HR,40,Stop de-icing T4,°C,,1,70,50,100,Signed 16bit,,,6
+HR,41,Max.de,Min.,,0,15,5,60,Unsigned 16bit,,,6
+HR,42,Deselect T2 temperature sensor (0=Off/1=On),OnOff,,0,0,0,1,Unsigned 16bit,,,6
+HR,43,Time between de-icing,Min.,,0,60,15,760,Unsigned 16bit,,,6
+HR,45,Summer / winter mode,°C,,1,130,50,200,Signed 16bit,,,6
+HR,46,Fire thermostat reset (1=Manual / 1=Automatic),,,0,0,0,1,Signed 16bit,,,6
+HR,47,Filter alarm on the panel (0=None),OnOff,,0,1,0,1,Unsigned 16bit,,,6
+HR,48,Extra sensor (0=None/1=VOC/2=CO2),,,0,0,0,2,Unsigned 16bit,,,6
+HR,50,Days between filter change,Day,,0,90,0,360,Unsigned 16bit,,,6
+HR,51,Reset filter change timer,OnOff,,0,0,0,1,Unsigned 16bit,,,6
+HR,53,Select option (1=Norm/2=Water/3=Electric),,,0,1,1,4,Unsigned 16bit,,,6
+HR,57,Minimum supply air temperature,°C,,1,160,100,200,Signed 16bit,,,6
+HR,58,Maximum supply air temperature,°C,,1,190,100,500,Signed 16bit,,,6
+HR,59,Supply air level 1,%,,1,230,200,1000,Unsigned 16bit,,,6
+HR,60,Supply air level 2,%,,1,400,200,1000,Unsigned 16bit,,,6
+HR,61,Supply air level 3,%,,1,650,200,1000,Unsigned 16bit,,,6
+HR,62,Supply air level 4,%,,1,950,200,1000,Unsigned 16bit,,,6
+HR,63,Extract air level 1,%,,1,250,200,1000,Unsigned 16bit,,,6
+HR,64,Extract air level 2,%,,1,450,200,1000,Unsigned 16bit,,,6
+HR,65,Extract air level 3,%,,1,700,200,1000,Unsigned 16bit,,,6
+HR,66,Extract air level 4,%,,1,1000,200,1000,Unsigned 16bit,,,6
+HR,69,User selection level control panel,,,0,2,1,4,Unsigned 16bit,,,6
+HR,70,Stop of unit (1=Stop/1=Operation),OnOff,,0,0,0,1,Unsigned 16bit,,,6
+HR,71,Timeoutuserselection1,Min.,,0,0,0,180,Unsigned 16bit,,,6
+HR,72,Cannot change fan speed level (0=Off/1=On),OnOff,,0,0,0,1,Unsigned 16bit,,,6
+HR,73,Unit cannot turn off (0=Off/1=On),OnOff,,0,0,0,1,Unsigned 16bit,,,6
+HR,74,Stop the unit,OnOff,,0,0,0,1,Unsigned 16bit,,,6
+HR,75,Test interval fire damper days (0=7/1=14/2=28),,,0,2,0,2,Unsigned 16bit,,,6
+HR,78,Supply air fan at de-icing (0=Stopped/1=Operation),,,0,0,0,1,Unsigned 16bit,,,6
+HR,79,Fan speed level user selection 1 (0=Function Off),,,0,0,0,4,Unsigned 16bit,,,6
+HR,80,Fan speed at high level,,,0,4,2,4,Unsigned 16bit,,,6
+HR,81,Stop at low room temperature (0=Off),°C,,1,0,0,200,Unsigned 16bit,,,6
+HR,82,Extra input (0=Off/1=User selection 2/2=Filter guard),,,0,1,0,3,Unsigned 16bit,,,6
+HR,83,Output (0=Off/1=10V alarm/2=0 10V alarm/3=10V),,,0,0,0,4,Unsigned 16bit,,,6
+HR,84,Timeoutuserselection2extendedoperationmin.,Min.,,0,0,0,180,Unsigned 16bit,,,6
+HR,85,Fan speed level user selection 2 (0=Function off),,,0,2,0,4,Unsigned 16bit,,,6
+HR,86,Fire input polarity (0=No/1=NC),,,0,0,0,1,Unsigned 16bit,,,6

@@ -1,0 +1,1006 @@
+BETJENINGS-
+VEJLEDNING
+
+               OPTIMA 260
+INDHOLDSFORTEGNELSE
+
+1. Montage Optima 100 Design...........................................................................................................................................3
+2. Montage Opus.......................................................................................................................................................................4
+3. Betjening.................................................................................................................................................................................4
+4. Datalogger..............................................................................................................................................................................5
+5. Setpunkter i Genlog............................................................................................................................................................9
+6. Funktion................................................................................................................................................................................16
+7. Vedligeholdelse..................................................................................................................................................................17
+8. Fejlsøgning..........................................................................................................................................................................18
+9. Skema for fabriksindstillinger.....................................................................................................................................19
+
+2 		
+1. MONTAGE OPTIMA 100 DESIGN
+
+1.1 Installation af betjeningspanelet                        Mellem aggregat og betjeningspanel skal der monteres et
+                                                             svagstrømskabel 8 x 0,25 mm2. Den maksimale kabel-
+Betjeningspanelet er beregnet til montering på               længde er 10 m. Over 10 m bliver spændingsfaldet for stort
+en plan væg.                                                 og kan give driftsforstyrrelser.
+
+1.2 Montering                                                Måden at montere vægbeslaget på
+
+Find det sted hvor betjeningspanelet skal sidde, og mærk     Først skrues beslaget fast på en plan væg og kablet føres
+af til hullerne, og beslaget skrues fast på væggen. Min. 4   synligt op nedefra.
+skruer skal isættes, de to øverste og de to nederste.
+                                                             Svagstømskablet forbindes til klemrækken. Kontroller, at
+Skrue obligatorisk  Skrue obligatorisk                       kablet er forbundet til de samme numre i begge ender.
+                                                             (Mellem betjeningspanel og hovedprint i aggregatet)
+         Skrue         Skrue
+Skrue obligatorisk  Skrue obligatorisk                       Betjeningspanelet klipses derefter på vægbeslaget, ved at
+                                                             føre det ned oppefra lidt skråt ud for neden, og afsluttes
+                                                             med at trykke det ind for neden, så det sidder plan med
+                                                             væggen. Ved demontering trækkes betjeningspanelet lidt
+                                                             ud for neden og løftes op.
+
+Vægrammen holdes op mod væggen, og huller til fast-
+gørelse af rammen mærkes op. Boring af huller, hulstørrelse
+og tilsvarende skruer til fastgørelse afhænger af vægmate-
+riale.
+
+Sæt betjeningspanelet ned i beslagene og vip den ind
+mod væggen. De fire støttepunkter i hjørnerne af displayet
+skal berøre væggen, for at displayet sidder stabilt.
+
+Støttepunkt         Støttepunkt
+Støttepunkt
+                    Støttepunkt                              Pos.  Beskrivelse
+                                                             1     Panelets hus
+                                                             2     Panelets front
+                                                             3     Trykplade til display
+                                                             4     Vægbeslag
+                                                             5     Glas til displayet
+
+                                    A
+
+   Forneden af betjeningspanelet er der adgang til:
+   A: Klemrække. Tilslutning til hovedprint
+
+		3
+2. MONTAGE OPUS 3. BETJENING
+
+2.1 Installation af betjeningspanelet                        Alle Genvex ventilationsaggregater med Optima 260-
+                                                             styringen kan betjenes med Optima 100-displayet.
+Betjeningspanelet er beregnet til montering i fatningen på
+en stikkontakt type Opus.                                    Optima 100-styringen har disse indstillingsmuligheder:
+                                                             • Ventilatorhastighed
+                                                             • Filteralarm
+                                                             • Aktiver/deaktiver eftervarmeflade
+
+                                                             Styringen bliver leveret med en fabriksindstilling, som gør,
+                                                             at anlægget kan sættes i drift, uden at man først skal
+                                                             ændre driftsindstillingerne. Fabriksindstillingen er kun en
+                                                             grundindstilling, som kan ændres til de driftsmæssige
+                                                             ønsker og krav til den aktuelle bolig, således at optimal
+                                                             udnyttelse og drift af anlægget opnås.
+
+2.2 Montering                                                3.1 Betjening og ændring af indstillinger
+
+Find det sted, hvor betjeningspanelet skal sidde, og for-    Betjening af Optima 100 Design foregår ved brug af
+bind først ledninger og klik så betjeningspanelet på plads.  tasterne K3 og K5. Betjening af Optima 100 Opus foregår
+                                                             ved brug af tasterne K3 og K5.
+Mellem aggregat og betjeningspanel skal der monteres et
+svagstrømskabel 8 x 0,25 mm2. Den maksimale kabel-           K3-tasten anvendes til at ændre ventilationhastigheden
+længde er 50 m. Over 50 m bliver spændingsfaldet for         endvidere kan K3-tasten holdes inde i ca. 5 sekunder hvor-
+stort og kan give driftsforstyrrelser.                       efter ventilationsaggregatet vil slukke (efter en efterløbs-
+                                                             tid på ca. 3 minutter).
+Kontroller, at svagstømskablet er forbundet til de samme
+numre i begge ender. (Mellem betjeningspanel og hoved-       OBS – funktionen "sluk ventilation" skal først frigives i
+print i aggregatet)                                          styringen via Genlog.
+
+Knappen til venstre på betjeningspanelet er K3 og knap-      K5-tasten anvendes til at resette filteralarmen (hold i 10
+pen til højre på betjeningspanelet er K5.                    sekunder) og ved et enkelt tryk aktiveres/deaktiveres en
+                                                             eventuel monteret el-eftervarmeflade.
+
+                                                                                                     4
+                                                                                                  3
+                                                                                              2
+                                                                                           1
+
+                                                             K3  K5
+
+4 		
+4. DATALOGGER
+
+Datalogningsudstyr                                            Genvex varenr. 022031
+                                                              - USB/Optima kommunikationskabel til PC
+Justering af setpunkter og programmering af Optima 260-
+styringen kan udføres på 2 måder.
+
+1. 	Programmering via Genvex Genlog software via USB til-
+    sluttet hovedprintet Optima 260.
+
+2. 	Programmering via Genvex Genlog software og udlæs-
+    ning af setpunkter til SD kort. (her skal anvendes funk-
+    tion "save to SD card" i menuen Setpunkter styring).
+
+Bemærkning til metode 1
+For at kunne påbegynde en datalogning af Optima 100
+Opus skal der anvendes dataloggerudstyr med et 4-benet
+stik. Det 4-benede stik tilsluttes hovedprintet, og USB-
+stikket tilsluttes pc´en. Dette kan erhverves direkte hos
+Genvex.
+
+Bemærkning til metode 2
+Anvendes metode 2 til idriftsættelse af Genvex-anlæg med
+Optima 260-styringen, anbefales det at fjerne SD-kortet
+på hovedprintet igen efter opstart af aggregatet (opstart
+og indlæsning af data tager ca. 2 minutter), da Optima 260
+ved strømudfald vil indlæse de forprogrammerede data på
+SD-kortet ved hvert strømudfald. Man kan med fordel
+erstatte programmerings SD-kortet med tomt SD-kort for
+at drage nytte af den automatiske datalogningsfunktion.
+
+Seneste version af Genvex Genlog-softwaren, kan rekvire-
+res ved at kontakte Genvex på tlf. +45 73532700
+
+		5
+Funktionsbeskrivelse af datalogger                                 Venstre y-akse er skalaen for temperaturer. Højre side af
+Datalogger-softwaren er til anvendelse af opsætning og             logningsområde er skalaen for procenter, f.eks. for venti-
+overvågning af Genvex anlæg. Dataloggeren kan tilsluttes           latorhastighederne. X-aksen udgør tidslinien.
+til alle Genvex Optima styringer. Vejledningen forudsæt-
+ter en korrekt og fungerende opsætning af softwaren.               En logning kan indeholde adskillige sider. Derfor vil der
+                                                                   stå et sidetal i højre/venstre hjørne ved de røde pile.
+                                                                   Siden kan skiftes ved klik på de røde pile.
+
+                                                                   Holder man venstre musetast nede et øjeblik over den
+                                                                   røde pil, fremkommer en dialogboks. Her kan indtastes
+                                                                   den side man ønsker at springe til.
+
+                                                                   I bunden af skærmen findes statusmenuen. På denne linie
+                                                                   kan man se dato og klokkeslæt, om datalogningen er star-
+                                                                   tet eller stoppet, antal datalogfejl samt hvilken styring
+                                                                   softwaren er indstillet til (ændres i ”Indstillinger”)
+
+                                                                   Menu’er
+
+Brugerinterfacet i Genvex Datalogger                               Filer
+                                                                   Hent data* - Her hentes tidligere gemte data fra hard­
+Dataloggeren kan anvendes til flere formål.                        disken (.txt filer)
+Indstillinger at parametre i styringen.                            Import af SD card filer* - Her importeres filer, der er gemt
+Oprettelse og ændring af urprogram i styringen.                    i betjeningspanelet Optima Design (.dal filer).
+Udlæsning af dataloggeren i betjeningspanelet for de               Gem data - Gemmer den aktuelle logning
+sidste 3 år.                                                       Gem vindue - Gemmer kun det aktuelle vindue
+                                                                   Gem data excel -
+En ”Live” logning af anlæggets nuværende drift.                    Print - Printer det aktuelle vindue
+Efterfølgende analyse af et anlægs drift.                          Afslut - Afslutter Software
+
+Brugerinterface                                                    *Selve dataloggeren arbejder med .txt filer, hvorimod betjeningspanelet
+Programmet er bygget op med det primære billede i                  arbejder med .dal filer
+midten af skærmen. Her vises de grafer, som udgør de
+informationer, der hentes fra styringen. I toppen er               Vis
+menu-linien for de forskellige indstillinger placeret.             Vis grafer - Åbner en afkrydsningsboks. Her gives mulig-
+                                                                   heden for at fra- og tilvælge de viste grafer på skærmen,
+                                                                   ofte for overskuelighedens skyld.
+
+I venstre side vises de værdier, der aflæses enten ”her og
+nu”, eller de værdier, som ligger under den røde streg. Den
+røde streg fremkommer, ved at man klikker et vilkårligt
+sted på skærmen. Tallene i venstre kolonne vil da være
+alle de værdier, som ligger på stregen. Farverne på kur-
+verne i logningsområdet svarer til de farver, som er vist i
+venstre side. Det nøjagtige tidspunkt for logningen vil stå
+i nederste venstre felt.
+
+Tip: Klikker man i feltet til uret, vil feltet skifte til visning
+af ”LOG NR”, Dette kan være nyttigt, hvis man ønsker at
+referere til en helt bestemt logning.
+
+I toppen af selve logningsområdet på skærmen er der et
+område med grå og hvide streger. Disse streger vil være
+udfyldt med rødt, hvis en udgang eller funktion er aktiv.
+Hold pilen fra musen over stregen et øjeblik, og en lille
+hjælpetekst vil fremkomme.
+
+6 		
+Zoom - Giver muligheden for at gøre billedet større eller    Data fra styring
+mindre.                                                      Setpunkter i styring - Åbner nedenstående boks.
+                                                             Her kan alle setpunkter hentes fra mikrochippen eller
+                                                             betjeningspanelet, ændres og herefter sendes tilbage til
+                                                             mikrochippen eller betjeningspanelet.
+
+Vis gennemsnit - Giver muligheden for at få et gennem-
+snit af kurverne i det valgte vindue.
+
+                                                             Ur uge program i styring - Åbner nedenstående boks.
+
+Funktioner                                                   I denne boks kan urprogrammet i Optimaen laves på en
+Start logning (20 sek.) - Åbner en dialogboks til angivelse  nemmere og mere overskuelig måde. Den dag, der skal
+af det ønskede filnavn. Det kan være en stor fordel at til-  programmeres, vælges ved at klikke på den ønskede
+føje Optima versionen i navnet, skriv f.eks. Opt310 som      ugedag. I eksemplet er mandag valgt. I nederste vindue,
+en del af navnet. Derefter starter en ny logning fra betje-  umiddelbart til venstre for knapperne med ugedagene,
+ningspanelet. Logningen tages hvert 20. sekund og vises      dannes urprogrammet for mandag ved at bruge pil-op og
+herefter på skærmen. Efter nogen tid vil logningen           pil-ned.
+begynde at danne billedet. Hvis der ikke klikkes på bille-
+det for at fremkalde den røde streg, vil visningerne i ven-  Under trin vælges 1, 2, 3 eller 4. Vælges 0, vil styringen
+stre side referere til den sidste logning.                   springe punktet over. Vælges 4, stopper anlægget.
+                                                             Når urprogrammet er lavet for den valgte dag, kan dagen
+Stop logning (20 sek.)                                       kopieres ud på de andre dage ved at klikke på ugedagen.
+Stopper logningen. Visningen på skærmen gemmes auto-         Knapperne i højre side af vinduet anvendes til at modtage
+matisk.                                                      og sende skiftetiderne til og fra betjeningspanelet og til
+                                                             at hente og gemme urprogrammet på harddisken.
+En logning                                                   “Afslut” lukker vinduet.
+Foretager kun en enkelt logning. Gemmes ikke automa-
+tisk.
+
+Kommentar til data                                           Datalogning i styring (Kun for Optima betjeningspanel,
+Her kan der tilføjes en kommentar til en logning.            ikke Optima Design) - Her kan den gemte logning i betje-
+                                                             ningspanelet hentes over i programmet. Hvis tidspunktet
+Slet data                                                    for sidste logning afviger fra det valgte tidspunkt,
+Her kan man slette data                                      ændres dette om muligt. Dette af hensyn til tidslinien i
+                                                             bunden af skærmen. Kan f.eks. være aktuelt, hvis lognin-
+Høj hastighed datalogning (2 sek.)                           gen hentes fra en tilsendt løs SD-kort eller lign.
+Gemmes ikke i en fil. kun til overvågning.
+
+		7
+Klik på ”Modtag data”, herefter indlæses data. Bemærk, at       Ligeledes kan mappe til logfilerne vælges. F.eks. kan det
+det kan tage op til 10 minutter. I ventetiden vil betjenings-   være en god idé at oprette en mappe under ”Dokumenter”
+panelet og styringen på anlægget ikke kommunikere.              til logninger og få programmet til at foreslå denne mappe
+                                                                som standard.
+Ur i styring - En nem metode til indstilling af uret i styrin-
+gen                                                             Generelt
+Indstillinger                                                   Bemærk at:
+Comport styring – Her vælges den Comport, der benyttes          • Logningerne er ikke tilknyttet opsætningen, dvs. 		
+til dataloggeren.
+                                                                  selvom logningerne er hentet enten fra harddisken eller
+                                                                  fra betjeningspanelet, passer den ikke nødvendigvis 		
+                                                                  sammen med den valgte styring. Man kan altså risikere
+                                                                  at analysere på en logning fra en Combi, men værdier 		
+                                                                  vises som om de kommer fra en Energy.
+                                                                • Softwaren er som standard indstillet på dansk. Dette 		
+                                                                  kan ændres i ”Indstillinger”
+                                                                • Visse antivirus programmer vil opfatte log-filerne som 		
+                                                                  virus ved afsendelse via mail.
+
+                                                                Tilslutning til pc – Optima 260
+                                                                For at kunne kommunikere direkte med computeren skal
+                                                                der benyttes dataloggerudstyr som tilsluttes direkte til
+                                                                Optima 260-printet se evt. s. 5.
+
+                                                                Mellem aggregat og betjeningspanel skal der monteres et
+                                                                svagstrømskabel 8 x 0,25 mm2. Den maksimale kabel-
+                                                                længde er 50 m.
+
+Generel opsætning - Her kan vælges sprog og model.
+
+8 		
+5. SETPUNKTER I GENLOG
+
+Kalender                                                       Ugedag                         Måned
+Brug denne funktion til at konfigurere indstillingen af hver
+dag i ugen. Hver dag kan indstilles til at køre med forskel-    Mandag   1                    Januar     1
+lige ventilatorhastigheder efter behov. Du kan kopiere ind-     Tirsdag
+stillingen fra en dag til en anden. Du kan vælge ON eller OFF   Onsdag   2                    Februar    2
+her. Hvis der f.eks. i en periode ikke er nogen hjemme, kan     Torsdag
+de daglige indstillinger slås fra, og anlægget vil køre efter   Fredag   3                    Marts      3
+en manuel indstilling, f.eks. trin 1.                           Lørdag
+                                                                Søndag   4                    April      4
+01 – Kalender
+Vælg mellem at styre systemet manuelt eller styre hastig-                5                    Maj        5
+heden (luftudskiftning) og temperaturen automatisk ud fra
+et fast ugedagsprogram. Hvis menupunktet er indstillet til               6                    Juni       6
+OFF, styres anlægget manuelt efter den valgte hastighed
+og temperatur.                                                           7                    Juli       7
+
+                                                                                              August     8
+
+                                                                                              September  9
+
+                                                                                              Oktober    10
+
+                                                                                              November   11
+
+                                                                                              December   12
+
+Hvis menupunktet er indstillet til ON, styres anlægget efter   Brugermenu
+de ugedagsprogrammer, der er indtastet i menupunkterne
+02 til 08.                                                     01 - Temperatur
+                                                               Indstil den ønskede temperatur mellem 10 og 30 °C. I punkt
+Indstillingsmulighed: ON/OFF.                                  19 i servicemenuen kan du vælge mellem indblæsningsre-
+                                                               gulering eller udsugningsregulering
+Eksempel : Mandag
+Der kan indtastes op til 10 skiftetidspunkter for en dag.      Indstillingsmulighed: Mellem 10 og 30 °C.
+Tidspunkterne kan indtastes i vilkårlig rækkefølge. Indtast
+timer i første kolonne, minutter i anden kolonne og hastig-    02 - Forvarme
+hed i tredje kolonne. Brug fjerde kolonne til at indtaste den  Hvis der er monteret en forvarmer på friskluftkanalen, skal
+temperaturforskel, som temperaturen skal reduceres med.        setpunktet indstilles på 1 eller 2.
+
+Eksempel: Hvis temperaturen er indstillet til 21 °C, og du     Indstillingsmulighederne er:
+indtaster -2,0 °C, styrer anlægget efter 19 °C.                0 = OFF
+                                                               1 = Friskluftstemperaturstyring
+Hvis hastigheden er blevet ændret manuelt på knappen           2 = Afkasttemperaturstyring
+under daglig drift, vil programmet gå tilbage til ugedags-
+programmet, når det næste skiftetidspunkt passeres.            Indtast den ønskede forvarmetemperatur i punkt 20 i
+                                                               servicemenuen.
+Eksempel på et ugedagsprogram:
+01 07:30 H3 -0,0                                               Indstillingsmulighed: 0, 1, 2.
+02 09:15 H1 -1,0
+03 17:00 H3 -0,0                                               03 - Eftervarme
+04 18:00 H2 -0,0                                               Hvis der er monteret en eftervarmer i anlægget, kan du
+05 23:30 H2 -2,0                                               vælge, om eftervarmeren skal være i drift. Hvis setpunktet
+                                                               er indstillet til OFF, arbejder varmeren ikke, selvom der er
+Det er ikke nødvendigt at bruge alle skiftetidspunkter. Hvis   behov for det. Hvis setpunktet er indstillet til ON, starter
+linjen er angivet med 0, springer styringen den over.          varmeren efter behov. Den regulerer i overensstemmelse
+                                                               med den temperatur, som er indstillet i punkt 1 i brugerme-
+Tirsdag til Søndag:                                            nuen.
+Disse dage kan udfyldes individuelt på samme måde som
+under punkt eksemplet mandag.                                  Indstillingsmulighed: ON/OFF.
+
+                                                               04 - Timer-trin 3 og 4
+                                                               På hastighed 3 og 4 skifter anlægget automatisk tilbage til
+                                                               hastighed 2 efter det antal timer, som er indstillet i punkt
+                                                               17 i servicemenuen, når setpunktet er indstillet til ON. Hvis
+                                                               setpunktet er indstillet til OFF, fortsætter anlægget med
+                                                               at køre på hastighed 3 eller 4, indtil der manuelt skiftes til
+                                                               en anden hastighed.
+
+                                                               Indstillingsmulighed: ON/OFF.
+
+		9
+05 - Skift filter                                               12 - Trin 3 og 4 Indblæsningsluft
+Der er indbygget en filtertimer, som tæller, hvor lang tid      Trin 3 er den højeste hastighed, som kan indstilles. Den
+anlægget har været i drift siden sidste filterskift. Setpunk-   bruges f.eks., hvis der er mange gæster, eller hvis der er
+tet kan indstilles mellem 1-12, som svarer til 12 måneder.      meget aktivitet i køkkenet.
+Det anbefales, at setpunktet i første omgang indstilles til 3,
+der svarer til 3 måneder (hvis der indtastes 0, er filtertime-  Indstillingsmulighed for trin 3: Mellem 0 og 100 %.
+ren slået fra og afgiver ikke nogen filteradvarsel).            Standardindstilling for trin 3: 75 %.
+
+Hvis filtrene er for snavsede efter den indstillede periode,    Trin 4 bruges især om sommeren for at sænke indendørs-
+skal du indstille setpunktet til et lavere tal. Hvis det ikke   temperaturen. Husk, at en større luftudskiftning øger
+er nødvendigt at skifte filtrene efter den konfigurerede        energiforbruget.
+periode, kan setpunktet indstilles til et højere tal.
+                                                                Indstillingsmulighed for trin 4: Kan ikke indstilles.
+Når timeren når den indstillede værdi for filterskift, blinker
+alarmen for filterskift på displayet.                           13 – Trin 1 Udsugningsluft
+                                                                Ventilatorhastigheden justeres, indtil samme luftmængde
+Når filtrene er skiftet, skal du gå tilbage til displayet med   opnås som for indblæsningsluften på trin 1.
+de daglige betjeningsmuligheder og holde knappen for fil-
+terindikator inde indtil dioden slukket. Anlægget vil heref-    Indstillingsmulighed: Mellem 0 og 100 %.
+ter skifte tilbage til normal drift.
+                                                                14 – Trin 2 Udsugningsluft
+Indstillingsmulighed: Mellem 1 og 12 måneder. Setpunkt = 0      Ventilatorhastigheden justeres, indtil samme luftmængde
+deaktiverer filtertimeren (vær forsigtig med at bruge denne     opnås som for indblæsningsluften på trin 2.
+indstilling – Genvex fraskriver sig ethvert ansvar for fejl på
+ventilationsaggregatet, der skyldes et tilstoppet filter).      Indstillingsmulighed: Mellem 0 og 100 %.
+
+06 - Fugtighedsstyring                                          15 - Trin 3 og 4 Udsugningsluft
+Her slås fugtighedsstyringen til. Den skal være indstillet til  Luftmængden for trin 3 justeres til samme luftmængde
+ON for at være aktiveret.                                       som for indblæsningsluften på trin 3 og 4 (punkt 12).
+
+Indstillingsmulighed: ON/OFF.                                   Indstillingsmulighed for trin 3: Mellem 0 og 100 %.
+                                                                Standardindstilling for trin 3: 75 %.
+
+Servicemenu                                                     Indstillingsmulighed for trin 4: Kan ikke indstilles.
+
+10 – Trin 1 Indblæsningsluft                                    16 – Ikke relevant
+Trin 1, som er den laveste hastighed, anvendes normalt, når
+der ikke er nogen hjemme. Begge ventilatorer kan indstilles     17 – Timer-trin 3 og 4
+uafhængigt af hinanden på alle trin, således at luftmæng-       Hvis der anvendes automatisk tilbagekobling for hastighed
+den i indblæsningsluften og i udsugningsluften er ens, hvil-    3 eller 4, kan du indtaste, hvor mange timer anlægget skal
+ket giver optimal drift.                                        køre på trin 3 eller 4, før det automatisk skifter tilbage til
+                                                                trin 2. Setpunktet kan indstilles til mellem 1 og 9 timer.
+Anlægget skal justeres med særligt luftteknisk måleudstyr,
+hvilket kan ske uden brug af hovedreguleringsspjældet.          Indstillingsmulighed: Mellem 1 og 9 timer.
+
+Det frarådes at indstille på luftmængderne uden kyndig          18 – Filter/stop
+vejledning. Ukorrekt indstilling kan medføre give et stort      For at sikre at filtrene skiftes, når filteralarmen blinker på
+energiforbrug og dårligt indeklima.                             betjeningspanelets display, kan setpunktet indstilles til ON.
+                                                                Anlægget stopper derefter automatisk efter 14 dage, hvis
+Indstillingsmulighed: Mellem 0 og 100 %.                        filtrene ikke er blevet skiftet i mellemtiden.
+
+11 – Trin 2 Indblæsningsluft                                    Hvis du ikke har behov for denne sikkerhedsforanstaltning,
+Trin 2 er anlæggets anbefalede hastighed til opnåelse af        kan setpunktet indstilles til OFF, og anlægget fortsætter
+det optimale indeklima og bør                                   driften.
+justeres til boligens ventilationsbehov.
+
+Indstillingsmulighed: Mellem 0 og 100 %.                        Indstillingsmulighed: ON/OFF.
+
+10 		
+19 – Reguleringsform                                             22 – Regulering vand
+Du kan vælge mellem 2 muligheder:                                Hvis der er installeret en vandeftervarmer med en motor-
+0. kan ikke benyttes                                             drevet ventil i anlægget, kan det være nødvendigt at justere
+1. Indblæsningsregulering (T1-sensor)                            reguleringstiden.
+2. Udsugningsregulering (T7-sensor)
+                                                                 Jo mindre reguleringstid, desto hurtigere vil den motor-
+Hvis anlægget anvendes i en bolig, anvendes normalt ind-         drevne ventil regulere.
+blæsningsregulering. Setpunktet indstilles til 1. Hvis du
+ønsker udsugningsregulering, skal du indstille setpunktet        Indstillingsmulighed: Mellem 1 og 250 sekunder.
+til 2.
+                                                                 23 – Regulering elektricitet
+Indstillingsmulighed: Mellem 0 og 2                              Hvis der er installeret en elektrisk forvarmer eller en elek-
+                                                                 trisk eftervarmer, kan det være nødvendigt at justere regu-
+20 – Forvarme                                                    leringstiden.
+Hvis forvarme er indstillet til ON i punkt 2 i Brugermenuen,
+skal setpunktet indstilles til den temperatur, hvor forvar-      Indstillingsmulighed: Mellem 1 og 30 minutter.
+men skal indkobles.
+                                                                 24 – Frostreduktion
+Indstillingsmulighed: Mellem ÷15 og +10 °C.                      For at undgå at modstrømsvarmeveksleren iser til, kan ind-
+                                                                 blæsningsluftmængden reduceres gradvist, når udblæs-
+21 – Bypass åben                                                 ningslufttemperaturen efter modstrømsvarmeveksleren er
+Her indstiller du den temperatur, hvor bypass skal være          faldet under den indstillede temperatur. Denne funktion
+100 % åben. Du indstiller en temperaturforskel, hvilket be-      reducerer gradvist indblæsningsluftmængden, indtil den
+tyder, at hvis du ønsker, at bypass skal være 100 % åben ved     indstillede værdi er nået.
+fx 23 °C, og den indstillede temperatur i bruger-menupunkt 1
+er 20 °C, så skal du indstille dette menupunkt til 3 °C.         OBS: Kan forårsage undertryk i huset!
+
+Bypass åbner under forudsætning af, at:                          Indstillingsmulighed: Mellem 0 og 10 °C. Funktionen deakti-
+1. Udsugningstemperaturen er højere end friskluft-               veres, hvis den indstilles til 0 °C.
+
+     temperaturen.                                               25 – Frostbeskyttelse
+2. Frisklufttemperaturen er over den indstillede                 Hvis der er installeret en vandeftervarmer med motordre-
+                                                                 vet ventil i anlægget, skal der monteres en frostbeskyttel-
+     temperatur i servicemenuens punkt 29.                       sessensor på vandeftervarmeren, og setpunktet skal ind-
+                                                                 stilles til ON.
+Aggregater med modulerende bypass:
+Hvis temperaturen stiger 0,5 °C over den indstillede tempe-      Hvis der ikke er installeret en frostbeskyttelsessensor, skal
+ratur i brugermenuens punkt 1, begynder bypass-spjældet at       setpunktet indstilles til OFF.
+åbne. Bypass er 100 % åbent, når temperaturen når setpunk-
+tet i brugermenuens punkt 1 + den temperaturforskel, som er      Indstillingsmulighed: ON/OFF.
+indstillet i dette menupunkt.
+                                                                 26 – Frostbeskyttelsestemperatur
+Du får en jævn åbning af bypass ved at indstille den tempe-      Hvis frostbeskyttelsen i punkt 25 er indstillet til ON, skal
+ratur, hvor bypass er helt åbent ved at indstille ca. 3 ºC over  frostbeskyttelsestemperaturen indstilles til den tempera-
+den indstillede temperatur i brugermenuens punkt 1.              tur, hvor anlægget skal stoppe og den motordrevne ventil
+                                                                 åbne helt for gennemstrømningen af varmt vand.
+Aggregater med on/off-bypass (f.eks. ECO 190 / ECO 375):
+Bypass åbner, når temperaturen når setpunktet i brugerme-        Indstillingsmulighed: Mellem 0 og 10 °C.
+nuens punkt 1 + den temperaturforskel, som er indstillet i
+dette menupunkt.
+
+Indstillingsmulighed: Mellem 1 og 10 °C.
+
+		11
+27 – Hjælpefunktion                                             30 - Modbus Mode
+Denne funktion kan anvendes til følgende:                       Se separat beskrivelse for MODBUS.
+                                                                Indstillingsmulighed: 0-2.
+Setpunkt  Funktion
+0                                                               0 = Modbus OFF
+1         Relæet er slukket.                                    1 = 9600 baud
+2                                                               2 = 19200 baud
+3         Relæet er tændt, når anlægget er i drift. Dette
+4         kan f.eks. bruges til at åbne og lukke friskluft-     31 – Modbus-adresse
+5         og udblæsningsluftspjældet.                           Se separat beskrivelse for MODBUS.
+                                                                Indstillingsmulighed: 1-247.
+6         Relæet er tændt, når der opstår et behov for
+          ekstra varme, eller hvis cirkulationspumpen           32 – Fugt maks. temperatur
+          skal køre, når der er behov for opvarmning            Indstilling af slutpunkt for udetemperaturkompensation
+          med vandeftervarme.                                   (T3), se X-aksen på grafen.
+
+          Relæet er tændt, når alarmen "Change filter"          Indstillingsmulighed: 5-25 °C.
+          er aktiveret. Dette kan bruges til at aktivere
+          en ekstern alarm.                                     33 – Fugt maks. værdi
+                                                                Indstilling af slutpunkt for udetemperaturkompensation, se
+          Relæet er tændt, når der er behov for ekstra          Y-aksen på grafen (ønsket maks. fugtighedsværdi).
+          køling. Denne funktion anvendes, hvis der også
+          er monteret en forvarmer i anlægget.                  Indstillingsmulighed: 35-85 %.
+
+          Styringen kan håndtere en jordvarmeveksler            34 – Fugt ventilatorhastighed
+          ved hjælp af et spjæld.                               Indstilling af hvor meget ventilatorhastigheden må afvige i
+          Relæet vil være tændt, når en af de følgende          forhold til den ønskede ventilatorhastighed. Se menupunk-
+          to betingelser er opfyldt:                            terne 11, 12, 14 og 15.
+          • Udetemperaturen, sensor T9, er lavere
+                                                                Indstillingsmulighed: 5-30 %.
+            end den værdi, som er indstillet i punkt 26
+            (frostbeskyttelsestemperatur, typisk ind-           Eksempel
+            stillet på 5 °C).                                   Setpunkt 34 = ± 15 %
+          • Udetemperaturen, sensor T9, er mere end 1°          Med en ønsket ventilatorhastighed på 3 vil ventilatorhastig-
+            over den indstillede temperatur i punkt 1 og        heden kunne variere ± 15 %. Eftersom ventilatorhastighed 3
+            1 ° over den aktuelle rumtemperatur.                er indstillet på 75 % i servicemenu 12 og 15, vil ventilator-
+                                                                hastigheden være maks. 90 % og min. 60 %.
+          Relæet er tændt, når terminal L1 kortslut­
+          tes/aktiveres (emhætte). Denne funktion kan
+          f.eks. anvendes i forbindelse med et afspær­
+          ringsspjæld tilsluttet relæ H17, som lukker
+          mod badeværelset, når emhætten aktiveres.
+
+Indstillingsmulighed: Mellem 0 og 6.                            Det samme gælder for ventilatorhastighed 2. Eftersom ven-
+                                                                tilatorhastighed 2 er indstillet på 50 % i servicemenu 11 og
+28 – Anlæg stop                                                 13, vil ventilatorhastigheden være maks. 65 % og min. 35 %.
+Her kan du vælge, om det skal være muligt at stoppe anlæg-
+get ved at trykke på knappen for hastighed (K1) i driftsme-     Ventilatorhastigheden reguleres ±1 % for hver 10 min.
+nuen i 3-4 sekunder. Hvis setpunktet er OFF, kan anlægget
+ikke slukkes.                                                   Indstillingsmulighed: Se punkt 35.
+
+Indstillingsmulighed: ON/OFF
+
+29 – Sluk for bypass
+Brug denne funktion til at indstille den laveste frisklufttem-
+peratur, hvor spjældet skal lukkes, for at sikre at bypass-
+spjældet ikke åbner ved lave frisklufttemperaturer og
+blæser kold, uopvarmet luft ind i boligen. Værdien er et
+udtryk for den største forskel, der må være mellem den
+temperatur, som er indstillet i punkt 1, og den laveste frisk-
+lufttemperatur.
+
+Indstillingsmulighed: Mellem 0 og 20 °C. Hvis 0 °C vælges,
+er funktionen slået helt fra.
+
+12 		
+35 – Fugt reguleringshyppighed
+Indstilling af den ønskede hyppighed for, hvor ofte ventila-
+torhastigheden må ændres.
+
+Funktionen er defineret som 1 % pr. tidsenhed. Når
+fugtstyring er aktiveret, måles den aktuelle fugtighed
+kontinuerligt via den integrerede fugtføler i ventilations-
+aggregatet, placeret i udsugningskanalen.
+
+Indstillingsmulighed: 1-60 min.
+
+Kompensationskurve for udetemperatur
+
+RH                                                               S. 32
+
+100%
+
+95
+
+90
+
+85
+
+80
+
+75
+
+70
+
+65                                                       S.34
+                                                                                                S.34
+60
+                                                                                                                                       S. 33
+55
+
+50                                                       Eks. 1         Eks. 2
+45
+
+40
+
+35
+
+30
+
+25    FasPtre-
+20
+15 insdestttinllging
+
+10
+
+5
+
+0 -10 -9 -8 -7 -6 -5 -4 -3 -2 -1 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
+
+                      = Grænser                                         Frisklufttemperatur
+                      = Standardindstilling
+
+                      = Eksempler            Eksempel 1
+
+                                             Ved en frisklufttemperatur på 10°C vil værdien for relativ
+                                             fugtighed være 55 %.
+
+                                             Eksempel 2
+                                             Ved en frisklufttemperatur på 20°C vil værdien for relativ
+                                             fugtighed være 60 %.
+
+Ventilatorhastighed
+
+Trin 4 = 100 %                               65 %                90 %
+Trin 3 = 75 %                                ±15 %               ±15 %
+Trin 2 = 50 %                                                    60 %
+
+                                             35 %
+
+Trin 1 = 25 %
+
+		13
+36 – Højre / Venstre (kun relevant for ECO 190)                     43 – Eftervarmeregulering
+                                                                    Eftervarmecyklus-funktionen fungerer på følgende måde:
+OBS !!! DENNE FUNKTION BØR KUN JUSTERES AF                          F.eks. nødvendig effekt 50 % og cyklus = 60 sek. betyder, at
+AUTORISERET VENTILATIONSENTREPRENØR.                                styringen slår forvarmeren til i 30 sek. og slår den fra i 30 sek.
+
+Som standard leveres ECO 190 i udførelsen højrevendt.               Bemærk: Følg de landespecifikke regler for begrænsninger,
+Såfremt aggregatet skal ændres til venstreudførelse                 når denne funktion justeres.
+omkonfigureres temperatursensorer til dette ved at sætte
+denne funktion til 1.                                               Den modulerende eftervarmerfunktion reguleres af den
+                                                                    værdi, der justeres i setpunkt nr. 40.
+Bemærk, at der fortsat skal foretages hardwareændringer
+også, som f.eks. korrekt tilslutning af kondensafløb, kipning       Eftervarmeren prøver at opretholde en konstant indblæs-
+af veksler, flytning af fugtsensor. Kontakt Genvex hvis du har      ningslufttemperatur i overensstemmelse med dette set-
+behov for nærmere information.                                      punkt. Når den modulerende eftervarmer anvendes, vil det
+                                                                    være nødvendigt at erstatte indblæsningsluftsensoren (T1) i
+37 – Forvarme PI P                                                  ventilationsaggregatet med en ny temperatursensor, som
+P-bånd for PI-regulering af den elektrisk modulerende               installeres i kanalen efter eftervarmefladen.
+forvarmer. P-båndet styrer forstærkningen, som følger afvi-
+gelsen fra setpunktet (speeder)                                     44 – Display Model
+                                                                    Her vælges hvilket eksternt display som er tilvalgt sammen
+38 – Forvarme PI I                                                  med Optima 260-styringen.
+I-bånd for PI-styring af den elektrisk modulerende forvar-          0 = intet display
+mer. Funktionen regulerer, hvor hurtigt styringen tilpasser         1 = OPT100 Design
+sig til en afvigelse fra setpunktet (bremse).                       2 = Boost knap
+
+39 – Forvarme Reg                                                   45 – Boost tid 1 (kun relevant ved tilkøb af boost knap)
+Forvarmecyklus-funktionen fungerer på følgende måde:                Her vælges hvor mange minutter tryk på boost knappen skal
+F.eks. nødvendig effekt 50 % og cyklus = 60 sek. betyder, at        medføre forceret drift - ved tryk på knappen 1 gang
+styringen slår forvarmeren til i 30 sek. og slår den fra i 30 sek.
+                                                                    46 – Boost tid 2 (kun relevant ved tilkøb af boost knap)
+Bemærk: Følg de landespecifikke regler for begrænsninger,           Her vælges hvor mange minutter tryk på boost knappen skal
+når denne funktion justeres.                                        medføre forceret drift - ved tryk på knappen 2 gange
+
+Den modulerende forvarmerfunktion reguleres af den værdi,           47 – Boost tid 2 (kun relevant ved tilkøb af boost knap)
+der justeres i setpunkt nr. 20. Forvarmeren prøver at opret-        Her vælges hvor mange minutter tryk på boost knappen skal
+holde en konstant friskluft-temperatur i overensstemmelse           medføre forceret drift - ved tryk på knappen 3 gange
+med dette setpunkt. Når den modulerende forvarmer anven-
+des, kan den eksisterende frisklufttemperatursensor (T3),           48 – Kalender on/off
+som er indbygget i ventilationsaggregatet, bruges som refe-         Her kan kalenderfunktioner aktiveres. Se nærmere beskri-
+rence. Der er ikke behov for en ekstra temperatursensor.            velse under punktet "kalender".
+
+40 – Eftervarme offset                                              49 - Behovsstyring
+Offset for eftervarmer reguleret af setpunktet for ønsket           Denne funktion giver mulighed for opkobling af eksternt
+temperatur på displayet (brugermenu 01)                             0-10 volt signal som kan tvangsstyre ventilatorer op i hastig-
+                                                                    hed som følge af forøgelse af signalet.
+F.eks. ønsket temperatur = 20 °C
+Offset-værdi=2 eftervarmeren prøver at opretholde 18 °C             Funktionen er kun aktiv i ventilator trin 2 og 3 og kræver at
+indblæsningstemperatur                                              fugtstyring er deaktiveret (brugermenu 06).
+
+41 – Eftervarme PI P                                                Fabriksindstilling er 0 %, hvilket deaktiverer behovsstyrin-
+P-bånd for PI-regulering af den elektrisk modulerende efter-        gen. Arbejdsområdet for tilladt forøgelse af ventilator-
+varmer. P-båndet styrer forstærkningen, som følger afvigel-         hastighed kan begrænses via indstilling fra 0-100 %.
+sen fra setpunktet (speeder).
+                                                                    F.eks. arbejdsområde 100 % her vil 5 volt forøge hastig-
+42 – Eftervarme PI I                                                heden med +50 %.
+I-bånd for PI-styring af den elektrisk modulerende for-
+varmer. Funktionen regulerer, hvor hurtigt styringen tilpas-        F.eks. arbejdsområde 50 % her vil 5 volt forøge hastigheden
+ser sig til en afvigelse fra setpunktet (bremse).                   med +25 %.
+
+14 		
+Skema for ugeprogram
+
+             Timer  Mandag                                   Timer   Tirsdag                                 Timer   Onsdag
+
+ 1)                 Minutter Hastighed Red. T2   1)                 Minutter Hastighed Red. T2   1)                 Minutter Hastighed Red. T2
+ 2)                                              2)                                              2)
+ 3)                                              3)                                              3)
+ 4)                                              4)                                              4)
+ 5)                                              5)                                              5)
+ 6)                                              6)                                              6)
+ 7)                                              7)                                              7)
+ 8)                                              8)                                              8)
+ 9)                                              9)                                              9)
+10)                                             10)                                             10)
+
+             Timer  Torsdag                                  Timer   Fredag                                  Timer   Lørdag
+
+ 1)                 Minutter Hastighed Red. T2   1)                 Minutter Hastighed Red. T2   1)                 Minutter Hastighed Red. T2
+ 2)                                              2)                                              2)
+ 3)                                              3)                                              3)
+ 4)                                              4)                                              4)
+ 5)                                              5)                                              5)
+ 6)                                              6)                                              6)
+ 7)                                              7)                                              7)
+ 8)                                              8)                                              8)
+ 9)                                              9)                                              9)
+10)                                             10)                                             10)
+
+             Timer   Søndag
+
+ 1)                 Minutter Hastighed Red. T2
+ 2)
+ 3)
+ 4)
+ 5)
+ 6)
+ 7)
+ 8)
+ 9)
+10)
+
+Red. T2 = reduceret rumtemperatur (natsænkning)
+
+		15
+6. FUNKTION
+
+6.1 Styring af Optima 260                                         6.3 Driftssikkerhed
+
+Regulering af rumtemperatur                                       Sikkerhedstermostat
+Der er 2 reguleringsmetoder – se servicemenuens punkt 19.         Hvis der opstår en fejl på en el-varmer, vil sikkerhedstermo-
+Hvis der er valgt indblæsningsregulering, vil styringen ind-      staten afbryde.
+blæse luft med den indstillede temperatur, forudsat der er
+monteret en eftervarmer i anlægget. Indblæsningsluft-tem-         Varmeren er udstyret med en brandtermostat, som automa-
+peraturen reguleres med indblæsningsluftsensoren T1.              tisk afbryder strømforsyningen, hvis temperaturen overskri-
+                                                                  der 80 °C. Hvis temperaturen falder, aktiveres varmeren
+Det anbefales at indstille indblæsningslufttemperaturen 2-3       automatisk igen.
+°C under rumtemperaturen.
+                                                                  Som ekstra sikkerhed er der indbygget en termosikring, som
+Relæ R8                                                           kobler ud, hvis temperaturen overskrider 110 °C.
+Når anlægget er i drift på trin 1, 2, 3 eller 4, vil relæet være  Sikringen skal tilkobles igen manuelt.
+tændt. Denne funktion kan f.eks. bruges til at styre friskluft-
+og udblæsningsluftspjældet.                                       Dette gælder ikke for PTC-el-varmere.
+
+6.2 Ekstra kapacitet                                              Husk at afbryde strømmen til anlægget, før du udfører
+                                                                  service på ventilationsanlægget.
+Vand-eftervarme
+På anlæg med vandeftervarmere begynder den motordrevne
+eftervarmer at regulere (PI-regulering), når temperaturen er
+faldet 1 °C under den indstillede temperatur.
+
+Elektrisk eftervarme on/off-version
+På anlæg med elektriske tilsluttes eftervarmeren, når tem-
+peraturen er faldet 1 °C under den indstillede temperatur.
+Hvis reguleringstiden f.eks. er indstillet til 3 minutter, vil
+temperatursensoren T1 måle, om temperaturen nu er over
+eller under den indstillede temperatur efter 3 minutter. Hvis
+temperaturen stadig er under den indstillede temperatur, vil
+eftervarmen fortsætte med at køre. Når temperaturen når
+den indstillede værdi, afbrydes den elektriske eftervarmer.
+
+Elektrisk eftervarmer (modulerende)
+For systemer med modulerende elektrisk eftervarmer, vil
+den elektriske eftervarmer automatisk tilpasse sig ændrin-
+ger i luftstrøm og temperaturer og bibeholde en konstant
+temperatur i overensstemmelse med det ønskede setpunkt.
+
+Styringen justerer eftervarmerens elektriske effekt
+automatisk.
+
+Ekstra køling
+Hvis der er monteret et ekstra køleanlæg i anlægget, tændes
+dette, når bypass-motoren er helt åben, og slukkes igen, når
+bypass-motoren begynder at lukke igen.
+
+Anlæg med elektrisk forvarmer vil regulere på samme måde
+som en elektrisk eftervarmer.
+
+16 		
+7. VEDLIGEHOLDELSE
+
+Følg nedenstående instruktioner for at opnå optimal ydelse:       Ventilatorer
+                                                                  Kontrollér de to ventilatorhjul for snavs en gang om året.
+               Før du åbner aggregatet, skal du slukke for        Hvis de er snavsede, kan de vaskes med en børste, flaskeren-
+               strømmen/trække stikket ud og vente, indtil        ser etc.
+               ventilatorerne er standset helt.
+                                                                  Indblæsnings- og udsugningsluftventiler
+Kontrollér et par dage efter førstegangsinstallationen, om        Rengør ventilerne ved at tørre dem af med en tør klud.
+kondensafløbet fungerer.                                          Pas på, at ventilerne ikke drejer, således at luftmængden
+                                                                  ændrer sig.
+
+Miljøkrav                                                         7.2 Alarmer
+Ved reparation eller adskillelse af aggregatet skal de lov-
+bestemte miljøkrav vedrørende genvinding samt destruktion         Filtertimer
+af diverse materialer overholdes.                                 Styringen har en filtertimer for at sikre, at filtret skiftes,
+                                                                  så der opnås optimal drift. Når timeren når den indstillede
+7.1 Aggregat                                                      værdi, blinker der en knap på displayet, indtil filtrene er skif-
+                                                                  tet.
+
+Filtre                                                            Når filtrene er skiftet, skal du holde knappen for filterfunkti-
+Når alarmen blinker i displayet på betjeningspanelet, skal fil-   onen inde - indtil lysdioden slukker.
+trene skiftes. Stop anlægget på anlæggets afbryder eller
+med afbryderen på tavlen. Åbn frontlågen/                         7.3 Adskillelse/anlægget tages ud af drift
+filterskufferne, og tag filtrene ud. Når filtrene er skiftet,
+skal du nulstille filtertimeren.                                  Følgende skal gøres:
+                                                                  Strømforsyningen, dvs. el-kablerne, skal afmonteres. Afmon-
+             Der er fare for at skære sig på skarpe lameller.     ter kondensafløbet og el-kablerne til alle eftervarmere/for-
+             Lamellerne må ikke blive beskadiget.                 varmere. Afmonter kablerne til betjeningspanelet og kana-
+             Det frarådes at støvsuge eller bruge trykluft        lerne.
+             på filtrene. Filtreringsgraden kan blive forringet.
+                                                                  Hvis anlægget skal tages ud af drift, skal kanalerne afmonte-
+                                                                  res for at undgå kondensvand i anlægget og kanalerne. Luk
+                                                                  alle indblæsnings- og udsugningsluftventiler.
+
+G4 = standardfilter
+F5 = finfilter
+F7 = pollenfilter
+
+Kondensafløb:
+Ved filterskift i august/september før udetemperaturen
+falder til 5 °C, skal du kontrollere, at kondensafløbet ikke er
+blokeret af snavs, og sørge for, at der er vand i vandlåsen.
+Hæld 1 liter vand i kondensvandsbakken, og kontrollér, at det
+kan købe uhindret bort. Hvis kondens-afløbet ikke fungerer,
+vil der kunne opstå vandskade i boligen.
+
+Varmeveksler:
+Efterse varmeveksleren hvert år. Hvis den er snavset, skal du
+tage den ud og:
+• Alu-varmeveksler: Vaske den i lunkent sæbevand og om
+
+  nødvendigt skylle den med en håndbruser.
+• Plast-varmeveksler: Ingen rengøring med opløsnings-
+
+  midler – brug kun rent vand, og fjern forsigtigt støv fra 		
+  luftindtagenes overflader med en støvsuger.
+
+		17
+8. FEJLSØGNING
+
+8.1 Sikkerhedstermostat i el-varmer (tilbehør)                    Kold indblæsningsluft:
+                                                                  Mulig fejl:
+Hvis der opstår en fejl på en el-varmer, vil sikkerheds-          • T ilstoppet varmeveksler
+termostaten afbryde. Varmeren er udstyret med en brand-           • D efekt udsugningsventilator
+termostat, som automatisk afbryder strømforsyningen, hvis         • Tilstoppet udsugningsfilter
+temperaturen overskrider 80 °C. Hvis temperaturen falder,         • D en elektriske eftervarmer er afbrudt ved overop-
+aktiveres varmeren automatisk igen.
+                                                                    hedningstermostaten (kun aggregater med installeret
+Som ekstra sikkerhed er der indbygget en termosikring, som          elektrisk eftervarmer)
+kobler ud, hvis temperaturen overskrider 110 °C.                  • Luft i varmerørene, defekt termostat/motorventil,
+Sikringen skal tilkobles igen manuelt.                              ukorrekt indstilling af betjeningspanel
+
+Dette gælder ikke for PTC-el-varmere.
+
+8.2 Anlægget kører ikke
+
+Aggregat stoppet
+Mulig fejl:
+• S ikring i eltavle er sprunget, ingen spænding til aggregatet
+• E n af sikringerne på aggregatets print er sprunget
+• L øs ledning, ingen strøm til aggregatet
+• Løs ledning mellem aggregat og betjeningspanel
+• Defekt eller forkert indstillet ugeprogram
+• Filtertimer har slukket anlægget
+
+Kondensvand løber ud af aggregatet
+Mulig fejl:
+• Kondensafløb blokeret af snavs
+• Kondensafløbet er ikke tilstrækkeligt beskyttet mod 		
+
+  frost ved lave udetemperaturer
+
+8.3 Fejl på luftsiden
+
+Ingen indblæsningsluft
+Mulig fejl:
+• D efekt indblæsningsventilator
+• T ilstoppet indblæsningsfilter
+• T ilstoppet friskluftgitter på grund af snavs og blade om
+
+  efteråret eller sne og is om vinteren
+• S ikring på print er sprunget
+• Aggregatet afrimer (indblæsningsventilator stopper)
+• Ukorrekt værdi indstillet i brugermenuens punkt 2
+
+Ingen udsugningsluft
+Mulig fejl:
+• D efekt udsugningsventilator
+• Tilstoppet udsugningsfilter
+• S ikring på print er sprunget
+
+18 		
+8. SKEMA FOR FABRIKSINDSTILLINGER
+
+  Punkt Overskrift                     Standardindstilling Indstillingsområde  Dato  Dato  Dato  Dato
+(5.5) 01 Temperatur
+                                       21 °C      10-30 °C
+      02 Forvarme
+      03 Eftervarme                    0          0, 1, 2
+      04 Timer-trin 3 og 4
+      05 Skift filter                  OFF        ON/OFF
+      06 Fugtighedsstyring
+(5.8) 10 Trin 1 Indblæsningsluft       OFF        ON/OFF
+      11 Trin 2 Indblæsningsluft
+      12 Trin 3 og 4 Indblæsningsluft  3 måneder  1 - 12 måneder
+      13 Trin 1 Udsugningsluft
+      14 Trin 2 Udsugningsluft         OFF        ON/OFF
+      15 Trin 3 og 4 Udsugningsluft
+      16 ikke relevant                 30 %       0-100 %
+      17 Timer-trin 3 og 4
+      18 Filter/stop                   50 %       0-100 %
+      19 Reguleringsform
+      20 Forvarme                      75 %       0-100 %
+      21 Bypass åben
+      22 Regulering vand               30 %       0-100 %
+      23 Regulering elektricitet
+      24 Frostreduktion                50 %       0-100 %
+      25 Frostbeskyttelse
+      26 Frostbeskyttelsestemperatur   75 %       0-100 %
+      27 Hjælpefunktioner
+      28 Anlæg stop                    OFF        ÷ 5-0 °C
+      29 Sluk for bypass
+      30 Modbus mode                   3 timer    1-9 timer
+      31 Modbus-adresse
+      32 Fugt maks. temperatur         OFF        ON/OFF
+      33 Fugt maks. værdi
+      34 Fugt ventilatorhastighed      2          0-2
+      35 Fugt reguleringshyppighed
+      36 Højre / venstre               ÷ 3 °C     ÷15 - +10 °C
+      37 Forvarme PI P
+      38 Forvarme PI I                 3 °C       1-10 °C
+      39 Forvarme Reg
+      40 Eftervarme offset             20 sek.    1-250 sek.
+      41 Eftervarme PI P
+      42 Eftervarme PI I               3 min      1-30 min
+      43 Eftervarme Reg
+      44 Display model                 0 °C       0-10 °C
+      45 Boost tid 1 (min)
+      46 Boost tid 2 (min)             OFF        ON/OFF
+      47 Boost tid 3 (min)
+      48 Kalender on/off               5 °C       0-10 °C
+      49 Behovsstyring
+                                       0          0-6
+
+                                       OFF        ON/OFF
+
+                                       4 °C       0-20 °C
+
+                                       2          0-2
+
+                                       1          1-247
+
+                                       15 °C      5-25 °C
+
+                                       60 %       35-85 %
+
+                                       15 %       5-30 %
+
+                                       10 min     1-60 min
+
+                                       0          0-1
+
+                                       5          1-255
+
+                                       200        1-255
+
+                                       40         10-120
+
+                                       -2         0-20
+
+                                       5          1-255
+
+                                       200        1-255
+
+                                       40         10-120
+
+                                       1          0-2
+
+                                       15         0-250
+
+                                       30         0-250
+
+                                       60         0-250
+
+                                       0          0-1
+
+                                       0          0-100 %
+
+		19
+DET ORIGINALE, FRISKE PUST                           Alle
+                                            Genvex-systemer
+    Et originalt Genvex-anlæg er bygget
+    af dygtige og erfarne teknikere og       er mærket med
+    har en levetid, der i mange tilfælde      energimærke
+    måles i årtier. Anlæggene er god-
+    kendt efter alle gældende standard-        A
+    er og er oven i købet lette at betjene
+    og servicere i det daglige. Sidst, men
+    ikke mindst, produceres alle Genvex-
+    anlæg med fokus på kompakte
+    indbygningsmål og montagevenlig-
+    hed og kan installeres diskret og
+    smukt i alle typer af boliger.
+
+    Vi er en del af NIBE-koncernen – en
+    familie af virksomheder, der har
+    specialiseret sig i at levere varmt
+    vand, varme og hjemmekomfort til
+    boligejere i hele verden.
+
+Genvex – det originale danske ventilationsanlæg                                                                    08:115-2104
+
+Genvex er en vaskeægte dansk original. Vi opfandt ventilationsanlægget
+for over 40 år siden, og vi er stadig forrest i feltet, når det gælder
+udvikling og produktion af markedets stærkeste og mest holdbare
+ventilationsanlæg.
+
+Vores anlæg sidder i tusinder af danske hjem og leverer frisk, ren luft,
+helt fri for pollen, støv og skadelige partikler. Det er med til at forlænge
+husets levetid og til at gøre indeklimaet sundt og behageligt for masser
+af mennesker. Samtidig er vores anlæg et vigtigt element, når det gælder
+om at spare på energien i husene og i samfundet som helhed – faktisk kan
+man genvinde helt op til 95 % af varmeenergien med et Genvex-anlæg.
+
+    Se en liste over vores forhandlere på www.genvex.com
+
+KVM-Genvex A/S • Sverigesvej 6 • DK-6100 Haderslev • Tlf.: +45 73 53 27 00 • salgogsupport@genvex.dk • genvex.com
+

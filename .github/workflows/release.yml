@@ -1,0 +1,277 @@
+name: Release
+
+# Run this from the Actions tab. Never publish the draft release by hand: that creates the tag
+# at whatever main points to, before the version in the package has been set.
+#
+# Everything runs in one direction, and nothing leaves the runner until it has been checked:
+# resolve the version -> test the exact commit -> set the version, build, and check that the
+# built package says that version -> push the version commit and the tag together -> PyPI ->
+# GitHub release. If main moves while this runs, the push is refused and nothing is published.
+#
+# The file name matters: PyPI trusted publishing is bound to this repository, this workflow
+# file and the pypi environment. A release cut from any other file never reaches PyPI.
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: >-
+          What to release. The version is worked out from the tags, PyPI and the draft release:
+          the next release candidate, or the final release that ends the series.
+        required: true
+        type: choice
+        options:
+          - release candidate
+          - final release
+        default: release candidate
+      version:
+        description: >-
+          Override, only for a new major version, which is never worked out, or when the version
+          worked out is wrong: canonical PEP 440 without a v, such as 2.0.0 or 2.0.0rc1, of the
+          kind chosen above. It must still be higher than every version tagged or on PyPI.
+        required: false
+        type: string
+
+permissions: {}
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+env:
+  PACKAGE: nilan_connect
+  VERSION_FILE: src/nilan_connect/__init__.py
+
+# The shell given explicitly, so GitHub runs every step with pipefail.
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  prepare:
+    name: Resolve the version
+    runs-on: ubuntu-latest
+    permissions:
+      # Draft releases are listed only to those who can push.
+      contents: write
+      # The pull requests merged since the previous release.
+      pull-requests: read
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      tag: ${{ steps.version.outputs.tag }}
+      prerelease: ${{ steps.version.outputs.prerelease }}
+      previous_tag: ${{ steps.version.outputs.previous_tag }}
+      sha: ${{ steps.main.outputs.sha }}
+    steps:
+      - name: Refuse to run from anything but main
+        if: github.ref != 'refs/heads/main'
+        run: |
+          # The tests and this workflow are taken from the branch it runs from.
+          echo "::error::Run the release from main, not $GITHUB_REF_NAME."
+          exit 1
+
+      - name: Check out main
+        uses: actions/checkout@v7
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Install packaging
+        run: python -m pip install packaging==26.3
+
+      - name: Work out the version
+        id: version
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE: ${{ inputs.release }}
+          OVERRIDE: ${{ inputs.version }}
+        run: |
+          draft=$(gh api "repos/$GITHUB_REPOSITORY/releases" \
+            --jq '[.[] | select(.draft)] | sort_by(.created_at) | reverse | .[0].tag_name // empty')
+          git ls-remote --tags --refs "https://github.com/$GITHUB_REPOSITORY.git" \
+            | cut -f2 | sed 's#^refs/tags/##' > "$RUNNER_TEMP/tags"
+          # Every version PyPI has ever taken, yanked ones too: it never takes one twice.
+          : > "$RUNNER_TEMP/published"
+          status=$(curl -sS -o "$RUNNER_TEMP/pypi.json" -w "%{http_code}" "https://pypi.org/pypi/$PACKAGE/json")
+          case "$status" in
+            200) jq -r '.releases | keys[]' "$RUNNER_TEMP/pypi.json" > "$RUNNER_TEMP/published" ;;
+            404) echo "$PACKAGE is not on PyPI yet" ;;
+            *) echo "::error::PyPI answered $status for $PACKAGE"; exit 1 ;;
+          esac
+          python .github/scripts/release_version.py next "$RELEASE" "$draft" "$OVERRIDE" \
+            "$RUNNER_TEMP/tags" "$RUNNER_TEMP/published" | tee -a "$GITHUB_OUTPUT"
+
+      - name: Refuse a release without changes
+        if: steps.version.outputs.previous_tag != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SINCE: ${{ steps.version.outputs.previous_tag }}
+        run: |
+          gh api --paginate "repos/$GITHUB_REPOSITORY/compare/$SINCE...$(git rev-parse HEAD)" \
+            --jq '.commits[].sha' > "$RUNNER_TEMP/commits"
+          : > "$RUNNER_TEMP/merged"
+          while read -r sha; do
+            gh api "repos/$GITHUB_REPOSITORY/commits/$sha/pulls" \
+              --jq '.[] | select(.merged_at != null) | .number' >> "$RUNNER_TEMP/merged"
+          done < "$RUNNER_TEMP/commits"
+          python .github/scripts/release_version.py changes "$SINCE" "$RUNNER_TEMP/merged"
+
+      - name: Record the commit to release
+        id: main
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+  test:
+    name: Test
+    needs: prepare
+    permissions:
+      contents: read
+    uses: ./.github/workflows/tests.yml
+    with:
+      ref: ${{ needs.prepare.outputs.sha }}
+
+  build:
+    name: Set the version, build and push the tag
+    needs: [prepare, test]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      VERSION: ${{ needs.prepare.outputs.version }}
+      TAG: ${{ needs.prepare.outputs.tag }}
+      SHA: ${{ needs.prepare.outputs.sha }}
+    steps:
+      - name: Check out the tested commit
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.prepare.outputs.sha }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Install the build tools
+        run: python -m pip install packaging==26.3 build==1.6.1
+
+      - name: Set the version, and commit it if it changed
+        run: |
+          python .github/scripts/release_version.py write "$VERSION" "$VERSION_FILE"
+          changed=$(git status --porcelain)
+          if [[ -n "$changed" && "$changed" != " M $VERSION_FILE" ]]; then
+            echo "::error::Setting the version changed more than $VERSION_FILE:"
+            echo "$changed"
+            exit 1
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [[ -n "$changed" ]]; then
+            git commit -q -am "Release $TAG"
+          else
+            echo "$VERSION_FILE already says $VERSION"
+          fi
+          git tag -a "$TAG" -m "Release $TAG"
+
+      - name: Build
+        run: python -m build
+
+      - name: Check the built package says this version
+        run: |
+          shopt -s nullglob
+          wheels=(dist/*-"$VERSION"-*.whl)
+          sdists=(dist/*-"$VERSION".tar.gz)
+          if (( ${#wheels[@]} != 1 || ${#sdists[@]} != 1 )); then
+            echo "::error::Expected one wheel and one sdist for $VERSION. dist/ holds:"
+            ls -1 dist/
+            exit 1
+          fi
+          python -m venv "$RUNNER_TEMP/check"
+          "$RUNNER_TEMP/check/bin/pip" install -q "${wheels[0]}"
+          "$RUNNER_TEMP/check/bin/python" - <<'PY'
+          import importlib, importlib.metadata, os, sys
+          package, version = os.environ["PACKAGE"], os.environ["VERSION"]
+          found = importlib.import_module(package).__version__, importlib.metadata.version(package)
+          if found != (version, version):
+              sys.exit(f"::error::the built package says __version__={found[0]}, metadata={found[1]}, not {version}")
+          print(f"{package} {version}: __version__ and metadata agree")
+          PY
+
+      - name: Push the version commit and the tag together
+        run: |
+          # Atomic, and main only fast-forwards from the tested commit: if main moved, or either
+          # ref is refused, neither is pushed.
+          git push --atomic origin "HEAD:refs/heads/main" "refs/tags/$TAG"
+
+      - name: Keep the distributions
+        uses: actions/upload-artifact@v7
+        with:
+          name: dist
+          path: dist/
+          if-no-files-found: error
+
+  pypi:
+    name: Publish to PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      # Mandatory for trusted publishing.
+      id-token: write
+    environment:
+      name: pypi
+      url: https://pypi.org/p/nilan-connect
+    steps:
+      - name: Fetch the distributions
+        uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist/
+
+      - name: Publish
+        uses: pypa/gh-action-pypi-publish@release/v1
+
+  github-release:
+    name: Publish the GitHub release
+    needs: [prepare, pypi]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: ${{ needs.prepare.outputs.tag }}
+      PRERELEASE: ${{ needs.prepare.outputs.prerelease }}
+      PREVIOUS_TAG: ${{ needs.prepare.outputs.previous_tag }}
+    steps:
+      - name: Fetch the distributions
+        uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist/
+
+      - name: Publish
+        run: |
+          draft=$(gh api "repos/$GITHUB_REPOSITORY/releases" \
+            --jq '[.[] | select(.draft)] | sort_by(.created_at) | reverse | .[0] // empty')
+          flags=()
+          if [[ "$PRERELEASE" == "false" && -n "$draft" ]]; then
+            # A final release carries the draft's notes, as edited before running this.
+            jq -r '.body // ""' <<< "$draft" > notes.md
+            flags+=(--notes-file notes.md)
+          else
+            # GitHub writes the notes from the pull requests since the previous release.
+            flags+=(--generate-notes)
+            if [[ -n "$PREVIOUS_TAG" ]]; then
+              flags+=(--notes-start-tag "$PREVIOUS_TAG")
+            fi
+          fi
+          if [[ "$PRERELEASE" == "true" ]]; then
+            flags+=(--prerelease --latest=false)
+          fi
+          gh release create "$TAG" dist/* --repo "$GITHUB_REPOSITORY" --verify-tag \
+            --title "$TAG" "${flags[@]}"
+          # The draft only proposed this release; Release Drafter drafts the next one.
+          if [[ -n "$draft" ]]; then
+            gh api -X DELETE "repos/$GITHUB_REPOSITORY/releases/$(jq -r .id <<< "$draft")"
+          fi

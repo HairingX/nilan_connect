@@ -1,0 +1,1023 @@
+                 USER MANUAL
+
+                                                                           UK / Version 22.08.2014
+
+            OPTIMA 250
+                                                         DISPLAY VER. 3.1 / PCB ES960C
+
+           GES ENERGY 1, GES ENERGY S/M, GE ENERGY 1/2/3
+
+Genvex A/S • Sverigesvej 6 • DK-6100 Haderslev • Tel.: +45 73 53 27 00 • salg@genvex.dk • genvex.dk
+   Table of contents
+
+                                                                                                                          Page
+
+                               1. Mounting Design................................................................. 3
+
+                               2. Control panel........................................................................ 4
+
+                               3. Installation............................................................................. 4
+
+                               4. Start-up................................................................................... 4
+
+                               5. Operating............................................................................... 5
+
+                                     5.1 Operating and changing data in the operating menu................ 5
+                                     5.2 Main menu................................................................................. 6
+                                     5.3 Date and time............................................................................ 6
+                                     5.4 Calendar.................................................................................... 7
+                                     5.5 User menu................................................................................. 7
+                                     5.6 Display menu............................................................................. 8
+                                     5.7 Info menu................................................................................ 10
+                                     5.8 Service menu...........................................................................11
+                                     5.9 Schedule for week program.................................................... 14
+                                     5.10 Schedule for set points ......................................................... 15
+
+                               6. Function............................................................................... 16
+
+                                     6.1 Controlling Optima 250............................................................ 16
+                                     6.2 Extra capacity.......................................................................... 16
+                                     6.3 Operating reliability.................................................................. 16
+
+                               7. Maintenance........................................................................ 17
+
+                                     7.1 Unit......................................................................................... 17
+                                     7.2 Alarms..................................................................................... 17
+                                     7.3 Dismantling/taking the system out of service.......................... 17
+
+                               8. Troubleshooting................................................................ 18
+
+                                     8.1 Safety thermostat in electrical heater (optional equipment)......... 18
+                                     8.2 The system is not running ..................................................... 18
+                                     8.3 Air faults................................................................................... 18
+
+2  Subject to technical modifications of Optima 250 Design
+1. Mounting Design                                              A low-current cable 4 x 0.25 mm2 must be attached
+                                                                between the unit and the control panel. 50 m is the
+1.1 Installation of the control panel                           maximum cable length. The voltage drop for cable
+                                                                lengths over 50 m is too high and can result in unreliable
+The control panel is designed to be mounted onto a flat         operation.
+wall.
+                                                                How to mount the wall fixture:
+1.2 Mounting
+                                                                First screw the fixture securely onto the flat wall and pass
+Find the location on the wall where you will fix the control    the cable up from below.
+panel and mark the screw-hole positions. A min. of four
+screws must be used, the two bottommost and the two             Connect the low-current cable to the terminal block. Check
+topmost.                                                        that the cable is connected to the same numbers at both
+                                                                ends. (Between the control panel and the main circuit
+Mandatory Screw  Mandatory Screw                                board in the unit.)
+
+         Screw      Screw                                       Next clip the control panel to the wall fixture by guiding
+Mandatory Screw  Mandatory Screw                                it down from above, slightly slanting out at the bottom.
+                                                                Finish by pressing in at the bottom so that it sits flat
+                                                                against the wall. For demounting: pull the control panel a
+                                                                little out at the bottom and lift up.
+
+Hold the wall frame against the wall and mark the
+screw-hole positions. Drilling of holes, hole size and the
+corresponding screws for fixing the panel depend on the
+wall material.
+
+Place the control panel in the fixtures and tilt it in against
+the wall. The four support points in the corner of the
+display must touch the wall to keep the display stable.
+
+Support             Support                                     Description
+Point               Point                                       Panel housing
+                                                                Front of panel
+Support                                                 Pos.    Pressure plate for display
+Point                                                   1       Wall fixture
+                                                        2       Glass for the display
+                                                        3
+                                                        4
+                                                        5
+
+                    Support
+                    Point
+
+                               A
+
+Underneath the control panel there is an access for the:
+A: Terminal block. Connection to main circuit board
+
+                 Subject to technical modifications of Optima 250 Design                    3
+   2. Control panel                                              4. Start-up
+
+   The control panel must be mounted on an interior wall that    The first time the system is started, the control panel dis-
+   is centrally located in the home.                             play will show: “Choose language”.
+   Since the control panel at the same time functions as a
+   room thermostat, it is important to observe the following:    Click “Next” to switch between available languages. Press
+                                                                 “Enter” when the desired language is shown in the display.
+   • Do not expose the control panel to direct sunlight          The control panel will now load the current program ver-
+   • Do not place the control panel on an outer wall             sion in the selected language.
+   • Do not recess the control panel in the wall
+   • Do not place the control panel over a heat source           The display will show:
+
+   A lamp close to the control panel can affect the light        • Updating model (loading the current model)
+   sensor so that the control panel will not regulate the light  • Wait 1.5 minutes (It takes approximately 1.5 minutes to
+   intensity as intended.                                        load the current version)
+                                                                 • Language load (91)
+   On the front of the control panel in the ring there are 7     • Language OK
+   keys that are used to operate the panel. The function of      • Menu load (84)
+   the keys changes depending on the menu selected.              • Menu OK
+   (More information is available under Operation).              • Icon load (369)
+                                                                 • Menu OK
+   There is an infrared movement sensor located under the        • Reset to default
+   glass screen. Simply by moving your hand past the con-        • Restarting……..
+   trol panel you can bring up the menu for daily operating      • Optima 250 UK
+   options. (This function can be turned off:
+   See under Main menu/Display/Menu item 5).                     The display will then change to:
+
+   The following are located at the bottom of the control        • The Genvex logo
+   panel:                                                        • Optima 250 UK
+                                                                 • Version number
+   1: SD card                                                    D (Control panel): X.X
+   2: Room sensor                                                C (Main board): X.X
+   3: Light sensor
+   4: Mini USB port for connection to computer                   Finally, the display changes to daily operation and the
+                                                                 system is now in operation with the factory setting which is
+   1: The removable SD card contains all the control models      only a basic setting.
+   and versions that make the control panel compatible with
+   older versions. The SD card also contains all the langu-      The system is now ready to be adjusted with the most
+   ages, menus, help texts, symbols and collected data logs.     optimal air flows and the operational desires and demands
+   During the start-up procedure, the current versions are       for the dwelling in question, e.g. weekly operation,
+   installed in the control panel so that the control can func-  temperatures etc. to achieve the most effective utilisation
+   tion without the SD card. However, the help texts will not    and operation of the system.
+   appear in the display and the data logs will not be saved.
+
+   4: In order for a computer to read the data logs,
+   the Genvex data logger program must be installed.
+
+   3. Installation
+
+   Please see the installation guide.
+
+4                                      Subject to technical modifications of Optima 250 Design
+5. Operating                                                  after heating will not commence, even if required.
+
+Optima 250                                                    K4 - Main menu
+                                                              Use this function to enter the main menu and access the
+All Genvex ventilation units of the types GE Energy and       sub-items Date and time, Calendar, User menu, Display,
+GES Energy for dwellings are delivered with the Optima        Info operation and Service menu.
+250 control, which has a factory setting so that the system
+can be put into operation without further setting.            K5 - Filter
+The factory setting is only a basic setting that should be    Use this function to reset the filter alarm. The key next to
+adapted to the operating desires and demands for the          the “Filter” symbol resets the alarm for filter change. To
+dwelling in question to achieve the most effective utilisa-   reset the filter alarm, change the filters and hold down the
+tion and operation of the system.                             key with the “Filter” symbol until the exclamation mark in
+                                                              the symbol disappears.
+5.1 Operating and changing data in the
+operating menu                                                K6 - Information
+                                                              Use this function to get an overview of the current operat-
+Normally the symbols for daily operating options are          ing condition, e.g. temperatures, fan settings, relay status/
+displayed and the following keys can be seen.                 function ON/OFF, alarms, timers etc.
+                                                              Use the key next to the symbol “Info” to read the operating
+K1  K7                                                        condition of the unit. More information can be found in the
+                                                              main menu section under the item Info operation.
+K2  K6
+                                                              K7 - Temperature
+                           K3 K4 K5                           Use this function to set the room temperature if the system is
+                                                              equipped with an after heater and/or a bypass damper. Press
+K1 - Speed                                                    the key next to the “Temperature” symbol to enter the desired
+Use this function to set the fan speed to levels 0-1-2-3-4.   temperature between 10 and 30 °C. The current temperature
+Use the key next to the “Speed” symbol to change be-          will be displayed at the centre of the screen.
+tween the 4 speeds. The system can also be stopped by         Press the key K4 to enter the main menu and sub-menus and
+holding down the key for 3-4 seconds on condition that        the following keys change function:
+item 28 of the Service menu is set to ON.
+                                                              K3 changes to “Arrow down ” and when changing the
+K2 - Forced operation (Party mode)                                 setting to “÷”.
+Use this function/key to set the timer to party mode from
+0 to 9 hours. If the number of hours is set to 0, speeds 3    K4 changes to “Enter”. Press “Enter” to proceed through
+and 4 will run until the speed is changed manually. If the         the menus and sub-menus.
+the number of hours is set between 1 and 9 hours, speeds
+3 and 4 will automatically reconnect to speed 2 after the     K5 changes to “Arrow up” and when changing the setting
+number of hours configured.                                        to “+”.
+
+K3 - After heating                                            K6 changes to “Exit”. Press “Exit” to return to the previous
+Use this function to switch the after heating on and off. On       screen.
+the key next to the symbol “After heating” you can change
+between “+” and “÷”. If the symbol is set to “+” and the      K7 changes to “Help”. Press “Help” to see a short guide 		
+system is equipped with an after heater the after heating          to the current menu item.
+will commence as required. If the symbol is set to “÷”, the
+                                                              The horizontal arrow in the menu shows the current
+                                                              location. To save changes to a menu item, finish by
+                                                              pressing “Enter”.
+
+    Subject to technical modifications of Optima 250 Design   5
+   5.2 Main menu                                                 05 Month
+                                                                 Enter the current month here.
+   There is a “Book” symbol at the bottom centre of the
+   screen with the daily operating options. Press this key to    06 Year
+   enter the main menu.                                          Enter the current year here.
+
+   Date and time (item 4.3)                                      Weekday                       Month
+
+   Calendar   (item 4.4)                                         Monday    1                   January   1
+
+                                                                 Tuesday   2                   February  2
+
+   User menu  (item 4.5)                                         Wednesday 3                   March     3
+
+                                                                 Thursday 4                    April     4
+
+   Display    (item 4.6)                                         Friday    5                   May       5
+
+                                                                 Saturday  6                   June      6
+
+   Info operation (item 4.7)                                     Sunday    7                   July      7
+
+   Service menu (item 4.8)                                                                     August    8
+
+                                                                                               September 9
+
+   “Arrow down” or “Arrow up” will change the symbol to a                                      October   10
+   horizontal arrow that shows the current location.
+                                                                                               November 11
+
+                                                                                               December 12
+
+   Press “Enter” to access the sub-items of the current menu.
+   Press “Arrow down” or “Arrow up” again to select the re-
+   quired sub-menu item. When the horizontal arrow is next
+   to a sub-menu item, the 2 lines will change place, the font
+   sizes will change and the text “Set” will be added. Press-
+   ing ”Enter” next to the selected sub-menu item will change
+   the background of the item to grey. Use the ”+” and ”÷”
+   keys to change the current value. Press “Enter” again to
+   save the change.
+
+   If no changes are required, press “Exit” to go back out of
+   the menus. Press “Help” to see a short guide to the menu
+   item. Press one of the keys to exit the help program.
+   After a short period of non-activity, the control will auto-
+   matically exit the programs.
+
+   5.3 Date and time
+
+   Use this function to set the date and time.
+
+   01 Hours
+   Enter the current hour here.
+   When changing between summer and winter time you
+   have to set the time one hour forward or back manually.
+
+   02 Minutes
+   Enter the current minute here.
+
+   03 Weekday
+   Enter the current weekday here.
+
+   04 Date
+   Enter the current date here.
+
+6                             Subject to technical modifications of Optima 250 Design
+5.4 Calendar                                                    5.5 User menu
+
+Use this function to configure the setting of each day of       01 - Temperature
+the week. Each day can be configured to run with different      Set the desired temperature between 10 and 30 °C.
+fan speeds as required. You can copy the configuration          In item 19 of the Service menu you can choose between
+from one day to another. You can choose ON or OFF here,         supply air regulation, room regulation or extract air regulation.
+i.e. if for a period of time there is nobody home, the daily    (The sensor is mounted in the control panel).
+settings can be turned off and the system will run accord-      Setting option: between 10 and 30 °C.
+ing to a manual setting, e.g. level 1.                          Factory setting: 21 °C.
+
+01 - Calendar                                                   02 - Preheating
+Choose between controlling the system manually or con-          If a preheater is fitted to the fresh air duct the set point must
+trolling the speed (air exchange) and temperature auto-         be configured to ON. Enter the desired preheating tempera-
+matically according to a fixed day program. If the menu         ture in item 20 of the Service menu. If instead a refrigerant
+item is set to OFF, the system will be controlled manually      device is installed in the supply air duct the set point must be
+according to the speed and temperature selected.                configured to OFF. (It is not possible to control a preheater
+If the menu item is set to ON, the system will be controlled    and a refrigerant device at the same time). If both types of
+according to the day programs entered in the menu items         optional equipment are installed, the set point must be con-
+02 to 08.                                                       figured manually in spring and autumn. If none of the help
+Setting option: ON/OFF.                                         functions in item 27 of the Service menu are used, the help
+Factory setting: OFF.                                           function 4 can be used to control the additional cooling.
+                                                                Setting option: ON/OFF.
+02 - Monday                                                     Factory setting: OFF.
+Up to 10 switching times can be entered for one day. The
+times can be entered in random order. Enter the hours in the    03 - After heating
+first column, the minutes in the second and the speed in the    If a after heater is fitted to the system it is optional if the after
+third column. Use the fourth column to enter the temperature    heater should operate. If the set point is configured to OFF
+difference by which the temperature should be lowered.          the after heater will not operate, even if required. Is the set
+Example: If the temperature is set to 21 °C and you enter       point configured to ON the after heater will engage as re-
+– 2.0 °C, the system will aim at 19 °C.                         quired. It regulates according to the temperature set in item
+If the speed has been changed manually on the key under         1 of the User menu.
+daily operation, the program will return to the day program     Setting option: ON/OFF.
+when the next switching time is passed.                         Factory setting: OFF.
+
+                   Examples of a day program:                   04 - Timer levels 3 and 4
+                                                                At speeds 3 and 4, the system will automatically reconnect
+                            01 07:30 H3 -0,0                    to speed 2 after the number of hours set in item 17 of the
+                            02 09:15 H1 -1,0                    Service menu by configuring the set point to ON. If the set
+                            03 17:00 H3 -0,0                    point is set to OFF, the system will run at speed 3 or 4 until
+                            04 18:00 H2 -0,0                    it is manually changed to another speed. The timer can
+                            05 23:30 H2 -2,0                    also be operated directly on the key next to the symbol for
+                                                                “Party mode” on the screen for daily operating options.
+It is not necessary to use all switching times. If the line is  Setting option: ON/OFF.
+marked by 0, it will be skipped by the control.                 Factory setting: OFF.
+
+03 to 08                                                        05 - Change filter
+These days can be filled in individually in the same way as     A filter timer is built-in counting how long the system has
+under item 02.                                                  been running since the last change of filter. The set point
+                                                                can be set between 1-6, which corresponds to 1-6 months.
+09 Copy day                                                     It is recommended that the set point should initially be set
+Use this menu item to copy one day to another, where the        to 3, corresponding to 3 months.
+same switching times, speeds and temperature lowering           If the filters are too dirty after the period configured, set
+are required.                                                   the set point to a lower number. If it is not necessary to
+For example: From Thursday to Tuesday.                          change the filters after the configured period, the set point
+                                                                can be set to a larger number.
+                                                                When the timer reaches the configured value for the
+                                                                change of filter, the alarm “Change filter” will flash at the
+                                                                top of the screen saver.
+
+Subject to technical modifications of Optima 250 Design         7
+   When the filters have been changed, return to the screen     screen with the symbols for the daily operating options by
+   with daily operating options and hold down the key for the   moving your hand past the control panel.
+   “Filter” symbol until the exclamation mark disappears and    If the function is set to OFF, press any key to display the
+   the system returns to normal operation.                      daily operating options.
+   Setting option: between 1 and 6 months.                      Setting option: between 0 and 4.
+   Factory setting: 3 months.                                   Factory setting: 1.
+
+   06 - Humidity control                                                         ”0” OFF
+   Here the humidity control is turned on, which must be set                     ”1” Max sensitive
+   to ON in order to be active.                                                  ”2” Level 2
+   Setting option: ON/OFF.                                                       ”3” Level 3
+   Factory setting: OFF.                                                         ”4” Least sensitive
+
+   5.6 Display menu                                             06 - Auto lightness
+                                                                In the display there is a movement sensor.
+   The menu item with the “Display” symbol.                     Setting option: ON/OFF.
+   Use this function to configure the following sub-menu        Factory setting: ON.
+   items:
+                                                                07 - Lightness day
+   01 - Language                                                Use this to enter the maximum brightness level for the
+   Choose between several different languages in the dis-       control panel when the room is fully lit.
+   play.                                                        Setting option: between 0 and 100 %.
+                                                                Factory setting: 100 %.
+   02 - Program info
+   This menu shows which Optima is fitted on the system         08 - Lightness night
+   and its version number:                                      Use this to enter the minimum brightness level for the
+   Example: Optima 250 UK D: 3.1 C: 1.0                         control panel when the room is in complete darkness.
+   D represents the version number of the control panel.        Setting option: between 0 and 100 %.
+   C represents the version number of the main board.           Factory setting: 30 %.
+
+   03 - Screen saver.                                           09 - Lightness day screen saver
+   The following settings can be selected here:                 Use this to enter the maximum brightness level for the
+   0: Screen saver off (daily operating options are displayed)  screen saver when the room is fully lit.
+   1: Screen saver off, but with light dimming                  Setting option: between 0 and 100 %.
+   2: Room temperature + light dimming                          Factory setting: 50 %.
+   3: Clock + light dimming
+   4: Clock and room temperature + light dimming                10 - Lightness night screen saver
+   5: Black screen + light dimming                              Use this to enter the minimum brightness level for the
+   Setting option: between 0 and 5.                             screensaver when the room is in complete darkness.
+   Factory setting: 3.                                          Setting option: between 0 and 100 %.
+                                                                Factory setting: 0 %.
+   04 - Pause time
+   Use this to set the period from no operation of the symbols  11 - Reset to factory settings
+   on the screen for daily operation until the screen auto-     If the set points are configured so that the system does
+   matically returns to the screen saver. From daily menu       not function as expected and the cause cannot be estab-
+   to screen saver variable from 1 to 10 minutes. The other     lished, there are 2 different options to reset the menu
+   automatic return connections cannot be adjusted. If no       items to the factory settings.
+   key has been pressed within the time intervals indicated
+   below, it will automatically return to the previous screen:  - Press 1 to change all menu items to the factory settings
+   -Change in menu item back to menu item = 30 seconds          except for the menu items for Speed (Level), Filter timer,
+   -From menu item to main menu = 2 minutes                     Calendar and Defrost temperatures.
+   -From menu item to daily menu = 2 minutes
+   Setting option: between 1 and 10 minutes.                    - Press 2 to change all menu items to the factory settings.
+   Factory setting: 10 minutes.                                 Note: Before performing a reset, ensure that the currently
+                                                                entered values are noted in the “Schedule for set points”.
+   05 - Auto wake-up                                            Setting option: between 0 and 2.
+   It is possible to deactivate the “Auto wake-up” function,    Factory setting: 0 mode.
+   where you can change from the screen saver to the
+
+8  Subject to technical modifications of Optima 250 Design
+12 - Safety menu                                                 5.7 Info operation
+It is possible to prevent access to selected main menu
+items so that they can only be changed with a password,          The Info operation menu provides an overview of the
+which is a 4-digit figure. The first time, press 4 times 0 and   current operating status of the system. If you want to see
+then “Enter”. Items 13 to 18 will open. Select the password      the operating status of the system over a period of ope-
+in item 18, which will also be the password to access the        ration, connect the control panel to a computer and use
+menu items 13 to 18 in future.                                   the Optima data logger program. The system monitors
+                                                                 the operating status every minute and stores the data for
+13 - Date and time                                               up to one year on the SD card.
+If this item is set to ON, it will not be possible to enter the
+menu for Date and time without using the selected pass-          Current temperature
+word in item 18.                                                 Press “Enter” next to the info operation menu. The first
+Setting option: ON/OFF.                                          screen displayed shows the current temperatures.
+Factory setting: OFF.
+                                                                                      T1 Supply air
+14 - Calendar                                                                         T2 Room
+If this item is set to ON, it will not be possible to enter the                       T3 Fresh air
+menu for Calendar without using the selected password in                              T4 Exhaust air
+item 18.                                                                              T7 Extract air
+Setting option: ON/OFF.                                                               T8 Frost protection
+Factory setting: OFF.                                                                 T9 Extra sensor
+
+15 - User menu                                                   Current fan speed
+If this item is set to ON, it will not be possible to enter the  Press “Arrow down” to display the current percentage fan
+User menu without using the selected password in item 18.        speeds and the opening of the bypass damper and of the
+Setting option: ON/OFF.                                          water valve.
+Factory setting: OFF.
+                                                                 Supply air     in %
+16 - Display                                                     Extract air    in%
+If this item is set to ON, it will not be possible to enter the  Bypass damper  in %
+menu for Display without using the selected password in          Water valve    in %
+item 18.                                                         Bypass         on/off
+Setting option: ON/OFF.
+Factory setting: OFF.                                            Current setting of operation relays
+                                                                 Press “Arrow down” again to display the current status of
+17 - Service menu                                                the operation relays.
+If this item is set to ON, it will not be possible to enter
+the Service menu without using the selected password in                              R2 After heating
+item 18.                                                                             R3 Preheating
+Setting option: ON/OFF.                                                              R8 System in operation
+Factory setting: OFF.                                                                R9 Help relay 9
+
+18 - Password
+Enter the selected password here and use this also in
+item 12 to enter items 13 to 18. If you forget your pass-
+word, contact Genvex Service department for assistance.
+To change the password, enter a new password in this
+item and press “Enter”. The password has now been
+changed.
+
+Subject to technical modifications of Optima 250 Design                                                                     9
+Current list of alarms                                                                 5.8 Service menu
+Press “Arrow down” again to display the current alarms.
+An alarm it is activated if ON appears beside it. At ON                                Use this function to configure the following sub-menu items.
+there is an alarm, which can also be seen on the screen
+saver and the display for daily operating options. At the top                          10 - Level 1 Supply air
+it says alarm. The Info operation menu shows the type of                               Level 1, which is the lowest speed, is usually used when
+alarm. When the timer for changing filter reaches the set                              there is nobody home. Both fans can be configured inde-
+value, the alarm “Change filter” will flash at the top of the                          pendently of each other for all levels so that the air flow in
+screen saver.                                                                          the supply air and in the extract air is equal, which pro-
+The alarm will read OFF when the error has been cor-                                   vides optimal operation.
+rected or the filter is changed and reset.                                             The adjustment of the system must be performed with
+                                                                                       specialised air measurement equipment and can be per-
+    Alarm            Status Error at ”ON”                                              formed without the use of the main regulating damper.
+                                                                                       It is not recommended to configure the air flows without
+    Control stopped  ON/OFF  Filter not changed after 14 days/ Frost protection        expert advice. Incorrect configuration can lead to major
+                             error/The system is equipped with an external             energy consumption or unpleasant indoor climate.
+                             switch between terminals 28 and 29. “Alarm” will be       Setting option: between 0 and 100 %.
+                             displayed when these are short-circuited and the          Factory setting: 30 %.
+                             system has stopped.
+                                                                                       11 - Level 2 Supply air
+    Change filter    ON/OFF The filters should be changed.                             Level 2 is the recommended speed of the system in order
+                                                                                       to provide the optimal indoor climate and it should be
+    Frost protection ON/OFF The temperature of the water after heater is too low       adjusted to the ventilation requirement of the dwelling.
+                                           (frost danger).                             Setting option: between 0 and 100 %.
+                                                                                       Factory setting: 50 %.
+    Com error        ON/OFF The control panel cannot communicate with the main
+                                    board between display and printed circuit board).  12 - Levels 3 and 4 Supply air
+                                                                                       Level 3 is the highest speed that can be configured. It is
+Hour counters (2 pages)                                                                used e.g. if there are many guests or there is a lot of acti-
+Press “Arrow down” again to display the hour counters,                                 vity in the kitchen.
+which count from the day the system is put into operation.                             Setting option of level 3: between 0 and 100 %.
+The figures shown should be multiplied by 10. This shows                               Factory setting of level 3: 75 %.
+how many hours the system has been running, how many                                   Level 4 is used mainly in summer to lower the indoor
+hours the system has run at the various speeds and how                                 temperature. Remember that a higher air exchange rate
+many hours the relays have been connected (ON).                                        increases the energy consumption.
+                                                                                       Setting option of level 4: cannot be configured.
+   Total tid                                                                           Factory setting: 100 %.
+   Level 0
+   Level 1                                                                             13 - Level 1 Extract air
+   Level 2                                                                             The fan speed is adjusted until the same air flow is
+   Level 3                                                                             achieved as the supply air on level 1.
+   Level 4                                                                             Setting option: between 0 and 100 %.
+   Relay 2 After heating                                                               Factory setting: 30 %.
+   Relay 3 Preheating
+   Relay 8 System in operation                                                         14 - Level 2 Extract air
+   Relay 9 Help function                                                               The fan speed is adjusted until the same air flow is
+                                                                                       achieved as the supply air on level 2.
+Press “Exit” to return to the main menu.                                               Setting option: between 0 and 100 %.
+                                                                                       Factory setting: 50 %.
+
+                                                                                       15 - Levels 3 and 4 Extract air
+                                                                                       The air flow of level 3 is adjusted to the same air flow as
+                                                                                       the supply air on levels 3 and 4 (item 12).
+                                                                                       Setting option of level 3: between 0 and 100 %.
+                                                                                       Factory setting of level 3: 75 %.
+                                                                                       Setting option of level 4: cannot be configured.
+                                                                                       Factory setting: 100 %.
+
+10                                         Subject to technical modifications of Optima 250 Design
+16 - Fine tuning (T2)                                          GE Energy 1/2/3 with modulating bypass: If the tempera-
+It is possible to fine tune the room sensor of the control     ture rises 0.5 °C above the temperature set in User Menu
+panel so the correct current room temperature is displayed.    item 1, the bypass damper will begin to open. The bypass
+Setting option: between -5 and 0 °C.                           is 100 % open when the temperature reaches the set point
+Factory setting: -3 °C.                                        in the User Menu Item 1 + the temperature differential set
+                                                               in this menu item.
+17 - Timer levels 3 and 4                                      To get a smooth opening of the bypass, the temperature
+If automatic reconnection is used for speeds 3 or 4, you       at which the bypass is fully open should be set appr. 3 ºC
+can enter how many hours the system should run on level        above the set temperature in Use Menu item 1.
+3 or 4 before it automatically returns to level 2. The set     GES Energy S/M with ON/OFF bypass: The bypass opens
+point can be configured between 1 and 9 hours.                 when the temperature reaches the set point in the User
+Setting option: between 1 and 9 hours.                         Menu Item 1 + the temperature differential set in this menu
+Factory setting: 3 hours.                                      item.
+                                                               Setting option: between 1 and 10 °C.
+18 - Filter/stop                                               Factory setting: 3 °C.
+To ensure that the filters are changed when the alarm
+“Change Filter” flashes on the screen of the control panel,    22 - Regulation water
+the set point can be configured to ON. The system will         If a water after heater with a motor-operated valve is
+then stop automatically after 14 days if the filters have not  installed in the system it may be necessary to adjust the
+been changed.                                                  regulation time.
+If this precaution is not required, the set point can be con-  The less regulation time, the faster the motor-operated
+figured to OFF and the system will continue to operate.        valve will regulate.
+Setting option: ON/OFF.                                        Setting option: between 1 and 250 seconds.
+Factory setting: OFF.                                          Factory setting: 20 seconds.
+
+19 - Method of regulation                                      23 - Regulation electricity
+There are 3 options:
+0. Room regulation (T2 sensor)                                 If an electrical preheater or an electrical after heater is
+1. Supply air regulation (T1 sensor)                           installed, it may be necessary to adjust the regulation time.
+2. Extract air regulation (T7 sensor)                          Setting option: between 1 and 300 minutes.
+If the system is used in a dwelling, supply air regulation is  Factory setting: 3 minutes.
+the normal choice. The set point is configured to 1.
+For room regulation, configure the set point to 0.             24 - Frost reduction
+For extract air regulation, configure the set point to 2.
+Setting option: between 0 and 2.                               To avoid icing of the counter current heat exchanger,
+Factory setting: 2.                                            the supply air flow can be reduced gradually, when the
+                                                               exhaust air temperature after the counter current heat
+20 - Preheating                                                exchanger has fallen below the set temperature. This
+If preheating is set to ON in item 2 of the User menu, the     function gradually reduces the supply air flow, until the set
+set point must be configured to the fresh air temperature,     value has been reached.
+at which the preheating should connect.
+Setting option: between -15 and 0 °C.                          Caution: May cause negative pressure in the house!
+Factory setting: -3 °C.                                        Setting option: between 0 and 10 °C. The function is dis-
+                                                               abled if set to 0 °C.
+21 - Bypass open                                               Factory setting: 0 °C.
+Here you set the temperature at which the bypass should
+be 100 % open. You set a temperature differential which        25 - Frost protection
+means that if you want the bypass to be 100 % open at
+e.g. 23 °C and if the set temperature in User Menu item 1      If a water after heater with motor-operated valve is instal-led
+is 20 °C, this menu item should be set to 3 °C.                in the system, a frost protection sensor must be fitted to the
+                                                               water after heater and the set point configured to ON.
+The bypass will open, provided that:                           If no frost protection sensor is installed, the set point must
+1. The exhaust temperature is higher than the outdoor          be configured to OFF.
+                                                               Setting option: ON/OFF.
+     air temperature.                                          Factory setting: OFF.
+2. The outdoor air temperature is above the set tempera-
+                                                               26 - Frost protection temperature
+     ture in the Service Menu Item 29.
+                                                               If frost protection in item 25 is set to ON, the frost protec-
+                                                               tion temperature must be configured to the temperature
+                                                               where the system should stop and the motor-operated
+                                                               valve open completely for the flow of hot water.
+                                                               Setting option: between 0 and 10 °C.
+                                                               Factory setting: 5 °C.
+
+Subject to technical modifications of Optima 250 Design        11
+27 - Help funktion                                                            32 - Humidity max. temperature **)
+                                                                              Setting the end point for outside temperature-compensati-
+This function can be used for the following:                                  on (T3), see the X-axis on the graph.
+                                                                              Setting option: 5-25 °C.
+    Setpoint Function                                                         Factory setting: 15 °C.
+
+    0  The relay is off.                                                      33 - Humidity max. value **)
+                                                                              Setting the end point for outside temperature compensa-
+    1  The relay is on when the system is running. This can e.g. be used      tion, see the Y-axis on the graph (desired max. humidity
+                                                                              value).
+       to open and close the fresh air damper and the exhaust air damper.     Setting option: 35-85 %.
+                                                                              Factory setting: 60 %.
+    2  The relay is on when extra heat is required or when the circulating
+                                                                              34 - Humidity fan speed **)
+       pump should run when heating with water after heating is required.     Setting of how much the fan speed may differ in relation to
+                                                                              the desired fan speed. See menu points 11, 12, 14 and 15.
+    3  The relay is on when the alarm “Change filter” is active. This can be  Setting option: 5-30 %.
+                                                                              Factory setting: 15 %.
+       used to activate an external alarm.
+
+    4  The relay is on when extra cooling is required. This function is used
+
+       if a preheater is also fitted to the system.
+
+    5  The control can handle an earth heat exchanger by a damper.
+
+       The relay will be on for one of the following two conditions:
+
+       • The outdoor temperature, sensor T9, is lower than the value
+
+       configured in item 26 (frost protection temperature, typically
+
+       set at 5 °C).
+
+       • The outdoor temperature, sensor T9, is more than 1° above
+
+       the temperature configured in item 1 and 1 ° above the cur-
+
+       rent room temperature.
+
+Setting option: between 0 and 5.                                              35 - Humidity regulating frequency **)
+Factory setting: 0.                                                           Setting of desired frequency for how often the fan speed
+                                                                              may be changed.
+28 - System stop                                                              The device is defined as 1 % per unit of time.
+Here you choose if it should be possible to stop the sys-                     Setting option: 1-60 min.
+tem by pressing the key for speed (K1) in the operating                       Factory setting: 10 min.
+menu for 3-4 seconds. If the set point is OFF, the system
+cannot be turned off.                                                         Menu point Fan speed 2                          Fan speed 3
+Setting option: ON/OFF                                                                                                        Supply air (75 %)
+Factory setting: OFF.                                                         11                          Supply air (50 %)   Extract air (75 %)
+
+29 - Turn off bypass                                                          12
+To prevent the bypass damper from opening at low fresh
+air temperatures and blow cold, not heated air into the                       14                          Extract air (50 %)
+dwelling, use this function to configure the lowest fresh air
+temperature, at which the damper must be closed. The                          15
+value is an expression of the greatest difference that may
+exist between the temperature configured in item 1 and                        *) Only displays with integrated Modbus module
+the lowest fresh air temperature.                                             **) Only units with integrated humidity sensor
+Setting option: between 0 and 20 °C. If 0°C is selected,
+the function is turned fully off.                                             Sketch for humidity regulation
+Factory setting: 4 °C.
+                                                                              Desired RH set-point, see the graph below.
+                                                                              Variable fan speed on fresh air, see the graph below.
+
+Please note: It is not recommended to configure the item
+without expert advice.
+
+30 - Modbus Mode *)                                                           Desired RH-set point,                               Variable fan speed on fresh air
+See separate description for MODBUS.                                          see graph below.                                    side, see graph below.
+Setting option: 0-2.
+0 = Modbus OFF                                                                               Extract air  Sensor              T3  Fresh air
+1 = 9600 Baud                                                                                             location
+2 = 19200 Baud
+Factory setting: 0.                                                               Supply air                                      Exhaust air
+
+31 - Modbus adresse *)
+See separate description for MODBUS.
+Setting option: 1-247.
+Factory setting: 1.
+
+12                                                   Subject to technical modifications of Optima 250 Design
+Outside temperature compensation curve
+
+                                                                                                              S. 32
+RH
+
+100%
+
+95
+
+90
+
+85
+
+80
+
+75
+
+70
+
+65                                   S.34
+                                                                            S.3 4
+60
+                                                                                                            S. 33
+55
+
+50                                   Ex. 1                                                                           Ex. 2
+45
+
+40
+
+35
+
+30
+
+25    Pre-
+20
+15 setting
+
+10
+
+5
+
+0 -10 -9 -8 -7 -6 -5 -4 -3 -2 -1 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
+
+            = Limits                                                                                                        Fresh air temp. °C
+
+            = Factory setting
+
+            = Examples
+
+                               Example 1
+                               At a fresh air temperature of 10°C the RH-value is 55 %.
+
+                               Example 2
+                               At a fresh air temperature of 20°C the RH-value is 60 %.
+
+Set point 34
+Setting for how much the fan speed may differ in relation to the desired fan speed.
+
+Example:
+Set point 34 = ± 15%
+With a desired fan speed of 3, the fan speed will be able to fluctuate ± 15 %. Since fan speed 3 is set at 75% in
+service menu 12 and 15, the fan speed must be max. 90% and min. 60%.
+
+The same applies to fan speed 2. Since fan speed 2 is set at 50% in service menu 11 and 13, the fan speed must
+be max. 65% and min. 35%.
+
+Regulation of the fan speed takes place ±1% for every 10 min.
+Setting option: see set point 35.
+
+Fan speed
+
+Level 4 = 100%                 65%          90%
+Level 3 = 75%                  ±15%         ±15%
+Level 2 = 50%                                60%
+
+                               35%
+
+Level 1 = 30%
+
+                                     Subject to technical modifications of Optima 250 Design                                                    13
+5.9 Schedule for week program
+
+                        Monday                                      Tuesday                                                  Wednesday
+
+                 Hours  Minutes Speed  Red. T2               Hours  Minutes Speed  Red. T2                            Hours  Minutes Speed  Red. T2
+
+     1)                                          1)                                                       1)
+     2)                                          2)                                                       2)
+     3)                                          3)                                                       3)
+     4)                                          4)                                                       4)
+     5)                                          5)                                                       5)
+     6)                                          6)                                                       6)
+     7)                                          7)                                                       7)
+     8)                                          8)                                                       8)
+     9)                                          9)                                                       9)
+    10)                                         10)                                                      10)
+
+                 Hours  Thursday       Red. T2               Hours   Friday        Red. T2                            Hours  Saturday       Red. T2
+
+     1)                 Minutes Speed            1)                 Minutes Speed                         1)                 Minutes Speed
+     2)                                          2)                                                       2)
+     3)                                          3)                                                       3)
+     4)                                          4)                                                       4)
+     5)                                          5)                                                       5)
+     6)                                          6)                                                       6)
+     7)                                          7)                                                       7)
+     8)                                          8)                                                       8)
+     9)                                          9)                                                       9)
+    10)                                         10)                                                      10)
+
+                 Hours  Sunday         Red. T2
+
+     1)                 Minutes Speed
+     2)
+     3)
+     4)
+     5)
+     6)
+     7)
+     8)
+     9)
+    10)
+
+Red. T2 = Reduced room temperature
+(Night set-back)
+
+14                                              Subject to technical modifications of Optima 250 Design
+5.10 Schedule for set points
+
+    Item Headline                       Factory setting  Configuration area                      Date  Date  Date  Date
+(4.5) 1 Temperature                            21 °C            10 - 30 °C
+                                                 OFF            ON / OFF
+        2 Preheating                             OFF            ON / OFF
+        3 After heating                          OFF            ON / OFF
+        4 Timer levels 3 and 4
+        5 Change filter                  3 months          1 - 6 months
+        6 Humidity control                      OFF             ON / OFF
+(4.8) 10 Level 1 Supply air                     30 %            0 - 100 %
+       11 Level 2 Supply air                    50 %            0 - 100 %
+       12 Level 3 and 4 Supply air              75 %            0 - 100 %
+       13 Level 1 Extract air                   30 %            0 - 100 %
+       14 Level 2 Extract air                   50 %            0 - 100 %
+       15 Level 3 and 4 Extract air             75 %            0 - 100 %
+       16 Fine tuning (T2)                     ÷ 3°C             ÷ 5 - 0 °C
+       17 Timer level 3 and 4
+       18 Filter/stop                       3 hours           1 - 9 hours
+       19 Method of regulation                   OFF            ON / OFF
+       20 Preheating                                 2                 0-2
+       21 By pass open                                         ÷ 15 - 0 °C
+       22 Regulation water                    ÷ 3 °C             1 – 10 °C
+       23 Regulation electricity                 3 °C
+       24 Frost reduction                                    1 - 250 sec.
+       25 Frost protection                   20 sec.           1 - 30 min.
+       26 Frost protection temperature        3 min.
+       27 Help functions                                         0 – 10 °C
+       28 System stop                            0 °C           ON / OFF
+       29 Turn off bypass                        OFF             0 - 10 °C
+    30 *) Modbus Mode                            5 °C
+    31 *) Modbus Address                                               0-5
+  32 **) Humidity max. temperature                   0          ON / OFF
+  33 **) Humidity max. value                     OFF             0 - 20 °C
+  34 **) Humidity fan speed                      4 °C
+  35 **) Humidity regulating frequency                                 0-2
+                                                     0              1 - 247
+                                                     1           5 - 25 °C
+                                              15 °C             35 - 85 %
+                                               60 %               5 - 30 %
+                                               15 %            1 - 60 min.
+                                           10 mIn.
+
+*) Only displays with integrated Modbus module
+**) Only units with integrated humidity sensor
+
+                                        Subject to technical modifications of Optima 250 Design                          15
+6. Function                                                   same way as an electrical after heater.
+
+6.1 Controlling Optima 250                                    6.3 Operating reliability
+
+Regulation of room temperature                                Safety thermostat
+There are 3 methods of regulation – see service menu          If an error occurs on an electrical heater, the safety ther-
+item 19. If the supply air regulation has been selected, the  mostat will disconnect.
+control will blow in air with the temperature set, provided   The heater is equipped with a fire thermostat that automat-
+that an after heater is fitted to the system. The supply air  ically cuts off the power supply, if the temperature exceeds
+temperature is regulated by the supply air sensor T1.         80 °C. If the temperature decreases, the heater automati-
+It is recommended to configure the supply air temperature     cally re-engages.
+2-3 °C below the room temperature.                            As an additional security there is a built-in thermal cut-out,
+                                                              which disengages if the temperature exceeds 110 °C. Re-
+Relay R8                                                      engaging must be done manually.
+When the system is running at levels 1, 2, 3 or 4, the relay  Does not apply to PTC electrical heaters.
+will be turned on. This function can be used to e.g. control
+the fresh air damper or the exhaust air damper.               Remember to disconnect the power to the system
+                                                              before performing an operation.
+6.2 Extra capacity
+
+Water reheating
+For systems with water reheaters the motor-operated
+reheater will begin to regulate (PI regulation) when the
+temperature has fallen 1 °C below the temperature set.
+
+Electrical reheating
+For systems with electrical reheaters the reheater will
+connect when the temperature has fallen 1 °C below
+the temperature set. If the regulation time is set to e.g. 3
+minutes, the temperature sensor T1 will measure if the
+temperature is now above or below the temperature set
+after 3 minutes. If the temperature is still below the tem-
+perature set, the reheating will keep running. When the
+temperature reaches the value set, the electrical reheater
+will disconnect.
+
+Bypass
+GE Energy 1/2/3 w/ bypass: They are equipped with a
+modulating bypass. If the room temperature increases to
+0.5 °C above the set temperature, the bypass will begin to
+open. The bypass is fully open when the temperature set
+in the Service menu item 21 is reached, e.g. 5 °C above
+the set / desired temperature.
+GES Energy S / M w/ bypass: They are equipped with an
+ON/OFF bypass. The bypass opens completely when the
+temperature set in the Service menu item 21 is reached,
+e.g. as 5 ° C above the set / desired temperature.
+
+If the bypass function is set to ON, the bypass damper will
+normally open, but if the outdoor temperature (T3) is 1 °C
+higher than the extract air temperature (T7), the bypass
+damper will close in order to utilise the “free” cooling of
+the supply air that the counter current heat exchanger can
+provide.
+If an extra refrigerant device is fitted to the system, this
+will turn on when the bypass valve is open completely and
+turn off again when the bypass valve begins to turn off
+again.
+Systems with an electrical preheater will regulate in the
+
+16  Subject to technical modifications of Optima 250 Design
+7. Maintenance                                                          water); only careful dust removal from air intake surfaces
+                                                                        with a household vacuum cleaner.
+Follow the following instructions to achieve optimal
+performance:                                                           Fans:
+                                                                       Inspect the two fan wheels for dirt each year. If they are
+               Before opening the unit, turn off the power/            dirty, they can be washed using a brush, bottle cleaner,
+               pull out the plug and wait until the fans have          etc.
+               stopped completely.
+                                                                       Supply air and extract air valves:
+A couple of days after the primary installation, check that            Clean the valves by wiping with a dry cloth. Be careful that
+the condensation outlet is working.                                    the valves do not turn, so that the air volume changes.
+
+Environmental requirements                                             7.2 Alarms
+When repairing or dismantling the unit, statutory environ-
+mental regulations must be observed regarding recycling                Filter timer
+and destruction of various materials.                                  The control has a filter timer to guarantee that the filter is
+                                                                       changed and that optimal operation is established. When
+7.1 Unit                                                               the timer reaches the set value, “Chg. filter” will flash in
+                                                                       the display until the filters have been changed.
+Filters                                                                When the filters have been changed, the button for the
+When the alarm “Change filter” flashes in the control panel            filter symbol must be held down until ”Alarm!”, “Chg. Filter”
+display, the filters must be changed. Stop the system by               and the exclamation mark disappears and the unit reverts
+the circuit breaker of the unit or by the circuit breaker on           to normal operation.
+the terminal board. Open the front cover/filter drawers and
+remove the filters. After having changed the filters, reset            Com error
+the filter timer. The time interval for cleaning/changing the          This error appears when there is no communication
+filters can be adjusted in the operating menu.                         between the display and control. Check that the wiring is
+                                                                       correct on terminals 21 to 24.
+               There is a danger of cuts from sharp discs.
+               The discs must not be damaged.                                             21 Signal
+               Vacuum cleaning or using pressurised air on                                22 Signal
+               the filters is not recommended.                                            23 10 Volt
+               Filter performance may be impaired.                                        24 0 Volt
+
+                         G4 = Standard filter (basic filter class G4)  Frost protection error
+                         F5 = Fein filter (fine filter class F5)       This error message will be displayed if a water reheater
+                         F7 = Pollen filter (fine filter class F7)     is fitted to the system and the temperature of the water
+                                                                       reheater is too low, causing a danger of frost burst.
+                                                                       The control will stop the system and open the motor-
+                                                                       operated valve to keep the heater warm.
+
+Condensation drain:                                                    7.3 Dismantling/taking the system out
+When changing the filter in August/September before                    of service
+the outside temperature falls to 5 °C, check that the
+condensation drain is not blocked with dirt and make sure              The following must be done:
+that there is water in the water trap. Pour 1 litre of water           The power supply, i.e. the power cables, must be discon-
+into the condensation tray and make sure it runs off freely.           nected. Disconnect the condensation outlet and power
+If the condensation drain does not work, this could lead to            cables for any reheater/preheater. Disconnect cables for
+water damage in the home.                                              the control panel and dismantle ducts.
+
+Heat exchanger:                                                        If the system should to be taken out of service, the ducts
+Inspect the heat exchanger every year. If it is dirty, remove          must be dismantled to avoid condensed water in the sys-
+it and:                                                                tem and in the ducts. Close all supply air and extract air
+- Alu-exchanger: Wash in lukewarm soapy water and rinse                valves.
+
+ using a hand shower if necessary.
+- Plastic exchanger: No cleaning with fluids (including
+
+Subject to technical modifications of Optima 250 Design                17
+8. Troubleshooting                                                   ing thermostat (only units with electrical reheater
+                                                                     installed).
+8.1 Safety thermostat in electrical                             • Air in the heating pipes, faulty thermostat / motorvalve,
+heater (optional equipment)                                          incorrect setting of control panel.
+
+If an error occurs on an electrical heater, the safety ther-    Within the guarantee period (0-2 years):
+mostat will disconnect.                                         The installer from whom you have bought the system.
+The heater is equipped with a fire thermostat that auto-
+matically cuts off the power supply, if the temperature         After the guarantee period (2 years ->):
+exceeds 80 °C. If the temperature decreases, the heater         The installer from whom you have bought the system or
+automatically re-engages.                                       the Genvex service department (+45 7353 2765).
+As an additional security there is a built-in thermal cut-out,
+which disengages if the temperature exceeds 110 °C. Re-         Before calling, please write down the data from the inscrip-
+engaging must be done manually.                                 tion plate (silver plate on the unit).
+Does not apply to PTC electrical heaters.
+
+8.2 The system is not running
+
+Unit stopped
+Possible error:
+• Fuse in main board has blown, no power to unit.
+• One of the fuses on the circuit board of the unit is-
+
+     blown.
+• Loose wire, no power to unit.
+• Loose wire between unit and control panel.
+• Faulty or incorrectly set week program.
+• Filter timer has switched the system off.
+
+Condensed water is leaking from the unit
+Possible error:
+• Condensation outlet blocked by dirt.
+• The condensation outlet is not adequately protected
+
+     against freezing at low outdoor temperatures.
+
+8.3 Air faults
+
+No supply air:
+Possible error:
+• Faulty supply air fan
+• Clogged supply air fi lter
+• Clogged fresh air grill due to dirt and leaves during the
+
+     fall and snow and ice during the winter.
+• Fuse on the circuit board is blown.
+• The unit is in defrost mode (supply air fan stops)
+• Incorrect value set in User menu item 2.
+
+No extract air:
+Possible error:
+• Faulty extract air fan
+• Clogged extract air fi lter.
+• Fuse on the circuit board is blown
+
+Cold supply air:
+Possible error:
+• Clogged heat changer.
+• Faulty extract air fan.
+• Clogged extract air filter.
+• Electrical reheater is disconnected at the over heat-
+
+18  Subject to technical modifications of Optima 250 Design
+Our Units and Controls – Your Choice
+
+Genvex has more than 40 years of experience in creating quality units   Today’s and future construction place greater and greater requirements
+providing optimum indoor climate with excellent energy efficiency. Our  for energy-friendly, yet compact systems. We at Genvex are aware of
+systems employ the newest technologies in heat recovery and have        this and are continuously developing solutions that meet these needs.
+heat recovery rates of up to 96%. The systems are continuously          For example, a brilliant solution for decentralised housing ventilation is
+optimised with the newest technologies.                                 a range hood solution with full integration to the system’s control which
+                                                                        ensures that the most efficient ventilation system is achieved with the
+Advanced controls ensure that as little energy as possible is used for  simplest installation.
+reaching an optimum level of comfort.
+
+Genvex A/S • Sverigesvej 6 • DK-6100 Haderslev • Tel.: +45 73 53 27 00 • salg@genvex.dk • genvex.dk
+

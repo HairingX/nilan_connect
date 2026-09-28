@@ -1,0 +1,1050 @@
+SOFTWARE INSTRUCTIONS
+
+  CTS400 BY NILAN
+
+Comfort
+
+Version 1.30- 20.01.2025
+S75 Comfort GB
+Table of contents
+
+Control panel
+
+     Functions on the control panel .................................................................................................................................................................. 3
+          Functional overview ............................................................................................................................................................................. 3
+          Warnings and alarms ............................................................................................................................................................................ 4
+          Damper test ........................................................................................................................................................................................... 6
+          Control panel locked ............................................................................................................................................................................. 6
+
+PC Tool
+
+     Installation .................................................................................................................................................................................................... 7
+          Installation of PC Tool ........................................................................................................................................................................... 7
+
+     Settings in PC Tool ....................................................................................................................................................................................... 9
+          Menu bar ................................................................................................................................................................................................. 9
+          PI diagram ............................................................................................................................................................................................... 9
+
+Software
+
+     Connection options .................................................................................................................................................................................. 10
+          Overview of connection options ..................................................................................................................................................... 10
+
+     Balancing .................................................................................................................................................................................................... 11
+          Balancing ............................................................................................................................................................................................. 11
+
+     Basic settings ............................................................................................................................................................................................ 11
+          Temperature settings ....................................................................................................................................................................... 11
+          Humidity control system .................................................................................................................................................................. 12
+          Filter alarm .......................................................................................................................................................................................... 13
+          Bypass Summer mode ...................................................................................................................................................................... 13
+          Settings ................................................................................................................................................................................................ 14
+          Fan speed % ........................................................................................................................................................................................ 17
+          User selection 2 .................................................................................................................................................................................. 18
+
+     Advanced settings .................................................................................................................................................................................... 19
+          De-icing function ................................................................................................................................................................................ 19
+          CO2 regulation .................................................................................................................................................................................... 20
+          Lock control panel .............................................................................................................................................................................. 21
+          Modbus ID ............................................................................................................................................................................................ 21
+          Manual test ......................................................................................................................................................................................... 22
+          Control panel ...................................................................................................................................................................................... 22
+          List of Alarms ...................................................................................................................................................................................... 22
+          List of Info Alarms .............................................................................................................................................................................. 22
+
+Alarm list
+
+     Comfort ...................................................................................................................................................................................................... 23
+
+                                                                                               2
+Control panel
+
+Functions on the control panel
+
+Functional overview
+
+                                                                     The following functions are available with the CTS 400 panel:
+                                                                     1. Power on and off button
+                                                                     2. Yellow LED light: Constantly flashing or lit by warnings or alarms
+                                                                     3. Green LED light: The number of lit LED lights indicates the desired fan speed level
+                                                                     4. Switching the fan speed level from 1-4 is done by pressing the arrow, after fan
+
+                                                                           speed level 4 fan speed level 1 appears again.
+                                                                                     ATTENTION
+                                                                                     When the unit is overridden by user selection, humidity, defrost, etc., the
+                                                                                     desired fan speed level will be lit green, but the current fan speed level will
+                                                                                     flash. By pressing the arrow, the unit will go to the desired fan speed level -
+                                                                                     until the next event.
+
+                                                                                               3
+Warnings and alarms
+
+If an alarm is triggered in the ventilation unit, the yellow LED will flash. Alarms are divided into 3 categories: Information, warning and
+critical alarm.
+
+                  INFO
+                  The alarm displays a piece of information that needs your attention, e.g. that filters need replacing.
+                  The ventilation unit remains in operation.
+
+                                                The yellow LED and the two lower green LED stays on:
+                                                Filters need replacing.
+                                                Replace filters and clean the unit.
+                                                Resetting the filter alarm:
+                                                Press the Level button (the button with the arrow) in 15 seconds.
+
+                                                The yellow LED and the two green LED in the middle stays on:
+                                                Release the Level button
+
+                                                The yellow LED and the four green LED stays on in 10 seconds.:
+
+                                                All LED turns off briefly.
+
+                                                The two lower green LED stays on:
+                                                The timer of the filter is resetted and the alarm is de-activated.
+
+                                                                                               4
+ATTENTION
+The alarm displays a warning that needs your attention. The ventilation unit continues to operate, but in emergency
+mode.
+
+                             Alarm display:
+                             Push briefly both the ON/OFF button and the Level button at the same time and release. After-
+                             wards one of the green LED is flashing and indicate the type of fault:
+
+                             The yellow diode and the first green diode are flashing:
+                             The temperature sensor has either short-circuited or been disconnected.
+                             Register the error and contact service. Reset the alarm once the error has been rectified.
+                             Resetting the alarm:
+                             Press the On/Off button and the button with the arrow at the same time and hold for 10 seconds.
+
+                             The yellow diode and the second green diode are flashing:
+                             The humidity sensor or the CO2 sensor has either short-circuited or been disconnected.
+                             Register the error and contact service. Reset the alarm once the error has been rectified.
+                             Resetting the alarm:
+                             Press the On/Off button and the button with the arrow at the same time and hold for 10 seconds.
+
+                             The yellow diode and the third green diode are flashing:
+                             The thermostat in the after-heating has short-circuited or been disconnected.
+                             Make a note of which sensor is faulty and contact service. Reset the alarm once the error has been
+                             rectified.
+                             Resetting the alarm:
+                             Press the On/Off button and the button with the arrow at the same time and hold for 10 seconds.
+
+                                                                             5
+                  WARNING
+                  The alarm displays a critical alarm that needs your attention.
+                  The ventilation unit has stopped.
+
+                                                The yellow diode and the first two green diodes are flashing:
+                                                The fire alarm has been activated.
+                                                If there is no fire, contact service. Reset the alarm once the error has been rectified.
+                                                Resetting the alarm:
+                                                Press the On/Off button and the button with the arrow at the same time and hold for 10 seconds.
+
+                                                The yellow diode and the upper two green diodes are flashing:
+                                                Frost in the water after-heating element (if installed)
+                                                Contact service. Reset the alarm once the error has been rectified.
+                                                Resetting the alarm:
+                                                Press the On/Off button and the button with the arrow at the same time and hold for 10 seconds.
+
+Damper test
+
+If a fire automation system has been connected and it has been activated in PC Tool, it will run a damper test. The damper test lasts
+approx. 3 minutes and it is carried out every 7/ 14 or 28 days (set in the Software). The test will also run every time the unit starts up
+after having been turned off. When the test has been completed, the unit will continue in the defined settings.
+
+                                                The 4 green LED lights range from 1-4:
+                                                A damper test is carried out that take approx. 3 min .
+                                                Resetting the alarm:
+                                                The alarm stops automatically when the test has finished, and the control panel will once again dis-
+                                                play the current fan speed level.
+
+Control panel locked
+
+You can lock the control panel in two different ways: The On/Off button and/or the button with the arrow.
+                                                All LEDs flash temporarily:
+                                                If all the LEDs flash temporarily when you use the panel, the panel has been locked.
+                                                Contact the caretaker or service provider if that happens.
+                                                Resetting alarms:
+                                                You can still reset alarms.
+                                                Press the On/Off button and the button with the arrow at the same time and hold for 10 seconds
+
+                                                                                               6
+PC Tool
+
+Installation
+
+Installation of PC Tool
+
+Use a USB AB cable to connect the PC to the USB port on the unit. The recommended maximum cable length for the USB AB cable
+used is 3 m.
+
+You can download the PC application via NilanNet under the menu item “After Sales/Software”.
+
+Install the latest software “Nilan PC-tool”
+The program will be installed under: C:\Program Files (x86)\Nilan PC-tool
+
+The example is for installation in Windows 10 (it may look different in other versions of Windows).
+
+1. Press “Next” to install Nilan PC-tool  2. Tick the box for accepting the       3. Press “Next” to confirm the location
+                                          license agreement and press “Next”      of the program
+
+4. Confirm the location of the pro-       5. Press “Finish” to run Nilan PC-tool  6. Press “Yes” to accept the user
+gram. Select the option “all users” and                                           license agreement for the software
+press “Next”
+
+7. Press “Next” to install Automated      8. Press “Next” to start installation   9. Press “Next” to confirm the location
+Solutions Modbus Master ActiveX                                                   of the program
+Control on the PC
+
+                                          7
+10. Press “Next” to add the program to  11. Press “Next” to start installation  12. Press “Finish” to complete installa-
+Program Manager Group                                                           tion
+
+  13. Information about successful
+  installation
+
+Setup in the program
+
+1. Following installation, you have to  2. Go to the sheet “Compatibility” and  3. Tick “Run this program as adminis-
+set a number of settings in the pro-    tick “run this program as administra-   trator” and press “OK”
+gram.                                   tor”. Then, press the bar at the bot-
+Under C:\Program Files (x86)\Nilan      tom: “Change settings for all users”
+PC-tool you have to right-click         and press “OK”
+DataloggerModbus
+
+                                        8
+Settings in PC Tool
+
+Menu bar
+
+In the menu bar at the top of the diagram, the following menus are available: Exit, Language, Configuration, Login, Firmware and Start/
+Stop connection.
+
+Exit                   The program closes
+Language
+                       The default language for the ventilation unit is Danish. You can change it to other languages in the
+Configuration          menu
+
+Login                  You can save set values and settings in PC-Tool and transfer them to e.g. a different unit or simply save
+Firmware               them for later use.
+Start/Stop connection
+                       Login access to default settings
+
+                       Software update
+
+                       If the connection to the unit is disrupted, you can reestablish it here.
+
+PI diagram
+
+Key for reading the following values in the PI diagram:
+
+When the green button flashes (at the centre of the counterflow heat exchanger), there is a connection to the ventilation unit.
+
+Software:   Software version
+
+Bypass damper: Open or closed
+
+Supply air [%]: Supply air fan (supply air)
+
+            Level: Fan speed level
+
+Extract air [%]: Extract air fan (extract air)
+
+            Level: Fan speed level
+
+T1: Outdoor air temperature
+T2: Supply air temperature (does not figure in all ventilation units)
+T3: Extract air temperature
+T4: Discharge air temperature
+T7: Supply air temperature (if an after-heating element has been installed)
+RH%: Humidity sensor in extract air
+CO2: CO2 level in ppm
+VOC: Air quality measurement
+
+                                                         9
+Software
+
+Connection options
+
+Overview of connection options
+
+You can connect external accessories to the ventilation unit. However, it is not possible to have all accessories connected up simulta-
+neously.
+The following table shows the external connections that are possible in the different settings.
+
+Setting                   User selection 1  User selection 2 /  Fire thermostat  VOC / CO2      Alarm output
+                                            Filter monitor                                   X              X
+Normal                    X                                                 X
+                                                        X                   X
+                                                                            X
+Water after-heating       X                                                 X
+
+Electrical after-heating  X
+
+Fire automation system    X
+
+                                            10
+Balancing
+
+Balancing
+
+To ensure a correct balancing, it is imprtant that the unit is in balancing mode. In this way all other functions such as e.g. humidity con-
+trol system are deactivated to ensure a correct balncing.
+
+Balancing                      Settings:              0/1
+                               Standard setting:      0
+                               Description:           1 indicates that the function “Balancing” has been activated.
+
+Basic settings
+
+Temperature settings
+
+If an after-heating element has not been installed, the settings are used to control the bypass damper.
+
+It is necessary to install an after-heating element if you want to control the supply air temperature and for it to contribute towards the
+heating of the dwelling. An after-heating element enables you to control the supply air temperature, regardless of the outdoor tem-
+perature.
+
+An external after-heating element can be mounted in the supply air duct. This, however, is not an option if the Fire automation system
+function is being used.
+
+Stop at low room temperature
+You can set a minimum room temperature at which the ventilation unit is to stop (Room low temperature).
+
+This is a safety function that can be useful, for instance, if you are not at home and the heat supply stops. In such an event, the dwelling
+will no longer be heated and the room temperature will fall. To prevent the ventilation unit from cooling the dwelling even further, you
+can set it to stop at a minimum room temperature.
+
+                  ATTENTION
+                  During periods when heating is not required in the dwelling, the supply air temperature may fall below the minimum
+                  temperature.
+
+Desired room temperature       Settings:              0  28 °C
+Regulatory-deadband            Standard setting:      20 °C
+                               Description:           Here you set the desired room temperature.
+
+                               Settings:              0  4 °C
+                               Standard setting:      1 °C
+                               Description:           The temperature setting is deducted from or added to the regu-
+                                                      latory-deadband of the setpoint.
+Stop at room low temperature:  Settings:
+0=Off                          Standard setting:      0 / 1  20°C
+                               Description:           0
+                                                      Here you set the room temperature at which the ventilation
+Summer/winter mode             Settings:              unit is to stop.
+                               Standard setting:
+                               Description:           5  30 °C
+                                                      12 °C
+                                                      Here you set the temperature for the shift to and from summer
+                                                      and winter mode.
+
+                                                      • If the outdoor temperature is higher, the unit will operate in
+                                                         summer mode
+
+                                                      • If the outside temperature is lower, the unit will operate in
+                                                         winter mode
+
+                                                  11
+Humidity control system
+
+The primary purpose of ventilation is to extract humidity from the dwelling to avoid damage to the building, and to achieve a good in-
+door climate. During long periods with sub-zero temperatures, humidity levels in the dwelling may become critically low for the build-
+ing and for the indoor climate. Wooden floors, furniture and walls can get damaged from very dry air, which also whirls up dust,
+resulting in a poor indoor climate.
+
+To prevent this, the control system has an integral humidity control system that maintains a healthy, relative humidity level. When the
+average air humidity level in the dwelling falls below a set value (default setting is 30%), you can choose to reduce ventilation. It will
+typically only last for a short period of time. In this way, you can prevent further reduction of the air humidity level in the dwelling.
+
+The humidity control system also has a function that enables you to increase ventilation if the air humidity level becomes high, for in-
+stance when running a bath. This reduces the risk of mould growth in the bathroom, and, as an added bonus, the bathroom mirror will
+rarely steam up.
+
+The humidity control system follows the average air humidity level measured over the previous 24 hours. In this way the system au-
+tomatically adapts to summer and winter conditions.
+
+Fan speed level at low humidity   Settings:              0/1/ 2/3
+level                             Standard setting:      1
+                                  Description:           When the current humidity level falls below the level that signi-
+                                                         fies low air humidity, the ventilation unit will change to the set
+Fan speed level at high humidity  Settings:              fan speed level.
+level                             Standard setting:
+                                  Description:           0 indicates that the function “Fan speed level at low humidity
+                                                         level” has been deactivated.
+Low humidity level [%]            Settings:
+Time out high humidity level      Standard setting:      2/3/4/0
+                                  Description:           3
+                                                         At high air humidity, for instance when running at bath, the ven-
+                                  Settings:              tilation unit will change to the set fan speed level.
+                                  Standard setting:
+                                  Description:           0 indicates that the function “Fan speed level at high humidity
+                                                         level” has been deactivated.
+
+                                                         15  45%
+                                                         30%
+                                                         When the current air humidity level falls below this value, “Fan
+                                                         speed level at low humidity level” will be activated.
+
+                                                         0  180 min.
+                                                         60 min .
+                                                         The function “Fan speed level at high humidity level” ordinarily
+                                                         stops when the current air humidity level is 3% above the aver-
+                                                         age humidity level.
+
+                                                         The time limit will, however, stop operation if it has not been
+                                                         achieved within the set amount of time.
+
+                                                         0 indicates that the function has been deactivated.
+
+                                                     12
+Filter alarm
+
+                  ATTENTION
+                  It is important to change the filters regularly as required. Dirty filters reduce the efficiency of the ventilation unit and
+                  result in a poorer indoor climate and higher power consumption.
+
+The default setting of the filter alarm is 90 days between filter replacements. You can set the timer so it fits the level of pollution in the
+location where the ventilation unit has been installed.
+
+If someone in the household has a pollen allergy, it is recommended that you install a pollen filter in the outdoor air intake.
+
+Days between filter replace-       Settings:              0  360
+ments                              Standard setting:      90 days
+                                   Description:           Here you set the amount of days between filter replacements.
+Filter alarm on the panel: 0=None
+                                   Settings:              0/1
+                                   Standard setting:      1
+                                   Description:           Here you indicate whether or not an alarm is to be displayed on
+                                                          the panel
+
+Bypass Summer mode
+
+In the summer time when it is hot the unit can be set to run a higher air exchange.
+
+Bypass Boost Trin: 0= Off          Settings:              04
+Bypass Boost Offset                Standard setting:      Off
+                                   Description:           Set the fan level speed which has to be used for Bypass mode in
+                                                          the summer time.
+                                   Settings:
+                                   Standard setting:      0.0  10.0
+                                   Description:           0,0
+                                                          Set additional temperatur at which, above set temperatur,
+                                                          increased ventilation must be activated.
+
+                                                      13
+Settings                           Settings:          14
+                                   Standard setting:  1
+  Select setting:                  Description:       Here you can select settings related to Normal operation, Water
+  1=Normal                                            / electrical after-heating or Fire automation system
+  2=Water after-heating
+  3=Electrical after-heating
+  4=Fire automation system
+
+1=Normal                           Description:       Here you select normal setting
+
+Fan speed level user selection 1:  Settings:          04
+0=Function off                     Standard setting:  0
+1-4= fan speed level 1-4           Description:       Here you select the desired fan speed level when user selection
+                                                      1 is activated.
+Time out user selection 1:         Settings:
+Stop after min. (0=Off)            Standard setting:  0  180 min.
+                                   Description:       0
+                                                      Here you select for how long user selection 1 is to remain active
+Fire thermostat reset:             Settings:          after it has been activated.
+0=Manual / 1=Automatic             Standard setting:
+                                   Description:       0: User selection 1 remains active as long as the potential signal
+Additional input: 0=Off                               is closed.
+1=User selection 2 / 2= Filter     Settings:          1-180: User selection 1 is deactivated automatically after the
+monitor                            Standard setting:  selected amount of time (in minutes).
+                                   Description:
+Additional sensor:                                    This is used, for instance, in sheltered housing for old people
+0=Ingen / 1= VOC / 2=CO2           Settings:          where residents might forget to turn off the cooker hood.
+                                   Standard setting:
+                                   Description:       0/1
+                                                      0
+Output: 0=Off                      Settings:          Fire: Automatic confirmation when fire input is back to normal.
+1=10V alarm / 2=0-10V alarm /      Standard setting:
+3=10V with fan /                   Description:       02
+4= User selection 1                                   0
+                                                      Here you activate user selection 2 or input from the filter moni-
+                                                      tor.
+
+                                                      02
+                                                      0
+                                                      Here you indicate whether a VOC sensor or a CO2 sensor has
+                                                      been installed.
+
+                                                      04
+                                                      0
+                                                      Here you indicate whether the output signal is to communicate
+                                                      alarms to e.g. a lamp / operation of the unit, or it should be acti-
+                                                      vated by user selection 1.
+
+2=Water after-heating element Settings:                   Here you indicate whether or not a water after-heating ele-
+                                                          ment has been installed.
+Fan speed level user selection 1:  Settings:
+0=Function off                     Standard setting:      04
+1-4= fan speed level 1-4           Description:           0
+                                                          Here you select the desired fan speed level when user selection
+Time out user selection 1:         Settings:              1 is activated.
+Stop after min. (0=Off)            Standard setting:
+                                   Description:           0  180 min.
+                                                          0
+                                                          Here you select for how long user selection 1 is to remain active
+                                                          after it has been activated.
+
+                                                          0: User selection 1 remains active as long as the potential signal
+                                                          is closed.
+                                                          1-180: User selection 1 is deactivated automatically after the
+                                                          selected amount of time (in minutes).
+
+                                                          This is used, for instance, in sheltered housing for old people
+                                                          where residents might forget to turn off the cooker hood.
+
+                                                      14
+Fire thermostat reset:             Settings:              0/1
+0=Manual / 1=Automatic             Standard setting:      0
+                                   Description:           Fire: Automatic confirmation when fire input is back to normal.
+Status of frost thermostat
+0=Ok / 1=Error                     Description:           Shows status of the frost thermostat in the water after-heating
+                                                          element. If there is an error, there is a risk of frost in the water
+Status of after-heating element    Description:           after-heating element.
+[%]
+                                   Settings:              Shows the current output of the water after-heating element.
+Minimum supply air                 Standard setting:
+temperature                        Description:           10.0  20.0 °C
+                                                          16.0
+Maximum supply air                 Settings:              Here you set the minimum supply air temperature that you
+temperature                        Standard setting:      want the ventilation unit to give off when heating is required in
+                                   Description:           the dwelling.
+
+3=Electrical after-heating         Settings:              If heating is not required, the supply air temperature may fall
+                                                          below this value.
+Fan speed level user selection 1:  Settings:
+0=Function off                     Standard setting:      10.0  50.0 °C
+1-4= fan speed level 1-4           Description:           25
+                                                          Here you set the maximum supply air temperature that you
+Time out user selection 1:         Settings:              want the ventilation unit to give off when heating is required in
+Stop after min. (0=Off)            Standard setting:      the dwelling.
+                                   Description:
+                                                          Here, you indicate whether or not an electrical after-heating
+Fire thermostat reset:             Settings:              element has been installed.
+0=Manual / 1=Automatic             Standard setting:
+                                   Description:           04
+Status of thermostat to prevent                           0
+overheating:                       Description:           Here you select the desired fan speed level when user selection
+0=Ok / 1=Error                                            1 is activated.
+
+Status of after-heating element    Description:           0  180 min.
+[%]                                                       0
+                                   Settings:              Here you select for how long user selection 1 is to remain active
+Minimum supply air                 Standard setting:      after it has been activated.
+temperature                        Description:
+                                                          0: User selection 1 remains active as long as the potential signal
+                                                          is closed.
+                                                          1-180: User selection 1 is deactivated automatically after the
+                                                          selected amount of time (in minutes).
+
+                                                          This is used, for instance, in sheltered housing for old people
+                                                          where residents might forget to turn off the cooker hood.
+
+                                                          0/1
+                                                          0
+                                                          Fire: Automatic confirmation when fire input is back to normal.
+
+                                                          Shows status of thermostat to prevent overheating
+
+                                                          Errors indicate that the after-heating element has been too hot,
+                                                          which may be due to insufficient air flow across the element.
+
+                                                          NB: Nilan’s electrical after-heating elements have an integral
+                                                          thermostat to prevent overheating. It is therefore not included
+                                                          in this outline.
+
+                                                          Shows the current output of the electrical after-heating ele-
+                                                          ment.
+
+                                                          10.0  20.0 °C
+                                                          16.0
+                                                          Here you set the minimum supply air temperature that you
+                                                          want the ventilation unit to give off when heating is required in
+                                                          the dwelling.
+
+                                                          If heating is not required, the supply air temperature may fall
+                                                          below this value.
+
+                                                      15
+Maximum supply air               Settings:              10.0  50.0 °C
+temperature                      Standard setting:      25
+                                 Description:           Here you set the maximum supply air temperature that you
+                                                        want the ventilation unit to give off when heating is required in
+4=Fire automation system         Settings:              the dwelling.
+
+Fan speed level user selection   Settings:              Here you indicate whether or not you wish to use the Fire auto-
+1:                               Standard setting:      mation system.
+0=Function off                   Description:
+1-4= fan speed level 1-4                                04
+                                 Settings:              0
+Time out user selection 1:       Standard setting:      Here you select the desired fan speed level when user selection
+Stop after min. (0=Off)          Description:           1 is activated.
+
+Fire thermostat reset:           Settings:              0  180 min.
+0=Manual / 1=Automatic           Standard setting:      0
+                                 Description:           Here you select for how long user selection 1 is to remain active
+Fire damper closed               Description:           after it has been activated.
+(1=fully closed)
+                                 Description:           0: User selection 1 remains active as long as the potential signal
+Fire damper open                                        is closed.
+(1=fully open)                   Description:           1-180: User selection 1 is deactivated automatically after the
+                                                        selected amount of time (in minutes).
+Status of fire damper            Settings:
+0=Ok / 1=Error                   Standard setting:      This is used, for instance, in sheltered housing for old people
+                                 Description:           where residents might forget to turn off the cooker hood.
+Intervals between tests of fire
+damper                                                  0/1
+in days: 0=7 / 1=14 / 2=28                              0
+                                                        Fire: Automatic confirmation when fire input is back to normal.
+Polarity of fire input:          Settings:
+0=NO, 1=NC                       Standard setting:      Shows whether the fire damper is closing or is fully closed
+                                 Description:
+                                                        Shows whether the fire damper is opening or is fully open
+
+                                                        Shows status of fire damper
+
+                                                        02
+                                                        2
+                                                        Here you set the desired amount of days before the fire damper
+                                                        is to be tested again.
+
+                                                        0/1
+                                                        0
+                                                        The fire input for the fire thermostat should be:
+                                                        0: Normally open
+                                                        1: Normally closed
+
+                                                    16
+Fan speed %
+
+It is a fast and easy process to balance the air volume using the Nilan CTS400 control system. You can set all fan speed levels between
+20 and 100% (stepless). The levels can differ in extract air and supply air.
+
+                    ATTENTION
+                    Be sure to set regulation to “1” in PC Tool Software settings and remember to restore “0” after regulation.
+
+Supply air - level 1   Settings:              20  100%
+Supply air - level 2   Standard setting:      23%
+Supply air - level 3   Description:           Here you set the fan speed level for Level 1 - Supply air.
+Supply air - level 4
+Supply air - level 5   Settings:              20  100%
+                       Standard setting:      40%
+Supply air - level 6   Description:           Here you set the fan speed level for Level 2 - Supply air.
+
+Extract air - level 1  Settings:              20  100%
+Extract air - level 2  Standard setting:      65%
+Extract air - level 3  Description:           Here you set the fan speed level for Level 3 - Supply air.
+Extract air - level 4
+Extract air - level 5  Settings:              20  100%
+                       Standard setting:      100%
+Extract air - level 6  Description:           Here you set the fan speed level for Level 4 - Supply air.
+
+                       Settings:              20  100%
+                       Standard setting:      100%
+                       Description:           Here you set the fan speed level for Level 5 - Supply air.
+                                              This level must be selected in User selection and can not be
+                       Settings:              selected in control panel.
+                       Standard setting:
+                       Description:           20  100%
+                                              100%
+                       Settings:              Here you set the fan speed level for Level 6 - Supply air.
+                       Standard setting:      This level must be selected in User selection and can not be
+                       Description:           selected in control panel.
+
+                       Settings:              20  100%
+                       Standard setting:      25%
+                       Description:           Here you set the fan speed level for Level 1 - Extract air.
+
+                       Settings:              20  100%
+                       Standard setting:      45%
+                       Description:           Here you set the fan speed level for Level 2 - Extract air.
+
+                       Settings:              20  100%
+                       Standard setting:      70%
+                       Description:           Here you set the fan speed level for Level 3 - Extract air.
+
+                       Settings:              20  100%
+                       Standard setting:      100%
+                       Description:           Here you set the fan speed level for Level 4 - Extract air.
+
+                       Settings:              20  100%
+                       Standard setting:      100%
+                       Description:           Here you set the fan speed level for Level 5 - Extract air.
+                                              This level must be selected in User selection and can not be
+                                              selected in control panel.
+
+                                              20  100%
+                                              100%
+                                              Here you set the fan speed level for Level 6 - Extract air.
+                                              This level must be selected in User selection and can not be
+                                              selected in control panel.
+
+Nilan recommends the following settings for the individual fan speed levels:
+Level 1: "Holiday ventilation" - is used when you are away on holiday, but also for "Humidity low"
+Level 2: "Basic ventilation" - is used for standard operation
+Level 3: "Visitor ventilation" - is used when you have visitors, but also for "High humidity level"
+Level 4: "Party ventilation" - is used when many people are gathered in the dwelling, but also for "Cooker hood function"
+Level 5: User selection 1 or 2 (Cooker hood)
+Level 6: User selection 1 or 2 (Cooker hood)
+
+                                          17
+User selection 2
+
+If you have chosen user selection 2 in settings, you can change the fan speed level and the time settings.
+
+Fan speed level user selection 2:  Settings:              04
+0=Function off                     Standard setting:      0
+                                   Description:           Here you select the desired fan speed level when user selection
+                                                          2 is activated.
+Time out user selection 2:         Settings:
+Stop after min.                    Standard setting:      0  180 min.
+(0=User selection 2 Off)           Description:           0 (Must be set to a min. of 1 minute)
+                                                          Here you select for how long the program is to continue running
+                                                          after the external signal is released.
+
+                                                      18
+Advanced settings
+
+De-icing function
+
+In all ventilation units with a heat exchanger with high-efficiency heat recovery ice may form in the heat exchanger during periods of
+heavy frost. The de-icing function will try to de-ice the exchanger so that normal operation can continue.
+
+You can prevent ice formation in the heat exchanger by installing a pre-heating element for frost protection. This ensures continuous
+operation without cold draughts or coldness.
+
+It is recommended that you install a pre-heating element for frost protection if you are in a location with very frosty winters.
+
+Start de-icing T4                Settings:              1  5 °C
+                                 Standard setting:      3 °C
+                                 Description:           Here you select at which discharge air temperature (T4) de-
+                                                        icing is to begin.
+Stop de-icing T4                 Settings:
+                                 Standard setting:      5  10 °C
+                                 Description:           7 °C
+                                                        Here you select at which discharge air temperature (T4) de-
+Max. de-icing time [min.]        Settings:              icing is to stop.
+                                 Standard setting:
+                                 Description:           5  60 min.
+                                                        15 Min .
+Time between de-icing processes  Settings:              Here you set the maximum time allowed for de-icing the coun-
+[min.]                           Standard setting:      terflow heat exchanger.
+                                 Description:
+                                                        15  760 min.
+                                                        60 min .
+                                                        Her you set the minimum time that has to pass between
+                                                        individual de-icing processes.
+
+                                                    19
+CO2 regulation
+
+This menu item only appears if a CO2sensor has been installed and the function has been selected in CO2 - regulation.
+
+                    ATTENTION
+                    CO2-sensor is only mountable in Normal settings
+
+If the numbers of people using the building/rooms is inconsistent, it can be a good idea to regulate ventilation in accordance with the
+CO2-level in extract air. This funtion is often used in officies and schools where the concentration og people varies greatly during the
+day and during the week.
+
+CO2 regulation                        Settings:          0/1
+                                      Standard setting:  0
+                                      Description:       Her you can select if the ventilation is controlled according to
+                                                         the CO2-level measured in the extract air.
+   >1                                 Description:       0: No
+      > Fan speed level at high CO2-                     1: Yes
+      level                           Settings:
+                                      Standard setting:  CO2-measuring is chosen to control the ventilation.
+      > High CO2-level                Description:
+                                                         1/ 2/3/4
+      > Fan speed level for Nobody    Settings:          4
+      home                            Standard setting:  Here you set the fan speed level for ventilation unit by high
+                                      Description:       CO2-level.
+      > Nobody home limit
+                                      Settings:          500 - 2000 ppm
+      >Fan runtime                    Standard setting:  800
+                                      Description:       Here you set the level for high CO2-level.
+CO2 Mode 0-3
+                                      Settings:          1/ 2/3/4
+   >0                                 Standard setting:  1
+   >1                                 Description:       (not Austria) Here you set the fan speed level for ventilation
+                                                         unit by low CO2-level.
+      > Nobody home standby           Settings:
+                                      Standard setting:  400-500 ppm
+                                      Description:       450
+                                                         Here you set the level for low CO2-level.
+                                      Settings:
+                                      Standard setting:  5 - 20 min
+                                      Description:       5 min
+                                                         (Only Austria) If the function ”Nobody home standby” is active,
+                                      Description:       the fan will be runing once an hour during the selected period.
+
+                                      Description:       0/1/2/3
+                                                         0
+                                      Settings:          Here you set the basic setting for Co2 measurements according
+                                      Standard setting:  to which the ventilation must be regulated.
+                                      Description:
+                                                         CO2 sensor is off (default)
+>2                                    Description:
+                                                         The ventilation is regulated according to CO2 measurements
+                                                         for high CO2 -level and basic setting ”High ventilation”
+
+                                                         0/1
+                                                         0
+                                                         (Only Austria) Here you choose if the regulation of the ventila-
+                                                         tion according to the CO2 measurements is paused when
+                                                         nobody is home.
+                                                         O: No (default)
+                                                         1: Yes
+
+                                                         The ventilation is regulated according to CO2 measurements
+                                                         for low CO2 -level and basic setting ”Nobody home”
+
+                                                         20
+   > Nobody home standby        Settings:          0/1
+>3                              Standard setting:  0
+                                Description:       (Only Austria) Here you choose if the regulation of the ventila-
+                                                   tion according to the CO2 measurements is paused when
+                                Description:       nobody is home.
+                                                   O: No (default)
+                                                   1: Yes
+
+                                                   The ventilation is regulated according to CO2 measurements
+                                                   for both high CO2-level and law CO2-level and function ”High
+                                                   ventilation” + ”Nobody home”.
+
+Lock control panel              Settings:              0/1
+                                Standard setting:      0
+  Unit cannot turn off:         Description:           Here you can choose a setting that makes it impossible to turn
+  0=Off / 1=On                                         off the ventilation unit via the control panel.
+                                Settings:
+  Fan speed cannot be changed:  Standard setting:      0/1
+  0=Off /1=On                   Description:           0
+                                                       Here you can choose a setting that makes it impossible to
+                                                       change the fan speed level via the control panel.
+
+Modbus ID
+
+Nilan’s ventilation units have a control system with open Modbus communication. It enables you to control the unit with e.g. an external
+CTS control system.
+
+The CTS400 control system communicates Modbus RS485, and you can download the complete Modbus protocol from Nilan’s website.
+
+Modbus address                  Settings:              1  247
+                                Standard setting:      30
+                                Description            Here you specify the Modbus address for the ventilation unit.
+
+                                                   21
+Manual test                    Settings:              A. Out / Bypass / Extract air fan / Supply air fan
+                               Standard setting:      0
+  Override output signal       Description:           Must be selected before the following output parameters can
+                                                      be tested.
+     Override supply air fan   Settings:
+                               Standard setting:      0.0  100%
+     Override extract air fan  Description:           50
+                               Settings:              Manual setting of the speed level of the supply air fan.
+     Test bypass damper:       Standard setting:
+     0=Closed / 1=Open         Description:           0.0  100%
+     Override analog output    Settings:              50
+                               Standard setting:      Manual setting of the speed level of the extract air fan.
+  Override input signal        Description:
+                               Settings:              0/1
+     Override average          Standard setting:      0
+     air humidity level        Description:           Testing the bypass damper.
+     Override RH value         Settings:
+                                                      0  100
+     Override CO2 level        Standard setting:      0
+                               Description:           Testing the analog output signal.
+     Override VOC level
+                               Settings:              VOC / RH AVG 24 / CO2 / RH
+     Override D1in value       Standard setting:      0
+                               Description:           Must be selected before the following output parameters can
+Control panel                  Settings:              be tested.
+                               Standard setting:
+  Stop unit                    Description:           0.0  100
+  0=stop 1=operating           Settings:              50
+  Fan speed level              Standard setting:      Here you can override the average air humidity level.
+                               Description:
+List of Alarms                                        0  120
+                               Settings:              50
+  Alarm codes 1, 2 and 3       Standard setting:      Here you can override the average air humidity level.
+                               Description:
+                               Settings:              0  2000
+                               Standard setting:      600
+                               Description:           If a CO2 sensor has been installed
+
+                               Description:           0.0  2000
+                                                      600
+                               Description:           If a VOC sensor has been installed
+
+                               Description:           0/1
+                                                      0
+List of Info Alarms            Description:           Testing User selection 1
+
+  Info Alarms 1, 2 and 3                              Shows the operation mode which has been setted in the control
+                                                      panel. It is also possible to set the levels in the software.
+
+                                                      Shows the fan speed level set in control panel (1-4). It is also
+                                                      possible to set the levels in the software.
+
+                                                      Displays codes for the latest 3 alarms.
+
+                                                      See outline of the alarm list for the meaning of the individual
+                                                      code.
+
+                                                      Displays codes for the latest 3 info alarms.
+
+                                                      See outline of the alarm list for the meaning of the individual
+                                                      code.
+
+                                                  22
+Alarm list
+
+Comfort
+
+The list below is for Comfort ventilation units with a CTS400 control system. Incidents are divided into the following
+categories:
+
+    Info                 Operation continues, but an incident has occurred that needs your attention.
+
+    Warning              Operation continues, but an incident has occurred that needs your attention.
+                         Briefly, press the On/Off button and the button with the arrow to get information about the alarm.
+
+    Alarm                Operation has stopped completely as a serious error has occurred that requires immediate attention.
+
+ID Type Name                          Display on the panel           Resetting and rectifying an error
+                                      The yellow diode emits light   Clean/ replace filters.
+1         Change filter                                              Reset alarm.
+                                      None
+15        De-icing time out                                          No resetting and rectification
+
+16        Outdoor air temperature T1  The yellow diode emits light   Register the error and contact service. Reset
+
+          disconnected                Green D1 is flashing           the alarm once the error has been rectified.
+
+17        Outdoor air temperature T1  The yellow diode emits light   Register the error and contact service. Reset
+
+          short-circuited             Green D1 is flashing           the alarm once the error has been rectified.
+
+18        Supply air temperature sen- The yellow diode emits light   Register the error and contact service. Reset
+
+          sor T2 disconnected         Green D1 is flashing           the alarm once the error has been rectified.
+
+19        Supply air temperature sen- The yellow diode emits light   Register the error and contact service. Reset
+
+          sor T2 short-circuited      Green D1 is flashing           the alarm once the error has been rectified.
+
+20        Extract air temperature sen- The yellow diode emits light  Register the error and contact service. Reset
+
+          sor T3 disconnected         Green D1 is flashing           the alarm once the error has been rectified.
+
+21        Extract air temperature sen- The yellow diode emits light  Register the error and contact service. Reset
+
+          sor T3                      Green D1 is flashing           the alarm once the error has been rectified.
+
+          short-circuited
+
+22        Discharge air temperature   The yellow diode emits light   Register the error and contact service. Reset
+
+          sensor T4 disconnected      Green D1 is flashing           the alarm once the error has been rectified.
+
+23        Discharge air temperature   The yellow diode emits light   Register the error and contact service. Reset
+
+          sensor T4                   Green D1 is flashing           the alarm once the error has been rectified.
+
+          short-circuited
+
+24        Supply air temperature sen- The yellow diode emits light   Register the error and contact service. Reset
+
+          sor T7 disconnected         Green D1 is flashing           the alarm once the error has been rectified.
+
+25        Supply air temperature sen- The yellow diode emits light   Register the error and contact service. Reset
+
+          sor T7 short-circuited      Green D1 is flashing           the alarm once the error has been rectified.
+
+26        Humidity sensor (RH) error  The yellow diode emits light   Register the error and contact service. Reset
+
+                                      Green D2 is flashing           the alarm once the error has been rectified.
+
+27        CO2 sensor is signaling an  The yellow diode emits light   Register the error and contact service. Reset
+
+          error                       Green D2 is flashing           the alarm once the error has been rectified.
+
+                                      23
+28  Frost thermostat in after-  The yellow diode emits light     Check that the water after-heating element
+
+    heating disconnected or     Green D3 is flashing             and its connections have been insulated cor-
+
+    short-circuited                                              rectly.
+
+                                                                 Reset the alarm once the error has been recti-
+
+                                                                 fied.
+
+29  Risk of frost in after-heating The yellow diode emits light  Check that the water after-heating element
+
+    element                     Green D3 is flashing             and its connections have been insulated cor-
+
+                                                                 rectly.
+
+                                                                 Reset the alarm once the error has been recti-
+
+                                                                 fied.
+
+48  Activating fire input       The yellow diode emits light     If there has been no fire, check the connection
+
+                                Green D1 + D2 are flashing       to the fire thermostat.
+
+                                                                 If it is working, contact service.
+
+49  Fire                        The yellow diode emits light     Extinguish the fire and reset the alarm.
+                                Green D1 + D2 are flashing
+
+50  Frost in after-heating      The yellow diode emits light     Check that the water after-heating element
+
+                                Green D3 + D4 are flashing       and its connections have been insulated cor-
+
+                                                                 rectly.
+
+                                                                 Reset the alarm once the error has been recti-
+
+                                                                 fied.
+
+51  The room temperature is too The yellow diode emits light     When the room temperature falls below the set
+
+    low                         Green D3 + D4 are flashing       value (default set at 10 °C), the unit will stop in
+
+                                                                 order to avoid further cooling of the dwelling.
+
+                                                                 This may, for instance, be because the heating
+                                                                 system in the dwelling has stopped. Heat the
+                                                                 dwelling and reset the alarm.
+
+52  Emergency stop              The yellow diode emits light
+                                Green D3 + D4 are flashing
+
+                                24
+25
+26
+27
+                           Nilan A/S
+                      Nilanvej 2
+                  8722 Hedensted
+             Danmark
+         Tlf. +45 76 75 25 00
+    nilan@nilan.dk
+www.nilan.dk
+
+Nilan A/S disclaims all liability for potential errors and omissions in printed instructions - or for loss or damages arising from published materials, whether these are due to errors or
+inexpediency in the publications or they have other causes. Without prior notice Nilan A/S reserves the right to make changes to the products and instructions. All trademarks belong to
+Nilan A/S. All rights reserved.
+
