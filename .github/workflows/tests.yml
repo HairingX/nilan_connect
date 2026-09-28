@@ -57,7 +57,8 @@ jobs:
           if [ "$GITHUB_EVENT_NAME" = "push" ] && [ "$GITHUB_REF_NAME" != "main" ] \
               && git ls-remote --exit-code --heads "$LIBRARY" "$GITHUB_REF_NAME" > /dev/null; then
             echo "Library: branch $GITHUB_REF_NAME, in development"
-            git clone --depth 1 --branch "$GITHUB_REF_NAME" "$LIBRARY" "$RUNNER_TEMP/modbus_event_connect"
+            # With its tags: the library works its version out from them.
+            git clone --branch "$GITHUB_REF_NAME" "$LIBRARY" "$RUNNER_TEMP/modbus_event_connect"
             python -m pip install "$RUNNER_TEMP/modbus_event_connect"
           else
             echo "Library: the published version this package declares"
