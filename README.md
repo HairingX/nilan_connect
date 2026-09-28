@@ -56,8 +56,10 @@ answer. `port` reaches a gateway that does not answer on micro_nabto's standard 
 ## How often values are read
 
 The controller's readings every 10 seconds, its settings every 180 seconds, and a setting again
-one second after it is written. A filter reset has the filter's status and timers, and the alarm
-status, read again two seconds after it.
+one second after it is written. What a write changes is read again too: after a filter reset, the
+filter's status and timers and the alarm status, two seconds later; after a filter interval, the
+days left, two seconds later; after a fan level, the level the fans run at and their speeds,
+three seconds later.
 
 ## Writing
 
