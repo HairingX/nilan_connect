@@ -1,6 +1,56 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+# The version comes from the git tag (setuptools-scm), not from a file: a release never commits it.
+requires = ["setuptools>=80", "setuptools-scm[simple]>=9.2"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "nilan_connect"
+dynamic = ["version"]
+description = "Event-driven, async client for Nilan ventilation units behind a Nilan gateway: every value typed, and told when it changes - over micro_nabto."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "HairingX" }]
+keywords = [
+    "nilan",
+    "cts400",
+    "ventilation",
+    "micro_nabto",
+    "nabto",
+    "asyncio",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Framework :: AsyncIO",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Home Automation",
+    "Typing :: Typed",
+]
+requires-python = ">=3.12"
+dependencies = [
+    "modbus_event_connect>=0.2.1,<0.3",
+]
+
+[project.urls]
+Homepage = "https://github.com/HairingX/nilan_connect"
+Source = "https://github.com/HairingX/nilan_connect"
+Issues = "https://github.com/HairingX/nilan_connect/issues"
+Releases = "https://github.com/HairingX/nilan_connect/releases"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+# PEP 561: tells a type checker the package ships its own types, so a consumer does not have
+# to silence the import.
+nilan_connect = ["py.typed"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

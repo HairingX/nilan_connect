@@ -38,6 +38,8 @@ jobs:
         with:
           ref: ${{ inputs.ref }}
           persist-credentials: false
+          # setuptools-scm works the package's version out from the tags.
+          fetch-depth: 0
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v7

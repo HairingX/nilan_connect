@@ -1,12 +1,11 @@
 name: Release
 
-# Run this from the Actions tab. Never publish the draft release by hand: that creates the tag
-# at whatever main points to, before the version in the package has been set.
+# Run this from the Actions tab. Never publish the draft release by hand: the package takes its
+# version from the tag, and only this workflow tags a tested commit.
 #
 # Everything runs in one direction, and nothing leaves the runner until it has been checked:
-# resolve the version -> test the exact commit -> set the version, build, and check that the
-# built package says that version -> push the version commit and the tag together -> PyPI ->
-# GitHub release. If main moves while this runs, the push is refused and nothing is published.
+# resolve the version -> test the exact commit -> tag it, build, and check that the built package
+# says that version -> push the tag -> PyPI -> GitHub release. Nothing is pushed to main.
 #
 # The file name matters: PyPI trusted publishing is bound to this repository, this workflow
 # file and the pypi environment. A release cut from any other file never reaches PyPI.
@@ -39,7 +38,6 @@ concurrency:
 
 env:
   PACKAGE: nilan_connect
-  VERSION_FILE: src/nilan_connect/__init__.py
 
 # The shell given explicitly, so GitHub runs every step with pipefail.
 defaults:
@@ -134,7 +132,7 @@ jobs:
       ref: ${{ needs.prepare.outputs.sha }}
 
   build:
-    name: Set the version, build and push the tag
+    name: Tag, build and push the tag
     needs: [prepare, test]
     runs-on: ubuntu-latest
     permissions:
@@ -144,10 +142,12 @@ jobs:
       TAG: ${{ needs.prepare.outputs.tag }}
       SHA: ${{ needs.prepare.outputs.sha }}
     steps:
-      - name: Check out the tested commit
+      - name: Check out the tested commit, with every tag
         uses: actions/checkout@v7
         with:
           ref: ${{ needs.prepare.outputs.sha }}
+          # setuptools-scm works the version out from the tags.
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v7
@@ -155,25 +155,13 @@ jobs:
           python-version: "3.13"
 
       - name: Install the build tools
-        run: python -m pip install packaging==26.3 build==1.6.1
+        run: python -m pip install build==1.6.1
 
-      - name: Set the version, and commit it if it changed
+      - name: Tag the tested commit
         run: |
-          python .github/scripts/release_version.py write "$VERSION" "$VERSION_FILE"
-          changed=$(git status --porcelain)
-          if [[ -n "$changed" && "$changed" != " M $VERSION_FILE" ]]; then
-            echo "::error::Setting the version changed more than $VERSION_FILE:"
-            echo "$changed"
-            exit 1
-          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if [[ -n "$changed" ]]; then
-            git commit -q -am "Release $TAG"
-          else
-            echo "$VERSION_FILE already says $VERSION"
-          fi
-          git tag -a "$TAG" -m "Release $TAG"
+          git tag -a "$TAG" -m "Release $TAG" "$SHA"
 
       - name: Build
         run: python -m build
@@ -199,11 +187,8 @@ jobs:
           print(f"{package} {version}: __version__ and metadata agree")
           PY
 
-      - name: Push the version commit and the tag together
-        run: |
-          # Atomic, and main only fast-forwards from the tested commit: if main moved, or either
-          # ref is refused, neither is pushed.
-          git push --atomic origin "HEAD:refs/heads/main" "refs/tags/$TAG"
+      - name: Push the tag
+        run: git push origin "refs/tags/$TAG"
 
       - name: Keep the distributions
         uses: actions/upload-artifact@v7
