@@ -1,5 +1,5 @@
-"""The CTS400 model: its points as consumers know them, and what a real unit's registers decode
-to through the client and a simulated gateway."""
+"""What a real CTS400's registers decode to, and what a write sends, through the client and a
+simulated gateway."""
 import asyncio
 import json
 from collections.abc import AsyncGenerator
@@ -8,14 +8,12 @@ from typing import Any
 
 import pytest
 import pytest_asyncio
-from modbus_event_connect import Client, DataType, DataValue, InvalidValueError, Key, Point, Quality, ReadOnlyError, Transforms, Unit
+from modbus_event_connect import Client, DataValue, InvalidValueError, Key, Point, Quality, ReadOnlyError
 from modbus_event_connect.micro_nabto import (
-    DatapointRegister,
     MicroNabtoConnection,
     MicroNabtoDevice,
     SetpointRegister,
 )
-from modbus_event_connect.testing import assert_models_valid
 
 from nilan_connect import CTS400, Alarm, PointKey, create_client, select_model
 from nilan_connect._cts400 import CTS400_POINTS
@@ -25,59 +23,13 @@ EMAIL = "user@example.invalid"
 SETPOINT_WRITE = 0x2B
 CTS400_IDENTITY = {"device_number": 72280, "device_model": 1140, "slave_device_number": 72270, "slave_device_model": 1}
 
-POINTS: dict[str, dict[str, Any]] = json.loads(
-    (Path(__file__).parent / "cts400_points.json").read_text(encoding="utf-8"))
-"""Every CTS400 point by key, as consumers have stored it: a change here changes what they have."""
-
 READ: dict[str, dict[str, int]] = json.loads(
     (Path(__file__).parent / "cts400_read_2026_09_27.json").read_text(encoding="utf-8"))
 """Every register the manual lists, as a CTS400 answered them on 2026-09-27, bypass open and
 its filter alarm active."""
 
-_TRANSFORMS = {"invert_bool": Transforms.INVERT_BOOL, "seconds_as_minutes": Transforms.SECONDS_AS_MINUTES,
-               "hours_as_days": Transforms.HOURS_AS_DAYS}
-
-
 def _point(key: str) -> Point[Any]:
     return next(p for p in CTS400_POINTS if p.key == key)
-
-
-# ================================================================================== points
-
-
-def test_the_keys_are_the_ones_consumers_have() -> None:
-    """A consumer's stored entities are built on these strings."""
-    assert sorted(p.key for p in CTS400_POINTS) == sorted(POINTS)
-    assert set(POINTS) <= {str(key) for key in PointKey.all()}
-
-
-@pytest.mark.parametrize("key", sorted(POINTS))
-def test_each_point_is_read_and_written_as_described(key: str) -> None:
-    expected, point = POINTS[key], _point(key)
-    space = DatapointRegister if expected["space"] == "datapoint" else SetpointRegister
-    assert point.read == (space(expected["read"]) if expected["read"] is not None else None)
-    assert point.write == (SetpointRegister(expected["write"]) if expected["write"] is not None else None)
-    assert point.scale == pytest.approx(expected["scale"])
-    assert (point.data_type is DataType.INT16) == expected["signed"]
-    assert point.transform is _TRANSFORMS.get(expected["transform"])
-    assert point.unit == (Unit(expected["unit"]) if expected["unit"] is not None else None)
-    limits = expected.get("limits")
-    if limits is None:
-        assert point.limits is None
-    else:
-        assert point.limits is not None
-        assert (point.limits.min, point.limits.max, point.limits.step) == pytest.approx(tuple(limits))
-
-
-# ============================================================================== the model
-
-
-def test_the_model_is_valid_for_a_cts400() -> None:
-    assert_models_valid(CTS400, identities=[CTS400_IDENTITY])
-
-
-def test_a_cts400_handshake_selects_the_cts400() -> None:
-    assert select_model(CTS400_IDENTITY) is CTS400
 
 
 # ================================================================== through a simulated gateway

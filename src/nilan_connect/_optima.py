@@ -54,12 +54,16 @@ def optima_fan_presets(address: int) -> tuple[Point[float], ...]:
     return tuple(setting(key, address + n, Limits(0, 100, step=1), unit=Unit.PERCENT) for n, key in enumerate(keys))
 
 
+def written_apart(address: int) -> int:
+    """Where an Optima 270 or 314 takes the write to the setpoint it reports at `address`."""
+    return 2 * address + 10
+
+
 def written_apart_setting[T](key: Key[T], address: int, limits: Limits | None, *,
                              data_type: DataType = DataType.UINT16, scale: float = 1,
                              unit: Unit | None = None, on_write: Refresh | None = None) -> Point[T]:
-    """A setpoint of an Optima 270 or 314, which takes the write to the setpoint it reports at
-    `address` at 2 × `address` + 10."""
-    return setting(key, address, limits, write_address=2 * address + 10, data_type=data_type, scale=scale,
+    """A setpoint of an Optima 270 or 314, written apart from where it is read."""
+    return setting(key, address, limits, write_address=written_apart(address), data_type=data_type, scale=scale,
                    unit=unit, on_write=on_write)
 
 
@@ -71,8 +75,8 @@ def written_apart_fan_level() -> Point[int]:
 
 
 def written_apart_switch(key: Key[bool], address: int) -> Point[bool]:
-    """A switch of an Optima 270 or 314, written at 2 × `address` + 10."""
-    return switch(key, address, write_address=2 * address + 10)
+    """A switch of an Optima 270 or 314, written apart from where it is read."""
+    return switch(key, address, write_address=written_apart(address))
 
 
 # The alarm bits, as found in material published online. The filter alarm's bit is set while the
@@ -269,7 +273,7 @@ OPTIMA_270 = nilan_model("Optima 270", "Genvex", (
         reading(PointKey.ALARM_BITS, 114),
         reading(PointKey.ALARM_BITS_HIGH, 115),
         *ALARMS_270,
-        optima_target(1, write_address=12),
+        optima_target(1, write_address=written_apart(1)),
         written_apart_switch(PointKey.REHEAT_ENABLE, 3),
         written_apart_switch(PointKey.HUMIDITY_CONTROL_ENABLE, 6),
         written_apart_fan_level(),
@@ -309,7 +313,7 @@ OPTIMA_314 = nilan_model("Optima 314", "Genvex", (
         reading(PointKey.ALARM_BITS, 114),
         reading(PointKey.ALARM_BITS_HIGH, 115),
         *ALARMS_314,
-        optima_target(1, write_address=12),
+        optima_target(1, write_address=written_apart(1)),
         written_apart_switch(PointKey.REHEAT_ENABLE, 3),
         written_apart_switch(PointKey.HUMIDITY_CONTROL_ENABLE, 6),
         written_apart_fan_level(),
