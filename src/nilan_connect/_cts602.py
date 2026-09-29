@@ -160,7 +160,8 @@ CTS602_SECTIONS = (
             state(PointKey.BYPASS_ACTIVE, 187),
             setting(PointKey.FAN_LEVEL, 139, Limits(0, 4, step=1), on_write=_CTS602_FAN_LEVEL_REREADS),
             cts602_temperature_setting(PointKey.TEMP_TARGET, 140, Limits(0, 30, step=0.5)),
-            setting(PointKey.FILTER_REPLACE_INTERVAL, 159, Limits(0, 365, step=1), unit=Unit.DAYS),
+            # HR 1105 AirFlow.FiltAlmType by its group: a period chosen from fixed ones, not days.
+            choice(PointKey.FILTER_CHANGE_ALARM, 159),
         ),
         inferred=(
             cts602_temperature(PointKey.TEMP_CONTROLLER, 31),                      # IR 200 Input.T0_Controller
@@ -302,7 +303,8 @@ CTS602_LIGHT_SECTIONS = (
             state(PointKey.BYPASS_ACTIVE, 129),
             setting(PointKey.FAN_LEVEL, 135, Limits(0, 4, step=1), on_write=_CTS602_FAN_LEVEL_REREADS),
             cts602_temperature_setting(PointKey.TEMP_TARGET, 136, Limits(0, 30, step=0.5)),
-            setting(PointKey.FILTER_REPLACE_INTERVAL, 153, Limits(0, 365, step=1), unit=Unit.DAYS),
+            # HR 1105 AirFlow.FiltAlmType by its group: a period chosen from fixed ones, not days.
+            choice(PointKey.FILTER_CHANGE_ALARM, 153),
         ),
         inferred=(
             cts602_temperature(PointKey.TEMP_CONTROLLER, 30),                      # IR 200 Input.T0_Controller
