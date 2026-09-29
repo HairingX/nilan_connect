@@ -54,29 +54,29 @@ def optima_fan_presets(address: int) -> tuple[Point[float], ...]:
     return tuple(setting(key, address + n, Limits(0, 100, step=1), unit=Unit.PERCENT) for n, key in enumerate(keys))
 
 
-def written_apart(address: int) -> int:
+def optima_write_address(address: int) -> int:
     """Where an Optima 270 or 314 takes the write to the setpoint it reports at `address`."""
     return 2 * address + 10
 
 
-def written_apart_setting[T](key: Key[T], address: int, limits: Limits | None, *,
-                             data_type: DataType = DataType.UINT16, scale: float = 1,
-                             unit: Unit | None = None, on_write: Refresh | None = None) -> Point[T]:
-    """A setpoint of an Optima 270 or 314, written apart from where it is read."""
-    return setting(key, address, limits, write_address=written_apart(address), data_type=data_type, scale=scale,
-                   unit=unit, on_write=on_write)
+def optima_270_setting[T](key: Key[T], address: int, limits: Limits | None, *,
+                          data_type: DataType = DataType.UINT16, scale: float = 1,
+                          unit: Unit | None = None, on_write: Refresh | None = None) -> Point[T]:
+    """A setpoint of an Optima 270 or 314, written at `optima_write_address`."""
+    return setting(key, address, limits, write_address=optima_write_address(address), data_type=data_type,
+                   scale=scale, unit=unit, on_write=on_write)
 
 
-def written_apart_fan_level() -> Point[int]:
+def optima_270_fan_level() -> Point[int]:
     """The fan level of an Optima 270 or 314."""
-    return written_apart_setting(PointKey.FAN_LEVEL, 7, Limits(0, 4, step=1), on_write=fan_level_rereads(
+    return optima_270_setting(PointKey.FAN_LEVEL, 7, Limits(0, 4, step=1), on_write=fan_level_rereads(
         PointKey.FAN_DUTYCYCLE_SUPPLY, PointKey.FAN_DUTYCYCLE_EXTRACT, PointKey.FAN_RPM_SUPPLY,
         PointKey.FAN_RPM_EXTRACT))
 
 
-def written_apart_switch(key: Key[bool], address: int) -> Point[bool]:
-    """A switch of an Optima 270 or 314, written apart from where it is read."""
-    return switch(key, address, write_address=written_apart(address))
+def optima_270_switch(key: Key[bool], address: int) -> Point[bool]:
+    """A switch of an Optima 270 or 314, written at `optima_write_address`."""
+    return switch(key, address, write_address=optima_write_address(address))
 
 
 # The alarm bits, as found in material published online. The filter alarm's bit is set while the
@@ -273,21 +273,21 @@ OPTIMA_270 = nilan_model("Optima 270", "Genvex", (
         reading(PointKey.ALARM_BITS, 114),
         reading(PointKey.ALARM_BITS_HIGH, 115),
         *ALARMS_270,
-        optima_target(1, write_address=written_apart(1)),
-        written_apart_switch(PointKey.REHEAT_ENABLE, 3),
-        written_apart_switch(PointKey.HUMIDITY_CONTROL_ENABLE, 6),
-        written_apart_fan_level(),
-        written_apart_setting(PointKey.TEMP_BYPASS_OPEN_OFFSET, 21, Limits(1, 10, step=0.1), data_type=DataType.INT16,
-                              scale=0.1, unit=Unit.CELSIUS),
-        written_apart_setting(PointKey.TEMP_BYPASS_CLOSE_OFFSET, 29, Limits(0, 20, step=1), unit=Unit.CELSIUS),
-        written_apart_switch(PointKey.BOOST_ENABLE, 30),
+        optima_target(1, write_address=optima_write_address(1)),
+        optima_270_switch(PointKey.REHEAT_ENABLE, 3),
+        optima_270_switch(PointKey.HUMIDITY_CONTROL_ENABLE, 6),
+        optima_270_fan_level(),
+        optima_270_setting(PointKey.TEMP_BYPASS_OPEN_OFFSET, 21, Limits(1, 10, step=0.1), data_type=DataType.INT16,
+                           scale=0.1, unit=Unit.CELSIUS),
+        optima_270_setting(PointKey.TEMP_BYPASS_CLOSE_OFFSET, 29, Limits(0, 20, step=1), unit=Unit.CELSIUS),
+        optima_270_switch(PointKey.BOOST_ENABLE, 30),
         command(PointKey.FILTER_REPLACE_RESET, 110),
-        written_apart_setting(PointKey.BYPASS_FAN_INCREASE, 57, Limits(0, 100, step=1), unit=Unit.PERCENT),
-        written_apart_setting(PointKey.TEMP_BYPASS_FAN_INCREASE_OFFSET, 58, Limits(0, 5, step=0.1),
-                              data_type=DataType.INT16, scale=0.1, unit=Unit.CELSIUS),
-        written_apart_setting(PointKey.BOOST_TIME, 70, Limits(1, 120, step=1), unit=Unit.MINUTES),
+        optima_270_setting(PointKey.BYPASS_FAN_INCREASE, 57, Limits(0, 100, step=1), unit=Unit.PERCENT),
+        optima_270_setting(PointKey.TEMP_BYPASS_FAN_INCREASE_OFFSET, 58, Limits(0, 5, step=0.1),
+                           data_type=DataType.INT16, scale=0.1, unit=Unit.CELSIUS),
+        optima_270_setting(PointKey.BOOST_TIME, 70, Limits(1, 120, step=1), unit=Unit.MINUTES),
         # The user manual gives the filter timer in months, 0-12; this register was reported in days.
-        written_apart_setting(PointKey.FILTER_REPLACE_INTERVAL, 100, None, unit=Unit.DAYS),
+        optima_270_setting(PointKey.FILTER_REPLACE_INTERVAL, 100, None, unit=Unit.DAYS),
     )),
 ))
 
@@ -313,16 +313,16 @@ OPTIMA_314 = nilan_model("Optima 314", "Genvex", (
         reading(PointKey.ALARM_BITS, 114),
         reading(PointKey.ALARM_BITS_HIGH, 115),
         *ALARMS_314,
-        optima_target(1, write_address=written_apart(1)),
-        written_apart_switch(PointKey.REHEAT_ENABLE, 3),
-        written_apart_switch(PointKey.HUMIDITY_CONTROL_ENABLE, 6),
-        written_apart_fan_level(),
-        written_apart_switch(PointKey.BOOST_ENABLE, 30),
+        optima_target(1, write_address=optima_write_address(1)),
+        optima_270_switch(PointKey.REHEAT_ENABLE, 3),
+        optima_270_switch(PointKey.HUMIDITY_CONTROL_ENABLE, 6),
+        optima_270_fan_level(),
+        optima_270_switch(PointKey.BOOST_ENABLE, 30),
         command(PointKey.FILTER_REPLACE_RESET, 110),
-        written_apart_setting(PointKey.BOOST_TIME, 70, Limits(1, 120, step=1), unit=Unit.MINUTES),
+        optima_270_setting(PointKey.BOOST_TIME, 70, Limits(1, 120, step=1), unit=Unit.MINUTES),
         # The user manual gives the filter timer in months, 0-12; this register was reported in days.
-        written_apart_setting(PointKey.FILTER_REPLACE_INTERVAL, 100, None, unit=Unit.DAYS),
-        written_apart_setting(PointKey.TEMP_HOTWATER, 122, Limits(0, 55, step=0.1), data_type=DataType.INT16,
-                              scale=0.1, unit=Unit.CELSIUS),
+        optima_270_setting(PointKey.FILTER_REPLACE_INTERVAL, 100, None, unit=Unit.DAYS),
+        optima_270_setting(PointKey.TEMP_HOTWATER, 122, Limits(0, 55, step=0.1), data_type=DataType.INT16,
+                           scale=0.1, unit=Unit.CELSIUS),
     )),
 ))
