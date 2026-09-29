@@ -33,7 +33,7 @@ from ._points import (
     switch,
     temperature,
 )
-from ._states import Alarm, HeatSource, OperationState
+from ._states import Alarm, FilterReplaceInterval, HeatSource, OperationState
 
 # The device variants - the handshake's slave device model - that have each part, as found in
 # material published online.
@@ -114,6 +114,14 @@ CENTRAL_HEAT_SOURCES: Mapping[int, HeatSource] = {
 """CentralHeat.HeatType: "0=OFF, 1=El, 2=Heatpump, 3=Both (first compressor then electric priority)"."""
 
 HOT_WATER_SUPPLEMENTS: Mapping[int, HeatSource] = {0: HeatSource.OFF, 1: HeatSource.ELECTRIC}
+
+FILTER_INTERVALS: Mapping[int, FilterReplaceInterval] = {
+    0: FilterReplaceInterval.PRESSURE_GUARD, 1: FilterReplaceInterval.DAYS_30, 2: FilterReplaceInterval.DAYS_90,
+    3: FilterReplaceInterval.DAYS_180, 4: FilterReplaceInterval.DAYS_360,
+    5: FilterReplaceInterval.DAYS_70_AND_PRESSURE_GUARD,
+}
+"""AirFlow.FiltAlmType: "0: Pressure guard (input) 1: 30 days 2: 90 days 3: 180 days 4: 360 days
+5: 70 days and pressure guard"."""
 """HotWater.HeatType: "Use of electricity supplement: 0=OFF, 1=El"."""
 
 
@@ -161,7 +169,7 @@ CTS602_SECTIONS = (
             setting(PointKey.FAN_LEVEL, 139, Limits(0, 4, step=1), on_write=_CTS602_FAN_LEVEL_REREADS),
             cts602_temperature_setting(PointKey.TEMP_TARGET, 140, Limits(0, 30, step=0.5)),
             # HR 1105 AirFlow.FiltAlmType by its group: a period chosen from fixed ones, not days.
-            choice(PointKey.FILTER_CHANGE_ALARM, 159),
+            choice(PointKey.FILTER_REPLACE_INTERVAL_CHOICE, 159, codes=FILTER_INTERVALS),
         ),
         inferred=(
             cts602_temperature(PointKey.TEMP_CONTROLLER, 31),                      # IR 200 Input.T0_Controller
@@ -304,7 +312,7 @@ CTS602_LIGHT_SECTIONS = (
             setting(PointKey.FAN_LEVEL, 135, Limits(0, 4, step=1), on_write=_CTS602_FAN_LEVEL_REREADS),
             cts602_temperature_setting(PointKey.TEMP_TARGET, 136, Limits(0, 30, step=0.5)),
             # HR 1105 AirFlow.FiltAlmType by its group: a period chosen from fixed ones, not days.
-            choice(PointKey.FILTER_CHANGE_ALARM, 153),
+            choice(PointKey.FILTER_REPLACE_INTERVAL_CHOICE, 153, codes=FILTER_INTERVALS),
         ),
         inferred=(
             cts602_temperature(PointKey.TEMP_CONTROLLER, 30),                      # IR 200 Input.T0_Controller

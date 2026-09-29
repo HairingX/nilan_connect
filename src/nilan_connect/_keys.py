@@ -21,7 +21,7 @@ from ._states import (
     CoolingSetpoint,
     DamperTestState,
     ExtraSensor,
-    FilterChangeAlarm,
+    FilterReplaceInterval,
     HeatSource,
     OperationMode,
     OperationState,
@@ -223,8 +223,8 @@ class PointKey:
     """Days since the filter was changed."""
     FILTER_REPLACE_TIME_REMAIN = Key("filter_replace_time_remain", float)
     """Days until the filter must be changed."""
-    FILTER_CHANGE_ALARM = Key("filter_change_alarm", FilterChangeAlarm)
-    """What raises the filter change alarm, where a controller chooses from fixed periods."""
+    FILTER_REPLACE_INTERVAL_CHOICE = Key("filter_replace_interval_choice", FilterReplaceInterval)
+    """How long between filter changes, where a controller chooses from fixed periods."""
     FILTER_ALARM_ON_PANEL = Key("filter_alarm_on_panel", bool)
     """Whether the filter alarm is shown on the control panel."""
     FILTER_REPLACE_RESET = Key("filter_replace_reset", bool)

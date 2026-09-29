@@ -30,7 +30,7 @@ from nilan_connect import (
     OPTIMA_314,
     Alarm,
     Certainty,
-    FilterChangeAlarm,
+    FilterReplaceInterval,
     OperationState,
     PointKey,
     Weekday,
@@ -225,10 +225,10 @@ def test_the_damper_test_day_is_only_read_as_choosing_one_cannot_be_undone() -> 
 
 
 @pytest.mark.parametrize(("variant", "address"), [("CTS602/0", 159), ("CTS602_LIGHT", 153)])
-async def test_a_cts602s_filter_alarm_period_is_one_of_the_manuals_periods(variant: str, address: int) -> None:
+async def test_a_cts602s_filter_interval_is_one_of_the_manuals_periods(variant: str, address: int) -> None:
     """By its group the setpoint is HR 1105 AirFlow.FiltAlmType: "0: Pressure guard 1: 30 days 2: 90 days ..."."""
     async for client, _ in _client(VARIANTS[variant][1], {}, {address: 2}):
-        assert _value(client, PointKey.FILTER_CHANGE_ALARM) is FilterChangeAlarm.DAYS_90
+        assert _value(client, PointKey.FILTER_REPLACE_INTERVAL_CHOICE) is FilterReplaceInterval.DAYS_90
         assert not client.has(PointKey.FILTER_REPLACE_INTERVAL)
 
 

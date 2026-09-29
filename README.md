@@ -122,7 +122,7 @@ Controllers share a key wherever a value means the same.
 A value with named states is an `IntEnum`, one for all controllers: `Alarm`, `OperationState`,
 `OperationMode`, `Weekday`, `HeatSource`, `CompressorPriority`, `CoolingSetpoint`,
 `AirExchangeMode`, `ControlSensor`, `CentralHeatMode`, `CirculationPumpMode`, `ServiceMode`,
-`DamperTestState`, `FilterChangeAlarm` and `ExtraSensor`. Each controller maps its own numbers onto them, so a state means the same
+`DamperTestState`, `FilterReplaceInterval` and `ExtraSensor`. Each controller maps its own numbers onto them, so a state means the same
 whichever controller reports it: a CTS400's alarm 1 and a CTS602's alarm 19 are both
 `Alarm.CHANGE_FILTER`.
 

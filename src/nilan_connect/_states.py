@@ -259,8 +259,9 @@ class ServiceMode(IntEnum):
     CENTRAL_HEAT = 8
 
 
-class FilterChangeAlarm(IntEnum):
-    """What raises the filter change alarm: the pressure guard, a timer of so many days, or both."""
+class FilterReplaceInterval(IntEnum):
+    """How long between filter changes, chosen from fixed periods; the pressure guard asks for a
+    change when the filter is clogged."""
     PRESSURE_GUARD = 0
     DAYS_30 = 1
     DAYS_90 = 2
