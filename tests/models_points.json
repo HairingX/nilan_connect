@@ -569,19 +569,6 @@
     "source": "untested",
     "codes": null
    },
-   "filter_replace_reset": {
-    "space": null,
-    "read": null,
-    "write": 71,
-    "scale": 1,
-    "offset": 0,
-    "type": "BOOL",
-    "bit": null,
-    "unit": null,
-    "limits": null,
-    "source": "untested",
-    "codes": null
-   },
    "filter_replace_time_ago": {
     "space": "datapoint",
     "read": 101,
@@ -1703,19 +1690,6 @@
      365,
      1
     ],
-    "source": "untested",
-    "codes": null
-   },
-   "filter_replace_reset": {
-    "space": null,
-    "read": null,
-    "write": 71,
-    "scale": 1,
-    "offset": 0,
-    "type": "BOOL",
-    "bit": null,
-    "unit": null,
-    "limits": null,
     "source": "untested",
     "codes": null
    },
@@ -2866,19 +2840,6 @@
      365,
      1
     ],
-    "source": "untested",
-    "codes": null
-   },
-   "filter_replace_reset": {
-    "space": null,
-    "read": null,
-    "write": 71,
-    "scale": 1,
-    "offset": 0,
-    "type": "BOOL",
-    "bit": null,
-    "unit": null,
-    "limits": null,
     "source": "untested",
     "codes": null
    },
@@ -4139,19 +4100,6 @@
     "source": "untested",
     "codes": null
    },
-   "filter_replace_reset": {
-    "space": null,
-    "read": null,
-    "write": 71,
-    "scale": 1,
-    "offset": 0,
-    "type": "BOOL",
-    "bit": null,
-    "unit": null,
-    "limits": null,
-    "source": "untested",
-    "codes": null
-   },
    "filter_replace_time_ago": {
     "space": "datapoint",
     "read": 101,
@@ -5398,19 +5346,6 @@
      365,
      1
     ],
-    "source": "untested",
-    "codes": null
-   },
-   "filter_replace_reset": {
-    "space": null,
-    "read": null,
-    "write": 71,
-    "scale": 1,
-    "offset": 0,
-    "type": "BOOL",
-    "bit": null,
-    "unit": null,
-    "limits": null,
     "source": "untested",
     "codes": null
    },
@@ -6728,19 +6663,6 @@
     "source": "untested",
     "codes": null
    },
-   "filter_replace_reset": {
-    "space": null,
-    "read": null,
-    "write": 71,
-    "scale": 1,
-    "offset": 0,
-    "type": "BOOL",
-    "bit": null,
-    "unit": null,
-    "limits": null,
-    "source": "untested",
-    "codes": null
-   },
    "filter_replace_time_ago": {
     "space": "datapoint",
     "read": 101,
@@ -8008,19 +7930,6 @@
      365,
      1
     ],
-    "source": "untested",
-    "codes": null
-   },
-   "filter_replace_reset": {
-    "space": null,
-    "read": null,
-    "write": 71,
-    "scale": 1,
-    "offset": 0,
-    "type": "BOOL",
-    "bit": null,
-    "unit": null,
-    "limits": null,
     "source": "untested",
     "codes": null
    },
@@ -9426,19 +9335,6 @@
      365,
      1
     ],
-    "source": "untested",
-    "codes": null
-   },
-   "filter_replace_reset": {
-    "space": null,
-    "read": null,
-    "write": 71,
-    "scale": 1,
-    "offset": 0,
-    "type": "BOOL",
-    "bit": null,
-    "unit": null,
-    "limits": null,
     "source": "untested",
     "codes": null
    },
@@ -10891,19 +10787,6 @@
     "source": "untested",
     "codes": null
    },
-   "filter_replace_reset": {
-    "space": null,
-    "read": null,
-    "write": 71,
-    "scale": 1,
-    "offset": 0,
-    "type": "BOOL",
-    "bit": null,
-    "unit": null,
-    "limits": null,
-    "source": "untested",
-    "codes": null
-   },
    "filter_replace_time_ago": {
     "space": "datapoint",
     "read": 101,
@@ -12262,19 +12145,6 @@
      365,
      1
     ],
-    "source": "untested",
-    "codes": null
-   },
-   "filter_replace_reset": {
-    "space": null,
-    "read": null,
-    "write": 67,
-    "scale": 1,
-    "offset": 0,
-    "type": "BOOL",
-    "bit": null,
-    "unit": null,
-    "limits": null,
     "source": "untested",
     "codes": null
    },

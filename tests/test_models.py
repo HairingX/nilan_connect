@@ -269,3 +269,10 @@ async def test_a_weekday_is_numbered_as_the_manual_numbers_it() -> None:
         assert _value(client, PointKey.ANTILEGIONELLA_DAY) is Weekday.MONDAY
         assert await client.write(PointKey.ANTILEGIONELLA_DAY, Weekday.SUNDAY) is True
         assert [c.items for c in simulated.received(SETPOINT_WRITE)] == [((0, 194, 7),)]
+
+
+@pytest.mark.parametrize("variant", ["CTS602/0", "CTS602/244", "CTS602_LIGHT"])
+def test_a_cts602_has_no_filter_reset(variant: str) -> None:
+    """None of the three CTS602 manuals documents one, and the address found elsewhere is untested."""
+    points = _points(MODELS[variant.split("/")[0]], PINNED[variant]["identity"])
+    assert PointKey.FILTER_REPLACE_RESET not in {point.key for point in points}
