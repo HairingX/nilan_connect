@@ -96,7 +96,7 @@ CTS602_SECTIONS: tuple[Section, ...] = (
         setting(PointKey.OPERATION_MODE, 138, Limits(0, 4, step=1)),
     )), when=slave_model_not_in({23})),
     Section(labelled(Source.UNTESTED, (
-        setting(PointKey.TEMP_COOLING_START_OFFSET, 170, Limits(0, 10, step=1)),
+        setting(PointKey.TEMP_COOLING_START_OFFSET, 170, Limits(0, 8, step=1)),
     )), when=slave_model_in({4, 9, 10, 12, 19, 21, 26, 30, 32, 33, 35, 36, 38, 39, 40, 41, 43, 44, 45, 144, 244})),
     Section(labelled(Source.UNTESTED, (
         setting(PointKey.TEMP_SUMMER_SUPPLY_MIN, 171, Limits(0, 40, step=0.01), data_type=DataType.INT16, scale=0.01, unit=Unit.CELSIUS),

@@ -2371,7 +2371,7 @@
     "unit": null,
     "limits": [
      0,
-     10,
+     8,
      1
     ],
     "source": "untested"
@@ -6455,7 +6455,7 @@
     "unit": null,
     "limits": [
      0,
-     10,
+     8,
      1
     ],
     "source": "untested"
@@ -7564,7 +7564,7 @@
     "unit": null,
     "limits": [
      0,
-     10,
+     8,
      1
     ],
     "source": "untested"
@@ -8777,7 +8777,7 @@
     "unit": null,
     "limits": [
      0,
-     10,
+     8,
      1
     ],
     "source": "untested"
