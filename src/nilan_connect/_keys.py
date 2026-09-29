@@ -20,6 +20,8 @@ from ._states import (
     ControlSensor,
     CoolingSetpoint,
     DamperTestState,
+    ExtraSensor,
+    FilterReplaceInterval,
     HeatSource,
     OperationMode,
     OperationState,
@@ -106,6 +108,16 @@ class PointKey:
     CONTROL_SENSOR = Key("control_sensor", ControlSensor)
     """The sensor the temperature is controlled by."""
 
+    # ------------------------------------------------------------------ control panel
+    PANEL_LOCK_FAN_LEVEL = Key("panel_lock_fan_level", bool)
+    """Whether the control panel's fan level button is locked."""
+    PANEL_LOCK_ON_OFF = Key("panel_lock_on_off", bool)
+    """Whether the control panel's on/off button is locked, so the unit cannot be turned off there."""
+    DIGITAL_INPUT_1 = Key("digital_input_1", bool)
+    """Whether digital input D1 is active."""
+    DIGITAL_INPUT_2 = Key("digital_input_2", bool)
+    DIGITAL_INPUT_3 = Key("digital_input_3", bool)
+
     # ------------------------------------------------------------------ air quality
     HUMIDITY = Key("humidity", float)
     """Relative humidity, in percent."""
@@ -120,6 +132,8 @@ class PointKey:
     HUMIDITY_LOW_THRESHOLD = Key("humidity_low_threshold", float)
     """The low humidity level, in percent."""
     HUMIDITY_CONTROL_ENABLE = Key("humidity_control_enable", bool)
+    EXTRA_SENSOR = Key("extra_sensor", ExtraSensor)
+    """The extra air quality sensor fitted."""
     CO2_LEVEL = Key("co2_level", int)
     """CO2, in ppm."""
     CO2_THRESHOLD = Key("co2_threshold", int)
@@ -196,6 +210,8 @@ class PointKey:
     """The longest defrosting, in minutes."""
     DEFROST_BREAK_TIME = Key("defrost_break_time", int)
     """The time between two defrostings, in minutes."""
+    DEFROST_SUPPLY_FAN = Key("defrost_supply_fan", bool)
+    """Whether the supply fan runs while the heat exchanger is defrosted."""
 
     # ----------------------------------------------------------------------- filter
     FILTER_OK = Key("filter_ok", bool)
@@ -207,6 +223,10 @@ class PointKey:
     """Days since the filter was changed."""
     FILTER_REPLACE_TIME_REMAIN = Key("filter_replace_time_remain", float)
     """Days until the filter must be changed."""
+    FILTER_REPLACE_INTERVAL_CHOICE = Key("filter_replace_interval_choice", FilterReplaceInterval)
+    """How long between filter changes, where a controller chooses from fixed periods."""
+    FILTER_ALARM_ON_PANEL = Key("filter_alarm_on_panel", bool)
+    """Whether the filter alarm is shown on the control panel."""
     FILTER_REPLACE_RESET = Key("filter_replace_reset", bool)
     """Written to tell the unit its filter has been changed."""
 

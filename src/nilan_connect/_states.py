@@ -259,6 +259,24 @@ class ServiceMode(IntEnum):
     CENTRAL_HEAT = 8
 
 
+class FilterReplaceInterval(IntEnum):
+    """How long between filter changes, chosen from fixed periods; the pressure guard asks for a
+    change when the filter is clogged."""
+    PRESSURE_GUARD = 0
+    DAYS_30 = 1
+    DAYS_90 = 2
+    DAYS_180 = 3
+    DAYS_360 = 4
+    DAYS_70_AND_PRESSURE_GUARD = 5
+
+
+class ExtraSensor(IntEnum):
+    """The extra sensor fitted to the unit."""
+    NONE = 0
+    VOC = 1
+    CO2 = 2
+
+
 class DamperTestState(IntEnum):
     OFF = 0
     STANDBY = 1

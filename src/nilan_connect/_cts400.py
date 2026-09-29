@@ -18,7 +18,7 @@ from modbus_event_connect import DataType, Key, Limits, Point, Refresh, Transfor
 
 from ._certainty import section
 from ._keys import PointKey
-from ._points import command, fan_level_rereads, nilan_model, reading, setting, state, switch, temperature
+from ._points import choice, command, fan_level_rereads, nilan_model, reading, setting, state, switch, temperature
 from ._states import Alarm
 
 CTS400_ALARMS: Mapping[int, Alarm] = {
@@ -54,9 +54,13 @@ def _fan_speed(key: Key[float], address: int) -> Point[float]:
 
 
 CTS400_POINTS: tuple[Point[Any], ...] = (
+    state(PointKey.DIGITAL_INPUT_1, 20),
+    state(PointKey.DIGITAL_INPUT_2, 21),
+    state(PointKey.DIGITAL_INPUT_3, 22),
     state(PointKey.BYPASS_ACTIVE, 23),
     reading(PointKey.FAN_DUTYCYCLE_EXTRACT, 24, scale=0.1, unit=Unit.PERCENT),
     reading(PointKey.FAN_DUTYCYCLE_SUPPLY, 25, scale=0.1, unit=Unit.PERCENT),
+    reading(PointKey.REHEAT_OUTPUT, 26, scale=0.1, unit=Unit.PERCENT),
     temperature(PointKey.TEMP_OUTSIDE, 27, scale=0.1),                             # T1
     temperature(PointKey.TEMP_SUPPLY, 28, scale=0.1),                              # T2
     temperature(PointKey.TEMP_EXTRACT, 29, scale=0.1),                             # T3
@@ -81,6 +85,7 @@ CTS400_POINTS: tuple[Point[Any], ...] = (
     reading(PointKey.HUMIDITY_HIGH_LEVEL, 66, scale=0.1),
     reading(PointKey.HUMIDITY_HIGH_LEVEL_TIME, 70, unit=Unit.MINUTES, transform=Transforms.SECONDS_AS_MINUTES),
     state(PointKey.WINTER_MODE_ACTIVE, 72),                                        # 0 = summer, 1 = winter
+    state(PointKey.REHEAT_ACTIVE, 74),
     reading(PointKey.FILTER_REPLACE_TIME_AGO, 77, unit=Unit.DAYS, transform=Transforms.HOURS_AS_DAYS),
     state(PointKey.DEFROST_ACTIVE, 91),
     reading(PointKey.FILTER_REPLACE_TIME_REMAIN, 110, unit=Unit.DAYS),
@@ -101,6 +106,8 @@ CTS400_POINTS: tuple[Point[Any], ...] = (
     _temperature_setting(PointKey.TEMP_WINTER_MODE_THRESHOLD, 45, 5, 20),
     setting(PointKey.FILTER_REPLACE_INTERVAL, 50, Limits(0, 360, step=1), unit=Unit.DAYS,
             on_write=FILTER_INTERVAL_REREADS),
+    switch(PointKey.FILTER_ALARM_ON_PANEL, 47),
+    choice(PointKey.EXTRA_SENSOR, 48),
     command(PointKey.FILTER_REPLACE_RESET, 51, on_write=FILTER_RESET_REREADS),
     _temperature_setting(PointKey.TEMP_SUPPLY_MIN, 57, 10, 20),
     _temperature_setting(PointKey.TEMP_SUPPLY_MAX, 58, 10, 50),
@@ -114,6 +121,9 @@ CTS400_POINTS: tuple[Point[Any], ...] = (
     _fan_speed(PointKey.FAN_LEVEL4_EXTRACT_PRESET, 66),
     setting(PointKey.FAN_LEVEL, 69, Limits(1, 4, step=1), on_write=FAN_LEVEL_REREADS),
     switch(PointKey.ENABLE, 70),                                                   # 1 = operation
+    switch(PointKey.PANEL_LOCK_FAN_LEVEL, 72),
+    switch(PointKey.PANEL_LOCK_ON_OFF, 73),
+    switch(PointKey.DEFROST_SUPPLY_FAN, 78),                                       # 0 = stopped, 1 = operation
     setting(PointKey.FAN_LEVEL_HIGH_CO2, 80, Limits(2, 4, step=1)),
 )
 

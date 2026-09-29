@@ -30,6 +30,7 @@ from nilan_connect import (
     OPTIMA_314,
     Alarm,
     Certainty,
+    FilterReplaceInterval,
     OperationState,
     PointKey,
     Weekday,
@@ -180,6 +181,9 @@ def test_a_cts400_point_is_its_register_as_the_manual_gives_it(point: Point[Any]
     manual_range = None if not row["min"] else (int(row["min"]) * 10 ** -decimals, int(row["max"]) * 10 ** -decimals)
     if point.writable and point.key.type is bool:
         assert manual_range in (None, (0, 1))
+    elif point.writable and point.states:
+        assert manual_range is not None
+        assert all(manual_range[0] <= state <= manual_range[1] for state in point.states)
     elif point.writable:
         assert point.limits is not None and manual_range is not None
         assert (point.limits.min, point.limits.max) == pytest.approx(manual_range)
@@ -218,6 +222,14 @@ def test_a_cts602_has_no_damper_test_day(variant: str) -> None:
 
 def test_the_damper_test_day_is_only_read_as_choosing_one_cannot_be_undone() -> None:
     assert _point("CTS602_LIGHT", PointKey.DAMPER_TEST_DAY).write is None
+
+
+@pytest.mark.parametrize(("variant", "address"), [("CTS602/0", 159), ("CTS602_LIGHT", 153)])
+async def test_a_cts602s_filter_interval_is_one_of_the_manuals_periods(variant: str, address: int) -> None:
+    """By its group the setpoint is HR 1105 AirFlow.FiltAlmType: "0: Pressure guard 1: 30 days 2: 90 days ..."."""
+    async for client, _ in _client(VARIANTS[variant][1], {}, {address: 2}):
+        assert _value(client, PointKey.FILTER_REPLACE_INTERVAL_CHOICE) is FilterReplaceInterval.DAYS_90
+        assert not client.has(PointKey.FILTER_REPLACE_INTERVAL)
 
 
 def test_an_optima_314s_datapoint_24_is_the_hot_water_tanks_bottom() -> None:
