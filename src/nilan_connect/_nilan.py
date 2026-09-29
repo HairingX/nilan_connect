@@ -4,7 +4,7 @@ from __future__ import annotations
 from modbus_event_connect import Client, Clock
 from modbus_event_connect.micro_nabto import MicroNabtoDevice
 
-from ._model import select_model
+from ._select import select_model
 
 WRITE_RETRY_FOR = 15.0
 """Seconds a write the controller did not take is sent again: a CTS400's gateway answered 0x63

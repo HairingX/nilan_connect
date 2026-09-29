@@ -48,7 +48,7 @@ def _point(key: str) -> Point[Any]:
 def test_the_keys_are_the_ones_consumers_have() -> None:
     """A consumer's stored entities are built on these strings."""
     assert sorted(p.key for p in CTS400_POINTS) == sorted(POINTS)
-    assert sorted(PointKey.all()) == sorted(POINTS)
+    assert set(POINTS) <= {str(key) for key in PointKey.all()}
 
 
 @pytest.mark.parametrize("key", sorted(POINTS))
@@ -78,16 +78,6 @@ def test_the_model_is_valid_for_a_cts400() -> None:
 
 def test_a_cts400_handshake_selects_the_cts400() -> None:
     assert select_model(CTS400_IDENTITY) is CTS400
-
-
-@pytest.mark.parametrize("identity", [
-    {"device_model": 1140, "slave_device_number": 2763306, "slave_device_model": 2},
-    {"device_model": 1140, "slave_device_number": 72270, "slave_device_model": 2},
-    {"device_model": 2010, "device_number": 79265},
-    {"device_model": 1040, "slave_device_number": 79250, "slave_device_model": 1},
-], ids=["cts602-light", "cts400-other-slave-model", "optima-270", "optima-250"])
-def test_no_model_is_selected_for_a_controller_not_supported_yet(identity: dict[str, int]) -> None:
-    assert select_model(identity) is None
 
 
 # ================================================================== through a simulated gateway

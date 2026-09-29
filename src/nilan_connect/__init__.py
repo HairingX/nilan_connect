@@ -15,6 +15,7 @@ from modbus_event_connect import (
     Identity,
     InvalidValueError,
     Key,
+    Labels,
     Limits,
     ModelError,
     NotConnectedError,
@@ -33,7 +34,10 @@ from modbus_event_connect import (
 )
 from modbus_event_connect.micro_nabto import DiscoveredDevice, discover
 
-from ._model import CTS400, PointKey, select_model
+from ._cts602 import CTS602, CTS602_LIGHT
+from ._model import CTS400, SOURCE, PointKey, Source
+from ._optima import OPTIMA_250, OPTIMA_251, OPTIMA_260, OPTIMA_270, OPTIMA_301, OPTIMA_312, OPTIMA_314
+from ._select import select_model
 from ._nilan import WRITE_RETRY_FOR, create_client
 
 __version__ = _installed_version("nilan_connect")
@@ -47,6 +51,7 @@ __all__ = [
     "Identity",
     "InvalidValueError",
     "Key",
+    "Labels",
     "Limits",
     "ModelError",
     "NotConnectedError",
@@ -65,7 +70,18 @@ __all__ = [
     "DiscoveredDevice",
     "discover",
     "CTS400",
+    "CTS602",
+    "CTS602_LIGHT",
+    "OPTIMA_250",
+    "OPTIMA_251",
+    "OPTIMA_260",
+    "OPTIMA_270",
+    "OPTIMA_301",
+    "OPTIMA_312",
+    "OPTIMA_314",
     "PointKey",
+    "SOURCE",
+    "Source",
     "WRITE_RETRY_FOR",
     "create_client",
     "select_model",

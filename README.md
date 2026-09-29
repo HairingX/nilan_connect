@@ -1,7 +1,7 @@
 # Nilan Connect
 
-An event-driven Python client for **Nilan** ventilation units behind a Nilan gateway, over the
-gateway's local micro_nabto protocol, built on
+An event-driven Python client for **Nilan** and **Genvex** ventilation units behind their
+gateway, over the gateway's local micro_nabto protocol, built on
 [modbus_event_connect](https://github.com/HairingX/modbus_event_connect).
 
 You subscribe to the values you care about and are told when one changes - with its quality, so
@@ -11,10 +11,30 @@ You subscribe to the values you care about and are told when one changes - with 
 
 | Controller | Status |
 |---|---|
-| Nilan CTS400 | Every point checked against Nilan's Modbus manual and read from a unit |
+| Nilan CTS400 | Tested: every point checked against Nilan's Modbus manual and read from a unit |
+| Genvex Optima 270 | Tested: read from a unit |
+| Nilan CTS602, every variant including Geo | Untested, apart from four temperatures (T2, T3, T4, T8) read from a unit |
+| Nilan CTS602 Light | Untested |
+| Genvex Optima 250, 251, 260, 301, 312, 314 | Untested |
 
-Other controllers behind a Nilan or Genvex gateway follow. Until then, `connect()` raises
-`UnsupportedDeviceError` for them.
+**The gateway's addresses of the untested controllers are derived and calculated from the
+material we could find online, and have not been tested on those controllers.** Values may be
+wrong or missing; reports of what a unit shows are welcome. `connect()` raises
+`UnsupportedDeviceError` for any other controller.
+
+Every point says where its address comes from, in its `source` label:
+
+| `Source` | Meaning |
+|---|---|
+| `Source.TESTED` | Read on a unit of the model. |
+| `Source.UNTESTED` | Found in material published online; not tested on a unit of the model. |
+| `Source.CALCULATED` | Placed from the model's Modbus manual by the order of its register group. Never written, only read. |
+
+On a CTS602 the gateway does not use the manual's addresses. Within one of the manual's register
+groups - blocks of 100, such as the temperatures from input register 200 - it keeps the manual's
+order and spacing, so a group's other registers follow from one known address in it: those are
+the `calculated` points. A consumer that wants only what has been seen working leaves them out,
+and `client.select(Labels(source=Source.CALCULATED))` names them.
 
 ## Installation
 
@@ -145,6 +165,10 @@ setpoint):
 
 `filter_ok` is the manual's "filter change status" the other way round, and
 `humidity_high_active` its "average level humidity 24 hours OK" the other way round.
+
+The other controllers share these keys wherever a value means the same, and add their own.
+Every point of every controller and device variant, with its register, scale, limits and source,
+is in [tests/models_points.json](https://github.com/HairingX/nilan_connect/blob/main/tests/models_points.json).
 
 ## Documentation
 
