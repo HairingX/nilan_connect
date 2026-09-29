@@ -189,7 +189,7 @@ OPTIMA_301_SECTIONS: tuple[Section, ...] = (
         reading(PointKey.FAN_DUTYCYCLE_EXTRACT, 103, data_type=DataType.INT16, unit=Unit.PERCENT),
         state(PointKey.BYPASS_ACTIVE, 104),
         setting(PointKey.TEMP_TARGET, 0, Limits(10, 30, step=0.5), data_type=DataType.INT16, scale=0.1, offset=10, unit=Unit.CELSIUS),
-        setting(PointKey.TEMP_COOLING_START_OFFSET, 1, Limits(30, 100, step=0.1), data_type=DataType.INT16, unit=Unit.CELSIUS),
+        setting(PointKey.TEMP_COOLING_START_OFFSET, 1, Limits(30, 100, step=1)),
         switch(PointKey.COOLING_ENABLE, 2),
         setting(PointKey.FAN_LEVEL1_SUPPLY_PRESET, 6, Limits(0, 100, step=1), unit=Unit.PERCENT),
         setting(PointKey.FAN_LEVEL2_SUPPLY_PRESET, 7, Limits(0, 100, step=1), unit=Unit.PERCENT),

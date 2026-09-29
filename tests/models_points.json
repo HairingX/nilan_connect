@@ -1918,10 +1918,14 @@
     "write": 191,
     "scale": 1,
     "offset": 0,
-    "type": "BOOL",
+    "type": "UINT16",
     "bit": null,
     "unit": null,
-    "limits": null,
+    "limits": [
+     0,
+     1,
+     1
+    ],
     "source": "untested"
    },
    "control_sensor": {
@@ -2362,9 +2366,9 @@
     "write": 170,
     "scale": 1,
     "offset": 0,
-    "type": "INT16",
+    "type": "UINT16",
     "bit": null,
-    "unit": "\u00b0C",
+    "unit": null,
     "limits": [
      0,
      10,
@@ -2899,10 +2903,14 @@
     "write": 191,
     "scale": 1,
     "offset": 0,
-    "type": "BOOL",
+    "type": "UINT16",
     "bit": null,
     "unit": null,
-    "limits": null,
+    "limits": [
+     0,
+     1,
+     1
+    ],
     "source": "untested"
    },
    "control_sensor": {
@@ -5910,10 +5918,14 @@
     "write": 191,
     "scale": 1,
     "offset": 0,
-    "type": "BOOL",
+    "type": "UINT16",
     "bit": null,
     "unit": null,
-    "limits": null,
+    "limits": [
+     0,
+     1,
+     1
+    ],
     "source": "untested"
    },
    "control_sensor": {
@@ -6438,9 +6450,9 @@
     "write": 170,
     "scale": 1,
     "offset": 0,
-    "type": "INT16",
+    "type": "UINT16",
     "bit": null,
-    "unit": "\u00b0C",
+    "unit": null,
     "limits": [
      0,
      10,
@@ -7015,10 +7027,14 @@
     "write": 191,
     "scale": 1,
     "offset": 0,
-    "type": "BOOL",
+    "type": "UINT16",
     "bit": null,
     "unit": null,
-    "limits": null,
+    "limits": [
+     0,
+     1,
+     1
+    ],
     "source": "untested"
    },
    "control_sensor": {
@@ -7543,9 +7559,9 @@
     "write": 170,
     "scale": 1,
     "offset": 0,
-    "type": "INT16",
+    "type": "UINT16",
     "bit": null,
-    "unit": "\u00b0C",
+    "unit": null,
     "limits": [
      0,
      10,
@@ -8168,10 +8184,14 @@
     "write": 191,
     "scale": 1,
     "offset": 0,
-    "type": "BOOL",
+    "type": "UINT16",
     "bit": null,
     "unit": null,
-    "limits": null,
+    "limits": [
+     0,
+     1,
+     1
+    ],
     "source": "untested"
    },
    "control_sensor": {
@@ -8752,9 +8772,9 @@
     "write": 170,
     "scale": 1,
     "offset": 0,
-    "type": "INT16",
+    "type": "UINT16",
     "bit": null,
-    "unit": "\u00b0C",
+    "unit": null,
     "limits": [
      0,
      10,
@@ -11229,13 +11249,13 @@
     "write": 1,
     "scale": 1,
     "offset": 0,
-    "type": "INT16",
+    "type": "UINT16",
     "bit": null,
-    "unit": "\u00b0C",
+    "unit": null,
     "limits": [
      30,
      100,
-     0.1
+     1
     ],
     "source": "untested"
    },

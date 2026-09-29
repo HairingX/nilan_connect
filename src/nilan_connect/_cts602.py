@@ -96,7 +96,7 @@ CTS602_SECTIONS: tuple[Section, ...] = (
         setting(PointKey.OPERATION_MODE, 138, Limits(0, 4, step=1)),
     )), when=slave_model_not_in({23})),
     Section(labelled(Source.UNTESTED, (
-        setting(PointKey.TEMP_COOLING_START_OFFSET, 170, Limits(0, 10, step=1), data_type=DataType.INT16, unit=Unit.CELSIUS),
+        setting(PointKey.TEMP_COOLING_START_OFFSET, 170, Limits(0, 10, step=1)),
     )), when=slave_model_in({4, 9, 10, 12, 19, 21, 26, 30, 32, 33, 35, 36, 38, 39, 40, 41, 43, 44, 45, 144, 244})),
     Section(labelled(Source.UNTESTED, (
         setting(PointKey.TEMP_SUMMER_SUPPLY_MIN, 171, Limits(0, 40, step=0.01), data_type=DataType.INT16, scale=0.01, unit=Unit.CELSIUS),
@@ -107,7 +107,7 @@ CTS602_SECTIONS: tuple[Section, ...] = (
         setting(PointKey.TEMP_HOTWATER, 190, Limits(20, 70, step=0.01), data_type=DataType.INT16, scale=0.01, unit=Unit.CELSIUS),
     )), when=slave_model_in({9, 10, 11, 12, 13, 18, 19, 20, 21, 23, 30, 31, 32, 34, 38, 43, 44, 144, 244})),
     Section(labelled(Source.UNTESTED, (
-        switch(PointKey.COMPRESSOR_PRIORITY, 191),
+        setting(PointKey.COMPRESSOR_PRIORITY, 191, Limits(0, 1, step=1)),
     )), when=slave_model_in({2, 9, 10, 12, 13, 30, 31, 32, 38, 43, 44, 144, 244})),
     Section(labelled(Source.UNTESTED, (
         setting(PointKey.ANTILEGIONELLA_DAY, 194, Limits(0, 7, step=1)),
