@@ -66,6 +66,14 @@ async def _written(gateway: SimulatedMicroNabtoDevice) -> list[tuple[int, ...]]:
     return [item for command in gateway.received(SETPOINT_WRITE) for item in command.items]
 
 
+async def test_a_client_tells_what_the_gateway_reported(gateway: SimulatedMicroNabtoDevice) -> None:
+    client = await _connected(gateway)
+    try:
+        assert client.identity == CTS400_IDENTITY
+    finally:
+        await client.disconnect()
+
+
 async def test_a_real_units_registers_read_as_what_they_mean(gateway: SimulatedMicroNabtoDevice) -> None:
     client = await _connected(gateway)
     try:
