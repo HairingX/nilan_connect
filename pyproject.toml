@@ -66,7 +66,7 @@ log_cli_date_format = "%Y-%m-%d %H:%M:%S"
 [tool.pyright]
 # The standard belongs to the repository, not to a personal editor setting: an IDE and a CI
 # run must agree on what counts as an error.
-include = ["src", "tests"]
+include = ["src", "tests", "docs/controllers.py"]
 exclude = ["**/__pycache__", "**/.venv", "**/.claude"]
 typeCheckingMode = "strict"
 reportMissingTypeStubs = "none"

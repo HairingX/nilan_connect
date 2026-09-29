@@ -1,7 +1,9 @@
 """Every controller besides the CTS400: the model a handshake selects, the points each model and
-variant has, where each point's address comes from, and values through a simulated gateway."""
+variant has, how certain each point is, and values through a simulated gateway."""
 import csv
 import json
+import runpy
+from collections import Counter
 from datetime import datetime
 from collections.abc import AsyncGenerator, Mapping
 from pathlib import Path
@@ -9,7 +11,12 @@ from typing import Any
 
 import pytest
 from modbus_event_connect import Client, Model, Point, Section
-from modbus_event_connect.micro_nabto import MicroNabtoConnection, MicroNabtoDevice, SetpointRegister
+from modbus_event_connect.micro_nabto import (
+    DatapointRegister,
+    MicroNabtoConnection,
+    MicroNabtoDevice,
+    SetpointRegister,
+)
 
 from nilan_connect import (
     CTS400,
@@ -25,11 +32,12 @@ from nilan_connect import (
     OPTIMA_301,
     OPTIMA_312,
     OPTIMA_314,
-    SOURCE,
+    Certainty,
     PointKey,
-    Source,
+    certainty,
     select_model,
 )
+from nilan_connect._certainty import section
 from nilan_connect.testing import SimulatedMicroNabtoDevice
 
 HERE = Path(__file__).parent
@@ -44,8 +52,8 @@ MODELS: dict[str, Model] = {
 }
 
 PINNED: dict[str, dict[str, Any]] = json.loads((HERE / "models_points.json").read_text(encoding="utf-8"))
-"""Every point of every model, per device variant, as consumers get it: a change here changes
-what they have."""
+"""Every point of every model, per device variant, as consumers get it. It catches a change no one
+meant; it is not a source of what a controller has."""
 
 GROUP_STARTS: dict[str, dict[tuple[str, int], int]] = {
     "CTS602": {("IR", 200): 31, ("IR", 400): 64, ("IR", 1000): 84, ("IR", 1100): 98, ("HR", 1000): 136,
@@ -75,7 +83,7 @@ def _describe(point: Point[Any]) -> dict[str, Any]:
         "scale": point.scale, "offset": point.offset, "type": point.data_type.kind.name,
         "bit": point.data_type.bit_index, "unit": None if point.unit is None else point.unit.value,
         "limits": None if limits is None else [limits.min, limits.max, limits.step],
-        "source": point.labels[SOURCE],
+        "certainty": certainty(point).value,
         "codes": None if point.codes is None else {str(code): state.name for code, state in point.codes.items()},
     }
 
@@ -127,25 +135,53 @@ def test_every_key_is_declared() -> None:
     assert {point.key for _, point in _every_point()} <= declared
 
 
-def test_every_point_says_where_its_address_comes_from() -> None:
-    sources = {Source.TESTED, Source.UNTESTED, Source.CALCULATED}
-    assert all(point.labels.get(SOURCE) in sources for _, point in _every_point())
-    cts400 = {"device_model": 1140, "slave_device_number": 72270, "slave_device_model": 1}
-    assert all(point.labels.get(SOURCE) == Source.TESTED for point in _points(CTS400, cts400))
+@pytest.mark.parametrize("model", [CTS400, *MODELS.values()], ids=lambda model: model.name)
+def test_every_point_of_every_model_has_a_certainty(model: Model) -> None:
+    points = [point for section in model.sections if isinstance(section, Section) for point in section.points]
+    assert all(certainty(point) in Certainty for point in points)
 
 
-def test_only_the_optima_270_and_the_confirmed_cts602_temperatures_are_tested_besides_the_cts400() -> None:
-    tested = {(variant.split("/")[0], point.key) for variant, point in _every_point()
-              if point.labels[SOURCE] == Source.TESTED}
-    assert {model for model, _ in tested} == {"OPTIMA_270", "CTS602"}
-    assert {key for model, key in tested if model == "CTS602"} == {
+def test_every_point_of_the_cts400_is_verified() -> None:
+    assert {certainty(point) for section in CTS400.sections if isinstance(section, Section)
+            for point in section.points} == {Certainty.VERIFIED}
+
+
+def test_only_the_optima_270_and_the_confirmed_cts602_temperatures_are_verified_besides_the_cts400() -> None:
+    verified = {(variant.split("/")[0], point.key) for variant, point in _every_point()
+                if certainty(point) is Certainty.VERIFIED}
+    assert {model for model, _ in verified} == {"OPTIMA_270", "CTS602"}
+    assert {key for model, key in verified if model == "CTS602"} == {
         "temp_supply", "temp_extract", "temp_exhaust", "temp_outside"}
 
 
-def test_a_calculated_point_can_never_be_written() -> None:
-    calculated = [point for _, point in _every_point() if point.labels[SOURCE] == Source.CALCULATED]
-    assert calculated
-    assert all(point.write is None and point.readable for point in calculated)
+def test_a_point_given_two_certainties_is_refused() -> None:
+    point = Point(PointKey.TEMP_SUPPLY, read=SetpointRegister(1))
+    section(verified=[point])
+    with pytest.raises(ValueError, match="both"):
+        section(inferred=[point])
+
+
+def test_a_point_of_no_model_has_no_certainty() -> None:
+    with pytest.raises(KeyError):
+        certainty(Point(PointKey.TEMP_SUPPLY, read=SetpointRegister(1)))
+
+
+@pytest.mark.parametrize("variant", sorted(PINNED))
+def test_no_two_keys_are_written_to_one_register(variant: str) -> None:
+    points = _points(MODELS[variant.split("/")[0]], PINNED[variant]["identity"])
+    written = Counter((type(point.write).__name__, point.write.address) for point in points if point.write is not None)
+    assert [register for register, count in written.items() if count > 1] == []
+
+
+@pytest.mark.parametrize("variant", ["CTS602/0", "CTS602/244"])
+def test_a_cts602_has_no_damper_test_day(variant: str) -> None:
+    """Its two manuals number HR 1102 differently: 1 is "Wednesday 0400" in one, Monday in the other."""
+    points = _points(MODELS[variant.split("/")[0]], PINNED[variant]["identity"])
+    assert PointKey.DAMPER_TEST_DAY not in {point.key for point in points}
+
+
+def test_the_damper_test_day_is_only_read_as_choosing_one_cannot_be_undone() -> None:
+    assert _point("CTS602_LIGHT", PointKey.DAMPER_TEST_DAY).write is None
 
 
 @pytest.mark.parametrize("model", sorted(GROUP_STARTS))
@@ -163,7 +199,7 @@ def test_a_calculated_address_is_a_manual_register_placed_by_its_group(model: st
     variants = [v for v in PINNED if v.split("/")[0] == model]
     for variant in variants:
         for point in _points(MODELS[model], PINNED[variant]["identity"]):
-            if point.labels[SOURCE] != Source.CALCULATED:
+            if certainty(point) is not Certainty.INFERRED:
                 continue
             assert point.read is not None
             table = "HR" if isinstance(point.read, SetpointRegister) else "IR"
@@ -276,3 +312,15 @@ def test_a_cts602_has_no_filter_reset(variant: str) -> None:
     """None of the three CTS602 manuals documents one, and the address found elsewhere is untested."""
     points = _points(MODELS[variant.split("/")[0]], PINNED[variant]["identity"])
     assert PointKey.FILTER_REPLACE_RESET not in {point.key for point in points}
+
+
+def test_the_controllers_document_is_current() -> None:
+    """docs/controllers.md is generated: `python docs/controllers.py` writes it again."""
+    generator = runpy.run_path(str(HERE.parent / "docs" / "controllers.py"))
+    assert generator["render"]() == generator["OUTPUT"].read_text(encoding="utf-8")
+
+
+def test_an_optima_314s_datapoint_24_is_the_hot_water_tanks_bottom() -> None:
+    """The user manual calls sensor T8 the tank bottom."""
+    points = _points(OPTIMA_314, PINNED["OPTIMA_314"]["identity"])
+    assert [point.key for point in points if point.read == DatapointRegister(24)] == [PointKey.TEMP_HOTWATER_BOTTOM]

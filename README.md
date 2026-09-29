@@ -22,19 +22,26 @@ material we could find online, and have not been tested on those controllers.** 
 wrong or missing; reports of what a unit shows are welcome. `connect()` raises
 `UnsupportedDeviceError` for any other controller.
 
-Every point says where its address comes from, in its `source` label:
+`certainty(point)` says how certain it is that a point is right:
 
-| `Source` | Meaning |
+| `Certainty` | Meaning |
 |---|---|
-| `Source.TESTED` | Read on a unit of the model. |
-| `Source.UNTESTED` | Found in material published online; not tested on a unit of the model. |
-| `Source.CALCULATED` | Placed from the model's Modbus manual by the order of its register group. Never written, only read. |
+| `VERIFIED` | Read on a unit of the model. |
+| `REPORTED` | Found in material published online; not read on a unit of the model. |
+| `INFERRED` | Placed from the model's Modbus manual by the order of its register group; not read on a unit of the model, and not found elsewhere. |
 
 On a CTS602 the gateway does not use the manual's addresses. Within one of the manual's register
 groups - blocks of 100, such as the temperatures from input register 200 - it keeps the manual's
 order and spacing, so a group's other registers follow from one known address in it: those are
-the `calculated` points. A consumer that wants only what has been seen working leaves them out,
-and `client.select(Labels(source=Source.CALCULATED))` names them.
+the `inferred` points. A setting among them can be written, as a test of it needs to; whether a
+user is offered that is the consumer's choice. A consumer that wants only what has been seen
+working leaves the inferred points out:
+
+```python
+from nilan_connect import Certainty, certainty
+
+shown = [point for point in client.points.values() if certainty(point) is not Certainty.INFERRED]
+```
 
 ## Installation
 
@@ -78,7 +85,7 @@ answer. `port` reaches a gateway that does not answer on micro_nabto's standard 
 The controller's readings every 10 seconds, its settings every 180 seconds, and a setting again
 one second after it is written. What a write changes is read again too: after a filter reset, the
 filter's status and timers and the alarm status, two seconds later; after a filter interval, the
-days left, two seconds later; after a fan level, the level the fans run at and their speeds,
+days left, two seconds later; after a fan level, the levels the fans run at and their speeds,
 three seconds later.
 
 ## Writing
@@ -132,7 +139,7 @@ setpoint):
 | `winter_mode_active` | bool | IR 72 | read |  |  |
 | `filter_replace_time_ago` | float | IR 77 | read | d |  |
 | `defrost_active` | bool | IR 91 | read |  |  |
-| `filter_replace_time_remain` | int | IR 110 | read | d |  |
+| `filter_replace_time_remain` | float | IR 110 | read | d |  |
 | `alarm_reset` | bool | HR 30 | write |  |  |
 | `humidity_low_threshold` | float | HR 31 | read, write | % | 15–45 |
 | `fan_level_low_humidity` | int | HR 32 | read, write |  | 0–3 |
@@ -184,8 +191,9 @@ whichever controller reports it: a CTS400's alarm 1 and a CTS602's alarm 19 are 
 - A sensor alarm names the sensor by the controller's T number, as the controller's panel does.
 - When an alarm was raised (`alarm_1_time`) and when the damper last tested itself
   (`damper_test_last_date`) are in the controller's own clock, without a time zone.
-Every point of every controller and device variant, with its register, scale, limits and source,
-is in [tests/models_points.json](https://github.com/HairingX/nilan_connect/blob/main/tests/models_points.json).
+
+Every point of every controller and device variant, with its registers, unit and certainty, is in
+[docs/controllers.md](https://github.com/HairingX/nilan_connect/blob/main/docs/controllers.md).
 
 ## Documentation
 

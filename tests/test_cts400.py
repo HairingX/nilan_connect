@@ -18,7 +18,7 @@ from modbus_event_connect.micro_nabto import (
 from modbus_event_connect.testing import assert_models_valid
 
 from nilan_connect import CTS400, Alarm, PointKey, create_client, select_model
-from nilan_connect._model import CTS400_POINTS
+from nilan_connect._cts400 import CTS400_POINTS
 from nilan_connect.testing import FakeClock, SimulatedMicroNabtoDevice
 
 EMAIL = "user@example.invalid"

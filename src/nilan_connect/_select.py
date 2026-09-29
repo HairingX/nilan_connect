@@ -3,8 +3,8 @@ from __future__ import annotations
 
 from modbus_event_connect import Identity, Model
 
+from ._cts400 import CTS400
 from ._cts602 import CTS602, CTS602_LIGHT
-from ._model import CTS400
 from ._optima import OPTIMA_250, OPTIMA_251, OPTIMA_260, OPTIMA_270, OPTIMA_301, OPTIMA_312, OPTIMA_314
 
 _BY_SLAVE_MODEL_79250 = {1: OPTIMA_250, 5: OPTIMA_301, 8: OPTIMA_251, 9: OPTIMA_312}
