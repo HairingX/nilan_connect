@@ -23,7 +23,7 @@ from modbus_event_connect.micro_nabto import MicroNabtoConnection, MicroNabtoDev
 
 from conftest import live_or_skip, live_setting
 from nilan_connect import CTS400, PointKey, select_model
-from nilan_connect._model import CTS400_POINTS
+from nilan_connect._cts400 import CTS400_POINTS
 
 HOST = live_setting("NILAN_HOST")
 EMAIL = live_setting("NILAN_EMAIL")
