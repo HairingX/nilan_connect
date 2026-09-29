@@ -17,7 +17,7 @@ from modbus_event_connect.micro_nabto import (
 )
 from modbus_event_connect.testing import assert_models_valid
 
-from nilan_connect import CTS400, PointKey, create_client, select_model
+from nilan_connect import CTS400, Alarm, PointKey, create_client, select_model
 from nilan_connect._model import CTS400_POINTS
 from nilan_connect.testing import FakeClock, SimulatedMicroNabtoDevice
 
@@ -129,6 +129,8 @@ async def test_a_real_units_registers_read_as_what_they_mean(gateway: SimulatedM
             PointKey.TEMP_WINTER_MODE_THRESHOLD: 12.0, PointKey.HUMIDITY_HIGH_ACTIVE: False,
             PointKey.HUMIDITY_HIGH_LEVEL: 64.6, PointKey.HUMIDITY_HIGH_LEVEL_TIME: 0.0,
             PointKey.ENABLE: True, PointKey.TEMP_TARGET: 23.0, PointKey.HUMIDITY_LOW_THRESHOLD: 30.0,
+            # The filter alarm was active, yet the unit listed no alarm code.
+            PointKey.ALARM_1: Alarm.NONE,
         }
         found = {key: current.value for key in expected if (current := client.value(key)) is not None}
         assert found == pytest.approx(expected)

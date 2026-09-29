@@ -8,12 +8,16 @@ Sources:
 """
 from __future__ import annotations
 
-from modbus_event_connect import DataType, Limits, Model, PollRate, Section, Unit
+from collections.abc import Mapping
+from typing import Any
+
+from modbus_event_connect import DataType, Key, Limits, Model, Point, PollRate, Section, Unit
 from modbus_event_connect.micro_nabto import MicroNabtoOptions
 
 from ._model import (
     PointKey,
     Source,
+    alarm_bit,
     command,
     labelled,
     reading,
@@ -22,6 +26,52 @@ from ._model import (
     switch,
     temperature,
 )
+
+# Which alarm each bit of an Optima's alarm registers raises, as found in material published online.
+# A 32-bit field spans two registers, the lower bits first. The filter alarm is `filter_ok`, the
+# other way round, as a CTS400 has it.
+_FILTER = PointKey.FILTER_OK
+
+ALARM_BITS_250: Mapping[int, Key[bool]] = {
+    0: PointKey.ALARM_EXTERNAL_STOP, 1: _FILTER, 2: PointKey.ALARM_HIGH_PRESSURE, 3: PointKey.ALARM_FROST_FAILURE,
+    4: PointKey.ALARM_PANEL_COMMUNICATION, 5: PointKey.ALARM_EXTERNAL_FILTER, 6: PointKey.ALARM_FAN_ERROR,
+    7: PointKey.ALARM_SENSOR_ERROR,
+}
+"""The Optima 250, 251, 301 and 312."""
+
+_SENSOR_T1_T9: tuple[Key[bool], ...] = (
+    PointKey.ALARM_SENSOR_T1_ERROR, PointKey.ALARM_SENSOR_T2_ERROR, PointKey.ALARM_SENSOR_T3_ERROR,
+    PointKey.ALARM_SENSOR_T4_ERROR, PointKey.ALARM_SENSOR_T5_ERROR, PointKey.ALARM_SENSOR_T6_ERROR,
+    PointKey.ALARM_SENSOR_T7_ERROR, PointKey.ALARM_SENSOR_T8_ERROR, PointKey.ALARM_SENSOR_T9_ERROR,
+)
+_FIRE_DAMPERS: tuple[Key[bool], ...] = (
+    PointKey.ALARM_FIRE_DAMPER_1_ERROR, PointKey.ALARM_FIRE_DAMPER_2_ERROR, PointKey.ALARM_FIRE_DAMPER_3_ERROR,
+    PointKey.ALARM_FIRE_DAMPER_4_ERROR,
+)
+
+ALARM_BITS_270: Mapping[int, Key[bool]] = {
+    0: _FILTER, 1: PointKey.ALARM_EXTERNAL_STOP, **{2 + n: key for n, key in enumerate(_SENSOR_T1_T9)},
+    11: PointKey.ALARM_HUMIDITY_SENSOR_ERROR, 12: PointKey.ALARM_FIRE_TEST_ERROR,
+    13: PointKey.ALARM_SUPPLY_FAN_ERROR, 14: PointKey.ALARM_EXTRACT_FAN_ERROR, 15: PointKey.ALARM_FROST_FAILURE,
+    **{16 + n: key for n, key in enumerate(_FIRE_DAMPERS)}, 20: PointKey.ALARM_FIRE_BOX_1_ERROR,
+    21: PointKey.ALARM_FIRE_BOX_2_ERROR, 22: PointKey.ALARM_ROTOR,
+}
+
+ALARM_BITS_314: Mapping[int, Key[bool]] = {
+    1: _FILTER, 2: PointKey.ALARM_EXTERNAL_STOP, **{3 + n: key for n, key in enumerate(_SENSOR_T1_T9)},
+    12: PointKey.ALARM_HUMIDITY_SENSOR_ERROR, 13: PointKey.ALARM_FIRE_TEST_ERROR,
+    14: PointKey.ALARM_SUPPLY_FAN_ERROR, 15: PointKey.ALARM_EXTRACT_FAN_ERROR,
+    **{17 + n: key for n, key in enumerate(_FIRE_DAMPERS)}, 21: PointKey.ALARM_FIRE_BOX_1_ERROR,
+    22: PointKey.ALARM_FIRE_BOX_2_ERROR, 24: PointKey.ALARM_INTERNAL_MODBUS, 25: PointKey.ALARM_HIGH_PRESSURE,
+    26: PointKey.ALARM_LOW_PRESSURE, 27: PointKey.ALARM_FLOW_TEMPERATURE_ERROR,
+    28: PointKey.ALARM_RETURN_TEMPERATURE_ERROR, 29: PointKey.ALARM_SENSOR_T10_ERROR,
+    30: PointKey.ALARM_SENSOR_T11_ERROR,
+}
+
+
+def alarm_bits(bits: Mapping[int, Key[bool]], address: int) -> tuple[Point[Any], ...]:
+    """A point for each alarm of the field starting at `address`, the filter alarm inverted."""
+    return tuple(alarm_bit(key, address + bit // 16, bit % 16, inverted=key == _FILTER) for bit, key in bits.items())
 
 
 OPTIMA_250_SECTIONS: tuple[Section, ...] = (
@@ -32,6 +82,7 @@ OPTIMA_250_SECTIONS: tuple[Section, ...] = (
         temperature(PointKey.TEMP_EXTRACT, 6, scale=0.1, offset=-30),
         reading(PointKey.HUMIDITY, 10, data_type=DataType.INT16, unit=Unit.PERCENT),
         reading(PointKey.ALARM_BITS, 101),
+        *alarm_bits(ALARM_BITS_250, 101),
         reading(PointKey.FAN_DUTYCYCLE_SUPPLY, 102, data_type=DataType.INT16, unit=Unit.PERCENT),
         reading(PointKey.FAN_DUTYCYCLE_EXTRACT, 103, data_type=DataType.INT16, unit=Unit.PERCENT),
         state(PointKey.BYPASS_ACTIVE, 104),
@@ -69,6 +120,7 @@ OPTIMA_251_SECTIONS: tuple[Section, ...] = (
         temperature(PointKey.TEMP_EXTRACT, 6, scale=0.1, offset=-30),
         reading(PointKey.HUMIDITY, 10, data_type=DataType.INT16, unit=Unit.PERCENT),
         reading(PointKey.ALARM_BITS, 101),
+        *alarm_bits(ALARM_BITS_250, 101),
         reading(PointKey.FAN_DUTYCYCLE_SUPPLY, 102, data_type=DataType.INT16, unit=Unit.PERCENT),
         reading(PointKey.FAN_DUTYCYCLE_EXTRACT, 103, data_type=DataType.INT16, unit=Unit.PERCENT),
         state(PointKey.BYPASS_ACTIVE, 104),
@@ -143,23 +195,24 @@ OPTIMA_270_SECTIONS: tuple[Section, ...] = (
         reading(PointKey.HUMIDITY, 26, data_type=DataType.INT16, unit=Unit.PERCENT),
         reading(PointKey.FAN_RPM_SUPPLY, 35, data_type=DataType.INT16, unit=Unit.RPM),
         reading(PointKey.FAN_RPM_EXTRACT, 36, data_type=DataType.INT16, unit=Unit.RPM),
-        reading(PointKey.BYPASS_POSITION, 40, data_type=DataType.INT16, unit=Unit.PERCENT),
+        reading(PointKey.BYPASS_POSITION, 40, data_type=DataType.INT16),
         reading(PointKey.PREHEAT_OUTPUT, 41, data_type=DataType.INT16, scale=0.01, unit=Unit.PERCENT),
         reading(PointKey.REHEAT_OUTPUT, 42, data_type=DataType.INT16, scale=0.01, unit=Unit.PERCENT),
         reading(PointKey.ROTOR_SPEED, 50, data_type=DataType.INT16, unit=Unit.RPM),
         state(PointKey.BYPASS_ACTIVE, 53),
         reading(PointKey.ALARM_BITS, 114),
         reading(PointKey.ALARM_BITS_HIGH, 115),
+        *alarm_bits(ALARM_BITS_270, 114),
         setting(PointKey.TEMP_TARGET, 1, Limits(10, 30, step=0.5), write_address=12, data_type=DataType.INT16, scale=0.1, offset=10, unit=Unit.CELSIUS),
         switch(PointKey.REHEAT_ENABLE, 3, write_address=16),
         switch(PointKey.HUMIDITY_CONTROL_ENABLE, 6, write_address=22),
         setting(PointKey.FAN_LEVEL, 7, Limits(0, 4, step=1), write_address=24),
         setting(PointKey.TEMP_BYPASS_OPEN_OFFSET, 21, Limits(1, 10, step=0.1), write_address=52, data_type=DataType.INT16, scale=0.1, unit=Unit.CELSIUS),
-        setting(PointKey.BYPASS_TURNOFF, 29, Limits(0, 20, step=1), write_address=68),
+        setting(PointKey.TEMP_BYPASS_CLOSE_OFFSET, 29, Limits(0, 20, step=1), write_address=68, unit=Unit.CELSIUS),
         switch(PointKey.BOOST_ENABLE, 30, write_address=70),
         command(PointKey.FILTER_REPLACE_RESET, 110),
-        setting(PointKey.BYPASS_FAN_LEVEL, 57, Limits(0, 100, step=1), write_address=124, unit=Unit.PERCENT),
-        setting(PointKey.TEMP_BYPASS_FORCE, 58, Limits(0, 5, step=0.1), write_address=126, data_type=DataType.INT16, scale=0.1, unit=Unit.CELSIUS),
+        setting(PointKey.BYPASS_FAN_INCREASE, 57, Limits(0, 100, step=1), write_address=124, unit=Unit.PERCENT),
+        setting(PointKey.TEMP_BYPASS_FAN_INCREASE_OFFSET, 58, Limits(0, 5, step=0.1), write_address=126, data_type=DataType.INT16, scale=0.1, unit=Unit.CELSIUS),
         setting(PointKey.BOOST_TIME, 70, Limits(1, 120, step=1), write_address=150, unit=Unit.MINUTES),
         setting(PointKey.FILTER_REPLACE_INTERVAL, 100, Limits(0, 65535, step=1), write_address=210, unit=Unit.DAYS),
     ))),
@@ -185,11 +238,12 @@ OPTIMA_301_SECTIONS: tuple[Section, ...] = (
         temperature(PointKey.TEMP_ROOM, 9, scale=0.1, offset=-30),
         reading(PointKey.HUMIDITY, 10, data_type=DataType.INT16, unit=Unit.PERCENT),
         reading(PointKey.ALARM_BITS, 101),
+        *alarm_bits(ALARM_BITS_250, 101),
         reading(PointKey.FAN_DUTYCYCLE_SUPPLY, 102, data_type=DataType.INT16, unit=Unit.PERCENT),
         reading(PointKey.FAN_DUTYCYCLE_EXTRACT, 103, data_type=DataType.INT16, unit=Unit.PERCENT),
         state(PointKey.BYPASS_ACTIVE, 104),
         setting(PointKey.TEMP_TARGET, 0, Limits(10, 30, step=0.5), data_type=DataType.INT16, scale=0.1, offset=10, unit=Unit.CELSIUS),
-        setting(PointKey.TEMP_COOLING_START_OFFSET, 1, Limits(30, 100, step=1)),
+        setting(PointKey.COOLING_TEMPERATURE, 1, Limits(30, 100, step=1)),
         switch(PointKey.COOLING_ENABLE, 2),
         setting(PointKey.FAN_LEVEL1_SUPPLY_PRESET, 6, Limits(0, 100, step=1), unit=Unit.PERCENT),
         setting(PointKey.FAN_LEVEL2_SUPPLY_PRESET, 7, Limits(0, 100, step=1), unit=Unit.PERCENT),
@@ -229,6 +283,7 @@ OPTIMA_312_SECTIONS: tuple[Section, ...] = (
         state(PointKey.HEAT_PUMP_WATER_HEATING, 15),
         state(PointKey.HEAT_PUMP_ROOM_HEATING, 16),
         reading(PointKey.ALARM_BITS, 101),
+        *alarm_bits(ALARM_BITS_250, 101),
         reading(PointKey.FAN_DUTYCYCLE_SUPPLY, 102, data_type=DataType.INT16, unit=Unit.PERCENT),
         reading(PointKey.FAN_DUTYCYCLE_EXTRACT, 103, data_type=DataType.INT16, unit=Unit.PERCENT),
         state(PointKey.BYPASS_ACTIVE, 104),
@@ -276,6 +331,7 @@ OPTIMA_314_SECTIONS: tuple[Section, ...] = (
         state(PointKey.HEAT_PUMP_ACTIVE, 75),
         reading(PointKey.ALARM_BITS, 114),
         reading(PointKey.ALARM_BITS_HIGH, 115),
+        *alarm_bits(ALARM_BITS_314, 114),
         setting(PointKey.TEMP_TARGET, 1, Limits(10, 30, step=0.5), write_address=12, data_type=DataType.INT16, scale=0.1, offset=10, unit=Unit.CELSIUS),
         switch(PointKey.REHEAT_ENABLE, 3, write_address=16),
         switch(PointKey.HUMIDITY_CONTROL_ENABLE, 6, write_address=22),

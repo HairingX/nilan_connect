@@ -2,6 +2,7 @@
 variant has, where each point's address comes from, and values through a simulated gateway."""
 import csv
 import json
+from datetime import datetime
 from collections.abc import AsyncGenerator, Mapping
 from pathlib import Path
 from typing import Any
@@ -12,6 +13,9 @@ from modbus_event_connect.micro_nabto import MicroNabtoConnection, MicroNabtoDev
 
 from nilan_connect import (
     CTS400,
+    Alarm,
+    OperationState,
+    Weekday,
     CTS602,
     CTS602_LIGHT,
     OPTIMA_250,
@@ -72,6 +76,7 @@ def _describe(point: Point[Any]) -> dict[str, Any]:
         "bit": point.data_type.bit_index, "unit": None if point.unit is None else point.unit.value,
         "limits": None if limits is None else [limits.min, limits.max, limits.step],
         "source": point.labels[SOURCE],
+        "codes": None if point.codes is None else {str(code): state.name for code, state in point.codes.items()},
     }
 
 
@@ -208,3 +213,59 @@ async def test_a_cts602_reads_its_extract_air_where_its_variant_has_it(slave_mod
 async def test_a_calculated_alarm_status_is_the_bit_the_manual_names_for_an_active_alarm() -> None:
     async for client, _ in _client(PINNED["CTS602_LIGHT"]["identity"], {63: 0x80}, {}):
         assert _value(client, PointKey.ALARM_STATUS) is True
+
+
+async def test_a_calculated_alarms_time_is_its_dos_date_and_time() -> None:
+    date_word, time_word = (46 << 9) | (9 << 5) | 29, (13 << 11) | (37 << 5) | 21
+    async for client, _ in _client(PINNED["CTS602/0"]["identity"], {66: date_word, 67: time_word}, {}):
+        assert _value(client, PointKey.ALARM_1_TIME) == datetime(2026, 9, 29, 13, 37, 42)
+
+
+# =============================================================================== shared states
+
+
+def _point(variant: str, key: str) -> Point[Any]:
+    return next(p for p in _points(MODELS[variant.split("/")[0]], PINNED[variant]["identity"]) if p.key == key)
+
+
+def test_the_same_alarm_is_one_state_whichever_code_a_controller_gives_it() -> None:
+    """A CTS400 calls its filter alarm 1, a CTS602 19; to a CTS602, 1 is a hardware fault."""
+    cts400 = {"device_model": 1140, "slave_device_number": 72270, "slave_device_model": 1}
+    cts400_alarm = next(p for p in _points(CTS400, cts400) if p.key == PointKey.ALARM_1)
+    assert cts400_alarm.codes is not None and cts400_alarm.codes[1] is Alarm.CHANGE_FILTER
+    cts602_alarm = _point("CTS602/0", PointKey.ALARM_1)
+    assert cts602_alarm.codes is not None
+    assert cts602_alarm.codes[19] is Alarm.CHANGE_FILTER and cts602_alarm.codes[1] is Alarm.HARDWARE
+
+
+async def test_an_alarm_code_stays_the_code_and_its_alarm_is_a_key_of_its_own() -> None:
+    async for client, _ in _client(PINNED["CTS602/0"]["identity"], {65: 19}, {}):
+        assert _value(client, PointKey.ALARM_1_CODE) == 19
+        assert _value(client, PointKey.ALARM_1) is Alarm.CHANGE_FILTER
+
+
+async def test_an_optimas_alarm_bits_are_alarms_of_their_own_with_the_filter_as_filter_ok() -> None:
+    async for client, _ in _client(PINNED["OPTIMA_270"]["identity"], {114: 0b11, 115: 1 << 6}, {}):
+        assert _value(client, PointKey.FILTER_OK) is False
+        assert _value(client, PointKey.ALARM_EXTERNAL_STOP) is True
+        assert _value(client, PointKey.ALARM_ROTOR) is True
+        assert _value(client, PointKey.ALARM_SENSOR_T1_ERROR) is False
+
+
+def test_the_state_code_names_only_the_control_states_of_the_manual() -> None:
+    state = _point("CTS602/0", PointKey.OPERATION_STATE)
+    assert state.states[-1] is OperationState.HEATING_HOT_WATER and len(state.states) == 18
+
+
+def test_heat_pump_states_that_share_a_text_are_one_state() -> None:
+    heat_pump = _point("CTS602/44", PointKey.HEAT_PUMP_STATE)
+    assert heat_pump.codes is not None
+    assert heat_pump.codes[6] is heat_pump.codes[10] is OperationState.HEAT_PUMP_STOP
+
+
+async def test_a_weekday_is_numbered_as_the_manual_numbers_it() -> None:
+    """HotWater.LegioType: "0=OFF, 1=Mandag, ..., 7=sondag"."""
+    async for client, simulated in _client(PINNED["CTS602/9"]["identity"], {}, {194: 1}):
+        assert _value(client, PointKey.ANTILEGIONELLA_DAY) is Weekday.MONDAY
+        assert await client.write(PointKey.ANTILEGIONELLA_DAY, Weekday.SUNDAY) is True
+        assert [c.items for c in simulated.received(SETPOINT_WRITE)] == [((0, 194, 7),)]

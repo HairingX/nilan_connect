@@ -38,6 +38,21 @@ from ._cts602 import CTS602, CTS602_LIGHT
 from ._model import CTS400, SOURCE, PointKey, Source
 from ._optima import OPTIMA_250, OPTIMA_251, OPTIMA_260, OPTIMA_270, OPTIMA_301, OPTIMA_312, OPTIMA_314
 from ._select import select_model
+from ._states import (
+    AirExchangeMode,
+    Alarm,
+    CentralHeatMode,
+    CirculationPumpMode,
+    CompressorPriority,
+    ControlSensor,
+    CoolingSetpoint,
+    DamperTestState,
+    HeatSource,
+    OperationMode,
+    OperationState,
+    ServiceMode,
+    Weekday,
+)
 from ._nilan import WRITE_RETRY_FOR, create_client
 
 __version__ = _installed_version("nilan_connect")
@@ -85,4 +100,17 @@ __all__ = [
     "WRITE_RETRY_FOR",
     "create_client",
     "select_model",
+    "AirExchangeMode",
+    "Alarm",
+    "CentralHeatMode",
+    "CirculationPumpMode",
+    "CompressorPriority",
+    "ControlSensor",
+    "CoolingSetpoint",
+    "DamperTestState",
+    "HeatSource",
+    "OperationMode",
+    "OperationState",
+    "ServiceMode",
+    "Weekday",
 ]

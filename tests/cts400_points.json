@@ -1,4 +1,13 @@
 {
+ "alarm_1": {
+  "read": 51,
+  "scale": 1.0,
+  "signed": false,
+  "space": "datapoint",
+  "transform": null,
+  "unit": null,
+  "write": null
+ },
  "alarm_1_code": {
   "read": 51,
   "scale": 1.0,
@@ -17,6 +26,15 @@
   "unit": null,
   "write": null
  },
+ "alarm_2": {
+  "read": 52,
+  "scale": 1.0,
+  "signed": false,
+  "space": "datapoint",
+  "transform": null,
+  "unit": null,
+  "write": null
+ },
  "alarm_2_code": {
   "read": 52,
   "scale": 1.0,
@@ -28,6 +46,15 @@
  },
  "alarm_2_info": {
   "read": 57,
+  "scale": 1.0,
+  "signed": false,
+  "space": "datapoint",
+  "transform": null,
+  "unit": null,
+  "write": null
+ },
+ "alarm_3": {
+  "read": 53,
   "scale": 1.0,
   "signed": false,
   "space": "datapoint",

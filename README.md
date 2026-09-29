@@ -167,6 +167,23 @@ setpoint):
 `humidity_high_active` its "average level humidity 24 hours OK" the other way round.
 
 The other controllers share these keys wherever a value means the same, and add their own.
+
+## States
+
+A value with named states is an `IntEnum`, one for all controllers: `Alarm`, `OperationState`,
+`OperationMode`, `Weekday`, `HeatSource`, `CompressorPriority`, `CoolingSetpoint`,
+`AirExchangeMode`, `ControlSensor`, `CentralHeatMode`, `CirculationPumpMode`, `ServiceMode` and
+`DamperTestState`. Each controller maps its own numbers onto them, so a state means the same
+whichever controller reports it: a CTS400's alarm 1 and a CTS602's alarm 19 are both
+`Alarm.CHANGE_FILTER`.
+
+- A key ending in `_code` holds the controller's own number. What it means is a key of its own:
+  `alarm_1` for `alarm_1_code`, `operation_state` for `state_code`.
+- An Optima reports its alarms as bits. Each is a `bool` key named after its alarm, such as
+  `alarm_external_stop`; its filter alarm is `filter_ok`, the other way round.
+- A sensor alarm names the sensor by the controller's T number, as the controller's panel does.
+- When an alarm was raised (`alarm_1_time`) and when the damper last tested itself
+  (`damper_test_last_date`) are in the controller's own clock, without a time zone.
 Every point of every controller and device variant, with its register, scale, limits and source,
 is in [tests/models_points.json](https://github.com/HairingX/nilan_connect/blob/main/tests/models_points.json).
 
