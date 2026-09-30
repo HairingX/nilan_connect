@@ -53,7 +53,7 @@ async def test_the_controller_is_a_cts400(client: Client) -> None:
 
 
 async def test_every_readable_point_reads_a_value(client: Client) -> None:
-    readable = [p.key for p in CTS400_POINTS if p.readable]
+    readable = [p.key for p in CTS400_POINTS if p.readable and p.key in client.points]
     qualities: dict[str, Any] = {key: (v.quality if (v := client.value(key)) is not None else None)
                                  for key in readable}
     for key in readable:

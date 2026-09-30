@@ -14,12 +14,12 @@ from __future__ import annotations
 from collections.abc import Mapping
 from typing import Any
 
-from modbus_event_connect import DataType, Key, Limits, Point, Refresh, Transforms, Unit
+from modbus_event_connect import DataType, Key, Limits, Point, Quality, Refresh, Scan, Transforms, Unit
 
 from ._certainty import section
 from ._keys import PointKey
 from ._points import choice, command, fan_level_rereads, nilan_model, reading, setting, state, switch, temperature
-from ._states import Alarm
+from ._states import Alarm, ExtraSensor
 
 CTS400_ALARMS: Mapping[int, Alarm] = {
     0: Alarm.NONE, 1: Alarm.CHANGE_FILTER, 15: Alarm.DEFROST_TIMEOUT_EXCHANGER,
@@ -127,4 +127,22 @@ CTS400_POINTS: tuple[Point[Any], ...] = (
     setting(PointKey.FAN_LEVEL_HIGH_CO2, 80, Limits(2, 4, step=1)),
 )
 
-CTS400 = nilan_model("CTS 400", "Nilan", [section(verified=CTS400_POINTS)])
+CO2_POINTS: tuple[Key[Any], ...] = (PointKey.CO2_LEVEL, PointKey.CO2_THRESHOLD, PointKey.FAN_LEVEL_HIGH_CO2)
+"""What a CTS400 has only with a CO2 sensor fitted: its manual shows CO2 regulation "only if a
+CO2sensor has been installed"."""
+
+VOC_POINTS: tuple[Key[Any], ...] = (PointKey.VOC_LEVEL, PointKey.VOC_THRESHOLD)
+"""What a CTS400 has only with a VOC sensor fitted."""
+
+
+async def extra_sensor_fitted(scan: Scan) -> None:
+    """Mark the CO2 or VOC points missing unless HR 48 says that sensor is fitted."""
+    current = (await scan.read([PointKey.EXTRA_SENSOR])).get(PointKey.EXTRA_SENSOR)
+    fitted = current.value if current is not None and current.quality is Quality.GOOD else None
+    if fitted is not ExtraSensor.CO2:
+        scan.set_available(list(CO2_POINTS), False, reason="no CO2 sensor fitted")
+    if fitted is not ExtraSensor.VOC:
+        scan.set_available(list(VOC_POINTS), False, reason="no VOC sensor fitted")
+
+
+CTS400 = nilan_model("CTS 400", "Nilan", [section(verified=CTS400_POINTS)], scan_steps=[extra_sensor_fitted])
