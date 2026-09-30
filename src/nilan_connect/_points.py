@@ -18,6 +18,7 @@ from modbus_event_connect import (
     Point,
     PollRate,
     Refresh,
+    ScanStep,
     Section,
     Transform,
     Transforms,
@@ -27,10 +28,12 @@ from modbus_event_connect import (
 from modbus_event_connect.micro_nabto import DatapointRegister, MicroNabtoOptions, SetpointRegister
 
 
-def nilan_model(name: str, manufacturer: str, sections: Sequence[Section]) -> Model:
-    """A model of a controller behind a Nilan gateway."""
+def nilan_model(name: str, manufacturer: str, sections: Sequence[Section],
+                scan_steps: Sequence[ScanStep] = ()) -> Model:
+    """A model of a controller behind a Nilan gateway, whose `scan_steps` find what the unit lacks."""
     return Model(
         name, manufacturer, sections,
+        scan_steps=tuple(scan_steps),
         options=MicroNabtoOptions(),
         # Settings change only when written, so they are read far less often than readings.
         poll_intervals={PollRate.FAST: 10.0, PollRate.SLOW: 180.0},

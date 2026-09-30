@@ -15,8 +15,8 @@ from modbus_event_connect.micro_nabto import (
     SetpointRegister,
 )
 
-from nilan_connect import CTS400, Alarm, PointKey, create_client, select_model
-from nilan_connect._cts400 import CTS400_POINTS
+from nilan_connect import CTS400, Alarm, ExtraSensor, PointKey, create_client, select_model
+from nilan_connect._cts400 import CO2_POINTS, CTS400_POINTS, VOC_POINTS
 from nilan_connect.testing import FakeClock, SimulatedMicroNabtoDevice
 
 EMAIL = "user@example.invalid"
@@ -99,11 +99,28 @@ async def test_a_real_units_registers_read_as_what_they_mean(gateway: SimulatedM
 
 
 async def test_every_readable_point_of_a_real_unit_is_read(gateway: SimulatedMicroNabtoDevice) -> None:
+    """The unit has no extra sensor (HR 48 = 0), so it has no CO2 or VOC points."""
     client = await _connected(gateway)
     try:
-        readable = {p.key for p in CTS400_POINTS if p.readable}
+        readable = {p.key for p in CTS400_POINTS if p.readable} - set(CO2_POINTS) - set(VOC_POINTS)
         assert {key for key in readable if (v := client.value(key)) is not None and v.quality is Quality.GOOD} == readable
-        assert not client.unavailable_reasons
+        assert set(client.unavailable_reasons) == set(CO2_POINTS) | set(VOC_POINTS)
+    finally:
+        await client.disconnect()
+
+
+@pytest.mark.parametrize(("sensor", "has", "lacks"), [
+    (ExtraSensor.CO2, CO2_POINTS, VOC_POINTS),
+    (ExtraSensor.VOC, VOC_POINTS, CO2_POINTS),
+], ids=["co2", "voc"])
+async def test_a_unit_has_the_points_of_the_extra_sensor_fitted(
+        gateway: SimulatedMicroNabtoDevice, sensor: ExtraSensor, has: tuple[Key[Any], ...],
+        lacks: tuple[Key[Any], ...]) -> None:
+    gateway.setpoint_registers[(0, 48)] = sensor
+    client = await _connected(gateway)
+    try:
+        assert set(has) <= set(client.points)
+        assert not set(lacks) & set(client.points)
     finally:
         await client.disconnect()
 
