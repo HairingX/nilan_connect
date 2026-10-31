@@ -257,6 +257,28 @@ async def test_a_created_client_with_write_retry_for_0_sends_a_write_once(
         await client.disconnect()
 
 
+async def test_a_cts400_keeps_a_read_sent_again_open_1_s_for_a_later_answer(
+        gateway: SimulatedMicroNabtoDevice) -> None:
+    host, port = gateway.address
+    client = create_client(EMAIL, host=host, port=port)
+    await client.connect()
+    try:
+        assert client.diagnostics()["later_answer_wait"] == 1.0
+    finally:
+        await client.disconnect()
+
+
+async def test_a_created_client_keeps_a_read_sent_again_open_as_long_as_it_is_given(
+        gateway: SimulatedMicroNabtoDevice) -> None:
+    host, port = gateway.address
+    client = create_client(EMAIL, host=host, port=port, later_answer_wait=3.0)
+    await client.connect()
+    try:
+        assert client.diagnostics()["later_answer_wait"] == 3.0
+    finally:
+        await client.disconnect()
+
+
 async def test_a_value_outside_the_manuals_limits_is_refused(gateway: SimulatedMicroNabtoDevice) -> None:
     client = await _connected(gateway)
     try:

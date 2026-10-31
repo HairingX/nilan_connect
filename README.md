@@ -103,6 +103,10 @@ same write on a later try. Such a write is sent again until `create_client(...,
 write_retry_for=...)` seconds have passed since it was first sent - `WRITE_RETRY_FOR` unless
 given; 0 sends every write once. A newer value for the same setting takes over from it.
 
+A read sent again, as its receipt did not come, and answered with only zeros where the registers
+held values, is kept open for a later answer: 1 s for a CTS400, and the library's 5 s for the
+other controllers. `create_client(..., later_answer_wait=...)` sets it for any controller.
+
 ## Keys
 
 A key is the stable name of a point, and carries the type of its value. A key string never

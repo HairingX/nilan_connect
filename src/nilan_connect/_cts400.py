@@ -145,4 +145,9 @@ async def extra_sensor_fitted(scan: Scan) -> None:
         scan.set_available(list(VOC_POINTS), False, reason="no VOC sensor fitted")
 
 
-CTS400 = nilan_model("CTS 400", "Nilan", [section(verified=CTS400_POINTS)], scan_steps=[extra_sensor_fitted])
+CTS400_LATER_ANSWER_WAIT = 1.0
+"""Seconds a CTS400's read sent again is kept open for a later answer: the 1 s a request is given
+before it is sent again."""
+
+CTS400 = nilan_model("CTS 400", "Nilan", [section(verified=CTS400_POINTS)], scan_steps=[extra_sensor_fitted],
+                     later_answer_wait=CTS400_LATER_ANSWER_WAIT)
