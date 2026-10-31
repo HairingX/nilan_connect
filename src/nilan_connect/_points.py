@@ -29,12 +29,16 @@ from modbus_event_connect.micro_nabto import DatapointRegister, MicroNabtoOption
 
 
 def nilan_model(name: str, manufacturer: str, sections: Sequence[Section],
-                scan_steps: Sequence[ScanStep] = ()) -> Model:
-    """A model of a controller behind a Nilan gateway, whose `scan_steps` find what the unit lacks."""
+                scan_steps: Sequence[ScanStep] = (), *, later_answer_wait: float | None = None) -> Model:
+    """A model of a controller behind a Nilan gateway, whose `scan_steps` find what the unit lacks.
+
+    `later_answer_wait` is the seconds a read sent again, answered with only zeros, is kept open
+    for a later answer; None leaves it to the library.
+    """
     return Model(
         name, manufacturer, sections,
         scan_steps=tuple(scan_steps),
-        options=MicroNabtoOptions(),
+        options=MicroNabtoOptions(later_answer_wait=later_answer_wait),
         # Settings change only when written, so they are read far less often than readings.
         poll_intervals={PollRate.FAST: 10.0, PollRate.SLOW: 180.0},
         read_back_after=1.0,

@@ -13,6 +13,7 @@ from modbus_event_connect.micro_nabto import (
     DatapointRegister,
     MicroNabtoConnection,
     MicroNabtoDevice,
+    MicroNabtoOptions,
     SetpointRegister,
 )
 from modbus_event_connect.testing import assert_models_valid, resolve
@@ -126,6 +127,13 @@ def test_each_model_is_valid_for_its_variants(model: str) -> None:
     """Every section of a model must be one some variant has."""
     variants = [VARIANTS[name] for name in VARIANTS if name.split("/")[0] == model]
     assert_models_valid(variants[0][0], identities=[identity for _, identity in variants])
+
+
+@pytest.mark.parametrize("variant", sorted(VARIANTS))
+def test_only_a_cts400_keeps_a_read_sent_again_open_shorter_than_the_librarys_wait(variant: str) -> None:
+    options = VARIANTS[variant][0].options
+    assert isinstance(options, MicroNabtoOptions)
+    assert options.later_answer_wait == (1.0 if variant == "CTS400" else None)
 
 
 def test_every_key_is_declared() -> None:
