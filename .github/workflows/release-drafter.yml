@@ -1,13 +1,18 @@
 name: Release Drafter
 
-# Keeps a draft release proposing the next version, from the labels of the pull requests merged
-# since the last final release. The draft is never published by hand.
+# Keeps a draft release proposing the next version, and labels pull requests by their branch's
+# name. The draft is never published by hand: the Release workflow publishes it. A merge made with
+# a workflow's token starts no push run, so that workflow starts this one by hand.
+#
+# The workflows and the tools are shared by every repository of the owner, from
+# HairingX/workflows; this file is a copy of its template and is checked to stay so.
 on:
   push:
     branches:
       - main
   pull_request:
     types: [opened, reopened, synchronize]
+  workflow_dispatch:
 
 permissions: {}
 
@@ -17,28 +22,9 @@ defaults:
     shell: bash
 
 jobs:
-  update_release_draft:
-    name: Update the release draft
-    if: github.event_name == 'push'
-    runs-on: ubuntu-latest
+  drafter:
+    name: Release Drafter
     permissions:
       contents: write
-      pull-requests: read
-    steps:
-      - name: Draft the release
-        uses: release-drafter/release-drafter@v7
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-
-  autolabel_pr:
-    name: Label the pull request
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
       pull-requests: write
-    steps:
-      - name: Apply labels
-        uses: release-drafter/release-drafter/autolabeler@v7
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+    uses: HairingX/workflows/.github/workflows/release-drafter.yml@v2
