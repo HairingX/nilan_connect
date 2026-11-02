@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-from modbus_event_connect import Client, Identity, Model, Point
+from modbus_event_connect import CircuitBreaker, Client, Fixed, Identity, Model, Point
 from modbus_event_connect.micro_nabto import (
     DatapointRegister,
     MicroNabtoConnection,
@@ -127,6 +127,15 @@ def test_each_model_is_valid_for_its_variants(model: str) -> None:
     """Every section of a model must be one some variant has."""
     variants = [VARIANTS[name] for name in VARIANTS if name.split("/")[0] == model]
     assert_models_valid(variants[0][0], identities=[identity for _, identity in variants])
+
+
+@pytest.mark.parametrize("variant", sorted(VARIANTS))
+def test_every_gateway_counts_as_not_answering_after_ten_seconds_and_is_asked_again_after_five(variant: str) -> None:
+    model = VARIANTS[variant][0]
+    options = model.options
+    assert isinstance(options, MicroNabtoOptions)
+    assert model.offline_after == 10.0
+    assert options.handshake == CircuitBreaker(after=1, pause=Fixed(5.0))
 
 
 @pytest.mark.parametrize("variant", sorted(VARIANTS))

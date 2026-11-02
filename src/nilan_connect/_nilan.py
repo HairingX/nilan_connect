@@ -1,6 +1,8 @@
 """Using a Nilan controller: creating a client for it."""
 from __future__ import annotations
 
+from typing import Any
+
 from modbus_event_connect import Client, Clock
 from modbus_event_connect.micro_nabto import MicroNabtoDevice
 
@@ -29,7 +31,7 @@ def create_client(email: str, *, host: str | None = None, device_id: str | None 
 
     `connect()` raises `UnsupportedDeviceError` for a controller no model matches.
     """
-    connection: dict[str, int] = {} if port is None else {"port": port}
+    connection: dict[str, Any] = {} if port is None else {"port": port}
     return Client(MicroNabtoDevice.udp(email, host=host, device_id=device_id, clock=clock,
                                        later_answer_wait=later_answer_wait, **connection),
                   select_model, clock=clock, read_only=read_only, write_retry_for=write_retry_for)
