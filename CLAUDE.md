@@ -118,7 +118,12 @@ release each accept what an earlier attempt already did.
 
 PyPI trusted publishing is bound to this repository, the workflow file `release.yml` and the
 `pypi` environment: renaming either breaks the upload. Actions are referred to by their major
-version; Dependabot proposes a new major, and updates to the test tools, as pull requests.
+version. Dependabot proposes each update of the test tools once it is three days old, all
+that are no new major version in one pull request a week, and **Merge Dependabot's updates**
+merges it once every check passes, then updates the release draft. It assigns the owner only an
+update that needs them: a new major version, or one a check fails. The actions are the
+template's, kept up to date in HairingX/workflows.
+Packages Home Assistant decides, and the owner's own libraries, are left out.
 
 ## Libraries developed together
 
