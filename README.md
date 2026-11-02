@@ -88,6 +88,30 @@ filter's status and timers and the alarm status, two seconds later; after a filt
 days left, two seconds later; after a fan level, the levels the fans run at and their speeds,
 three seconds later.
 
+## The gateway
+
+The gateway is a device of its own between the network and the controller. It reaches the
+controller over RS-485 Modbus at 19,200 baud, as the master, and gives the controller's registers
+addresses of its own.
+
+**It answers from what it holds, not from the controller.** A CTS602's gateway answered reads of
+4 to 31 registers within 7 to 24 ms, the trip over the network included. Asked of the controller
+over RS-485, one register alone takes about 13 ms, and those reads, which span up to five of the
+manual's register groups, at least 40 to 95 ms.
+
+What it holds can be empty. A CTS602's gateway answered the first reads of a new session with
+only zeros, at once and again 18 ms later, and with values 10 s later. The same gateway was
+reported leaving a read unanswered every 33 minutes and answering the next. Not known yet:
+
+- whether it empties what it holds when a session begins, when it restarts, or at some interval;
+- how long it takes to fill it;
+- whether every controller's gateway works this way: only a CTS602's has been measured.
+
+modbus_event_connect handles such an answer for any device, also one read directly: the last
+values are kept while the registers are read again, and the zeros are taken if they stay. It logs,
+as warnings, why each session began, when the gateway went silent and answered again, and how long
+it took to answer values. Those lines answer the questions above; please include them in a report.
+
 ## Writing
 
 ```python
