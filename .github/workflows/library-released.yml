@@ -1,0 +1,32 @@
+name: Library released
+
+# A pull request is merged only once every library developed alongside the package comes from
+# its release, not from a branch of the pull request's name.
+#
+# The workflows and the tools are shared by every library of the owner, from
+# HairingX/workflows; this file is a copy of its template and is checked to stay so.
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+# The shell given explicitly, so GitHub runs every step with pipefail.
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  released:
+    name: Libraries released and pinned
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: No library from a branch
+        uses: HairingX/workflows/python/actions/libraries-released@v2
+        with:
+          branch: ${{ github.head_ref }}
