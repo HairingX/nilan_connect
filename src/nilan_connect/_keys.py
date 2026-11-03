@@ -123,6 +123,8 @@ class PointKey:
     """Relative humidity, in percent."""
     HUMIDITY_AVG = Key("humidity_average", float)
     """The average relative humidity, in percent."""
+    HUMIDITY_AVERAGE_OK = Key("humidity_average_ok", bool)
+    """Whether the controller reports its 24 hour average humidity as OK."""
     HUMIDITY_HIGH_ACTIVE = Key("humidity_high_active", bool)
     """Whether the high humidity function runs."""
     HUMIDITY_HIGH_LEVEL = Key("humidity_high_level", float)

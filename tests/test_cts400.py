@@ -87,6 +87,7 @@ async def test_a_real_units_registers_read_as_what_they_mean(gateway: SimulatedM
             PointKey.FILTER_REPLACE_TIME_AGO: 139.0, PointKey.FILTER_REPLACE_TIME_REMAIN: 0,
             PointKey.FILTER_REPLACE_INTERVAL: 90, PointKey.WINTER_MODE_ACTIVE: False,
             PointKey.TEMP_WINTER_MODE_THRESHOLD: 12.0, PointKey.HUMIDITY_HIGH_ACTIVE: False,
+            PointKey.HUMIDITY_AVERAGE_OK: True,
             PointKey.HUMIDITY_HIGH_LEVEL: 64.6, PointKey.HUMIDITY_HIGH_LEVEL_TIME: 0.0,
             PointKey.ENABLE: True, PointKey.TEMP_TARGET: 23.0, PointKey.HUMIDITY_LOW_THRESHOLD: 30.0,
             # The filter alarm was active, yet the unit listed no alarm code.
@@ -118,6 +119,7 @@ async def test_high_humidity_is_active_while_its_time_counts_whatever_the_24_hou
         client = await _connected(running)
         try:
             assert _value(client, PointKey.HUMIDITY_HIGH_ACTIVE) is True
+            assert _value(client, PointKey.HUMIDITY_AVERAGE_OK) is True
             assert _value(client, PointKey.HUMIDITY_HIGH_LEVEL_TIME) == pytest.approx(95 / 60)
             assert _value(client, PointKey.FAN_LEVEL_OVERRIDDEN) is True
         finally:

@@ -81,6 +81,7 @@ CTS400_POINTS: tuple[Point[Any], ...] = (
     reading(PointKey.ALARM_2_INFO, 57),
     reading(PointKey.ALARM_3_INFO, 58),
     reading(PointKey.FAN_LEVEL_CURRENT, 63),
+    state(PointKey.HUMIDITY_AVERAGE_OK, 64),
     state(PointKey.FAN_LEVEL_OVERRIDDEN, 65),
     # The time of high humidity counts while the function runs and is 0 once it stops.
     state(PointKey.HUMIDITY_HIGH_ACTIVE, 70),
