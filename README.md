@@ -145,7 +145,7 @@ Every key is in `PointKey`. Which keys a controller has, and at which registers,
 it is read, written or both.
 
 `filter_ok` is the CTS400 manual's "filter change status" the other way round, and
-`humidity_high_active` its "average level humidity 24 hours OK" the other way round.
+`humidity_high_active` is whether its "time of high humidity" counts.
 
 Controllers share a key wherever a value means the same.
 

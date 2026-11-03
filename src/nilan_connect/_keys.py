@@ -148,6 +148,9 @@ class PointKey:
     """The fan level chosen; a CTS602's manual gives 0 as off."""
     FAN_LEVEL_CURRENT = Key("fan_level_current", int)
     """The fan level the unit runs at."""
+    FAN_LEVEL_OVERRIDDEN = Key("fan_level_overridden", bool)
+    """Whether the unit runs at another fan level than the one chosen, set by a user selection,
+    humidity, de-icing or the like."""
     FAN_LEVEL_SUPPLY = Key("fan_level_supply", int)
     """The level the supply fan runs at."""
     FAN_LEVEL_EXTRACT = Key("fan_level_extract", int)
