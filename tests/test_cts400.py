@@ -81,12 +81,13 @@ async def test_a_real_units_registers_read_as_what_they_mean(gateway: SimulatedM
             PointKey.TEMP_OUTSIDE: 15.2, PointKey.TEMP_SUPPLY: 16.4, PointKey.TEMP_EXTRACT: 23.1,
             PointKey.TEMP_EXHAUST: 23.9, PointKey.HUMIDITY: 56.0,
             PointKey.FAN_DUTYCYCLE_EXTRACT: 26.0, PointKey.FAN_DUTYCYCLE_SUPPLY: 24.0,
-            PointKey.FAN_LEVEL_CURRENT: 1, PointKey.FAN_LEVEL: 1,
+            PointKey.FAN_LEVEL_CURRENT: 1, PointKey.FAN_LEVEL: 1, PointKey.FAN_LEVEL_OVERRIDDEN: False,
             PointKey.FAN_LEVEL1_EXTRACT_PRESET: 26.0, PointKey.FAN_LEVEL1_SUPPLY_PRESET: 24.0,
             PointKey.BYPASS_ACTIVE: True, PointKey.ALARM_STATUS: True, PointKey.FILTER_OK: False,
             PointKey.FILTER_REPLACE_TIME_AGO: 139.0, PointKey.FILTER_REPLACE_TIME_REMAIN: 0,
             PointKey.FILTER_REPLACE_INTERVAL: 90, PointKey.WINTER_MODE_ACTIVE: False,
             PointKey.TEMP_WINTER_MODE_THRESHOLD: 12.0, PointKey.HUMIDITY_HIGH_ACTIVE: False,
+            PointKey.HUMIDITY_AVERAGE_OK: True,
             PointKey.HUMIDITY_HIGH_LEVEL: 64.6, PointKey.HUMIDITY_HIGH_LEVEL_TIME: 0.0,
             PointKey.ENABLE: True, PointKey.TEMP_TARGET: 23.0, PointKey.HUMIDITY_LOW_THRESHOLD: 30.0,
             # The filter alarm was active, yet the unit listed no alarm code.
@@ -107,6 +108,22 @@ async def test_every_readable_point_of_a_real_unit_is_read(gateway: SimulatedMic
         assert set(client.unavailable_reasons) == set(CO2_POINTS) | set(VOC_POINTS)
     finally:
         await client.disconnect()
+
+
+async def test_high_humidity_is_active_while_its_time_counts_whatever_the_24_hour_average_says() -> None:
+    """The unit was seen counting the time of high humidity while IR 64 stayed 1."""
+    datapoints = {(0, int(a)): v for a, v in READ["datapoints"].items()} | {(0, 64): 1, (0, 65): 1, (0, 70): 95}
+    async with SimulatedMicroNabtoDevice(
+            emails=frozenset({EMAIL}), identity=CTS400_IDENTITY, datapoint_registers=datapoints,
+            setpoint_registers={(0, int(a)): v for a, v in READ["setpoints"].items()}) as running:
+        client = await _connected(running)
+        try:
+            assert _value(client, PointKey.HUMIDITY_HIGH_ACTIVE) is True
+            assert _value(client, PointKey.HUMIDITY_AVERAGE_OK) is True
+            assert _value(client, PointKey.HUMIDITY_HIGH_LEVEL_TIME) == pytest.approx(95 / 60)
+            assert _value(client, PointKey.FAN_LEVEL_OVERRIDDEN) is True
+        finally:
+            await client.disconnect()
 
 
 @pytest.mark.parametrize(("sensor", "has", "lacks"), [

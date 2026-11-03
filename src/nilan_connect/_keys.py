@@ -123,6 +123,8 @@ class PointKey:
     """Relative humidity, in percent."""
     HUMIDITY_AVG = Key("humidity_average", float)
     """The average relative humidity, in percent."""
+    HUMIDITY_AVERAGE_OK = Key("humidity_average_ok", bool)
+    """Whether the controller reports its 24 hour average humidity as OK."""
     HUMIDITY_HIGH_ACTIVE = Key("humidity_high_active", bool)
     """Whether the high humidity function runs."""
     HUMIDITY_HIGH_LEVEL = Key("humidity_high_level", float)
@@ -148,6 +150,9 @@ class PointKey:
     """The fan level chosen; a CTS602's manual gives 0 as off."""
     FAN_LEVEL_CURRENT = Key("fan_level_current", int)
     """The fan level the unit runs at."""
+    FAN_LEVEL_OVERRIDDEN = Key("fan_level_overridden", bool)
+    """Whether the unit runs at another fan level than the one chosen, set by a user selection,
+    humidity, de-icing or the like."""
     FAN_LEVEL_SUPPLY = Key("fan_level_supply", int)
     """The level the supply fan runs at."""
     FAN_LEVEL_EXTRACT = Key("fan_level_extract", int)
