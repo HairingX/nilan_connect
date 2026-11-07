@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-from modbus_event_connect import Client, Fixed, Identity, Model, Point, Retry
+from modbus_event_connect import Client, Identity, Model, Point
 from modbus_event_connect.micro_nabto import (
     DatapointRegister,
     MicroNabtoConnection,
@@ -263,7 +263,7 @@ async def _client(identity: Mapping[str, Any], datapoints: dict[int, int],
     async with simulated:
         host, port = simulated.address
         connection = MicroNabtoConnection(EMAIL, host=host, port=port, timeout=0.2, retries=1,
-                                          reconnect=Retry(Fixed(5.0)))
+                                          reconnect=None)
         client = Client(MicroNabtoDevice(connection, owns_connection=True), select_model)
         await client.connect()
         try:

@@ -47,7 +47,7 @@ async def gateway() -> AsyncGenerator[SimulatedMicroNabtoDevice, None]:
 
 def _client(gateway: SimulatedMicroNabtoDevice, *, read_only: bool = False) -> Client:
     host, port = gateway.address
-    connection = MicroNabtoConnection(EMAIL, host=host, port=port, timeout=0.2, retries=1, reconnect=Retry(Fixed(5.0)))
+    connection = MicroNabtoConnection(EMAIL, host=host, port=port, timeout=0.2, retries=1, reconnect=None)
     return Client(MicroNabtoDevice(connection, owns_connection=True), select_model, read_only=read_only)
 
 
@@ -175,7 +175,7 @@ async def _clocked(gateway: SimulatedMicroNabtoDevice) -> tuple[Client, FakeCloc
     clock = FakeClock()
     host, port = gateway.address
     connection = MicroNabtoConnection(EMAIL, host=host, port=port, timeout=0.2, retries=1, clock=clock,
-                                      reconnect=Retry(Fixed(5.0)))
+                                      reconnect=None)
     client = Client(MicroNabtoDevice(connection, owns_connection=True), select_model, clock=clock)
     await client.connect()
     return client, clock

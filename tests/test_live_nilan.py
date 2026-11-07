@@ -18,7 +18,7 @@ from typing import Any, NoReturn
 
 import pytest
 import pytest_asyncio
-from modbus_event_connect import Client, Fixed, Quality, Retry
+from modbus_event_connect import Client, Quality
 from modbus_event_connect.micro_nabto import MicroNabtoConnection, MicroNabtoDevice
 
 from conftest import live_or_skip, live_setting
@@ -37,7 +37,7 @@ pytestmark = [
 @pytest_asyncio.fixture(scope="module", loop_scope="module")  # pyright: ignore[reportUntypedFunctionDecorator, reportUnknownMemberType]
 async def client() -> AsyncGenerator[Client, None]:
     assert HOST is not None and EMAIL is not None   # guarded by the skip above
-    connection = MicroNabtoConnection(EMAIL, host=HOST, reconnect=Retry(Fixed(5.0)))
+    connection = MicroNabtoConnection(EMAIL, host=HOST, reconnect=None)
 
     async def refuse(command: bytes) -> NoReturn:
         raise AssertionError("a write was attempted; these tests are read-only")
