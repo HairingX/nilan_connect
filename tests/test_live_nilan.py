@@ -37,7 +37,7 @@ pytestmark = [
 @pytest_asyncio.fixture(scope="module", loop_scope="module")  # pyright: ignore[reportUntypedFunctionDecorator, reportUnknownMemberType]
 async def client() -> AsyncGenerator[Client, None]:
     assert HOST is not None and EMAIL is not None   # guarded by the skip above
-    connection = MicroNabtoConnection(EMAIL, host=HOST)
+    connection = MicroNabtoConnection(EMAIL, host=HOST, reconnect=None)
 
     async def refuse(command: bytes) -> NoReturn:
         raise AssertionError("a write was attempted; these tests are read-only")
