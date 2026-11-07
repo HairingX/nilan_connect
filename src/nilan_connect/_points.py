@@ -10,9 +10,7 @@ from enum import IntEnum
 from typing import Any
 
 from modbus_event_connect import (
-    CircuitBreaker,
     DataType,
-    Fixed,
     Identity,
     Key,
     Limits,
@@ -34,10 +32,6 @@ OFFLINE_AFTER = 10.0
 read, of those that come every 10 s, keeps the last values, and a gateway that stays silent is
 shown as not answering."""
 
-HANDSHAKE = CircuitBreaker(after=1, pause=Fixed(5.0))
-"""After a failed handshake, requests fail at once for 5 s: shorter than the 10 s between reads,
-so the next read reaches the gateway instead of failing unsent."""
-
 
 def nilan_model(name: str, manufacturer: str, sections: Sequence[Section],
                 scan_steps: Sequence[ScanStep] = (), *, later_answer_wait: float | None = None) -> Model:
@@ -49,7 +43,7 @@ def nilan_model(name: str, manufacturer: str, sections: Sequence[Section],
     return Model(
         name, manufacturer, sections,
         scan_steps=tuple(scan_steps),
-        options=MicroNabtoOptions(later_answer_wait=later_answer_wait, handshake=HANDSHAKE),
+        options=MicroNabtoOptions(later_answer_wait=later_answer_wait),
         # Settings change only when written, so they are read far less often than readings.
         poll_intervals={PollRate.FAST: 10.0, PollRate.SLOW: 180.0},
         read_back_after=1.0,

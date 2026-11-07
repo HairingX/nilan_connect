@@ -8,7 +8,7 @@ from typing import Any
 
 import pytest
 import pytest_asyncio
-from modbus_event_connect import Client, DataValue, InvalidValueError, Key, Point, Quality, ReadOnlyError
+from modbus_event_connect import Client, DataValue, Fixed, InvalidValueError, Key, Point, Quality, ReadOnlyError, Retry
 from modbus_event_connect.micro_nabto import (
     MicroNabtoConnection,
     MicroNabtoDevice,
@@ -47,7 +47,7 @@ async def gateway() -> AsyncGenerator[SimulatedMicroNabtoDevice, None]:
 
 def _client(gateway: SimulatedMicroNabtoDevice, *, read_only: bool = False) -> Client:
     host, port = gateway.address
-    connection = MicroNabtoConnection(EMAIL, host=host, port=port, timeout=0.2, retries=1)
+    connection = MicroNabtoConnection(EMAIL, host=host, port=port, timeout=0.2, retries=1, reconnect=Retry(Fixed(5.0)))
     return Client(MicroNabtoDevice(connection, owns_connection=True), select_model, read_only=read_only)
 
 
@@ -174,7 +174,8 @@ async def _clocked(gateway: SimulatedMicroNabtoDevice) -> tuple[Client, FakeCloc
     """A client on the gateway whose time moves only when the test advances it."""
     clock = FakeClock()
     host, port = gateway.address
-    connection = MicroNabtoConnection(EMAIL, host=host, port=port, timeout=0.2, retries=1, clock=clock)
+    connection = MicroNabtoConnection(EMAIL, host=host, port=port, timeout=0.2, retries=1, clock=clock,
+                                      reconnect=Retry(Fixed(5.0)))
     client = Client(MicroNabtoDevice(connection, owns_connection=True), select_model, clock=clock)
     await client.connect()
     return client, clock
@@ -324,3 +325,17 @@ async def test_a_read_only_client_writes_nothing(gateway: SimulatedMicroNabtoDev
         assert not gateway.received(SETPOINT_WRITE)
     finally:
         await client.disconnect()
+
+
+def test_after_a_failed_handshake_a_client_tries_one_again_every_five_seconds(
+        monkeypatch: pytest.MonkeyPatch) -> None:
+    told: dict[str, Any] = {}
+    udp = MicroNabtoDevice.udp
+
+    def recording(*args: Any, **kwargs: Any) -> MicroNabtoDevice:
+        told.update(kwargs)
+        return udp(*args, **kwargs)
+
+    monkeypatch.setattr(MicroNabtoDevice, "udp", recording)
+    create_client(EMAIL, host="192.0.2.1")
+    assert told["reconnect"] == Retry(Fixed(5.0))

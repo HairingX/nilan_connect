@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from modbus_event_connect import Client, Clock
+from modbus_event_connect import Client, Clock, Fixed, Retry
 from modbus_event_connect.micro_nabto import MicroNabtoDevice
 
 from ._select import select_model
@@ -29,9 +29,13 @@ def create_client(email: str, *, host: str | None = None, device_id: str | None 
         later_answer_wait: seconds a read sent again, answered with only zeros, is kept open for
             a later answer; None leaves it to the controller's model.
 
-    `connect()` raises `UnsupportedDeviceError` for a controller no model matches.
+    After a failed handshake, one is tried again every 5 s. `connect()` raises
+    `UnsupportedDeviceError` for a controller no model matches.
     """
     connection: dict[str, Any] = {} if port is None else {"port": port}
-    return Client(MicroNabtoDevice.udp(email, host=host, device_id=device_id, clock=clock,
+    # Shorter than the 10 s between reads, so the next read reaches the gateway instead of failing
+    # unsent.
+    reconnect = Retry(Fixed(5.0))
+    return Client(MicroNabtoDevice.udp(email, host=host, device_id=device_id, clock=clock, reconnect=reconnect,
                                        later_answer_wait=later_answer_wait, **connection),
                   select_model, clock=clock, read_only=read_only, write_retry_for=write_retry_for)
