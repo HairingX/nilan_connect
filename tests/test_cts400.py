@@ -246,6 +246,29 @@ async def test_a_fan_level_reads_the_fans_level_and_speeds_again_three_seconds_l
         await client.disconnect()
 
 
+@pytest.mark.parametrize("key,value,address", [
+    (PointKey.FAN_LEVEL, 2, 69),
+    (PointKey.FILTER_REPLACE_INTERVAL, 91, 50),
+    (PointKey.TEMP_TARGET, 21.5, 37),
+], ids=["fan_level", "filter_replace_interval", "temp_target"])
+async def test_a_written_setting_is_read_back_one_second_later_whatever_it_makes_read_again(
+        gateway: SimulatedMicroNabtoDevice, key: Key[Any], value: object, address: int) -> None:
+    client, clock = await _clocked(gateway)
+    try:
+        client.subscribe(key, _polled)
+        await client.write(key, value)
+        # What the controller holds once it has taken the write, put another way by its panel.
+        gateway.setpoint_registers[(0, address)] = 4 if key is PointKey.FAN_LEVEL else 100
+        clock.advance(0.9)
+        await client.poll()
+        assert _value(client, key) == value
+        clock.advance(0.1)
+        await client.poll()
+        assert _value(client, key) != value
+    finally:
+        await client.disconnect()
+
+
 async def test_a_filter_interval_reads_the_days_left_again_two_seconds_later(
         gateway: SimulatedMicroNabtoDevice) -> None:
     """A CTS400 was seen changing them 1.0 s after the interval was written."""

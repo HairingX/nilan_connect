@@ -86,7 +86,7 @@ The controller's readings every 10 seconds, its settings every 180 seconds, and 
 one second after it is written. What a write changes is read again too: after a filter reset, the
 filter's status and timers and the alarm status, two seconds later; after a filter interval, the
 days left, two seconds later; after a fan level, the levels the fans run at and their speeds,
-three seconds later.
+three seconds later. The setting itself is read back after one second either way.
 
 ## The gateway
 
