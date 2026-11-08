@@ -10,8 +10,8 @@
     Run:
         pytest tests/test_live_nilan.py -v -s
 
-NOTHING HERE WRITES TO THE CONTROLLER: the client is read-only, and the one path a write could
-take fails the test.
+NOTHING HERE WRITES TO THE CONTROLLER: the client is read-only, and a write reaching the device
+fails the test.
 """
 from collections.abc import AsyncGenerator
 from typing import Any, NoReturn
@@ -38,12 +38,12 @@ pytestmark = [
 async def client() -> AsyncGenerator[Client, None]:
     assert HOST is not None and EMAIL is not None   # guarded by the skip above
     connection = MicroNabtoConnection(EMAIL, host=HOST, reconnect=CircuitBreaker(after=1, retry=NO_RETRY))
+    device = MicroNabtoDevice(connection, profiles=PROFILES, owns_connection=True)
 
-    async def refuse(command: bytes) -> NoReturn:
+    async def refuse(*args: object) -> NoReturn:
         raise AssertionError("a write was attempted; these tests are read-only")
-    setattr(connection, "send", refuse)
-    client = Client(MicroNabtoDevice(connection, profiles=PROFILES, owns_connection=True), select_model,
-                    write_retry=NO_RETRY, read_only=True)
+    setattr(device, "write", refuse)
+    client = Client(device, select_model, write_retry=NO_RETRY, read_only=True)
     await client.connect()
     yield client
     await client.disconnect()
