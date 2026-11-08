@@ -23,8 +23,10 @@ def test_every_link_in_its_description_works_where_the_description_is_shown() ->
     assert links and all(link.startswith(("https://", "#")) for link in links), links
 
 
-def test_what_it_passes_on_from_modbus_event_connect_is_that_packages_own() -> None:
-    """What the package passes on is modbus_event_connect's own, not a copy that could drift."""
+def test_what_it_passes_on_from_the_libraries_it_is_built_on_is_their_own() -> None:
+    """What the package passes on is modbus_event_connect's or event_connect's own, not a copy that
+    could drift."""
+    import event_connect
     import modbus_event_connect
     import modbus_event_connect.micro_nabto
     import modbus_event_connect.testing
@@ -32,7 +34,7 @@ def test_what_it_passes_on_from_modbus_event_connect_is_that_packages_own() -> N
     import nilan_connect.testing
 
     for package, sources in (
-        (nilan_connect, (modbus_event_connect, modbus_event_connect.micro_nabto)),
+        (nilan_connect, (modbus_event_connect, modbus_event_connect.micro_nabto, event_connect)),
         (nilan_connect.testing, (modbus_event_connect.testing,)),
     ):
         for name in package.__all__:
@@ -40,4 +42,5 @@ def test_what_it_passes_on_from_modbus_event_connect_is_that_packages_own() -> N
             if source is not None:
                 assert getattr(package, name) is getattr(source, name), name
     assert "Client" in nilan_connect.__all__
+    assert nilan_connect.Certainty is event_connect.Certainty
     assert "SimulatedMicroNabtoDevice" in nilan_connect.testing.__all__

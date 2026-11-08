@@ -5,10 +5,12 @@ setpoints.
 """
 from __future__ import annotations
 
-from collections.abc import Callable, Collection, Mapping
+from collections.abc import Callable, Collection, Mapping, Sequence
+from dataclasses import replace
 from enum import IntEnum
 from typing import Any
 
+from event_connect import Certainty
 from modbus_event_connect import (
     DataType,
     Fixed,
@@ -18,6 +20,7 @@ from modbus_event_connect import (
     Point,
     PollRate,
     Refresh,
+    Section,
     Steps,
     Timing,
     Transform,
@@ -42,6 +45,14 @@ GATEWAY_ZEROS = RereadZeros(within=7.5, wait=Steps(0.5, then=Fixed(1.0)), at_onc
 """How a Nilan gateway's answer of only zeros, where values were, is read again: the zeros are
 taken after 7.5 s, short of the 10 s between two reads, as a gateway was seen answering a new
 session's first reads with zeros, and values 10 s later."""
+
+
+def section(*, when: Callable[[Identity], bool] | None = None, verified: Sequence[Point[Any]] = (),
+            reported: Sequence[Point[Any]] = (), inferred: Sequence[Point[Any]] = ()) -> Section:
+    """A section of a model, each point given under how certain it is; `when` as a `Section` has it."""
+    return Section((*(replace(point, certainty=Certainty.VERIFIED) for point in verified),
+                    *(replace(point, certainty=Certainty.REPORTED) for point in reported),
+                    *(replace(point, certainty=Certainty.INFERRED) for point in inferred)), when=when)
 
 
 def slave_model_in(models: Collection[int]) -> Callable[[Identity], bool]:

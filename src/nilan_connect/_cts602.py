@@ -18,7 +18,6 @@ from collections.abc import Mapping
 from modbus_event_connect import DataType, Key, Limits, Model, Point, Unit
 from modbus_event_connect.micro_nabto import MicroNabtoProfile
 
-from ._certainty import section
 from ._keys import PointKey
 from ._points import (
     GATEWAY_TIMING,
@@ -27,6 +26,7 @@ from ._points import (
     choice,
     fan_level_rereads,
     reading,
+    section,
     setpoint_reading,
     setting,
     slave_model_in,

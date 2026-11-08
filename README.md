@@ -22,7 +22,7 @@ material we could find online, and have not been tested on those controllers.** 
 wrong or missing; reports of what a unit shows are welcome. `connect()` raises
 `UnsupportedDeviceError` for any other controller.
 
-`certainty(point)` says how certain it is that a point is right:
+A point's `certainty` says how certain it is that the point is right:
 
 | `Certainty` | Meaning |
 |---|---|
@@ -38,9 +38,9 @@ user is offered that is the consumer's choice. A consumer that wants only what h
 working leaves the inferred points out:
 
 ```python
-from nilan_connect import Certainty, certainty
+from nilan_connect import Certainty
 
-shown = [point for point in client.points.values() if certainty(point) is not Certainty.INFERRED]
+shown = [point for point in client.points.values() if point.certainty is not Certainty.INFERRED]
 ```
 
 ## Installation

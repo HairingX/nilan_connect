@@ -12,7 +12,6 @@ from typing import Any
 from modbus_event_connect import DataType, Key, Limits, Model, Point, Refresh, Unit
 from modbus_event_connect.micro_nabto import MicroNabtoProfile
 
-from ._certainty import section
 from ._keys import PointKey
 from ._points import (
     GATEWAY_TIMING,
@@ -21,6 +20,7 @@ from ._points import (
     command,
     fan_level_rereads,
     reading,
+    section,
     setting,
     state,
     switch,
