@@ -1,12 +1,12 @@
 """Nilan ventilation units behind a Nilan gateway, over micro_nabto, built on modbus_event_connect.
 
 Everything a user of a Nilan controller needs is here, so that nothing has to be imported from
-modbus_event_connect or event_connect: the client and its values, what a point is and how certain
-it is, the errors, and discovery.
+modbus_event_connect or event_connect: the client and its values, what a point is, how certain it
+is and the range it can be written with, the errors, and discovery.
 """
 from importlib.metadata import version as _installed_version
 
-from event_connect import Certainty
+from event_connect import Certainty, WriteRange
 from modbus_event_connect import (
     AuthenticationError,
     CannotConnectError,
@@ -94,6 +94,7 @@ __all__ = [
     "ValueCallback",
     "Write",
     "WriteKind",
+    "WriteRange",
     "DiscoveredDevice",
     "discover",
     "CTS400",

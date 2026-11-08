@@ -44,3 +44,11 @@ def test_what_it_passes_on_from_the_libraries_it_is_built_on_is_their_own() -> N
     assert "Client" in nilan_connect.__all__
     assert nilan_connect.Certainty is event_connect.Certainty
     assert "SimulatedMicroNabtoDevice" in nilan_connect.testing.__all__
+
+
+def test_it_names_the_range_a_setting_can_be_written_with() -> None:
+    """A consumer offers a setting the values its `Point.write_range()` gives."""
+    import event_connect
+
+    assert nilan_connect.WriteRange is event_connect.WriteRange
+    assert "WriteRange" in nilan_connect.__all__
