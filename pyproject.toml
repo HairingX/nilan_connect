@@ -33,7 +33,7 @@ classifiers = [
 ]
 requires-python = ">=3.14"
 dependencies = [
-    "modbus_event_connect>=0.7.1,<0.8",
+    "modbus_event_connect>=0.8,<0.9",
 ]
 
 [project.urls]

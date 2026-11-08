@@ -1,4 +1,4 @@
-"""Nilan's CTS602 and CTS602 Light as models.
+"""Nilan's CTS602 and CTS602 Light as models, and how each is talked to over micro_nabto.
 
 Sources:
     Nilan, "CTS 602 Modbus user manual" 3.00 (software 2.35), "Protocol description Nilan
@@ -15,15 +15,17 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 
-from modbus_event_connect import DataType, Key, Limits, Point, Unit
+from modbus_event_connect import DataType, Key, Limits, Model, Point, Unit
+from modbus_event_connect.micro_nabto import MicroNabtoProfile
 
 from ._certainty import section
 from ._keys import PointKey
 from ._points import (
+    GATEWAY_TIMING,
+    GATEWAY_ZEROS,
     alarm_bit,
     choice,
     fan_level_rereads,
-    nilan_model,
     reading,
     setpoint_reading,
     setting,
@@ -283,7 +285,14 @@ CTS602_SECTIONS = (
     )),
 )
 
-CTS602 = nilan_model("CTS 602", "Nilan", CTS602_SECTIONS)
+CTS602 = Model("CTS 602", "Nilan", CTS602_SECTIONS, timing=GATEWAY_TIMING)
+
+CTS602_MICRO_NABTO = MicroNabtoProfile(
+    model=CTS602,
+    max_registers=64,           # a CTS 402 answered 108, so this leaves room
+    later_answer_wait=5.0,      # not measured on this controller, so longer than a CTS400's
+    zeros=GATEWAY_ZEROS,
+)
 
 
 CTS602_LIGHT_SECTIONS = (
@@ -339,4 +348,11 @@ CTS602_LIGHT_SECTIONS = (
     ),
 )
 
-CTS602_LIGHT = nilan_model("CTS 602 Light", "Nilan", CTS602_LIGHT_SECTIONS)
+CTS602_LIGHT = Model("CTS 602 Light", "Nilan", CTS602_LIGHT_SECTIONS, timing=GATEWAY_TIMING)
+
+CTS602_LIGHT_MICRO_NABTO = MicroNabtoProfile(
+    model=CTS602_LIGHT,
+    max_registers=64,           # a CTS 402 answered 108, so this leaves room
+    later_answer_wait=5.0,      # not measured on this controller, so longer than a CTS400's
+    zeros=GATEWAY_ZEROS,
+)

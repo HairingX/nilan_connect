@@ -1,4 +1,4 @@
-"""Genvex's Optima controllers as models.
+"""Genvex's Optima controllers as models, and how each is talked to over micro_nabto.
 
 Sources:
     No Modbus description of an Optima is published. The gateway's addresses, scales and
@@ -9,15 +9,17 @@ from __future__ import annotations
 
 from typing import Any
 
-from modbus_event_connect import DataType, Key, Limits, Point, Refresh, Unit
+from modbus_event_connect import DataType, Key, Limits, Model, Point, Refresh, Unit
+from modbus_event_connect.micro_nabto import MicroNabtoProfile
 
 from ._certainty import section
 from ._keys import PointKey
 from ._points import (
+    GATEWAY_TIMING,
+    GATEWAY_ZEROS,
     alarm_bit,
     command,
     fan_level_rereads,
-    nilan_model,
     reading,
     setting,
     state,
@@ -187,14 +189,29 @@ OPTIMA_250_SECTIONS = (
 )
 """The Optima 250's, and the Optima 251's, which material published online gives the same."""
 
-OPTIMA_250 = nilan_model("Optima 250", "Genvex", OPTIMA_250_SECTIONS)
-OPTIMA_251 = nilan_model("Optima 251", "Genvex", OPTIMA_250_SECTIONS)
+OPTIMA_250 = Model("Optima 250", "Genvex", OPTIMA_250_SECTIONS, timing=GATEWAY_TIMING)
+
+OPTIMA_250_MICRO_NABTO = MicroNabtoProfile(
+    model=OPTIMA_250,
+    max_registers=64,           # a CTS 402 answered 108, so this leaves room
+    later_answer_wait=5.0,      # not measured on this controller, so longer than a CTS400's
+    zeros=GATEWAY_ZEROS,
+)
+
+OPTIMA_251 = Model("Optima 251", "Genvex", OPTIMA_250_SECTIONS, timing=GATEWAY_TIMING)
+
+OPTIMA_251_MICRO_NABTO = MicroNabtoProfile(
+    model=OPTIMA_251,
+    max_registers=64,           # a CTS 402 answered 108, so this leaves room
+    later_answer_wait=5.0,      # not measured on this controller, so longer than a CTS400's
+    zeros=GATEWAY_ZEROS,
+)
 
 
 _SLAVE_79250_FAN_LEVEL = setting(PointKey.FAN_LEVEL, 100, Limits(0, 4, step=1), on_write=fan_level_rereads(
     PointKey.FAN_DUTYCYCLE_SUPPLY, PointKey.FAN_DUTYCYCLE_EXTRACT))
 
-OPTIMA_301 = nilan_model("Optima 301", "Genvex", (
+OPTIMA_301 = Model("Optima 301", "Genvex", (
     section(reported=(
         *_SLAVE_79250_POINTS,
         optima_temperature(PointKey.TEMP_BEFORE_CONDENSER, 4),
@@ -207,9 +224,16 @@ OPTIMA_301 = nilan_model("Optima 301", "Genvex", (
         switch(PointKey.PREHEAT_ENABLE, 20),
         _SLAVE_79250_FAN_LEVEL,
     )),
-))
+), timing=GATEWAY_TIMING)
 
-OPTIMA_312 = nilan_model("Optima 312", "Genvex", (
+OPTIMA_301_MICRO_NABTO = MicroNabtoProfile(
+    model=OPTIMA_301,
+    max_registers=64,           # a CTS 402 answered 108, so this leaves room
+    later_answer_wait=5.0,      # not measured on this controller, so longer than a CTS400's
+    zeros=GATEWAY_ZEROS,
+)
+
+OPTIMA_312 = Model("Optima 312", "Genvex", (
     section(reported=(
         *_SLAVE_79250_POINTS,
         optima_temperature(PointKey.TEMP_BEFORE_CONDENSER, 4),
@@ -229,10 +253,17 @@ OPTIMA_312 = nilan_model("Optima 312", "Genvex", (
         switch(PointKey.REHEAT_ENABLE, 21),
         _SLAVE_79250_FAN_LEVEL,
     )),
-))
+), timing=GATEWAY_TIMING)
+
+OPTIMA_312_MICRO_NABTO = MicroNabtoProfile(
+    model=OPTIMA_312,
+    max_registers=64,           # a CTS 402 answered 108, so this leaves room
+    later_answer_wait=5.0,      # not measured on this controller, so longer than a CTS400's
+    zeros=GATEWAY_ZEROS,
+)
 
 
-OPTIMA_260 = nilan_model("Optima 260", "Genvex", (
+OPTIMA_260 = Model("Optima 260", "Genvex", (
     section(reported=(
         optima_temperature(PointKey.TEMP_SUPPLY, 0),
         optima_temperature(PointKey.TEMP_OUTSIDE, 2),
@@ -250,10 +281,17 @@ OPTIMA_260 = nilan_model("Optima 260", "Genvex", (
                 unit=Unit.CELSIUS),
         command(PointKey.FILTER_REPLACE_RESET, 47),
     )),
-))
+), timing=GATEWAY_TIMING)
+
+OPTIMA_260_MICRO_NABTO = MicroNabtoProfile(
+    model=OPTIMA_260,
+    max_registers=64,           # a CTS 402 answered 108, so this leaves room
+    later_answer_wait=5.0,      # not measured on this controller, so longer than a CTS400's
+    zeros=GATEWAY_ZEROS,
+)
 
 
-OPTIMA_270 = nilan_model("Optima 270", "Genvex", (
+OPTIMA_270 = Model("Optima 270", "Genvex", (
     section(verified=(
         optima_percent(PointKey.FAN_DUTYCYCLE_SUPPLY, 18, scale=0.01),
         optima_percent(PointKey.FAN_DUTYCYCLE_EXTRACT, 19, scale=0.01),
@@ -289,9 +327,16 @@ OPTIMA_270 = nilan_model("Optima 270", "Genvex", (
         # The user manual gives the filter timer in months, 0-12; this register was reported in days.
         optima_270_setting(PointKey.FILTER_REPLACE_INTERVAL, 100, None, unit=Unit.DAYS),
     )),
-))
+), timing=GATEWAY_TIMING)
 
-OPTIMA_314 = nilan_model("Optima 314", "Genvex", (
+OPTIMA_270_MICRO_NABTO = MicroNabtoProfile(
+    model=OPTIMA_270,
+    max_registers=64,           # a CTS 402 answered 108, so this leaves room
+    later_answer_wait=5.0,      # not measured on this controller, so longer than a CTS400's
+    zeros=GATEWAY_ZEROS,
+)
+
+OPTIMA_314 = Model("Optima 314", "Genvex", (
     section(reported=(
         state(PointKey.BYPASS_ACTIVE, 12),
         optima_percent(PointKey.FAN_DUTYCYCLE_SUPPLY, 18, scale=0.01),
@@ -325,4 +370,11 @@ OPTIMA_314 = nilan_model("Optima 314", "Genvex", (
         optima_270_setting(PointKey.TEMP_HOTWATER, 122, Limits(0, 55, step=0.1), data_type=DataType.INT16,
                            scale=0.1, unit=Unit.CELSIUS),
     )),
-))
+), timing=GATEWAY_TIMING)
+
+OPTIMA_314_MICRO_NABTO = MicroNabtoProfile(
+    model=OPTIMA_314,
+    max_registers=64,           # a CTS 402 answered 108, so this leaves room
+    later_answer_wait=5.0,      # not measured on this controller, so longer than a CTS400's
+    zeros=GATEWAY_ZEROS,
+)

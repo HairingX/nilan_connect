@@ -57,7 +57,7 @@ from ._states import (
     ServiceMode,
     Weekday,
 )
-from ._nilan import WRITE_RETRY_FOR, create_client
+from ._nilan import PROFILES, create_client
 
 __version__ = _installed_version("nilan_connect")
 __all__ = [
@@ -101,7 +101,7 @@ __all__ = [
     "PointKey",
     "Certainty",
     "certainty",
-    "WRITE_RETRY_FOR",
+    "PROFILES",
     "create_client",
     "select_model",
     "AirExchangeMode",

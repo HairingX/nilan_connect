@@ -1,4 +1,4 @@
-"""Nilan's CTS400 as a model.
+"""Nilan's CTS400 as a model, and how it is talked to over micro_nabto.
 
 Sources:
     Nilan, "Protocol description Nilan CTS400 Modbus version 1.0", doc. version 1.10,
@@ -14,11 +14,23 @@ from __future__ import annotations
 from collections.abc import Mapping
 from typing import Any
 
-from modbus_event_connect import DataType, Key, Limits, Point, Quality, Refresh, Scan, Transforms, Unit
+from modbus_event_connect import DataType, Key, Limits, Model, Point, Quality, Refresh, Scan, Transforms, Unit
+from modbus_event_connect.micro_nabto import MicroNabtoProfile
 
 from ._certainty import section
 from ._keys import PointKey
-from ._points import choice, command, fan_level_rereads, nilan_model, reading, setting, state, switch, temperature
+from ._points import (
+    GATEWAY_TIMING,
+    GATEWAY_ZEROS,
+    choice,
+    command,
+    fan_level_rereads,
+    reading,
+    setting,
+    state,
+    switch,
+    temperature,
+)
 from ._states import Alarm, ExtraSensor
 
 CTS400_ALARMS: Mapping[int, Alarm] = {
@@ -140,17 +152,21 @@ VOC_POINTS: tuple[Key[Any], ...] = (PointKey.VOC_LEVEL, PointKey.VOC_THRESHOLD)
 
 async def extra_sensor_fitted(scan: Scan) -> None:
     """Mark the CO2 or VOC points missing unless HR 48 says that sensor is fitted."""
-    current = (await scan.read([PointKey.EXTRA_SENSOR])).get(PointKey.EXTRA_SENSOR)
-    fitted = current.value if current is not None and current.quality is Quality.GOOD else None
+    current = (await scan.read([PointKey.EXTRA_SENSOR]))[PointKey.EXTRA_SENSOR]
+    fitted = current.value if current.quality is Quality.GOOD else None
     if fitted is not ExtraSensor.CO2:
         scan.set_available(list(CO2_POINTS), False, reason="no CO2 sensor fitted")
     if fitted is not ExtraSensor.VOC:
         scan.set_available(list(VOC_POINTS), False, reason="no VOC sensor fitted")
 
 
-CTS400_LATER_ANSWER_WAIT = 1.0
-"""Seconds a CTS400's read sent again is kept open for a later answer: the 1 s a request is given
-before it is sent again."""
+CTS400 = Model("CTS 400", "Nilan", [section(verified=CTS400_POINTS)], timing=GATEWAY_TIMING,
+               scan_steps=[extra_sensor_fitted])
 
-CTS400 = nilan_model("CTS 400", "Nilan", [section(verified=CTS400_POINTS)], scan_steps=[extra_sensor_fitted],
-                     later_answer_wait=CTS400_LATER_ANSWER_WAIT)
+CTS400_MICRO_NABTO = MicroNabtoProfile(
+    model=CTS400,
+    max_registers=64,           # a CTS 402 answered 108, so this leaves room
+    # A read sent again is kept open as long as a request is given before it is sent again.
+    later_answer_wait=1.0,
+    zeros=GATEWAY_ZEROS,
+)

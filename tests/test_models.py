@@ -8,15 +8,16 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-from modbus_event_connect import Client, Identity, Model, Point
+from modbus_event_connect import NO_RETRY, CircuitBreaker, Client, Fixed, Identity, Model, Point, PollRate, Steps
 from modbus_event_connect.micro_nabto import (
     DatapointRegister,
     MicroNabtoConnection,
     MicroNabtoDevice,
-    MicroNabtoOptions,
+    MicroNabtoProfile,
+    RereadZeros,
     SetpointRegister,
 )
-from modbus_event_connect.testing import assert_models_valid, resolve
+from modbus_event_connect.testing import ResolvedModel, assert_models_valid, resolve
 
 from nilan_connect import (
     CTS400,
@@ -29,6 +30,7 @@ from nilan_connect import (
     OPTIMA_301,
     OPTIMA_312,
     OPTIMA_314,
+    PROFILES,
     Alarm,
     Certainty,
     FilterReplaceInterval,
@@ -79,12 +81,21 @@ HANDSHAKE_ZEROS = {"device_number": 0, "device_model": 0, "slave_device_number":
 """What a simulated gateway's handshake says for a number the test does not care about."""
 
 
+def _profile(model: Model) -> MicroNabtoProfile:
+    return next(profile for profile in PROFILES if profile.model is model)
+
+
+def _resolved(variant: str) -> ResolvedModel:
+    model, identity = VARIANTS[variant]
+    return resolve(_profile(model), identity)
+
+
 def _points(variant: str) -> list[Point[Any]]:
-    return list(resolve(*VARIANTS[variant]).points.values())
+    return list(_resolved(variant).points.values())
 
 
 def _point(variant: str, key: str) -> Point[Any]:
-    return resolve(*VARIANTS[variant]).point(key)
+    return _resolved(variant).point(key)
 
 
 def _manual(folder: str) -> dict[tuple[str, int], dict[str, str]]:
@@ -122,23 +133,44 @@ def test_no_model_is_selected_for_a_controller_not_supported(identity: dict[str,
 # ================================================================================== rules
 
 
+MODELS = [CTS400, CTS602, CTS602_LIGHT, OPTIMA_250, OPTIMA_251, OPTIMA_260, OPTIMA_270, OPTIMA_301, OPTIMA_312,
+          OPTIMA_314]
+
+
+def test_every_model_has_one_profile_and_every_profile_a_model() -> None:
+    assert_models_valid(MODELS, PROFILES, identities=[identity for _, identity in VARIANTS.values()])
+
+
 @pytest.mark.parametrize("model", sorted({name.split("/")[0] for name in VARIANTS}))
 def test_each_model_is_valid_for_its_variants(model: str) -> None:
     """Every section of a model must be one some variant has."""
     variants = [VARIANTS[name] for name in VARIANTS if name.split("/")[0] == model]
-    assert_models_valid(variants[0][0], identities=[identity for _, identity in variants])
+    assert_models_valid([variants[0][0]], [_profile(variants[0][0])],
+                        identities=[identity for _, identity in variants])
 
 
 @pytest.mark.parametrize("variant", sorted(VARIANTS))
 def test_every_gateway_counts_as_not_answering_after_ten_seconds(variant: str) -> None:
-    assert VARIANTS[variant][0].offline_after == 10.0
+    assert VARIANTS[variant][0].timing.offline_after == 10.0
 
 
 @pytest.mark.parametrize("variant", sorted(VARIANTS))
-def test_only_a_cts400_keeps_a_read_sent_again_open_shorter_than_the_librarys_wait(variant: str) -> None:
-    options = VARIANTS[variant][0].options
-    assert isinstance(options, MicroNabtoOptions)
-    assert options.later_answer_wait == (1.0 if variant == "CTS400" else None)
+def test_every_gateways_readings_are_read_every_10_s_its_settings_every_180_s(variant: str) -> None:
+    timing = VARIANTS[variant][0].timing
+    assert (timing.poll_intervals[PollRate.FAST], timing.poll_intervals[PollRate.SLOW]) == (10.0, 180.0)
+    assert (timing.min_poll_interval, timing.read_back_after) == (0.0, 1.0)
+
+
+@pytest.mark.parametrize("variant", sorted(VARIANTS))
+def test_only_a_cts400_keeps_a_read_sent_again_open_shorter_than_5_s(variant: str) -> None:
+    assert _profile(VARIANTS[variant][0]).later_answer_wait == (1.0 if variant == "CTS400" else 5.0)
+
+
+@pytest.mark.parametrize("variant", sorted(VARIANTS))
+def test_every_gateway_is_asked_for_64_registers_and_takes_its_zeros_after_7_5_s(variant: str) -> None:
+    profile = _profile(VARIANTS[variant][0])
+    assert profile.max_registers == 64
+    assert profile.zeros == RereadZeros(within=7.5, wait=Steps(0.5, then=Fixed(1.0)), at_once=True, halves=True)
 
 
 def test_every_key_is_declared() -> None:
@@ -263,8 +295,9 @@ async def _client(identity: Mapping[str, Any], datapoints: dict[int, int],
     async with simulated:
         host, port = simulated.address
         connection = MicroNabtoConnection(EMAIL, host=host, port=port, timeout=0.2, retries=1,
-                                          reconnect=None)
-        client = Client(MicroNabtoDevice(connection, owns_connection=True), select_model)
+                                          reconnect=CircuitBreaker(after=1, retry=NO_RETRY))
+        client = Client(MicroNabtoDevice(connection, profiles=PROFILES, owns_connection=True), select_model,
+                        write_retry=NO_RETRY)
         await client.connect()
         try:
             yield client, simulated
