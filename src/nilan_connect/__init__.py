@@ -37,9 +37,16 @@ from modbus_event_connect import (
 from modbus_event_connect.micro_nabto import DiscoveredDevice, discover
 
 from ._cts400 import CTS400
-from ._cts602 import CTS602, CTS602_LIGHT
+from ._cts602 import CTS602
+from ._cts602_light import CTS602_LIGHT
 from ._keys import PointKey
-from ._optima import OPTIMA_250, OPTIMA_251, OPTIMA_260, OPTIMA_270, OPTIMA_301, OPTIMA_312, OPTIMA_314
+from ._optima_250 import OPTIMA_250
+from ._optima_251 import OPTIMA_251
+from ._optima_260 import OPTIMA_260
+from ._optima_270 import OPTIMA_270
+from ._optima_301 import OPTIMA_301
+from ._optima_312 import OPTIMA_312
+from ._optima_314 import OPTIMA_314
 from ._select import select_model
 from ._states import (
     AirExchangeMode,

@@ -132,12 +132,12 @@ after it was first sent. A newer value for the same setting takes over from it.
 
 ## How each controller is talked to
 
-Each model has its micro_nabto profile beside it, and `PROFILES` lists them all. Every gateway is
-asked for at most 64 registers in one read. A read sent again, as its receipt did not come, and
-answered with only zeros where the registers held values, is kept open for a later answer: 1 s
-for a CTS400, the 1 s a request is given before it is sent again, and 5 s for the other
-controllers, on which it has not been measured. Until the controller's model is known, the
-longest of them is used.
+Each model sits in a file of its own, with its micro_nabto profile beside it, and `PROFILES` lists
+them all. Every gateway is asked for at most 64 registers in one read. A read sent again, as its
+receipt did not come, and answered with only zeros where the registers held values, is kept open
+for a later answer: 1 s for a CTS400, the 1 s a request is given before it is sent again, and 5 s
+for the other controllers, on which it has not been measured. Until the controller's model is
+known, the longest of them is used.
 
 ## Keys
 

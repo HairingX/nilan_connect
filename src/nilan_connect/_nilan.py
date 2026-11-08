@@ -5,16 +5,15 @@ from modbus_event_connect import CircuitBreaker, Client, Clock, Fixed, Retry, Wi
 from modbus_event_connect.micro_nabto import MicroNabtoDevice, MicroNabtoProfile
 
 from ._cts400 import CTS400_MICRO_NABTO
-from ._cts602 import CTS602_LIGHT_MICRO_NABTO, CTS602_MICRO_NABTO
-from ._optima import (
-    OPTIMA_250_MICRO_NABTO,
-    OPTIMA_251_MICRO_NABTO,
-    OPTIMA_260_MICRO_NABTO,
-    OPTIMA_270_MICRO_NABTO,
-    OPTIMA_301_MICRO_NABTO,
-    OPTIMA_312_MICRO_NABTO,
-    OPTIMA_314_MICRO_NABTO,
-)
+from ._cts602 import CTS602_MICRO_NABTO
+from ._cts602_light import CTS602_LIGHT_MICRO_NABTO
+from ._optima_250 import OPTIMA_250_MICRO_NABTO
+from ._optima_251 import OPTIMA_251_MICRO_NABTO
+from ._optima_260 import OPTIMA_260_MICRO_NABTO
+from ._optima_270 import OPTIMA_270_MICRO_NABTO
+from ._optima_301 import OPTIMA_301_MICRO_NABTO
+from ._optima_312 import OPTIMA_312_MICRO_NABTO
+from ._optima_314 import OPTIMA_314_MICRO_NABTO
 from ._select import select_model
 
 PROFILES: tuple[MicroNabtoProfile, ...] = (
