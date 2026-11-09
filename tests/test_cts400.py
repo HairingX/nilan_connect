@@ -8,14 +8,28 @@ from typing import Any
 
 import pytest
 import pytest_asyncio
-from modbus_event_connect import Client, DataValue, Fixed, InvalidValueError, Key, Point, Quality, ReadOnlyError, Retry
+from modbus_event_connect import (
+    NO_RETRY,
+    CircuitBreaker,
+    Client,
+    DataValue,
+    Fixed,
+    InvalidValueError,
+    Key,
+    Point,
+    Quality,
+    ReadOnlyError,
+    Retry,
+    Within,
+)
 from modbus_event_connect.micro_nabto import (
     MicroNabtoConnection,
     MicroNabtoDevice,
     SetpointRegister,
 )
 
-from nilan_connect import CTS400, Alarm, ExtraSensor, PointKey, create_client, select_model
+import nilan_connect._nilan
+from nilan_connect import CTS400, PROFILES, Alarm, ExtraSensor, PointKey, create_client, select_model
 from nilan_connect._cts400 import CO2_POINTS, CTS400_POINTS, VOC_POINTS
 from nilan_connect.testing import FakeClock, SimulatedMicroNabtoDevice
 
@@ -27,6 +41,9 @@ READ: dict[str, dict[str, int]] = json.loads(
     (Path(__file__).parent / "cts400_read_2026_09_27.json").read_text(encoding="utf-8"))
 """Every register the manual lists, as a CTS400 answered them on 2026-09-27, bypass open and
 its filter alarm active."""
+
+NEVER_AGAIN = CircuitBreaker(after=1, retry=NO_RETRY)
+
 
 def _point(key: str) -> Point[Any]:
     return next(p for p in CTS400_POINTS if p.key == key)
@@ -47,8 +64,9 @@ async def gateway() -> AsyncGenerator[SimulatedMicroNabtoDevice, None]:
 
 def _client(gateway: SimulatedMicroNabtoDevice, *, read_only: bool = False) -> Client:
     host, port = gateway.address
-    connection = MicroNabtoConnection(EMAIL, host=host, port=port, timeout=0.2, retries=1, reconnect=None)
-    return Client(MicroNabtoDevice(connection, owns_connection=True), select_model, read_only=read_only)
+    connection = MicroNabtoConnection(EMAIL, host=host, port=port, timeout=0.2, retries=1, reconnect=NEVER_AGAIN)
+    return Client(MicroNabtoDevice(connection, profiles=PROFILES, owns_connection=True), select_model,
+                  write_retry=NO_RETRY, read_only=read_only)
 
 
 async def _connected(gateway: SimulatedMicroNabtoDevice, *, read_only: bool = False) -> Client:
@@ -175,8 +193,9 @@ async def _clocked(gateway: SimulatedMicroNabtoDevice) -> tuple[Client, FakeCloc
     clock = FakeClock()
     host, port = gateway.address
     connection = MicroNabtoConnection(EMAIL, host=host, port=port, timeout=0.2, retries=1, clock=clock,
-                                      reconnect=None)
-    client = Client(MicroNabtoDevice(connection, owns_connection=True), select_model, clock=clock)
+                                      reconnect=NEVER_AGAIN)
+    client = Client(MicroNabtoDevice(connection, profiles=PROFILES, owns_connection=True), select_model,
+                    write_retry=NO_RETRY, clock=clock)
     await client.connect()
     return client, clock
 
@@ -227,6 +246,29 @@ async def test_a_fan_level_reads_the_fans_level_and_speeds_again_three_seconds_l
         await client.disconnect()
 
 
+@pytest.mark.parametrize("key,value,address", [
+    (PointKey.FAN_LEVEL, 2, 69),
+    (PointKey.FILTER_REPLACE_INTERVAL, 91, 50),
+    (PointKey.TEMP_TARGET, 21.5, 37),
+], ids=["fan_level", "filter_replace_interval", "temp_target"])
+async def test_a_written_setting_is_read_back_one_second_later_whatever_it_makes_read_again(
+        gateway: SimulatedMicroNabtoDevice, key: Key[Any], value: object, address: int) -> None:
+    client, clock = await _clocked(gateway)
+    try:
+        client.subscribe(key, _polled)
+        await client.write(key, value)
+        # What the controller holds once it has taken the write, put another way by its panel.
+        gateway.setpoint_registers[(0, address)] = 4 if key is PointKey.FAN_LEVEL else 100
+        clock.advance(0.9)
+        await client.poll()
+        assert _value(client, key) == value
+        clock.advance(0.1)
+        await client.poll()
+        assert _value(client, key) != value
+    finally:
+        await client.disconnect()
+
+
 async def test_a_filter_interval_reads_the_days_left_again_two_seconds_later(
         gateway: SimulatedMicroNabtoDevice) -> None:
     """A CTS400 was seen changing them 1.0 s after the interval was written."""
@@ -261,20 +303,6 @@ async def test_a_created_client_sends_a_write_again_until_the_gateway_takes_it(
         await client.disconnect()
 
 
-async def test_a_created_client_with_write_retry_for_0_sends_a_write_once(
-        gateway: SimulatedMicroNabtoDevice) -> None:
-    host, port = gateway.address
-    client = create_client(EMAIL, host=host, port=port, write_retry_for=0)
-    await client.connect()
-    try:
-        gateway.write_statuses = [0x63]
-        assert await client.write(PointKey.FAN_LEVEL, 2) is False
-        assert len(gateway.received(SETPOINT_WRITE)) == 1
-        assert gateway.setpoint_registers[(0, 69)] == 1
-    finally:
-        await client.disconnect()
-
-
 async def test_a_cts400_keeps_a_read_sent_again_open_1_s_for_a_later_answer(
         gateway: SimulatedMicroNabtoDevice) -> None:
     host, port = gateway.address
@@ -282,17 +310,6 @@ async def test_a_cts400_keeps_a_read_sent_again_open_1_s_for_a_later_answer(
     await client.connect()
     try:
         assert client.diagnostics()["later_answer_wait"] == 1.0
-    finally:
-        await client.disconnect()
-
-
-async def test_a_created_client_keeps_a_read_sent_again_open_as_long_as_it_is_given(
-        gateway: SimulatedMicroNabtoDevice) -> None:
-    host, port = gateway.address
-    client = create_client(EMAIL, host=host, port=port, later_answer_wait=3.0)
-    await client.connect()
-    try:
-        assert client.diagnostics()["later_answer_wait"] == 3.0
     finally:
         await client.disconnect()
 
@@ -338,4 +355,32 @@ def test_after_a_failed_handshake_a_client_tries_one_again_every_five_seconds(
 
     monkeypatch.setattr(MicroNabtoDevice, "udp", recording)
     create_client(EMAIL, host="192.0.2.1")
-    assert told["reconnect"] == Retry(Fixed(5.0))
+    assert told["reconnect"] == CircuitBreaker(after=1, retry=Retry(Fixed(5.0)))
+
+
+def test_a_created_client_talks_to_each_model_as_its_profile_says_on_the_standard_port(
+        monkeypatch: pytest.MonkeyPatch) -> None:
+    told: dict[str, Any] = {}
+    udp = MicroNabtoDevice.udp
+
+    def recording(*args: Any, **kwargs: Any) -> MicroNabtoDevice:
+        told.update(kwargs)
+        return udp(*args, **kwargs)
+
+    monkeypatch.setattr(MicroNabtoDevice, "udp", recording)
+    create_client(EMAIL, host="192.0.2.1")
+    assert told["profiles"] is PROFILES
+    assert told["port"] == 5570
+
+
+def test_a_created_client_sends_a_write_again_every_half_second_for_15_seconds(
+        monkeypatch: pytest.MonkeyPatch) -> None:
+    told: dict[str, Any] = {}
+
+    def recording(*args: Any, **kwargs: Any) -> Client:
+        told.update(kwargs)
+        return Client(*args, **kwargs)
+
+    monkeypatch.setattr(nilan_connect._nilan, "Client", recording)
+    create_client(EMAIL, host="192.0.2.1")
+    assert told["write_retry"] == Retry(Fixed(0.5), Within(15.0))

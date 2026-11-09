@@ -1,4 +1,4 @@
-"""The kinds of point a controller behind a Nilan gateway has, and the model they are part of.
+"""The kinds of point a controller behind a Nilan gateway has, and what its models share.
 
 Over micro_nabto a controller's input registers are datapoints and its holding registers
 setpoints.
@@ -6,49 +6,53 @@ setpoints.
 from __future__ import annotations
 
 from collections.abc import Callable, Collection, Mapping, Sequence
+from dataclasses import replace
 from enum import IntEnum
 from typing import Any
 
+from event_connect import Certainty
 from modbus_event_connect import (
     DataType,
+    Fixed,
     Identity,
     Key,
     Limits,
-    Model,
     Point,
     PollRate,
     Refresh,
-    ScanStep,
     Section,
+    Steps,
+    Timing,
     Transform,
     Transforms,
     Unit,
     WriteKind,
 )
-from modbus_event_connect.micro_nabto import DatapointRegister, MicroNabtoOptions, SetpointRegister
+from modbus_event_connect.micro_nabto import DatapointRegister, RereadZeros, SetpointRegister
 
-OFFLINE_AFTER = 10.0
-"""Seconds the gateway may leave reads unanswered before it counts as not answering: one missed
-read, of those that come every 10 s, keeps the last values, and a gateway that stays silent is
-shown as not answering."""
+GATEWAY_TIMING = Timing(
+    # Settings change only when written, so they are read far less often than readings.
+    poll_intervals={PollRate.FAST: 10.0, PollRate.SLOW: 180.0},
+    min_poll_interval=0.0,
+    read_back_after=1.0,
+    # One missed read, of those that come every 10 s, keeps the last values; a gateway that stays
+    # silent is shown as not answering.
+    offline_after=10.0,
+)
+"""When a controller behind a Nilan gateway is read, and how long a write takes to show."""
+
+GATEWAY_ZEROS = RereadZeros(within=7.5, wait=Steps(0.5, then=Fixed(1.0)), at_once=True, halves=True)
+"""How a Nilan gateway's answer of only zeros, where values were, is read again: the zeros are
+taken after 7.5 s, short of the 10 s between two reads, as a gateway was seen answering a new
+session's first reads with zeros, and values 10 s later."""
 
 
-def nilan_model(name: str, manufacturer: str, sections: Sequence[Section],
-                scan_steps: Sequence[ScanStep] = (), *, later_answer_wait: float | None = None) -> Model:
-    """A model of a controller behind a Nilan gateway, whose `scan_steps` find what the unit lacks.
-
-    `later_answer_wait` is the seconds a read sent again, answered with only zeros, is kept open
-    for a later answer; None leaves it to the library.
-    """
-    return Model(
-        name, manufacturer, sections,
-        scan_steps=tuple(scan_steps),
-        options=MicroNabtoOptions(later_answer_wait=later_answer_wait),
-        # Settings change only when written, so they are read far less often than readings.
-        poll_intervals={PollRate.FAST: 10.0, PollRate.SLOW: 180.0},
-        read_back_after=1.0,
-        offline_after=OFFLINE_AFTER,
-    )
+def section(*, when: Callable[[Identity], bool] | None = None, verified: Sequence[Point[Any]] = (),
+            reported: Sequence[Point[Any]] = (), inferred: Sequence[Point[Any]] = ()) -> Section:
+    """A section of a model, each point given under how certain it is; `when` as a `Section` has it."""
+    return Section((*(replace(point, certainty=Certainty.VERIFIED) for point in verified),
+                    *(replace(point, certainty=Certainty.REPORTED) for point in reported),
+                    *(replace(point, certainty=Certainty.INFERRED) for point in inferred)), when=when)
 
 
 def slave_model_in(models: Collection[int]) -> Callable[[Identity], bool]:

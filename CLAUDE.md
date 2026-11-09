@@ -2,8 +2,8 @@
 
 An event-driven, async Python library for Nilan and Genvex ventilation units behind their
 gateway, over its local micro_nabto protocol: every value typed, and told when it changes. It is
-built on the `modbus_event_connect` library, developed alongside it. The Home Assistant
-integration `ha_nilan_connect` is built on it.
+built on the `modbus_event_connect` and `event_connect` libraries, developed alongside it. The
+Home Assistant integration `ha_nilan_connect` is built on it.
 
 ## This library
 
@@ -11,8 +11,8 @@ integration `ha_nilan_connect` is built on it.
 - Live tests (`tests/test_live_*.py`) only read, and never write to a controller. They take the
   gateway's address and email from environment variables or the gitignored `mysecrets.py`, and
   skip without them.
-- Everything a consumer uses comes from `nilan_connect`, nothing from `modbus_event_connect`;
-  `nilan_connect.testing` gives its tests a simulated gateway and a clock the test moves.
+- Everything a consumer uses comes from `nilan_connect`, nothing from `modbus_event_connect` or
+  `event_connect`; `nilan_connect.testing` gives its tests a simulated gateway and a clock the test moves.
 - `__version__` reads the version from the installed package.
 - `docs/models/` holds the manufacturers' manuals with every register extracted; the PDF is the
   authority, the extracts working copies.

@@ -22,7 +22,7 @@ material we could find online, and have not been tested on those controllers.** 
 wrong or missing; reports of what a unit shows are welcome. `connect()` raises
 `UnsupportedDeviceError` for any other controller.
 
-`certainty(point)` says how certain it is that a point is right:
+A point's `certainty` says how certain it is that the point is right:
 
 | `Certainty` | Meaning |
 |---|---|
@@ -38,9 +38,9 @@ user is offered that is the consumer's choice. A consumer that wants only what h
 working leaves the inferred points out:
 
 ```python
-from nilan_connect import Certainty, certainty
+from nilan_connect import Certainty
 
-shown = [point for point in client.points.values() if certainty(point) is not Certainty.INFERRED]
+shown = [point for point in client.points.values() if point.certainty is not Certainty.INFERRED]
 ```
 
 ## Installation
@@ -86,7 +86,7 @@ The controller's readings every 10 seconds, its settings every 180 seconds, and 
 one second after it is written. What a write changes is read again too: after a filter reset, the
 filter's status and timers and the alarm status, two seconds later; after a filter interval, the
 days left, two seconds later; after a fan level, the levels the fans run at and their speeds,
-three seconds later.
+three seconds later. The setting itself is read back after one second either way.
 
 ## The gateway
 
@@ -127,13 +127,17 @@ A value outside the limits Nilan's manual gives is refused before anything is se
 `create_client(..., read_only=True)` refuses every write.
 
 A CTS400's gateway answered some writes with a status saying it did not take them, and took the
-same write on a later try. Such a write is sent again until `create_client(...,
-write_retry_for=...)` seconds have passed since it was first sent - `WRITE_RETRY_FOR` unless
-given; 0 sends every write once. A newer value for the same setting takes over from it.
+same write on a later try. Such a write is sent again every half second, for up to 15 seconds
+after it was first sent. A newer value for the same setting takes over from it.
 
-A read sent again, as its receipt did not come, and answered with only zeros where the registers
-held values, is kept open for a later answer: 1 s for a CTS400, and the library's 5 s for the
-other controllers. `create_client(..., later_answer_wait=...)` sets it for any controller.
+## How each controller is talked to
+
+Each model sits in a file of its own, with its micro_nabto profile beside it, and `PROFILES` lists
+them all. Every gateway is asked for at most 64 registers in one read. A read sent again, as its
+receipt did not come, and answered with only zeros where the registers held values, is kept open
+for a later answer: 1 s for a CTS400, the 1 s a request is given before it is sent again, and 5 s
+for the other controllers, on which it has not been measured. Until the controller's model is
+known, the longest of them is used.
 
 ## Keys
 
