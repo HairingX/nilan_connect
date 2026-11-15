@@ -135,6 +135,12 @@ def test_every_gateway_counts_as_not_answering_after_ten_seconds(variant: str) -
 
 
 @pytest.mark.parametrize("variant", sorted(VARIANTS))
+def test_every_gateway_is_given_two_seconds_to_answer_a_request_it_has_acknowledged(variant: str) -> None:
+    options = VARIANTS[variant][0].options
+    assert isinstance(options, MicroNabtoOptions) and options.answer_wait == 2.0
+
+
+@pytest.mark.parametrize("variant", sorted(VARIANTS))
 def test_only_a_cts400_keeps_a_read_sent_again_open_shorter_than_the_librarys_wait(variant: str) -> None:
     options = VARIANTS[variant][0].options
     assert isinstance(options, MicroNabtoOptions)
