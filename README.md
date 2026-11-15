@@ -101,7 +101,8 @@ manual's register groups, at least 40 to 95 ms.
 
 The gateway counts as not answering once it has left reads unanswered for 10 seconds: one missed
 read keeps the last values, and a gateway that stays silent shows as not answering. After a failed
-handshake it is asked again after 5 seconds, before the next read is due.
+handshake it is asked again after 5 seconds, before the next read is due. A request the gateway
+has said it has is given 2 seconds to be answered: it answers within a fraction of a second.
 
 What it holds can be empty. A CTS602's gateway answered the first reads of a new session with
 only zeros, at once and again 18 ms later, and with values 10 s later. The same gateway was

@@ -32,6 +32,11 @@ OFFLINE_AFTER = 10.0
 read, of those that come every 10 s, keeps the last values, and a gateway that stays silent is
 shown as not answering."""
 
+ANSWER_WAIT = 2.0
+"""Seconds an answer is waited for once the gateway has said it has the request: a CTS602's
+gateway answered 21,000 reads within 245 ms, and one it leaves unanswered holds up the reads
+behind it for as long as this."""
+
 
 def nilan_model(name: str, manufacturer: str, sections: Sequence[Section],
                 scan_steps: Sequence[ScanStep] = (), *, later_answer_wait: float | None = None) -> Model:
@@ -43,7 +48,7 @@ def nilan_model(name: str, manufacturer: str, sections: Sequence[Section],
     return Model(
         name, manufacturer, sections,
         scan_steps=tuple(scan_steps),
-        options=MicroNabtoOptions(later_answer_wait=later_answer_wait),
+        options=MicroNabtoOptions(later_answer_wait=later_answer_wait, answer_wait=ANSWER_WAIT),
         # Settings change only when written, so they are read far less often than readings.
         poll_intervals={PollRate.FAST: 10.0, PollRate.SLOW: 180.0},
         read_back_after=1.0,
