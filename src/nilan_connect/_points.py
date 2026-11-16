@@ -46,6 +46,11 @@ GATEWAY_ZEROS = RereadZeros(within=7.5, wait=Steps(0.5, then=Fixed(1.0)), at_onc
 taken after 7.5 s, short of the 10 s between two reads, as a gateway was seen answering a new
 session's first reads with zeros, and values 10 s later."""
 
+GATEWAY_ANSWER_WAIT = 2.0
+"""Seconds an answer is waited for once the gateway has said it has the request: a CTS602's
+gateway answered 21,000 reads within 245 ms, and one it leaves unanswered holds up the reads
+behind it for as long as this."""
+
 
 def section(*, when: Callable[[Identity], bool] | None = None, verified: Sequence[Point[Any]] = (),
             reported: Sequence[Point[Any]] = (), inferred: Sequence[Point[Any]] = ()) -> Section:

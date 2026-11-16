@@ -22,6 +22,7 @@ from modbus_event_connect.micro_nabto import MicroNabtoProfile
 from ._keys import PointKey
 from ._points import (
     GATEWAY_TIMING,
+    GATEWAY_ANSWER_WAIT,
     GATEWAY_ZEROS,
     alarm_bit,
     choice,
@@ -292,6 +293,7 @@ CTS602 = Model("CTS 602", "Nilan", CTS602_SECTIONS, timing=GATEWAY_TIMING)
 CTS602_MICRO_NABTO = MicroNabtoProfile(
     model=CTS602,
     max_registers=64,           # a CTS 402 answered 108, so this leaves room
+    answer_wait=GATEWAY_ANSWER_WAIT,
     later_answer_wait=5.0,      # not measured on this controller, so longer than a CTS400's
     zeros=GATEWAY_ZEROS,
 )

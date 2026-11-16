@@ -21,7 +21,7 @@ from ._optima import (
     optima_temperature,
     optima_write_address,
 )
-from ._points import GATEWAY_TIMING, GATEWAY_ZEROS, alarm_bit, command, reading, section, state
+from ._points import GATEWAY_ANSWER_WAIT, GATEWAY_TIMING, GATEWAY_ZEROS, alarm_bit, command, reading, section, state
 
 # The alarm bits, as found in material published online. The filter alarm's bit is set while the
 # filter must be changed, so it is `filter_ok` inverted, as every controller has that key.
@@ -93,6 +93,7 @@ OPTIMA_270 = Model("Optima 270", "Genvex", (
 OPTIMA_270_MICRO_NABTO = MicroNabtoProfile(
     model=OPTIMA_270,
     max_registers=64,           # a CTS 402 answered 108, so this leaves room
+    answer_wait=GATEWAY_ANSWER_WAIT,
     later_answer_wait=5.0,      # not measured on this controller, so longer than a CTS400's
     zeros=GATEWAY_ZEROS,
 )

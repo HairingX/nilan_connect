@@ -172,6 +172,11 @@ def test_every_gateway_is_asked_for_64_registers_and_takes_its_zeros_after_7_5_s
     assert profile.zeros == RereadZeros(within=7.5, wait=Steps(0.5, then=Fixed(1.0)), at_once=True, halves=True)
 
 
+@pytest.mark.parametrize("variant", sorted(VARIANTS))
+def test_every_gateway_is_given_two_seconds_to_answer_a_request_it_has_acknowledged(variant: str) -> None:
+    assert _profile(VARIANTS[variant][0]).answer_wait == 2.0
+
+
 def test_every_key_is_declared() -> None:
     declared = {str(key) for key in PointKey.all()}
     assert {point.key for variant in VARIANTS for point in _points(variant)} <= declared

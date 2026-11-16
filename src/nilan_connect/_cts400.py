@@ -20,6 +20,7 @@ from modbus_event_connect.micro_nabto import MicroNabtoProfile
 from ._keys import PointKey
 from ._points import (
     GATEWAY_TIMING,
+    GATEWAY_ANSWER_WAIT,
     GATEWAY_ZEROS,
     choice,
     command,
@@ -166,6 +167,7 @@ CTS400 = Model("CTS 400", "Nilan", [section(verified=CTS400_POINTS)], timing=GAT
 CTS400_MICRO_NABTO = MicroNabtoProfile(
     model=CTS400,
     max_registers=64,           # a CTS 402 answered 108, so this leaves room
+    answer_wait=GATEWAY_ANSWER_WAIT,
     # A read sent again is kept open as long as a request is given before it is sent again.
     later_answer_wait=1.0,
     zeros=GATEWAY_ZEROS,

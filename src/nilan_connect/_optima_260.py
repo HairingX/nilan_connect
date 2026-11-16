@@ -14,6 +14,7 @@ from ._keys import PointKey
 from ._optima import optima_fan_presets, optima_percent, optima_target, optima_temperature
 from ._points import (
     GATEWAY_TIMING,
+    GATEWAY_ANSWER_WAIT,
     GATEWAY_ZEROS,
     command,
     fan_level_rereads,
@@ -46,6 +47,7 @@ OPTIMA_260 = Model("Optima 260", "Genvex", (
 OPTIMA_260_MICRO_NABTO = MicroNabtoProfile(
     model=OPTIMA_260,
     max_registers=64,           # a CTS 402 answered 108, so this leaves room
+    answer_wait=GATEWAY_ANSWER_WAIT,
     later_answer_wait=5.0,      # not measured on this controller, so longer than a CTS400's
     zeros=GATEWAY_ZEROS,
 )

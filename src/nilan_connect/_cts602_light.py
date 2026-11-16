@@ -23,6 +23,7 @@ from ._cts602 import (
 from ._keys import PointKey
 from ._points import (
     GATEWAY_TIMING,
+    GATEWAY_ANSWER_WAIT,
     GATEWAY_ZEROS,
     alarm_bit,
     choice,
@@ -92,6 +93,7 @@ CTS602_LIGHT = Model("CTS 602 Light", "Nilan", CTS602_LIGHT_SECTIONS, timing=GAT
 CTS602_LIGHT_MICRO_NABTO = MicroNabtoProfile(
     model=CTS602_LIGHT,
     max_registers=64,           # a CTS 402 answered 108, so this leaves room
+    answer_wait=GATEWAY_ANSWER_WAIT,
     later_answer_wait=5.0,      # not measured on this controller, so longer than a CTS400's
     zeros=GATEWAY_ZEROS,
 )

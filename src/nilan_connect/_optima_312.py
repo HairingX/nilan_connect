@@ -12,7 +12,7 @@ from modbus_event_connect.micro_nabto import MicroNabtoProfile
 
 from ._keys import PointKey
 from ._optima import SLAVE_79250_FAN_LEVEL, SLAVE_79250_POINTS, optima_temperature
-from ._points import GATEWAY_TIMING, GATEWAY_ZEROS, section, setting, state, switch
+from ._points import GATEWAY_ANSWER_WAIT, GATEWAY_TIMING, GATEWAY_ZEROS, section, setting, state, switch
 
 OPTIMA_312 = Model("Optima 312", "Genvex", (
     section(reported=(
@@ -39,6 +39,7 @@ OPTIMA_312 = Model("Optima 312", "Genvex", (
 OPTIMA_312_MICRO_NABTO = MicroNabtoProfile(
     model=OPTIMA_312,
     max_registers=64,           # a CTS 402 answered 108, so this leaves room
+    answer_wait=GATEWAY_ANSWER_WAIT,
     later_answer_wait=5.0,      # not measured on this controller, so longer than a CTS400's
     zeros=GATEWAY_ZEROS,
 )
