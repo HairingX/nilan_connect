@@ -46,3 +46,6 @@ WRITE_RETRY = Retry(
 )
 """When a write the controller did not take is sent again: every half second, for up to 15 s after
 it was first sent."""
+
+WRITE_TAKEN = frozenset({0})  # guess
+"""The statuses a gateway answers a write it took with."""

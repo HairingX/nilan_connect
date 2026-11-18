@@ -190,6 +190,7 @@ CTS400 = MicroNabtoModel(
     answer_wait=ANSWER_WAIT,
     later_answer_wait=1.0,  # guess: the 1 s a request is given before it is sent again
     zeros=ZEROS,
+    write_taken=frozenset({0}),  # measured on a CTS400: writes it took answered 0 (HairingX/modbus_event_connect#10), writes it did not 0x63 (HairingX/nilan_connect#5)
 )
 """Nilan's CTS400, as its gateway is talked to over micro_nabto. Whether an extra sensor is fitted
 is checked again every 900 s."""
