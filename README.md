@@ -80,8 +80,9 @@ asyncio.run(main())
 `create_client` takes keyword arguments only: `email`, `host`, `device_id`, `port` (micro_nabto's
 standard `PORT` unless given), `read_only` and `clock`. With only a `device_id`, the gateway is
 found by discovery, and with both, a gateway that has moved is found again. `run()` is the whole
-poll loop; a program with a loop of its own calls `poll()`, which reads only what is due, and
-waits `seconds_until_next_poll()`.
+poll loop, and never ends by itself: it waits while the client is not connected, and logs a poll
+that raises and polls on after a pause. A program with a loop of its own calls `poll()`, which
+reads only what is due, and waits `seconds_until_next_poll()`.
 
 ```python
 from nilan_connect import discover

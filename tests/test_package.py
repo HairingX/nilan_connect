@@ -70,3 +70,8 @@ def test_it_names_the_range_a_setting_can_be_written_with() -> None:
 
     assert nilan_connect.WriteRange is event_connect.WriteRange
     assert "WriteRange" in nilan_connect.__all__
+
+
+def test_it_passes_on_the_type_of_its_models() -> None:
+    assert "MicroNabtoModel" in nilan_connect.__all__
+    assert all(isinstance(model, nilan_connect.MicroNabtoModel) for model in nilan_connect.MODELS)
