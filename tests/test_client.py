@@ -96,6 +96,11 @@ def test_a_created_client_counts_a_gateway_as_not_answering_after_one_missed_fas
     assert told["offline_after_intervals"] == 1
 
 
+def test_a_client_needs_the_gateways_address_or_its_id() -> None:
+    with pytest.raises(ValueError):
+        create_client(email=EMAIL)
+
+
 def test_a_created_client_is_the_client_every_device_library_shares() -> None:
     client: DeviceClient = create_client(email=EMAIL, host="192.0.2.1")
     assert isinstance(client, DeviceClient)

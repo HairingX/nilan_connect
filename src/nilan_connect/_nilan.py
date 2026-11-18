@@ -81,6 +81,9 @@ def create_client(*, email: str, host: str | None = None, device_id: str | None 
         read_only: refuse every write before it reaches the controller.
         clock: the time the client plans by; None is the system's.
 
+    Raises:
+        ValueError: neither `host` nor `device_id` is given.
+
     `connect()` raises `UnsupportedDeviceError` for a controller no model matches.
     """
     return build_client(email, host=host, device_id=device_id, port=port, timeout=_TIMEOUT, retries=_RETRIES,
