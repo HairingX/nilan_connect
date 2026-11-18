@@ -1,5 +1,5 @@
-"""Nilan's CTS602 as a model, how it is talked to over micro_nabto, and what the CTS602 Light
-shares with it.
+"""Nilan's CTS602 as a model: its points, how its gateway is talked to over micro_nabto, and what
+the CTS602 Light shares with it.
 
 Sources:
     Nilan, "CTS 602 Modbus user manual" 3.00 (software 2.35) and "Protocol description Nilan
@@ -16,17 +16,13 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 
-from modbus_event_connect import DataType, Key, Limits, Model, Point, Unit
-from modbus_event_connect.micro_nabto import MicroNabtoProfile
+from modbus_event_connect import DataType, Key, Limits, Point, PollRate, Refresh, Unit
+from modbus_event_connect.micro_nabto import MicroNabtoModel
 
 from ._keys import PointKey
 from ._points import (
-    GATEWAY_TIMING,
-    GATEWAY_ANSWER_WAIT,
-    GATEWAY_ZEROS,
     alarm_bit,
     choice,
-    fan_level_rereads,
     reading,
     section,
     setpoint_reading,
@@ -36,6 +32,17 @@ from ._points import (
     state,
     switch,
     temperature,
+)
+from ._shared import (
+    ANSWER_WAIT,
+    FAN_LEVEL_REREAD_AFTER,
+    FAST_INTERVAL,
+    LATER_ANSWER_WAIT,
+    MAX_REGISTERS,
+    READ_BACK_AFTER,
+    SLOW_INTERVAL,
+    WRITE_RETRY,
+    ZEROS,
 )
 from ._states import Alarm, FilterReplaceInterval, HeatSource, OperationState
 
@@ -139,8 +146,8 @@ def cts602_temperature_setting(key: Key[float], address: int, limits: Limits | N
     return setting(key, address, limits, data_type=DataType.INT16, scale=0.01, unit=Unit.CELSIUS)
 
 
-CTS602_FAN_LEVEL_REREADS = fan_level_rereads(
-    PointKey.FAN_LEVEL_CURRENT, PointKey.FAN_LEVEL_SUPPLY, PointKey.FAN_LEVEL_EXTRACT)
+CTS602_FAN_LEVEL_REREADS = Refresh(
+    [PointKey.FAN_LEVEL_CURRENT, PointKey.FAN_LEVEL_SUPPLY, PointKey.FAN_LEVEL_EXTRACT], after=FAN_LEVEL_REREAD_AFTER)
 """What follows a CTS602's or CTS602 Light's fan level."""
 
 
@@ -288,12 +295,20 @@ CTS602_SECTIONS = (
     )),
 )
 
-CTS602 = Model("CTS 602", "Nilan", CTS602_SECTIONS, timing=GATEWAY_TIMING)
-
-CTS602_MICRO_NABTO = MicroNabtoProfile(
-    model=CTS602,
-    max_registers=64,           # a CTS 402 answered 108, so this leaves room
-    answer_wait=GATEWAY_ANSWER_WAIT,
-    later_answer_wait=5.0,      # not measured on this controller, so longer than a CTS400's
-    zeros=GATEWAY_ZEROS,
+CTS602 = MicroNabtoModel(
+    "CTS 602", "Nilan", CTS602_SECTIONS,
+    poll_intervals={
+        PollRate.FAST: FAST_INTERVAL,
+        PollRate.SLOW: SLOW_INTERVAL,
+    },
+    read_back_after=READ_BACK_AFTER,
+    write_retry=WRITE_RETRY,
+    scan_check=None,
+    identity_points=(),
+    scan_steps=(),
+    max_registers=MAX_REGISTERS,
+    answer_wait=ANSWER_WAIT,
+    later_answer_wait=LATER_ANSWER_WAIT,
+    zeros=ZEROS,
 )
+"""Nilan's CTS602, every variant, as its gateway is talked to over micro_nabto."""

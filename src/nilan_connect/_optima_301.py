@@ -1,4 +1,4 @@
-"""Genvex's Optima 301 as a model, and how it is talked to over micro_nabto.
+"""Genvex's Optima 301 as a model: its points, and how its gateway is talked to over micro_nabto.
 
 Sources:
     No Modbus description of an Optima is published. The gateway's addresses, scales and
@@ -7,32 +7,50 @@ Sources:
 """
 from __future__ import annotations
 
-from modbus_event_connect import Limits, Model
-from modbus_event_connect.micro_nabto import MicroNabtoProfile
+from modbus_event_connect import Limits, PollRate
+from modbus_event_connect.micro_nabto import MicroNabtoModel
 
 from ._keys import PointKey
 from ._optima import SLAVE_79250_FAN_LEVEL, SLAVE_79250_POINTS, optima_temperature
-from ._points import GATEWAY_ANSWER_WAIT, GATEWAY_TIMING, GATEWAY_ZEROS, section, setting, switch
-
-OPTIMA_301 = Model("Optima 301", "Genvex", (
-    section(reported=(
-        *SLAVE_79250_POINTS,
-        optima_temperature(PointKey.TEMP_BEFORE_CONDENSER, 4),
-        optima_temperature(PointKey.TEMP_EVAPORATOR, 5),
-        optima_temperature(PointKey.TEMP_HOTWATER_TOP, 6),
-        optima_temperature(PointKey.TEMP_HOTWATER_BOTTOM, 7),
-        optima_temperature(PointKey.TEMP_ROOM, 9),
-        setting(PointKey.COOLING_TEMPERATURE, 1, Limits(30, 100, step=1)),
-        switch(PointKey.COOLING_ENABLE, 2),
-        switch(PointKey.PREHEAT_ENABLE, 20),
-        SLAVE_79250_FAN_LEVEL,
-    )),
-), timing=GATEWAY_TIMING)
-
-OPTIMA_301_MICRO_NABTO = MicroNabtoProfile(
-    model=OPTIMA_301,
-    max_registers=64,           # a CTS 402 answered 108, so this leaves room
-    answer_wait=GATEWAY_ANSWER_WAIT,
-    later_answer_wait=5.0,      # not measured on this controller, so longer than a CTS400's
-    zeros=GATEWAY_ZEROS,
+from ._points import section, setting, switch
+from ._shared import (
+    ANSWER_WAIT,
+    FAST_INTERVAL,
+    LATER_ANSWER_WAIT,
+    MAX_REGISTERS,
+    READ_BACK_AFTER,
+    SLOW_INTERVAL,
+    WRITE_RETRY,
+    ZEROS,
 )
+
+OPTIMA_301 = MicroNabtoModel(
+    "Optima 301", "Genvex", (
+        section(reported=(
+            *SLAVE_79250_POINTS,
+            optima_temperature(PointKey.TEMP_BEFORE_CONDENSER, 4),
+            optima_temperature(PointKey.TEMP_EVAPORATOR, 5),
+            optima_temperature(PointKey.TEMP_HOTWATER_TOP, 6),
+            optima_temperature(PointKey.TEMP_HOTWATER_BOTTOM, 7),
+            optima_temperature(PointKey.TEMP_ROOM, 9),
+            setting(PointKey.COOLING_TEMPERATURE, 1, Limits(30, 100, step=1)),
+            switch(PointKey.COOLING_ENABLE, 2),
+            switch(PointKey.PREHEAT_ENABLE, 20),
+            SLAVE_79250_FAN_LEVEL,
+        )),
+    ),
+    poll_intervals={
+        PollRate.FAST: FAST_INTERVAL,
+        PollRate.SLOW: SLOW_INTERVAL,
+    },
+    read_back_after=READ_BACK_AFTER,
+    write_retry=WRITE_RETRY,
+    scan_check=None,
+    identity_points=(),
+    scan_steps=(),
+    max_registers=MAX_REGISTERS,
+    answer_wait=ANSWER_WAIT,
+    later_answer_wait=LATER_ANSWER_WAIT,
+    zeros=ZEROS,
+)
+"""Genvex's Optima 301, as its gateway is talked to over micro_nabto."""

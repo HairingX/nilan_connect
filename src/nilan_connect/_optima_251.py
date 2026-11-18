@@ -1,4 +1,4 @@
-"""Genvex's Optima 251 as a model, and how it is talked to over micro_nabto.
+"""Genvex's Optima 251 as a model: its points, and how its gateway is talked to over micro_nabto.
 
 Sources:
     No Modbus description of an Optima is published. The gateway's addresses, scales and
@@ -7,18 +7,35 @@ Sources:
 """
 from __future__ import annotations
 
-from modbus_event_connect import Model
-from modbus_event_connect.micro_nabto import MicroNabtoProfile
+from modbus_event_connect import PollRate
+from modbus_event_connect.micro_nabto import MicroNabtoModel
 
 from ._optima_250 import OPTIMA_250_SECTIONS
-from ._points import GATEWAY_ANSWER_WAIT, GATEWAY_TIMING, GATEWAY_ZEROS
-
-OPTIMA_251 = Model("Optima 251", "Genvex", OPTIMA_250_SECTIONS, timing=GATEWAY_TIMING)
-
-OPTIMA_251_MICRO_NABTO = MicroNabtoProfile(
-    model=OPTIMA_251,
-    max_registers=64,           # a CTS 402 answered 108, so this leaves room
-    answer_wait=GATEWAY_ANSWER_WAIT,
-    later_answer_wait=5.0,      # not measured on this controller, so longer than a CTS400's
-    zeros=GATEWAY_ZEROS,
+from ._shared import (
+    ANSWER_WAIT,
+    FAST_INTERVAL,
+    LATER_ANSWER_WAIT,
+    MAX_REGISTERS,
+    READ_BACK_AFTER,
+    SLOW_INTERVAL,
+    WRITE_RETRY,
+    ZEROS,
 )
+
+OPTIMA_251 = MicroNabtoModel(
+    "Optima 251", "Genvex", OPTIMA_250_SECTIONS,
+    poll_intervals={
+        PollRate.FAST: FAST_INTERVAL,
+        PollRate.SLOW: SLOW_INTERVAL,
+    },
+    read_back_after=READ_BACK_AFTER,
+    write_retry=WRITE_RETRY,
+    scan_check=None,
+    identity_points=(),
+    scan_steps=(),
+    max_registers=MAX_REGISTERS,
+    answer_wait=ANSWER_WAIT,
+    later_answer_wait=LATER_ANSWER_WAIT,
+    zeros=ZEROS,
+)
+"""Genvex's Optima 251, as its gateway is talked to over micro_nabto."""

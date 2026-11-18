@@ -1,4 +1,4 @@
-"""The kinds of point a controller behind a Nilan gateway has, and what its models share.
+"""The kinds of point a controller behind a Nilan gateway has.
 
 Over micro_nabto a controller's input registers are datapoints and its holding registers
 setpoints.
@@ -13,7 +13,6 @@ from typing import Any
 from event_connect import Certainty
 from modbus_event_connect import (
     DataType,
-    Fixed,
     Identity,
     Key,
     Limits,
@@ -21,35 +20,12 @@ from modbus_event_connect import (
     PollRate,
     Refresh,
     Section,
-    Steps,
-    Timing,
     Transform,
     Transforms,
     Unit,
     WriteKind,
 )
-from modbus_event_connect.micro_nabto import DatapointRegister, RereadZeros, SetpointRegister
-
-GATEWAY_TIMING = Timing(
-    # Settings change only when written, so they are read far less often than readings.
-    poll_intervals={PollRate.FAST: 10.0, PollRate.SLOW: 180.0},
-    min_poll_interval=0.0,
-    read_back_after=1.0,
-    # One missed read, of those that come every 10 s, keeps the last values; a gateway that stays
-    # silent is shown as not answering.
-    offline_after=10.0,
-)
-"""When a controller behind a Nilan gateway is read, and how long a write takes to show."""
-
-GATEWAY_ZEROS = RereadZeros(within=7.5, wait=Steps(0.5, then=Fixed(1.0)), at_once=True, halves=True)
-"""How a Nilan gateway's answer of only zeros, where values were, is read again: the zeros are
-taken after 7.5 s, short of the 10 s between two reads, as a gateway was seen answering a new
-session's first reads with zeros, and values 10 s later."""
-
-GATEWAY_ANSWER_WAIT = 2.0
-"""Seconds an answer is waited for once the gateway has said it has the request: a CTS602's
-gateway answered 21,000 reads within 245 ms, and one it leaves unanswered holds up the reads
-behind it for as long as this."""
+from modbus_event_connect.micro_nabto import DatapointRegister, SetpointRegister
 
 
 def section(*, when: Callable[[Identity], bool] | None = None, verified: Sequence[Point[Any]] = (),
@@ -136,8 +112,3 @@ def command(key: Key[bool], address: int, *, on_write: Refresh | None = None) ->
     """A setpoint written to make the controller act; nothing to show once it has."""
     return Point(key, write=SetpointRegister(address), data_type=DataType.BOOL, write_kind=WriteKind.COMMAND,
                  on_write=on_write)
-
-
-def fan_level_rereads(*keys: Key[Any]) -> Refresh:
-    """`keys`, which follow the chosen fan level, read again once the controller has taken it."""
-    return Refresh(list(keys), after=3.0)

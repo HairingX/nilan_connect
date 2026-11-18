@@ -1,4 +1,4 @@
-"""Nilan's CTS400 as a model, and how it is talked to over micro_nabto.
+"""Nilan's CTS400 as a model: its points, and how its gateway is talked to over micro_nabto.
 
 Sources:
     Nilan, "Protocol description Nilan CTS400 Modbus version 1.0", doc. version 1.10,
@@ -14,23 +14,29 @@ from __future__ import annotations
 from collections.abc import Mapping
 from typing import Any
 
-from modbus_event_connect import DataType, Key, Limits, Model, Point, Quality, Refresh, Scan, Transforms, Unit
-from modbus_event_connect.micro_nabto import MicroNabtoProfile
+from modbus_event_connect import DataType, Key, Limits, Point, PollRate, Quality, Refresh, Scan, Transforms, Unit
+from modbus_event_connect.micro_nabto import MicroNabtoModel
 
 from ._keys import PointKey
 from ._points import (
-    GATEWAY_TIMING,
-    GATEWAY_ANSWER_WAIT,
-    GATEWAY_ZEROS,
     choice,
     command,
-    fan_level_rereads,
     reading,
     section,
     setting,
     state,
     switch,
     temperature,
+)
+from ._shared import (
+    ANSWER_WAIT,
+    FAN_LEVEL_REREAD_AFTER,
+    FAST_INTERVAL,
+    MAX_REGISTERS,
+    READ_BACK_AFTER,
+    SLOW_INTERVAL,
+    WRITE_RETRY,
+    ZEROS,
 )
 from ._states import Alarm, ExtraSensor
 
@@ -46,15 +52,22 @@ CTS400_ALARMS: Mapping[int, Alarm] = {
 
 FILTER_RESET_REREADS = Refresh(
     [PointKey.FILTER_OK, PointKey.ALARM_STATUS, PointKey.FILTER_REPLACE_TIME_AGO, PointKey.FILTER_REPLACE_TIME_REMAIN],
-    after=2.0)
+    after=2.0,  # measured on a CTS400: all four changed within 1.0 s of a filter reset (HairingX/nilan_connect#4)
+)
 """What a filter reset changes, read again once the controller has taken the reset; the wait leaves
 room for a unit slower than the one it was measured on."""
 
-FILTER_INTERVAL_REREADS = Refresh([PointKey.FILTER_REPLACE_TIME_REMAIN], after=2.0)
+FILTER_INTERVAL_REREADS = Refresh(
+    [PointKey.FILTER_REPLACE_TIME_REMAIN],
+    after=2.0,  # measured on a CTS400: the days left changed 1.0 s after a filter interval (HairingX/nilan_connect#4)
+)
 """The days left until the filter change follow the interval, once the controller has taken it."""
 
-FAN_LEVEL_REREADS = fan_level_rereads(
-    PointKey.FAN_LEVEL_CURRENT, PointKey.FAN_DUTYCYCLE_EXTRACT, PointKey.FAN_DUTYCYCLE_SUPPLY)
+FAN_LEVEL_REREADS = Refresh(
+    [PointKey.FAN_LEVEL_CURRENT, PointKey.FAN_DUTYCYCLE_EXTRACT, PointKey.FAN_DUTYCYCLE_SUPPLY],
+    after=FAN_LEVEL_REREAD_AFTER,
+)
+"""The level the fans run at and their speeds follow the fan level, once the controller has taken it."""
 
 
 def _temperature_setting(key: Key[float], address: int, minimum: float, maximum: float) -> Point[float]:
@@ -161,14 +174,22 @@ async def extra_sensor_fitted(scan: Scan) -> None:
         scan.set_available(list(VOC_POINTS), False, reason="no VOC sensor fitted")
 
 
-CTS400 = Model("CTS 400", "Nilan", [section(verified=CTS400_POINTS)], timing=GATEWAY_TIMING,
-               scan_steps=[extra_sensor_fitted])
-
-CTS400_MICRO_NABTO = MicroNabtoProfile(
-    model=CTS400,
-    max_registers=64,           # a CTS 402 answered 108, so this leaves room
-    answer_wait=GATEWAY_ANSWER_WAIT,
-    # A read sent again is kept open as long as a request is given before it is sent again.
-    later_answer_wait=1.0,
-    zeros=GATEWAY_ZEROS,
+CTS400 = MicroNabtoModel(
+    "CTS 400", "Nilan", [section(verified=CTS400_POINTS)],
+    poll_intervals={
+        PollRate.FAST: FAST_INTERVAL,
+        PollRate.SLOW: SLOW_INTERVAL,
+        PollRate.RARE: 900.0,  # guess
+    },
+    read_back_after=READ_BACK_AFTER,
+    write_retry=WRITE_RETRY,
+    scan_check=PollRate.RARE,
+    identity_points=(),
+    scan_steps=[extra_sensor_fitted],
+    max_registers=MAX_REGISTERS,
+    answer_wait=ANSWER_WAIT,
+    later_answer_wait=1.0,  # guess: the 1 s a request is given before it is sent again
+    zeros=ZEROS,
 )
+"""Nilan's CTS400, as its gateway is talked to over micro_nabto. Whether an extra sensor is fitted
+is checked again every 900 s."""

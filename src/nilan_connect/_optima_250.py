@@ -1,4 +1,4 @@
-"""Genvex's Optima 250 as a model, and how it is talked to over micro_nabto.
+"""Genvex's Optima 250 as a model: its points, and how its gateway is talked to over micro_nabto.
 
 Sources:
     No Modbus description of an Optima is published. The gateway's addresses, scales and
@@ -7,12 +7,23 @@ Sources:
 """
 from __future__ import annotations
 
-from modbus_event_connect import DataType, Limits, Model, Unit
-from modbus_event_connect.micro_nabto import MicroNabtoProfile
+from modbus_event_connect import DataType, Limits, PollRate, Refresh, Unit
+from modbus_event_connect.micro_nabto import MicroNabtoModel
 
 from ._keys import PointKey
 from ._optima import SLAVE_79250_POINTS, optima_rpm, optima_temperature
-from ._points import GATEWAY_ANSWER_WAIT, GATEWAY_TIMING, GATEWAY_ZEROS, fan_level_rereads, section, setting, switch
+from ._points import section, setting, switch
+from ._shared import (
+    ANSWER_WAIT,
+    FAN_LEVEL_REREAD_AFTER,
+    FAST_INTERVAL,
+    LATER_ANSWER_WAIT,
+    MAX_REGISTERS,
+    READ_BACK_AFTER,
+    SLOW_INTERVAL,
+    WRITE_RETRY,
+    ZEROS,
+)
 
 OPTIMA_250_SECTIONS = (
     section(reported=(
@@ -25,19 +36,27 @@ OPTIMA_250_SECTIONS = (
         switch(PointKey.HUMIDITY_CONTROL_ENABLE, 5),
         setting(PointKey.TEMP_BYPASS_OPEN_OFFSET, 17, Limits(1, 10, step=0.1), data_type=DataType.INT16, scale=0.1,
                 unit=Unit.CELSIUS),
-        setting(PointKey.FAN_LEVEL, 100, Limits(0, 4, step=1), on_write=fan_level_rereads(
-            PointKey.FAN_DUTYCYCLE_SUPPLY, PointKey.FAN_DUTYCYCLE_EXTRACT, PointKey.FAN_RPM_SUPPLY,
-            PointKey.FAN_RPM_EXTRACT)),
+        setting(PointKey.FAN_LEVEL, 100, Limits(0, 4, step=1), on_write=Refresh(
+            [PointKey.FAN_DUTYCYCLE_SUPPLY, PointKey.FAN_DUTYCYCLE_EXTRACT, PointKey.FAN_RPM_SUPPLY,
+             PointKey.FAN_RPM_EXTRACT], after=FAN_LEVEL_REREAD_AFTER)),
     )),
 )
 """The Optima 250's, and the Optima 251's, which material published online gives the same."""
 
-OPTIMA_250 = Model("Optima 250", "Genvex", OPTIMA_250_SECTIONS, timing=GATEWAY_TIMING)
-
-OPTIMA_250_MICRO_NABTO = MicroNabtoProfile(
-    model=OPTIMA_250,
-    max_registers=64,           # a CTS 402 answered 108, so this leaves room
-    answer_wait=GATEWAY_ANSWER_WAIT,
-    later_answer_wait=5.0,      # not measured on this controller, so longer than a CTS400's
-    zeros=GATEWAY_ZEROS,
+OPTIMA_250 = MicroNabtoModel(
+    "Optima 250", "Genvex", OPTIMA_250_SECTIONS,
+    poll_intervals={
+        PollRate.FAST: FAST_INTERVAL,
+        PollRate.SLOW: SLOW_INTERVAL,
+    },
+    read_back_after=READ_BACK_AFTER,
+    write_retry=WRITE_RETRY,
+    scan_check=None,
+    identity_points=(),
+    scan_steps=(),
+    max_registers=MAX_REGISTERS,
+    answer_wait=ANSWER_WAIT,
+    later_answer_wait=LATER_ANSWER_WAIT,
+    zeros=ZEROS,
 )
+"""Genvex's Optima 250, as its gateway is talked to over micro_nabto."""

@@ -6,14 +6,15 @@ is and the range it can be written with, the errors, and discovery.
 """
 from importlib.metadata import version as _installed_version
 
-from event_connect import Certainty, WriteRange
-from modbus_event_connect import (
+from event_connect import (
     AuthenticationError,
     CannotConnectError,
-    Client,
+    Certainty,
+    Change,
     ClientError,
     Clock,
     DataValue,
+    DeviceClient,
     Identity,
     InvalidValueError,
     Key,
@@ -21,11 +22,11 @@ from modbus_event_connect import (
     Limits,
     ModelError,
     NotConnectedError,
-    Point,
     PointsCallback,
     PollRate,
     Quality,
     ReadOnlyError,
+    Selector,
     Status,
     StatusCallback,
     Unit,
@@ -33,8 +34,10 @@ from modbus_event_connect import (
     ValueCallback,
     Write,
     WriteKind,
+    WriteRange,
 )
-from modbus_event_connect.micro_nabto import DiscoveredDevice, discover
+from modbus_event_connect import Client, Point
+from modbus_event_connect.micro_nabto import PORT, MicroNabtoModel
 
 from ._cts400 import CTS400
 from ._cts602 import CTS602
@@ -65,16 +68,18 @@ from ._states import (
     ServiceMode,
     Weekday,
 )
-from ._nilan import PROFILES, create_client
+from ._nilan import MODELS, DiscoveredDevice, create_client, discover
 
 __version__ = _installed_version("nilan_connect")
 __all__ = [
     "AuthenticationError",
     "CannotConnectError",
-    "Client",
+    "Certainty",
+    "Change",
     "ClientError",
     "Clock",
     "DataValue",
+    "DeviceClient",
     "Identity",
     "InvalidValueError",
     "Key",
@@ -82,11 +87,11 @@ __all__ = [
     "Limits",
     "ModelError",
     "NotConnectedError",
-    "Point",
     "PointsCallback",
     "PollRate",
     "Quality",
     "ReadOnlyError",
+    "Selector",
     "Status",
     "StatusCallback",
     "Unit",
@@ -95,8 +100,15 @@ __all__ = [
     "Write",
     "WriteKind",
     "WriteRange",
+    "Client",
+    "Point",
+    "MicroNabtoModel",
+    "PORT",
     "DiscoveredDevice",
+    "create_client",
     "discover",
+    "MODELS",
+    "select_model",
     "CTS400",
     "CTS602",
     "CTS602_LIGHT",
@@ -108,10 +120,6 @@ __all__ = [
     "OPTIMA_312",
     "OPTIMA_314",
     "PointKey",
-    "Certainty",
-    "PROFILES",
-    "create_client",
-    "select_model",
     "AirExchangeMode",
     "Alarm",
     "CentralHeatMode",

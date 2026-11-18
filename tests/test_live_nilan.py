@@ -18,11 +18,8 @@ from typing import Any, NoReturn
 
 import pytest
 import pytest_asyncio
-from modbus_event_connect import NO_RETRY, CircuitBreaker, Client, Quality
-from modbus_event_connect.micro_nabto import MicroNabtoConnection, MicroNabtoDevice
-
 from conftest import live_or_skip, live_setting
-from nilan_connect import CTS400, PROFILES, PointKey, select_model
+from nilan_connect import CTS400, Client, PointKey, Quality, create_client
 from nilan_connect._cts400 import CTS400_POINTS
 
 HOST = live_setting("NILAN_HOST")
@@ -37,13 +34,11 @@ pytestmark = [
 @pytest_asyncio.fixture(scope="module", loop_scope="module")  # pyright: ignore[reportUntypedFunctionDecorator, reportUnknownMemberType]
 async def client() -> AsyncGenerator[Client, None]:
     assert HOST is not None and EMAIL is not None   # guarded by the skip above
-    connection = MicroNabtoConnection(EMAIL, host=HOST, reconnect=CircuitBreaker(after=1, retry=NO_RETRY))
-    device = MicroNabtoDevice(connection, profiles=PROFILES, owns_connection=True)
+    client = create_client(email=EMAIL, host=HOST, read_only=True)
 
-    async def refuse(*args: object) -> NoReturn:
+    async def refuse(*args: object, **kwargs: object) -> NoReturn:
         raise AssertionError("a write was attempted; these tests are read-only")
-    setattr(device, "write", refuse)
-    client = Client(device, select_model, write_retry=NO_RETRY, read_only=True)
+    setattr(client._device, "write", refuse)
     await client.connect()
     yield client
     await client.disconnect()

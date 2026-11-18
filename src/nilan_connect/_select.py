@@ -1,7 +1,8 @@
 """Choosing a controller's model from what its gateway's handshake says."""
 from __future__ import annotations
 
-from modbus_event_connect import Identity, Model
+from modbus_event_connect import Identity
+from modbus_event_connect.micro_nabto import MicroNabtoModel
 
 from ._cts400 import CTS400
 from ._cts602 import CTS602
@@ -17,7 +18,7 @@ from ._optima_314 import OPTIMA_314
 _BY_SLAVE_MODEL_79250 = {1: OPTIMA_250, 5: OPTIMA_301, 8: OPTIMA_251, 9: OPTIMA_312}
 
 
-def select_model(identity: Identity) -> Model | None:
+def select_model(identity: Identity) -> MicroNabtoModel | None:
     """The model for the controller the handshake names; None for one not supported.
 
     A CTS400 reported device model 1140, slave device 72270 and slave device model 1 on

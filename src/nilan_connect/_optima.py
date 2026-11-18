@@ -12,7 +12,8 @@ from typing import Any
 from modbus_event_connect import DataType, Key, Limits, Point, Refresh, Unit
 
 from ._keys import PointKey
-from ._points import alarm_bit, command, fan_level_rereads, reading, setting, state, switch, temperature
+from ._points import alarm_bit, command, reading, setting, state, switch, temperature
+from ._shared import FAN_LEVEL_REREAD_AFTER
 
 
 def optima_temperature(key: Key[float], address: int) -> Point[float]:
@@ -58,9 +59,9 @@ def optima_270_setting[T](key: Key[T], address: int, limits: Limits | None, *,
 
 def optima_270_fan_level() -> Point[int]:
     """The fan level of an Optima 270 or 314."""
-    return optima_270_setting(PointKey.FAN_LEVEL, 7, Limits(0, 4, step=1), on_write=fan_level_rereads(
-        PointKey.FAN_DUTYCYCLE_SUPPLY, PointKey.FAN_DUTYCYCLE_EXTRACT, PointKey.FAN_RPM_SUPPLY,
-        PointKey.FAN_RPM_EXTRACT))
+    return optima_270_setting(PointKey.FAN_LEVEL, 7, Limits(0, 4, step=1), on_write=Refresh(
+        [PointKey.FAN_DUTYCYCLE_SUPPLY, PointKey.FAN_DUTYCYCLE_EXTRACT, PointKey.FAN_RPM_SUPPLY,
+         PointKey.FAN_RPM_EXTRACT], after=FAN_LEVEL_REREAD_AFTER))
 
 
 def optima_270_switch(key: Key[bool], address: int) -> Point[bool]:
@@ -100,6 +101,6 @@ SLAVE_79250_POINTS: tuple[Point[Any], ...] = (
 """What the Optima 250, 251, 301 and 312 - slave device 79250 - share."""
 
 
-SLAVE_79250_FAN_LEVEL = setting(PointKey.FAN_LEVEL, 100, Limits(0, 4, step=1), on_write=fan_level_rereads(
-    PointKey.FAN_DUTYCYCLE_SUPPLY, PointKey.FAN_DUTYCYCLE_EXTRACT))
+SLAVE_79250_FAN_LEVEL = setting(PointKey.FAN_LEVEL, 100, Limits(0, 4, step=1), on_write=Refresh(
+    [PointKey.FAN_DUTYCYCLE_SUPPLY, PointKey.FAN_DUTYCYCLE_EXTRACT], after=FAN_LEVEL_REREAD_AFTER))
 """The fan level of the Optima 301 and 312."""

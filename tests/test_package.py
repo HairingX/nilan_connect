@@ -23,6 +23,25 @@ def test_every_link_in_its_description_works_where_the_description_is_shown() ->
     assert links and all(link.startswith(("https://", "#")) for link in links), links
 
 
+SHARED = (
+    "AuthenticationError", "CannotConnectError", "Certainty", "Change", "ClientError", "Clock", "DataValue",
+    "DeviceClient", "Identity", "InvalidValueError", "Key", "Labels", "Limits", "ModelError", "NotConnectedError",
+    "PointsCallback", "PollRate", "Quality", "ReadOnlyError", "Selector", "Status", "StatusCallback", "Unit",
+    "UnsupportedDeviceError", "ValueCallback", "Write", "WriteKind", "WriteRange",
+)
+"""What every device library exports, as event_connect's own, so that each is used alike."""
+
+NILANS_OWN = ("DiscoveredDevice", "discover")
+"""Names modbus_event_connect has too, for something of its own."""
+
+
+def test_it_exports_what_every_device_library_shares_as_event_connects_own() -> None:
+    import event_connect
+
+    assert [name for name in SHARED if name not in nilan_connect.__all__] == []
+    assert [name for name in SHARED if getattr(nilan_connect, name) is not getattr(event_connect, name)] == []
+
+
 def test_what_it_passes_on_from_the_libraries_it_is_built_on_is_their_own() -> None:
     """What the package passes on is modbus_event_connect's or event_connect's own, not a copy that
     could drift."""
@@ -37,12 +56,11 @@ def test_what_it_passes_on_from_the_libraries_it_is_built_on_is_their_own() -> N
         (nilan_connect, (modbus_event_connect, modbus_event_connect.micro_nabto, event_connect)),
         (nilan_connect.testing, (modbus_event_connect.testing,)),
     ):
-        for name in package.__all__:
+        for name in (name for name in package.__all__ if name not in NILANS_OWN):
             source = next((s for s in sources if name in getattr(s, "__all__", ())), None)
             if source is not None:
                 assert getattr(package, name) is getattr(source, name), name
     assert "Client" in nilan_connect.__all__
-    assert nilan_connect.Certainty is event_connect.Certainty
     assert "SimulatedMicroNabtoDevice" in nilan_connect.testing.__all__
 
 

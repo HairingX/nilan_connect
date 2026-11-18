@@ -1,4 +1,4 @@
-"""Genvex's Optima 270 as a model, and how it is talked to over micro_nabto.
+"""Genvex's Optima 270 as a model: its points, and how its gateway is talked to over micro_nabto.
 
 Sources:
     No Modbus description of an Optima is published. The gateway's addresses, scales and
@@ -7,8 +7,8 @@ Sources:
 """
 from __future__ import annotations
 
-from modbus_event_connect import DataType, Limits, Model, Point, Unit
-from modbus_event_connect.micro_nabto import MicroNabtoProfile
+from modbus_event_connect import DataType, Limits, Point, PollRate, Unit
+from modbus_event_connect.micro_nabto import MicroNabtoModel
 
 from ._keys import PointKey
 from ._optima import (
@@ -21,7 +21,17 @@ from ._optima import (
     optima_temperature,
     optima_write_address,
 )
-from ._points import GATEWAY_ANSWER_WAIT, GATEWAY_TIMING, GATEWAY_ZEROS, alarm_bit, command, reading, section, state
+from ._points import alarm_bit, command, reading, section, state
+from ._shared import (
+    ANSWER_WAIT,
+    FAST_INTERVAL,
+    LATER_ANSWER_WAIT,
+    MAX_REGISTERS,
+    READ_BACK_AFTER,
+    SLOW_INTERVAL,
+    WRITE_RETRY,
+    ZEROS,
+)
 
 # The alarm bits, as found in material published online. The filter alarm's bit is set while the
 # filter must be changed, so it is `filter_ok` inverted, as every controller has that key.
@@ -52,48 +62,56 @@ ALARMS_270: tuple[Point[bool], ...] = (
 )
 
 
-OPTIMA_270 = Model("Optima 270", "Genvex", (
-    section(verified=(
-        optima_percent(PointKey.FAN_DUTYCYCLE_SUPPLY, 18, scale=0.01),
-        optima_percent(PointKey.FAN_DUTYCYCLE_EXTRACT, 19, scale=0.01),
-        optima_temperature(PointKey.TEMP_SUPPLY, 20),
-        optima_temperature(PointKey.TEMP_OUTSIDE, 21),
-        optima_temperature(PointKey.TEMP_EXHAUST, 22),
-        optima_temperature(PointKey.TEMP_EXTRACT, 23),
-        optima_temperature(PointKey.TEMP_FROST_PROTECTION, 24),
-        reading(PointKey.HUMIDITY, 26, data_type=DataType.INT16, unit=Unit.PERCENT),
-        optima_rpm(PointKey.FAN_RPM_SUPPLY, 35),
-        optima_rpm(PointKey.FAN_RPM_EXTRACT, 36),
-        reading(PointKey.BYPASS_POSITION, 40, data_type=DataType.INT16),
-        optima_percent(PointKey.PREHEAT_OUTPUT, 41, scale=0.01),
-        optima_percent(PointKey.REHEAT_OUTPUT, 42, scale=0.01),
-        optima_rpm(PointKey.ROTOR_SPEED, 50),
-        state(PointKey.BYPASS_ACTIVE, 53),
-        reading(PointKey.ALARM_BITS, 114),
-        reading(PointKey.ALARM_BITS_HIGH, 115),
-        *ALARMS_270,
-        optima_target(1, write_address=optima_write_address(1)),
-        optima_270_switch(PointKey.REHEAT_ENABLE, 3),
-        optima_270_switch(PointKey.HUMIDITY_CONTROL_ENABLE, 6),
-        optima_270_fan_level(),
-        optima_270_setting(PointKey.TEMP_BYPASS_OPEN_OFFSET, 21, Limits(1, 10, step=0.1), data_type=DataType.INT16,
-                           scale=0.1, unit=Unit.CELSIUS),
-        optima_270_setting(PointKey.TEMP_BYPASS_CLOSE_OFFSET, 29, Limits(0, 20, step=1), unit=Unit.CELSIUS),
-        optima_270_switch(PointKey.BOOST_ENABLE, 30),
-        command(PointKey.FILTER_REPLACE_RESET, 110),
-        optima_270_setting(PointKey.BYPASS_FAN_INCREASE, 57, Limits(0, 100, step=1), unit=Unit.PERCENT),
-        optima_270_setting(PointKey.TEMP_BYPASS_FAN_INCREASE_OFFSET, 58, Limits(0, 5, step=0.1),
-                           data_type=DataType.INT16, scale=0.1, unit=Unit.CELSIUS),
-        optima_270_setting(PointKey.BOOST_TIME, 70, Limits(1, 120, step=1), unit=Unit.MINUTES),
-        # The user manual gives the filter timer in months, 0-12; this register was reported in days.
-        optima_270_setting(PointKey.FILTER_REPLACE_INTERVAL, 100, None, unit=Unit.DAYS),
-    )),
-), timing=GATEWAY_TIMING)
-
-OPTIMA_270_MICRO_NABTO = MicroNabtoProfile(
-    model=OPTIMA_270,
-    max_registers=64,           # a CTS 402 answered 108, so this leaves room
-    answer_wait=GATEWAY_ANSWER_WAIT,
-    later_answer_wait=5.0,      # not measured on this controller, so longer than a CTS400's
-    zeros=GATEWAY_ZEROS,
+OPTIMA_270 = MicroNabtoModel(
+    "Optima 270", "Genvex", (
+        section(verified=(
+            optima_percent(PointKey.FAN_DUTYCYCLE_SUPPLY, 18, scale=0.01),
+            optima_percent(PointKey.FAN_DUTYCYCLE_EXTRACT, 19, scale=0.01),
+            optima_temperature(PointKey.TEMP_SUPPLY, 20),
+            optima_temperature(PointKey.TEMP_OUTSIDE, 21),
+            optima_temperature(PointKey.TEMP_EXHAUST, 22),
+            optima_temperature(PointKey.TEMP_EXTRACT, 23),
+            optima_temperature(PointKey.TEMP_FROST_PROTECTION, 24),
+            reading(PointKey.HUMIDITY, 26, data_type=DataType.INT16, unit=Unit.PERCENT),
+            optima_rpm(PointKey.FAN_RPM_SUPPLY, 35),
+            optima_rpm(PointKey.FAN_RPM_EXTRACT, 36),
+            reading(PointKey.BYPASS_POSITION, 40, data_type=DataType.INT16),
+            optima_percent(PointKey.PREHEAT_OUTPUT, 41, scale=0.01),
+            optima_percent(PointKey.REHEAT_OUTPUT, 42, scale=0.01),
+            optima_rpm(PointKey.ROTOR_SPEED, 50),
+            state(PointKey.BYPASS_ACTIVE, 53),
+            reading(PointKey.ALARM_BITS, 114),
+            reading(PointKey.ALARM_BITS_HIGH, 115),
+            *ALARMS_270,
+            optima_target(1, write_address=optima_write_address(1)),
+            optima_270_switch(PointKey.REHEAT_ENABLE, 3),
+            optima_270_switch(PointKey.HUMIDITY_CONTROL_ENABLE, 6),
+            optima_270_fan_level(),
+            optima_270_setting(PointKey.TEMP_BYPASS_OPEN_OFFSET, 21, Limits(1, 10, step=0.1), data_type=DataType.INT16,
+                               scale=0.1, unit=Unit.CELSIUS),
+            optima_270_setting(PointKey.TEMP_BYPASS_CLOSE_OFFSET, 29, Limits(0, 20, step=1), unit=Unit.CELSIUS),
+            optima_270_switch(PointKey.BOOST_ENABLE, 30),
+            command(PointKey.FILTER_REPLACE_RESET, 110),
+            optima_270_setting(PointKey.BYPASS_FAN_INCREASE, 57, Limits(0, 100, step=1), unit=Unit.PERCENT),
+            optima_270_setting(PointKey.TEMP_BYPASS_FAN_INCREASE_OFFSET, 58, Limits(0, 5, step=0.1),
+                               data_type=DataType.INT16, scale=0.1, unit=Unit.CELSIUS),
+            optima_270_setting(PointKey.BOOST_TIME, 70, Limits(1, 120, step=1), unit=Unit.MINUTES),
+            # The user manual gives the filter timer in months, 0-12; this register was reported in days.
+            optima_270_setting(PointKey.FILTER_REPLACE_INTERVAL, 100, None, unit=Unit.DAYS),
+        )),
+    ),
+    poll_intervals={
+        PollRate.FAST: FAST_INTERVAL,
+        PollRate.SLOW: SLOW_INTERVAL,
+    },
+    read_back_after=READ_BACK_AFTER,
+    write_retry=WRITE_RETRY,
+    scan_check=None,
+    identity_points=(),
+    scan_steps=(),
+    max_registers=MAX_REGISTERS,
+    answer_wait=ANSWER_WAIT,
+    later_answer_wait=LATER_ANSWER_WAIT,
+    zeros=ZEROS,
 )
+"""Genvex's Optima 270, as its gateway is talked to over micro_nabto."""

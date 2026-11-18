@@ -1,4 +1,4 @@
-"""Genvex's Optima 260 as a model, and how it is talked to over micro_nabto.
+"""Genvex's Optima 260 as a model: its points, and how its gateway is talked to over micro_nabto.
 
 Sources:
     No Modbus description of an Optima is published. The gateway's addresses, scales and
@@ -7,47 +7,62 @@ Sources:
 """
 from __future__ import annotations
 
-from modbus_event_connect import DataType, Limits, Model, Unit
-from modbus_event_connect.micro_nabto import MicroNabtoProfile
+from modbus_event_connect import DataType, Limits, PollRate, Refresh, Unit
+from modbus_event_connect.micro_nabto import MicroNabtoModel
 
 from ._keys import PointKey
 from ._optima import optima_fan_presets, optima_percent, optima_target, optima_temperature
 from ._points import (
-    GATEWAY_TIMING,
-    GATEWAY_ANSWER_WAIT,
-    GATEWAY_ZEROS,
     command,
-    fan_level_rereads,
     reading,
     section,
     setting,
     state,
 )
-
-OPTIMA_260 = Model("Optima 260", "Genvex", (
-    section(reported=(
-        optima_temperature(PointKey.TEMP_SUPPLY, 0),
-        optima_temperature(PointKey.TEMP_OUTSIDE, 2),
-        optima_temperature(PointKey.TEMP_EXHAUST, 3),
-        optima_temperature(PointKey.TEMP_EXTRACT, 6),
-        optima_percent(PointKey.FAN_DUTYCYCLE_SUPPLY, 9),
-        optima_percent(PointKey.FAN_DUTYCYCLE_EXTRACT, 10),
-        state(PointKey.BYPASS_ACTIVE, 11),
-        reading(PointKey.HUMIDITY, 13, data_type=DataType.INT16, unit=Unit.PERCENT),
-        setting(PointKey.FAN_LEVEL, 0, Limits(0, 4, step=1), on_write=fan_level_rereads(
-            PointKey.FAN_DUTYCYCLE_SUPPLY, PointKey.FAN_DUTYCYCLE_EXTRACT)),
-        optima_target(2),
-        *optima_fan_presets(7),
-        setting(PointKey.TEMP_BYPASS_OPEN_OFFSET, 18, Limits(1, 10, step=0.1), data_type=DataType.INT16, scale=0.1,
-                unit=Unit.CELSIUS),
-        command(PointKey.FILTER_REPLACE_RESET, 47),
-    )),
-), timing=GATEWAY_TIMING)
-
-OPTIMA_260_MICRO_NABTO = MicroNabtoProfile(
-    model=OPTIMA_260,
-    max_registers=64,           # a CTS 402 answered 108, so this leaves room
-    answer_wait=GATEWAY_ANSWER_WAIT,
-    later_answer_wait=5.0,      # not measured on this controller, so longer than a CTS400's
-    zeros=GATEWAY_ZEROS,
+from ._shared import (
+    ANSWER_WAIT,
+    FAN_LEVEL_REREAD_AFTER,
+    FAST_INTERVAL,
+    LATER_ANSWER_WAIT,
+    MAX_REGISTERS,
+    READ_BACK_AFTER,
+    SLOW_INTERVAL,
+    WRITE_RETRY,
+    ZEROS,
 )
+
+OPTIMA_260 = MicroNabtoModel(
+    "Optima 260", "Genvex", (
+        section(reported=(
+            optima_temperature(PointKey.TEMP_SUPPLY, 0),
+            optima_temperature(PointKey.TEMP_OUTSIDE, 2),
+            optima_temperature(PointKey.TEMP_EXHAUST, 3),
+            optima_temperature(PointKey.TEMP_EXTRACT, 6),
+            optima_percent(PointKey.FAN_DUTYCYCLE_SUPPLY, 9),
+            optima_percent(PointKey.FAN_DUTYCYCLE_EXTRACT, 10),
+            state(PointKey.BYPASS_ACTIVE, 11),
+            reading(PointKey.HUMIDITY, 13, data_type=DataType.INT16, unit=Unit.PERCENT),
+            setting(PointKey.FAN_LEVEL, 0, Limits(0, 4, step=1), on_write=Refresh(
+                [PointKey.FAN_DUTYCYCLE_SUPPLY, PointKey.FAN_DUTYCYCLE_EXTRACT], after=FAN_LEVEL_REREAD_AFTER)),
+            optima_target(2),
+            *optima_fan_presets(7),
+            setting(PointKey.TEMP_BYPASS_OPEN_OFFSET, 18, Limits(1, 10, step=0.1), data_type=DataType.INT16, scale=0.1,
+                    unit=Unit.CELSIUS),
+            command(PointKey.FILTER_REPLACE_RESET, 47),
+        )),
+    ),
+    poll_intervals={
+        PollRate.FAST: FAST_INTERVAL,
+        PollRate.SLOW: SLOW_INTERVAL,
+    },
+    read_back_after=READ_BACK_AFTER,
+    write_retry=WRITE_RETRY,
+    scan_check=None,
+    identity_points=(),
+    scan_steps=(),
+    max_registers=MAX_REGISTERS,
+    answer_wait=ANSWER_WAIT,
+    later_answer_wait=LATER_ANSWER_WAIT,
+    zeros=ZEROS,
+)
+"""Genvex's Optima 260, as its gateway is talked to over micro_nabto."""

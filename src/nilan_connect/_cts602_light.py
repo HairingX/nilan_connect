@@ -1,4 +1,4 @@
-"""Nilan's CTS602 Light as a model, and how it is talked to over micro_nabto.
+"""Nilan's CTS602 Light as a model: its points, and how its gateway is talked to over micro_nabto.
 
 Sources:
     Nilan, "Protocol description Nilan CTS602Light Modbus" version 20, in this repository's
@@ -9,8 +9,8 @@ Sources:
 """
 from __future__ import annotations
 
-from modbus_event_connect import DataType, Limits, Model, Unit
-from modbus_event_connect.micro_nabto import MicroNabtoProfile
+from modbus_event_connect import DataType, Limits, PollRate, Unit
+from modbus_event_connect.micro_nabto import MicroNabtoModel
 
 from ._cts602 import (
     CONTROL_STATES,
@@ -22,9 +22,6 @@ from ._cts602 import (
 )
 from ._keys import PointKey
 from ._points import (
-    GATEWAY_TIMING,
-    GATEWAY_ANSWER_WAIT,
-    GATEWAY_ZEROS,
     alarm_bit,
     choice,
     reading,
@@ -33,6 +30,16 @@ from ._points import (
     setting,
     state,
     switch,
+)
+from ._shared import (
+    ANSWER_WAIT,
+    FAST_INTERVAL,
+    LATER_ANSWER_WAIT,
+    MAX_REGISTERS,
+    READ_BACK_AFTER,
+    SLOW_INTERVAL,
+    WRITE_RETRY,
+    ZEROS,
 )
 
 CTS602_LIGHT_SECTIONS = (
@@ -88,12 +95,20 @@ CTS602_LIGHT_SECTIONS = (
     ),
 )
 
-CTS602_LIGHT = Model("CTS 602 Light", "Nilan", CTS602_LIGHT_SECTIONS, timing=GATEWAY_TIMING)
-
-CTS602_LIGHT_MICRO_NABTO = MicroNabtoProfile(
-    model=CTS602_LIGHT,
-    max_registers=64,           # a CTS 402 answered 108, so this leaves room
-    answer_wait=GATEWAY_ANSWER_WAIT,
-    later_answer_wait=5.0,      # not measured on this controller, so longer than a CTS400's
-    zeros=GATEWAY_ZEROS,
+CTS602_LIGHT = MicroNabtoModel(
+    "CTS 602 Light", "Nilan", CTS602_LIGHT_SECTIONS,
+    poll_intervals={
+        PollRate.FAST: FAST_INTERVAL,
+        PollRate.SLOW: SLOW_INTERVAL,
+    },
+    read_back_after=READ_BACK_AFTER,
+    write_retry=WRITE_RETRY,
+    scan_check=None,
+    identity_points=(),
+    scan_steps=(),
+    max_registers=MAX_REGISTERS,
+    answer_wait=ANSWER_WAIT,
+    later_answer_wait=LATER_ANSWER_WAIT,
+    zeros=ZEROS,
 )
+"""Nilan's CTS602 Light, as its gateway is talked to over micro_nabto."""
