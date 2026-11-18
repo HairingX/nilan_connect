@@ -22,7 +22,7 @@ material we could find online, and have not been tested on those controllers.** 
 wrong or missing; reports of what a unit shows are welcome. `connect()` raises
 `UnsupportedDeviceError` for any other controller.
 
-`certainty(point)` says how certain it is that a point is right:
+A point's `certainty` says how certain it is that the point is right:
 
 | `Certainty` | Meaning |
 |---|---|
@@ -38,9 +38,9 @@ user is offered that is the consumer's choice. A consumer that wants only what h
 working leaves the inferred points out:
 
 ```python
-from nilan_connect import Certainty, certainty
+from nilan_connect import Certainty
 
-shown = [point for point in client.points.values() if certainty(point) is not Certainty.INFERRED]
+shown = [point for point in client.points.values() if point.certainty is not Certainty.INFERRED]
 ```
 
 ## Installation
@@ -50,8 +50,10 @@ pip install nilan-connect
 ```
 
 Everything you use comes from `nilan_connect`: the client and its values, the errors, discovery,
-and, in `nilan_connect.testing`, a simulated gateway for your own tests. modbus_event_connect is
-installed with it; nothing needs importing from it.
+and, in `nilan_connect.testing`, a simulated gateway and a client of it for your own tests.
+modbus_event_connect is installed with it; nothing needs importing from it. The client is the
+`DeviceClient` every device library built on event_connect shares, and the names they share
+(`Status`, `Quality`, `PollRate`, the errors, ...) are event_connect's own.
 
 ## Usage
 
@@ -64,29 +66,47 @@ def on_change(key, old, new):
 
 async def main():
     # The email is the account the gateway is paired with in Nilan's app.
-    client = create_client("you@example.com", host="<gateway-ip>")
+    client = create_client(email="you@example.com", host="192.0.2.10")
     await client.connect()              # reads the handshake and chooses the controller's model
 
     client.subscribe(PointKey.TEMP_OUTSIDE, on_change)
     client.subscribe(PointKey.FILTER_OK, on_change)
 
-    while True:                         # you own the clock; the library owns the plan
-        await client.poll()             # reads only what is due - free when nothing is
-        await asyncio.sleep(1)
+    await client.run()                  # reads whatever is due, until cancelled
 
 asyncio.run(main())
 ```
 
-With only a `device_id`, the gateway is found by discovery. `discover()` lists the gateways that
-answer. `port` reaches a gateway that does not answer on micro_nabto's standard port.
+`create_client` takes keyword arguments only: `email`, `host`, `device_id`, `port` (micro_nabto's
+standard `PORT` unless given), `read_only` and `clock`. With only a `device_id`, the gateway is
+found by discovery, and with both, a gateway that has moved is found again. `run()` is the whole
+poll loop, and never ends by itself: it waits while the client is not connected, and logs a poll
+that raises and polls on after a pause. A program with a loop of its own calls `poll()`, which
+reads only what is due, and waits `seconds_until_next_poll()`.
+
+```python
+from nilan_connect import discover
+
+async def find():
+    for gateway in await discover():                # every gateway on the local network
+        print(gateway.host, gateway.port, gateway.device_id)
+    return await discover(target="192.0.2.10")      # the gateway at one address
+```
+
+Discovery waits two seconds for answers.
 
 ## How often values are read
 
-The controller's readings every 10 seconds, its settings every 180 seconds, and a setting again
-one second after it is written. What a write changes is read again too: after a filter reset, the
-filter's status and timers and the alarm status, two seconds later; after a filter interval, the
-days left, two seconds later; after a fan level, the levels the fans run at and their speeds,
-three seconds later.
+Each controller's model says when its points are read, and nothing outside the model or
+`create_client` changes it. Every model reads the controller's readings every 10 seconds, its
+settings every 180 seconds, and a setting again one second after it is written. What a write
+changes is read again too: after a filter reset on a CTS400, the filter's status and timers and
+the alarm status, two seconds later; after a filter interval, the days left, two seconds later;
+after a fan level, on every controller, the levels the fans run at and their speeds, three
+seconds later. The setting itself is read back after one second either way. A CTS400 is checked
+every 900 seconds for whether a CO2 or VOC sensor has been fitted or taken out.
+
+Only what is subscribed to, or asked for with `refresh()`, is read.
 
 ## The gateway
 
@@ -99,10 +119,16 @@ addresses of its own.
 over RS-485, one register alone takes about 13 ms, and those reads, which span up to five of the
 manual's register groups, at least 40 to 95 ms.
 
-The gateway counts as not answering once it has left reads unanswered for 10 seconds: one missed
-read keeps the last values, and a gateway that stays silent shows as not answering. After a failed
-handshake it is asked again after 5 seconds, before the next read is due. A request the gateway
-has said it has is given 2 seconds to be answered: it answers within a fraction of a second.
+What is known of a gateway was seen on the gateway of one controller or another, and is named
+with it here; whether the others' gateways behave alike is not known. Each controller's model
+states how its gateway is talked to: where nothing was seen on that controller's gateway, with
+what was seen on another's, or a guess.
+
+A gateway counts as not answering once it has left reads unanswered for 10 seconds: one missed
+read keeps the last values, and a gateway that stays silent shows as not answering. After a
+failed handshake it is asked again after 5 seconds, before the next read is due. A read the
+gateway has said it has is given 2 seconds to be answered, a write or a first handshake 5
+seconds: a CTS602's gateway answered 21,000 reads within 245 ms.
 
 What it holds can be empty. A CTS602's gateway answered the first reads of a new session with
 only zeros, at once and again 18 ms later, and with values 10 s later. The same gateway was
@@ -128,13 +154,20 @@ A value outside the limits Nilan's manual gives is refused before anything is se
 `create_client(..., read_only=True)` refuses every write.
 
 A CTS400's gateway answered some writes with a status saying it did not take them, and took the
-same write on a later try. Such a write is sent again until `create_client(...,
-write_retry_for=...)` seconds have passed since it was first sent - `WRITE_RETRY_FOR` unless
-given; 0 sends every write once. A newer value for the same setting takes over from it.
+same write on a later try. Such a write is sent again every half second, for up to 15 seconds
+after it was first sent; every model does so, as nothing else is known. A newer value for the
+same setting takes over from it.
 
-A read sent again, as its receipt did not come, and answered with only zeros where the registers
-held values, is kept open for a later answer: 1 s for a CTS400, and the library's 5 s for the
-other controllers. `create_client(..., later_answer_wait=...)` sets it for any controller.
+## How each controller is talked to
+
+Each model is a `MicroNabtoModel` in a file of its own, read top to bottom: its points, when they
+are read, and how its gateway is talked to, each number with where it comes from. `MODELS` lists
+them all, and `select_model` chooses one from the gateway's handshake. Every model asks its
+gateway for at most 64 registers in one read. A read sent again, as its receipt did not come, and
+answered with only zeros where the registers held values, is kept open for a later answer: 1 s
+for a CTS400, the 1 s a request is given before it is sent again, and 5 s for the other
+controllers, on which it has not been measured. Until the controller's model is known, the
+longest of them is used.
 
 ## Keys
 

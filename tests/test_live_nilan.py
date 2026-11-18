@@ -10,19 +10,16 @@
     Run:
         pytest tests/test_live_nilan.py -v -s
 
-NOTHING HERE WRITES TO THE CONTROLLER: the client is read-only, and the one path a write could
-take fails the test.
+NOTHING HERE WRITES TO THE CONTROLLER: the client is read-only, and a write reaching the device
+fails the test.
 """
 from collections.abc import AsyncGenerator
 from typing import Any, NoReturn
 
 import pytest
 import pytest_asyncio
-from modbus_event_connect import Client, Quality
-from modbus_event_connect.micro_nabto import MicroNabtoConnection, MicroNabtoDevice
-
 from conftest import live_or_skip, live_setting
-from nilan_connect import CTS400, PointKey, select_model
+from nilan_connect import CTS400, Client, PointKey, Quality, create_client
 from nilan_connect._cts400 import CTS400_POINTS
 
 HOST = live_setting("NILAN_HOST")
@@ -37,12 +34,11 @@ pytestmark = [
 @pytest_asyncio.fixture(scope="module", loop_scope="module")  # pyright: ignore[reportUntypedFunctionDecorator, reportUnknownMemberType]
 async def client() -> AsyncGenerator[Client, None]:
     assert HOST is not None and EMAIL is not None   # guarded by the skip above
-    connection = MicroNabtoConnection(EMAIL, host=HOST, reconnect=None)
+    client = create_client(email=EMAIL, host=HOST, read_only=True)
 
-    async def refuse(command: bytes) -> NoReturn:
+    async def refuse(*args: object, **kwargs: object) -> NoReturn:
         raise AssertionError("a write was attempted; these tests are read-only")
-    setattr(connection, "send", refuse)
-    client = Client(MicroNabtoDevice(connection, owns_connection=True), select_model, read_only=True)
+    setattr(client._device, "write", refuse)
     await client.connect()
     yield client
     await client.disconnect()

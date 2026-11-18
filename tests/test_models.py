@@ -8,15 +8,9 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-from modbus_event_connect import Client, Identity, Model, Point
-from modbus_event_connect.micro_nabto import (
-    DatapointRegister,
-    MicroNabtoConnection,
-    MicroNabtoDevice,
-    MicroNabtoOptions,
-    SetpointRegister,
-)
-from modbus_event_connect.testing import assert_models_valid, resolve
+from modbus_event_connect import Fixed, Retry, Steps, Within
+from modbus_event_connect.micro_nabto import DatapointRegister, RereadZeros, SetpointRegister
+from modbus_event_connect.testing import ResolvedModel, assert_models_valid, resolve
 
 from nilan_connect import (
     CTS400,
@@ -31,15 +25,20 @@ from nilan_connect import (
     OPTIMA_314,
     Alarm,
     Certainty,
+    Client,
     FilterReplaceInterval,
+    MODELS,
+    Identity,
+    MicroNabtoModel,
     OperationState,
+    Point,
     PointKey,
+    PollRate,
     Weekday,
-    certainty,
     select_model,
 )
-from nilan_connect._certainty import section
-from nilan_connect.testing import SimulatedMicroNabtoDevice
+from nilan_connect._points import section
+from nilan_connect.testing import SimulatedMicroNabtoDevice, client_for
 
 DOCS = Path(__file__).parent.parent / "docs" / "models"
 EMAIL = "user@example.invalid"
@@ -50,7 +49,7 @@ def _cts602(slave_model: int) -> Identity:
     return {"device_model": 1140, "slave_device_number": 2763306, "slave_device_model": slave_model}
 
 
-VARIANTS: dict[str, tuple[Model, Identity]] = {
+VARIANTS: dict[str, tuple[MicroNabtoModel, Identity]] = {
     "CTS400": (CTS400, {"device_model": 1140, "slave_device_number": 72270, "slave_device_model": 1}),
     **{f"CTS602/{n}": (CTS602, _cts602(n)) for n in (0, 3, 9, 13, 20, 23, 44, 144, 244)},
     "CTS602_LIGHT": (CTS602_LIGHT, _cts602(2)),
@@ -79,12 +78,17 @@ HANDSHAKE_ZEROS = {"device_number": 0, "device_model": 0, "slave_device_number":
 """What a simulated gateway's handshake says for a number the test does not care about."""
 
 
+def _resolved(variant: str) -> ResolvedModel:
+    model, identity = VARIANTS[variant]
+    return resolve(model, identity)
+
+
 def _points(variant: str) -> list[Point[Any]]:
-    return list(resolve(*VARIANTS[variant]).points.values())
+    return list(_resolved(variant).points.values())
 
 
 def _point(variant: str, key: str) -> Point[Any]:
-    return resolve(*VARIANTS[variant]).point(key)
+    return _resolved(variant).point(key)
 
 
 def _manual(folder: str) -> dict[tuple[str, int], dict[str, str]]:
@@ -122,29 +126,60 @@ def test_no_model_is_selected_for_a_controller_not_supported(identity: dict[str,
 # ================================================================================== rules
 
 
+def test_the_models_are_every_model_a_handshake_selects() -> None:
+    assert set(MODELS) == {model for model, _ in VARIANTS.values()}
+    assert_models_valid(MODELS, identities=[identity for _, identity in VARIANTS.values()])
+
+
 @pytest.mark.parametrize("model", sorted({name.split("/")[0] for name in VARIANTS}))
 def test_each_model_is_valid_for_its_variants(model: str) -> None:
     """Every section of a model must be one some variant has."""
     variants = [VARIANTS[name] for name in VARIANTS if name.split("/")[0] == model]
-    assert_models_valid(variants[0][0], identities=[identity for _, identity in variants])
+    assert_models_valid([variants[0][0]], identities=[identity for _, identity in variants])
 
 
-@pytest.mark.parametrize("variant", sorted(VARIANTS))
-def test_every_gateway_counts_as_not_answering_after_ten_seconds(variant: str) -> None:
-    assert VARIANTS[variant][0].offline_after == 10.0
+@pytest.mark.parametrize("model", MODELS, ids=lambda model: model.name)
+def test_every_models_readings_are_read_every_10_s_its_settings_every_180_s_and_a_write_read_back_after_1_s(
+        model: MicroNabtoModel) -> None:
+    assert (model.poll_intervals[PollRate.FAST], model.poll_intervals[PollRate.SLOW]) == (10.0, 180.0)
+    assert model.read_back_after == 1.0
 
 
-@pytest.mark.parametrize("variant", sorted(VARIANTS))
-def test_every_gateway_is_given_two_seconds_to_answer_a_request_it_has_acknowledged(variant: str) -> None:
-    options = VARIANTS[variant][0].options
-    assert isinstance(options, MicroNabtoOptions) and options.answer_wait == 2.0
+def test_only_a_cts400_checks_what_it_scanned_and_does_so_every_900_s() -> None:
+    """Whether a CO2 or VOC sensor is fitted can change, so the CTS400 scans for it again."""
+    assert {model.name: model.scan_check for model in MODELS} == {
+        model.name: PollRate.RARE if model is CTS400 else None for model in MODELS}
+    assert {model.name: set(model.poll_intervals) for model in MODELS} == {
+        model.name: {PollRate.FAST, PollRate.SLOW, *([PollRate.RARE] if model is CTS400 else [])} for model in MODELS}
+    assert CTS400.poll_intervals[PollRate.RARE] == 900.0
 
 
-@pytest.mark.parametrize("variant", sorted(VARIANTS))
-def test_only_a_cts400_keeps_a_read_sent_again_open_shorter_than_the_librarys_wait(variant: str) -> None:
-    options = VARIANTS[variant][0].options
-    assert isinstance(options, MicroNabtoOptions)
-    assert options.later_answer_wait == (1.0 if variant == "CTS400" else None)
+@pytest.mark.parametrize("model", MODELS, ids=lambda model: model.name)
+def test_only_a_cts400_keeps_a_read_sent_again_open_shorter_than_5_s(model: MicroNabtoModel) -> None:
+    assert model.later_answer_wait == (1.0 if model is CTS400 else 5.0)
+
+
+@pytest.mark.parametrize("model", MODELS, ids=lambda model: model.name)
+def test_every_gateway_is_asked_for_64_registers_and_takes_its_zeros_after_7_5_s(model: MicroNabtoModel) -> None:
+    assert model.max_registers == 64
+    assert model.zeros == RereadZeros(within=7.5, wait=Steps(0.5, then=Fixed(1.0)), at_once=True, halves=True)
+
+
+@pytest.mark.parametrize("model", MODELS, ids=lambda model: model.name)
+def test_every_gateway_is_given_two_seconds_to_answer_a_request_it_has_acknowledged(model: MicroNabtoModel) -> None:
+    assert model.answer_wait == 2.0
+
+
+@pytest.mark.parametrize("model", MODELS, ids=lambda model: model.name)
+def test_every_model_sends_a_write_not_taken_again_every_half_second_for_15_s(model: MicroNabtoModel) -> None:
+    assert model.write_retry == Retry(Fixed(0.5), Within(15.0))
+
+
+@pytest.mark.parametrize("model", MODELS, ids=lambda model: model.name)
+def test_every_model_reads_what_follows_a_fan_level_again_3_s_after_it_is_written(model: MicroNabtoModel) -> None:
+    variant = next(name for name, (found, _) in VARIANTS.items() if found is model)
+    on_write = _point(variant, PointKey.FAN_LEVEL).on_write
+    assert on_write is not None and on_write.after == 3.0
 
 
 def test_every_key_is_declared() -> None:
@@ -152,30 +187,31 @@ def test_every_key_is_declared() -> None:
     assert {point.key for variant in VARIANTS for point in _points(variant)} <= declared
 
 
-@pytest.mark.parametrize("variant", sorted(VARIANTS))
-def test_every_point_has_a_certainty(variant: str) -> None:
-    assert all(certainty(point) in Certainty for point in _points(variant))
-
-
 def test_only_the_cts400_the_optima_270_and_four_cts602_temperatures_are_verified() -> None:
     verified = {(variant.split("/")[0], point.key) for variant in VARIANTS for point in _points(variant)
-                if certainty(point) is Certainty.VERIFIED}
+                if point.certainty is Certainty.VERIFIED}
     assert {model for model, _ in verified} == {"CTS400", "OPTIMA_270", "CTS602"}
     assert {key for model, key in verified if model == "CTS602"} == {
         "temp_supply", "temp_extract", "temp_exhaust", "temp_outside"}
-    assert all(certainty(point) is Certainty.VERIFIED for point in _points("CTS400"))
+    assert all(point.certainty is Certainty.VERIFIED for point in _points("CTS400"))
 
 
-def test_a_point_given_two_certainties_is_refused() -> None:
-    point = Point(PointKey.TEMP_SUPPLY, read=SetpointRegister(1))
-    section(verified=[point])
-    with pytest.raises(ValueError, match="both"):
-        section(inferred=[point])
+@pytest.mark.parametrize(("variant", "key", "expected"), [
+    ("CTS602/0", PointKey.TEMP_SUPPLY, Certainty.VERIFIED),
+    ("CTS602/0", PointKey.TEMP_ROOM, Certainty.REPORTED),
+    ("CTS602/0", PointKey.TEMP_CONTROLLER, Certainty.INFERRED),
+    ("CTS602/3", PointKey.TEMP_EXTRACT, Certainty.REPORTED),
+    ("CTS602/13", PointKey.TEMP_EXTRACT, Certainty.VERIFIED),
+    ("OPTIMA_314", PointKey.TEMP_SUPPLY, Certainty.REPORTED),
+])
+def test_a_point_is_as_certain_as_its_section_gives_it(variant: str, key: str, expected: Certainty) -> None:
+    assert _point(variant, key).certainty is expected
 
 
-def test_a_point_of_no_model_has_no_certainty() -> None:
-    with pytest.raises(KeyError):
-        certainty(Point(PointKey.TEMP_SUPPLY, read=SetpointRegister(1)))
+def test_one_point_given_under_two_certainties_in_two_sections_has_each_in_its_own() -> None:
+    point = Point(PointKey.TEMP_SUPPLY, read=SetpointRegister(1), poll_rate=PollRate.SLOW)
+    verified, inferred = section(verified=[point]), section(inferred=[point])
+    assert [p.certainty for p in (*verified.points, *inferred.points)] == [Certainty.VERIFIED, Certainty.INFERRED]
 
 
 @pytest.mark.parametrize("variant", sorted(VARIANTS))
@@ -217,7 +253,7 @@ def test_an_inferred_address_is_a_manual_register_placed_by_its_group(model: str
               for table_, address in documented if table_ == table and address // 100 * 100 == base}
     for variant in (name for name in VARIANTS if name.split("/")[0] == model):
         for point in _points(variant):
-            if certainty(point) is not Certainty.INFERRED:
+            if point.certainty is not Certainty.INFERRED:
                 continue
             assert point.read is not None
             table = "HR" if isinstance(point.read, SetpointRegister) else "IR"
@@ -267,10 +303,7 @@ async def _client(identity: Mapping[str, Any], datapoints: dict[int, int],
         datapoint_registers={(0, a): v for a, v in datapoints.items()},
         setpoint_registers={(0, a): v for a, v in setpoints.items()})
     async with simulated:
-        host, port = simulated.address
-        connection = MicroNabtoConnection(EMAIL, host=host, port=port, timeout=0.2, retries=1,
-                                          reconnect=None)
-        client = Client(MicroNabtoDevice(connection, owns_connection=True), select_model)
+        client = client_for(simulated, email=EMAIL, timeout=0.2, retries=1)
         await client.connect()
         try:
             yield client, simulated
@@ -284,12 +317,13 @@ def _value(client: Client, key: Any) -> object:
 
 
 @pytest.mark.parametrize("variant", sorted(VARIANTS))
-async def test_every_point_a_client_has_has_a_certainty(variant: str) -> None:
-    """A certainty is found by the point itself, so the client must hand out the model's points."""
+async def test_every_point_a_client_has_is_as_certain_as_its_model_gives_it(variant: str) -> None:
     every_register = {address: 0 for address in range(300)}
     async for client, _ in _client(VARIANTS[variant][1], every_register, every_register):
         assert client.points
-        assert all(certainty(point) in Certainty for point in client.points.values())
+        model = {point.key: point.certainty for point in _points(variant)}
+        assert {key: point.certainty for key, point in client.points.items()} == {
+            key: model[key] for key in client.points}
 
 
 async def test_an_optima_reads_its_offset_temperatures_and_writes_where_it_takes_writes() -> None:

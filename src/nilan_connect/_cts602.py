@@ -1,9 +1,10 @@
-"""Nilan's CTS602 and CTS602 Light as models.
+"""Nilan's CTS602 as a model: its points, how its gateway is talked to over micro_nabto, and what
+the CTS602 Light shares with it.
 
 Sources:
-    Nilan, "CTS 602 Modbus user manual" 3.00 (software 2.35), "Protocol description Nilan
-    CTS602Light Modbus" version 20 and "Protocol description Nilan CTS602 with HMI350T Modbus"
-    version 23, in this repository's docs/models: the registers, their scales and their groups.
+    Nilan, "CTS 602 Modbus user manual" 3.00 (software 2.35) and "Protocol description Nilan
+    CTS602 with HMI350T Modbus" version 23, in this repository's docs/models: the registers, their
+    scales and their groups.
     The gateway's addresses and the device variants were found in material published online.
 
 The gateway does not use the manuals' addresses. Within one of a manual's register groups -
@@ -15,16 +16,15 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 
-from modbus_event_connect import DataType, Key, Limits, Point, Unit
+from modbus_event_connect import DataType, Key, Limits, Point, PollRate, Refresh, Unit
+from modbus_event_connect.micro_nabto import MicroNabtoModel
 
-from ._certainty import section
 from ._keys import PointKey
 from ._points import (
     alarm_bit,
     choice,
-    fan_level_rereads,
-    nilan_model,
     reading,
+    section,
     setpoint_reading,
     setting,
     slave_model_in,
@@ -32,6 +32,17 @@ from ._points import (
     state,
     switch,
     temperature,
+)
+from ._shared import (
+    ANSWER_WAIT,
+    FAN_LEVEL_REREAD_AFTER,
+    FAST_INTERVAL,
+    LATER_ANSWER_WAIT,
+    MAX_REGISTERS,
+    READ_BACK_AFTER,
+    SLOW_INTERVAL,
+    WRITE_RETRY,
+    ZEROS,
 )
 from ._states import Alarm, FilterReplaceInterval, HeatSource, OperationState
 
@@ -135,8 +146,9 @@ def cts602_temperature_setting(key: Key[float], address: int, limits: Limits | N
     return setting(key, address, limits, data_type=DataType.INT16, scale=0.01, unit=Unit.CELSIUS)
 
 
-_CTS602_FAN_LEVEL_REREADS = fan_level_rereads(
-    PointKey.FAN_LEVEL_CURRENT, PointKey.FAN_LEVEL_SUPPLY, PointKey.FAN_LEVEL_EXTRACT)
+CTS602_FAN_LEVEL_REREADS = Refresh(
+    [PointKey.FAN_LEVEL_CURRENT, PointKey.FAN_LEVEL_SUPPLY, PointKey.FAN_LEVEL_EXTRACT], after=FAN_LEVEL_REREAD_AFTER)
+"""What follows a CTS602's or CTS602 Light's fan level."""
 
 
 CTS602_SECTIONS = (
@@ -166,7 +178,7 @@ CTS602_SECTIONS = (
             reading(PointKey.FAN_LEVEL_EXTRACT, 100, data_type=DataType.INT16),
             reading(PointKey.FILTER_REPLACE_TIME_REMAIN, 102, data_type=DataType.INT16, unit=Unit.DAYS),
             state(PointKey.BYPASS_ACTIVE, 187),
-            setting(PointKey.FAN_LEVEL, 139, Limits(0, 4, step=1), on_write=_CTS602_FAN_LEVEL_REREADS),
+            setting(PointKey.FAN_LEVEL, 139, Limits(0, 4, step=1), on_write=CTS602_FAN_LEVEL_REREADS),
             cts602_temperature_setting(PointKey.TEMP_TARGET, 140, Limits(0, 30, step=0.5)),
             # HR 1105 AirFlow.FiltAlmType by its group: a period chosen from fixed ones, not days.
             choice(PointKey.FILTER_REPLACE_INTERVAL_CHOICE, 159, codes=FILTER_INTERVALS),
@@ -283,60 +295,20 @@ CTS602_SECTIONS = (
     )),
 )
 
-CTS602 = nilan_model("CTS 602", "Nilan", CTS602_SECTIONS)
-
-
-CTS602_LIGHT_SECTIONS = (
-    section(
-        reported=(
-            cts602_temperature(PointKey.TEMP_EXTRACT, 33),
-            cts602_temperature(PointKey.TEMP_EXHAUST, 34),
-            cts602_temperature(PointKey.TEMP_SUPPLY, 37),
-            cts602_temperature(PointKey.TEMP_OUTSIDE, 38),
-            cts602_temperature(PointKey.TEMP_HEATER, 39),
-            reading(PointKey.HUMIDITY, 51, data_type=DataType.INT16, scale=0.01, unit=Unit.PERCENT),
-            # By its group, IR 222 AirQual.CO2 would be at 52; the address found published is 53.
-            reading(PointKey.CO2_LEVEL, 53, data_type=DataType.INT16, unit=Unit.PPM),
-            reading(PointKey.ALARM_1_CODE, 64),
-            reading(PointKey.ALARM_2_CODE, 67),
-            reading(PointKey.ALARM_3_CODE, 70),
-            reading(PointKey.ALARM_1, 64, codes=CTS602_ALARMS),
-            reading(PointKey.ALARM_2, 67, codes=CTS602_ALARMS),
-            reading(PointKey.ALARM_3, 70, codes=CTS602_ALARMS),
-            reading(PointKey.STATE_CODE, 85),
-            reading(PointKey.OPERATION_STATE, 85, codes=CONTROL_STATES),
-            reading(PointKey.FAN_LEVEL_SUPPLY, 98, data_type=DataType.INT16),
-            reading(PointKey.FAN_LEVEL_EXTRACT, 99, data_type=DataType.INT16),
-            reading(PointKey.FILTER_REPLACE_TIME_REMAIN, 101, data_type=DataType.INT16, unit=Unit.DAYS),
-            state(PointKey.BYPASS_ACTIVE, 129),
-            setting(PointKey.FAN_LEVEL, 135, Limits(0, 4, step=1), on_write=_CTS602_FAN_LEVEL_REREADS),
-            cts602_temperature_setting(PointKey.TEMP_TARGET, 136, Limits(0, 30, step=0.5)),
-            # HR 1105 AirFlow.FiltAlmType by its group: a period chosen from fixed ones, not days.
-            choice(PointKey.FILTER_REPLACE_INTERVAL_CHOICE, 153, codes=FILTER_INTERVALS),
-        ),
-        inferred=(
-            cts602_temperature(PointKey.TEMP_CONTROLLER, 30),                      # IR 200 Input.T0_Controller
-            alarm_bit(PointKey.ALARM_STATUS, 63, 7),                               # IR 400 Alarm.Status
-            reading(PointKey.ALARM_1_TIME, 65, data_type=DataType.DOS_DATETIME),   # IR 402-403 Alarm.List_1_Date, _Time
-            reading(PointKey.ALARM_2_TIME, 68, data_type=DataType.DOS_DATETIME),   # IR 405-406 Alarm.List_2_Date, _Time
-            reading(PointKey.ALARM_3_TIME, 71, data_type=DataType.DOS_DATETIME),   # IR 408-409 Alarm.List_3_Date, _Time
-            state(PointKey.RUNNING, 83),                                           # IR 1000 Control.RunAct
-            reading(PointKey.OPERATION_MODE_CURRENT, 84),                          # IR 1001 Control.ModeAct
-            reading(PointKey.TIME_IN_STATE, 86, unit=Unit.SECONDS),                # IR 1003 Control.SecInState
-            reading(PointKey.FAN_LEVEL_CURRENT, 97),                               # IR 1100 AirFlow.VentSet
-            reading(PointKey.FILTER_REPLACE_TIME_AGO, 100, unit=Unit.DAYS),        # IR 1103 AirFlow.SinceFiltDay
-            switch(PointKey.ENABLE, 133),                                          # HR 1001 Control.RunSet
-            choice(PointKey.OPERATION_MODE, 134),                                  # HR 1002 Control.ModeSet
-            choice(PointKey.SERVICE_MODE, 137),                                    # HR 1005 Control.ServiceMode
-            setting(PointKey.SERVICE_CAPACITY, 138, None, data_type=DataType.INT16, scale=0.01,
-                    unit=Unit.PERCENT),                                            # HR 1006 Control.ServicePct
-            # The manual: once chosen, the weekly self-test cannot be turned off again.
-            setpoint_reading(PointKey.DAMPER_TEST_DAY, 150),                       # HR 1102 AirFlow.TestSelect
-            setpoint_reading(PointKey.DAMPER_TEST_LAST_DATE, 151,
-                             data_type=DataType.DOS_DATE),                         # HR 1103 AirFlow.LastTestDay
-            setpoint_reading(PointKey.DAMPER_TEST_STATE, 152),                     # HR 1104 AirFlow.TestState
-        ),
-    ),
+CTS602 = MicroNabtoModel(
+    "CTS 602", "Nilan", CTS602_SECTIONS,
+    poll_intervals={
+        PollRate.FAST: FAST_INTERVAL,
+        PollRate.SLOW: SLOW_INTERVAL,
+    },
+    read_back_after=READ_BACK_AFTER,
+    write_retry=WRITE_RETRY,
+    scan_check=None,
+    identity_points=(),
+    scan_steps=(),
+    max_registers=MAX_REGISTERS,
+    answer_wait=ANSWER_WAIT,
+    later_answer_wait=LATER_ANSWER_WAIT,
+    zeros=ZEROS,
 )
-
-CTS602_LIGHT = nilan_model("CTS 602 Light", "Nilan", CTS602_LIGHT_SECTIONS)
+"""Nilan's CTS602, every variant, as its gateway is talked to over micro_nabto."""

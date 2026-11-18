@@ -1,17 +1,20 @@
 """Nilan ventilation units behind a Nilan gateway, over micro_nabto, built on modbus_event_connect.
 
 Everything a user of a Nilan controller needs is here, so that nothing has to be imported from
-modbus_event_connect: the client and its values, what a point is, the errors, and discovery.
+modbus_event_connect or event_connect: the client and its values, what a point is, how certain it
+is and the range it can be written with, the errors, and discovery.
 """
 from importlib.metadata import version as _installed_version
 
-from modbus_event_connect import (
+from event_connect import (
     AuthenticationError,
     CannotConnectError,
-    Client,
+    Certainty,
+    Change,
     ClientError,
     Clock,
     DataValue,
+    DeviceClient,
     Identity,
     InvalidValueError,
     Key,
@@ -19,11 +22,11 @@ from modbus_event_connect import (
     Limits,
     ModelError,
     NotConnectedError,
-    Point,
     PointsCallback,
     PollRate,
     Quality,
     ReadOnlyError,
+    Selector,
     Status,
     StatusCallback,
     Unit,
@@ -31,14 +34,22 @@ from modbus_event_connect import (
     ValueCallback,
     Write,
     WriteKind,
+    WriteRange,
 )
-from modbus_event_connect.micro_nabto import DiscoveredDevice, discover
+from modbus_event_connect import Client, Point
+from modbus_event_connect.micro_nabto import PORT, MicroNabtoModel
 
-from ._certainty import Certainty, certainty
 from ._cts400 import CTS400
-from ._cts602 import CTS602, CTS602_LIGHT
+from ._cts602 import CTS602
+from ._cts602_light import CTS602_LIGHT
 from ._keys import PointKey
-from ._optima import OPTIMA_250, OPTIMA_251, OPTIMA_260, OPTIMA_270, OPTIMA_301, OPTIMA_312, OPTIMA_314
+from ._optima_250 import OPTIMA_250
+from ._optima_251 import OPTIMA_251
+from ._optima_260 import OPTIMA_260
+from ._optima_270 import OPTIMA_270
+from ._optima_301 import OPTIMA_301
+from ._optima_312 import OPTIMA_312
+from ._optima_314 import OPTIMA_314
 from ._select import select_model
 from ._states import (
     AirExchangeMode,
@@ -57,16 +68,18 @@ from ._states import (
     ServiceMode,
     Weekday,
 )
-from ._nilan import WRITE_RETRY_FOR, create_client
+from ._nilan import MODELS, DiscoveredDevice, create_client, discover
 
 __version__ = _installed_version("nilan_connect")
 __all__ = [
     "AuthenticationError",
     "CannotConnectError",
-    "Client",
+    "Certainty",
+    "Change",
     "ClientError",
     "Clock",
     "DataValue",
+    "DeviceClient",
     "Identity",
     "InvalidValueError",
     "Key",
@@ -74,11 +87,11 @@ __all__ = [
     "Limits",
     "ModelError",
     "NotConnectedError",
-    "Point",
     "PointsCallback",
     "PollRate",
     "Quality",
     "ReadOnlyError",
+    "Selector",
     "Status",
     "StatusCallback",
     "Unit",
@@ -86,8 +99,16 @@ __all__ = [
     "ValueCallback",
     "Write",
     "WriteKind",
+    "WriteRange",
+    "Client",
+    "Point",
+    "MicroNabtoModel",
+    "PORT",
     "DiscoveredDevice",
+    "create_client",
     "discover",
+    "MODELS",
+    "select_model",
     "CTS400",
     "CTS602",
     "CTS602_LIGHT",
@@ -99,11 +120,6 @@ __all__ = [
     "OPTIMA_312",
     "OPTIMA_314",
     "PointKey",
-    "Certainty",
-    "certainty",
-    "WRITE_RETRY_FOR",
-    "create_client",
-    "select_model",
     "AirExchangeMode",
     "Alarm",
     "CentralHeatMode",

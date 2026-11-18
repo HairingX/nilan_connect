@@ -8,16 +8,25 @@ from typing import Any
 
 import pytest
 import pytest_asyncio
-from modbus_event_connect import Client, DataValue, Fixed, InvalidValueError, Key, Point, Quality, ReadOnlyError, Retry
-from modbus_event_connect.micro_nabto import (
-    MicroNabtoConnection,
-    MicroNabtoDevice,
-    SetpointRegister,
-)
+from modbus_event_connect.micro_nabto import SetpointRegister
 
-from nilan_connect import CTS400, Alarm, ExtraSensor, PointKey, create_client, select_model
+from nilan_connect import (
+    CTS400,
+    Alarm,
+    Client,
+    DataValue,
+    ExtraSensor,
+    InvalidValueError,
+    Key,
+    Point,
+    PointKey,
+    Quality,
+    ReadOnlyError,
+    Status,
+    create_client,
+)
 from nilan_connect._cts400 import CO2_POINTS, CTS400_POINTS, VOC_POINTS
-from nilan_connect.testing import FakeClock, SimulatedMicroNabtoDevice
+from nilan_connect.testing import FakeClock, SimulatedMicroNabtoDevice, client_for
 
 EMAIL = "user@example.invalid"
 SETPOINT_WRITE = 0x2B
@@ -45,10 +54,8 @@ async def gateway() -> AsyncGenerator[SimulatedMicroNabtoDevice, None]:
         yield simulated
 
 
-def _client(gateway: SimulatedMicroNabtoDevice, *, read_only: bool = False) -> Client:
-    host, port = gateway.address
-    connection = MicroNabtoConnection(EMAIL, host=host, port=port, timeout=0.2, retries=1, reconnect=None)
-    return Client(MicroNabtoDevice(connection, owns_connection=True), select_model, read_only=read_only)
+def _client(gateway: SimulatedMicroNabtoDevice, *, read_only: bool = False, clock: FakeClock | None = None) -> Client:
+    return client_for(gateway, email=EMAIL, timeout=0.2, retries=1, clock=clock, read_only=read_only)
 
 
 async def _connected(gateway: SimulatedMicroNabtoDevice, *, read_only: bool = False) -> Client:
@@ -173,10 +180,7 @@ def _polled(key: Key[Any], old: DataValue[Any] | None, new: DataValue[Any]) -> N
 async def _clocked(gateway: SimulatedMicroNabtoDevice) -> tuple[Client, FakeClock]:
     """A client on the gateway whose time moves only when the test advances it."""
     clock = FakeClock()
-    host, port = gateway.address
-    connection = MicroNabtoConnection(EMAIL, host=host, port=port, timeout=0.2, retries=1, clock=clock,
-                                      reconnect=None)
-    client = Client(MicroNabtoDevice(connection, owns_connection=True), select_model, clock=clock)
+    client = _client(gateway, clock=clock)
     await client.connect()
     return client, clock
 
@@ -227,6 +231,29 @@ async def test_a_fan_level_reads_the_fans_level_and_speeds_again_three_seconds_l
         await client.disconnect()
 
 
+@pytest.mark.parametrize("key,value,address", [
+    (PointKey.FAN_LEVEL, 2, 69),
+    (PointKey.FILTER_REPLACE_INTERVAL, 91, 50),
+    (PointKey.TEMP_TARGET, 21.5, 37),
+], ids=["fan_level", "filter_replace_interval", "temp_target"])
+async def test_a_written_setting_is_read_back_one_second_later_whatever_it_makes_read_again(
+        gateway: SimulatedMicroNabtoDevice, key: Key[Any], value: object, address: int) -> None:
+    client, clock = await _clocked(gateway)
+    try:
+        client.subscribe(key, _polled)
+        await client.write(key, value)
+        # What the controller holds once it has taken the write, put another way by its panel.
+        gateway.setpoint_registers[(0, address)] = 4 if key is PointKey.FAN_LEVEL else 100
+        clock.advance(0.9)
+        await client.poll()
+        assert _value(client, key) == value
+        clock.advance(0.1)
+        await client.poll()
+        assert _value(client, key) != value
+    finally:
+        await client.disconnect()
+
+
 async def test_a_filter_interval_reads_the_days_left_again_two_seconds_later(
         gateway: SimulatedMicroNabtoDevice) -> None:
     """A CTS400 was seen changing them 1.0 s after the interval was written."""
@@ -250,7 +277,7 @@ async def test_a_created_client_sends_a_write_again_until_the_gateway_takes_it(
         gateway: SimulatedMicroNabtoDevice) -> None:
     """A CTS400's gateway answered 0x63 and 0x85 to writes it took on a later try."""
     host, port = gateway.address
-    client = create_client(EMAIL, host=host, port=port)
+    client = create_client(email=EMAIL, host=host, port=port)
     await client.connect()
     try:
         gateway.write_statuses = [0x63, 0x85]
@@ -261,38 +288,13 @@ async def test_a_created_client_sends_a_write_again_until_the_gateway_takes_it(
         await client.disconnect()
 
 
-async def test_a_created_client_with_write_retry_for_0_sends_a_write_once(
-        gateway: SimulatedMicroNabtoDevice) -> None:
-    host, port = gateway.address
-    client = create_client(EMAIL, host=host, port=port, write_retry_for=0)
-    await client.connect()
-    try:
-        gateway.write_statuses = [0x63]
-        assert await client.write(PointKey.FAN_LEVEL, 2) is False
-        assert len(gateway.received(SETPOINT_WRITE)) == 1
-        assert gateway.setpoint_registers[(0, 69)] == 1
-    finally:
-        await client.disconnect()
-
-
 async def test_a_cts400_keeps_a_read_sent_again_open_1_s_for_a_later_answer(
         gateway: SimulatedMicroNabtoDevice) -> None:
     host, port = gateway.address
-    client = create_client(EMAIL, host=host, port=port)
+    client = create_client(email=EMAIL, host=host, port=port)
     await client.connect()
     try:
         assert client.diagnostics()["later_answer_wait"] == 1.0
-    finally:
-        await client.disconnect()
-
-
-async def test_a_created_client_keeps_a_read_sent_again_open_as_long_as_it_is_given(
-        gateway: SimulatedMicroNabtoDevice) -> None:
-    host, port = gateway.address
-    client = create_client(EMAIL, host=host, port=port, later_answer_wait=3.0)
-    await client.connect()
-    try:
-        assert client.diagnostics()["later_answer_wait"] == 3.0
     finally:
         await client.disconnect()
 
@@ -309,7 +311,7 @@ async def test_a_value_outside_the_manuals_limits_is_refused(gateway: SimulatedM
 
 async def test_a_client_reaches_a_gateway_on_the_port_it_is_given(gateway: SimulatedMicroNabtoDevice) -> None:
     host, port = gateway.address
-    client = create_client(EMAIL, host=host, port=port, read_only=True)
+    client = create_client(email=EMAIL, host=host, port=port, read_only=True)
     await client.connect()
     try:
         assert client.model is CTS400
@@ -327,15 +329,35 @@ async def test_a_read_only_client_writes_nothing(gateway: SimulatedMicroNabtoDev
         await client.disconnect()
 
 
-def test_after_a_failed_handshake_a_client_tries_one_again_every_five_seconds(
-        monkeypatch: pytest.MonkeyPatch) -> None:
-    told: dict[str, Any] = {}
-    udp = MicroNabtoDevice.udp
+async def test_a_gateway_that_leaves_one_read_unanswered_still_counts_as_answering_but_not_two(
+        gateway: SimulatedMicroNabtoDevice) -> None:
+    """A CTS602's gateway was seen leaving one read unanswered every 33 minutes and answering the next."""
+    client, clock = await _clocked(gateway)
+    try:
+        client.subscribe(PointKey.TEMP_OUTSIDE, _polled)
+        gateway.silent = True
+        clock.advance(10.0)
+        await client.poll()
+        assert client.status(Status.CONNECTED).value is True
+        clock.advance(10.0)
+        await client.poll()
+        assert client.status(Status.CONNECTED).value is False
+    finally:
+        await client.disconnect()
 
-    def recording(*args: Any, **kwargs: Any) -> MicroNabtoDevice:
-        told.update(kwargs)
-        return udp(*args, **kwargs)
 
-    monkeypatch.setattr(MicroNabtoDevice, "udp", recording)
-    create_client(EMAIL, host="192.0.2.1")
-    assert told["reconnect"] == Retry(Fixed(5.0))
+async def test_whether_an_extra_sensor_is_fitted_is_checked_again_every_900_s(
+        gateway: SimulatedMicroNabtoDevice) -> None:
+    client, clock = await _clocked(gateway)
+    try:
+        gained: list[frozenset[Key[Any]]] = []
+        client.subscribe_points(lambda new, lost: gained.append(new))
+        gateway.setpoint_registers[(0, 48)] = ExtraSensor.CO2
+        clock.advance(899.0)
+        await client.poll()
+        assert gained == []
+        clock.advance(1.0)
+        await client.poll()
+        assert gained == [frozenset(CO2_POINTS)]
+    finally:
+        await client.disconnect()

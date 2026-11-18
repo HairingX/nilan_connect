@@ -1,4 +1,4 @@
-"""The kinds of point a controller behind a Nilan gateway has, and the model they are part of.
+"""The kinds of point a controller behind a Nilan gateway has.
 
 Over micro_nabto a controller's input registers are datapoints and its holding registers
 setpoints.
@@ -6,54 +6,34 @@ setpoints.
 from __future__ import annotations
 
 from collections.abc import Callable, Collection, Mapping, Sequence
+from dataclasses import replace
 from enum import IntEnum
 from typing import Any
 
+from event_connect import Certainty
 from modbus_event_connect import (
     DataType,
     Identity,
     Key,
     Limits,
-    Model,
     Point,
     PollRate,
     Refresh,
-    ScanStep,
     Section,
     Transform,
     Transforms,
     Unit,
     WriteKind,
 )
-from modbus_event_connect.micro_nabto import DatapointRegister, MicroNabtoOptions, SetpointRegister
-
-OFFLINE_AFTER = 10.0
-"""Seconds the gateway may leave reads unanswered before it counts as not answering: one missed
-read, of those that come every 10 s, keeps the last values, and a gateway that stays silent is
-shown as not answering."""
-
-ANSWER_WAIT = 2.0
-"""Seconds an answer is waited for once the gateway has said it has the request: a CTS602's
-gateway answered 21,000 reads within 245 ms, and one it leaves unanswered holds up the reads
-behind it for as long as this."""
+from modbus_event_connect.micro_nabto import DatapointRegister, SetpointRegister
 
 
-def nilan_model(name: str, manufacturer: str, sections: Sequence[Section],
-                scan_steps: Sequence[ScanStep] = (), *, later_answer_wait: float | None = None) -> Model:
-    """A model of a controller behind a Nilan gateway, whose `scan_steps` find what the unit lacks.
-
-    `later_answer_wait` is the seconds a read sent again, answered with only zeros, is kept open
-    for a later answer; None leaves it to the library.
-    """
-    return Model(
-        name, manufacturer, sections,
-        scan_steps=tuple(scan_steps),
-        options=MicroNabtoOptions(later_answer_wait=later_answer_wait, answer_wait=ANSWER_WAIT),
-        # Settings change only when written, so they are read far less often than readings.
-        poll_intervals={PollRate.FAST: 10.0, PollRate.SLOW: 180.0},
-        read_back_after=1.0,
-        offline_after=OFFLINE_AFTER,
-    )
+def section(*, when: Callable[[Identity], bool] | None = None, verified: Sequence[Point[Any]] = (),
+            reported: Sequence[Point[Any]] = (), inferred: Sequence[Point[Any]] = ()) -> Section:
+    """A section of a model, each point given under how certain it is; `when` as a `Section` has it."""
+    return Section((*(replace(point, certainty=Certainty.VERIFIED) for point in verified),
+                    *(replace(point, certainty=Certainty.REPORTED) for point in reported),
+                    *(replace(point, certainty=Certainty.INFERRED) for point in inferred)), when=when)
 
 
 def slave_model_in(models: Collection[int]) -> Callable[[Identity], bool]:
@@ -132,8 +112,3 @@ def command(key: Key[bool], address: int, *, on_write: Refresh | None = None) ->
     """A setpoint written to make the controller act; nothing to show once it has."""
     return Point(key, write=SetpointRegister(address), data_type=DataType.BOOL, write_kind=WriteKind.COMMAND,
                  on_write=on_write)
-
-
-def fan_level_rereads(*keys: Key[Any]) -> Refresh:
-    """`keys`, which follow the chosen fan level, read again once the controller has taken it."""
-    return Refresh(list(keys), after=3.0)
