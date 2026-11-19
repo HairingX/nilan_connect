@@ -176,9 +176,9 @@ def test_every_model_sends_a_write_not_taken_again_every_half_second_for_15_s(mo
 
 
 @pytest.mark.parametrize("model", MODELS, ids=lambda model: model.name)
-def test_only_an_optima_270_names_0x01_as_a_write_taken_and_every_model_names_0(
+def test_an_optima_270_and_314_name_0x01_as_a_write_taken_and_every_model_names_0(
         model: MicroNabtoModel) -> None:
-    assert model.write_taken == (frozenset({0, 1}) if model is OPTIMA_270 else frozenset({0}))
+    assert model.write_taken == (frozenset({0, 1}) if model in (OPTIMA_270, OPTIMA_314) else frozenset({0}))
 
 
 @pytest.mark.parametrize("model", MODELS, ids=lambda model: model.name)
@@ -347,6 +347,14 @@ async def test_a_write_an_optima_270s_gateway_answers_0x01_is_taken_and_not_sent
         simulated.write_statuses = [1]
         assert await client.write(PointKey.TEMP_TARGET, 22.0) is True
         assert [c.items for c in simulated.received(SETPOINT_WRITE)] == [((0, 12, 120),)]
+
+
+async def test_a_write_an_optima_314s_gateway_answers_0x01_is_taken_and_not_sent_again() -> None:
+    async for client, simulated in _client(VARIANTS["OPTIMA_314"][1], {}, {1: 110}):
+        simulated.write_taken = frozenset({1})
+        simulated.write_statuses = [1]
+        assert await client.write(PointKey.TEMP_TARGET, 22.0) is True
+        assert len(simulated.received(SETPOINT_WRITE)) == 1
 
 
 @pytest.mark.parametrize(("slave_model", "address"), [(13, 34), (3, 41)])

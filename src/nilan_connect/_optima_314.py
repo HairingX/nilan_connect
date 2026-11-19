@@ -30,7 +30,6 @@ from ._shared import (
     READ_BACK_AFTER,
     SLOW_INTERVAL,
     WRITE_RETRY,
-    WRITE_TAKEN,
     ZEROS,
 )
 
@@ -117,6 +116,8 @@ OPTIMA_314 = MicroNabtoModel(
     answer_wait=ANSWER_WAIT,
     later_answer_wait=LATER_ANSWER_WAIT,
     zeros=ZEROS,
-    write_taken=WRITE_TAKEN,
+    # guess: its gateway is built in as the Optima 270's is (genvexnabto's README), and an Optima 270's
+    # answered 0x01 to every write it took (HairingX/modbus_event_connect#37); not measured on a 314
+    write_taken=frozenset({0, 1}),
 )
 """Genvex's Optima 314, as its gateway is talked to over micro_nabto."""

@@ -155,7 +155,8 @@ A value outside the limits Nilan's manual gives is refused before anything is se
 
 The gateway answers a write with a status. A CTS400's gateway answered 0 to a write it took; an
 Optima 270's gateway answered 0x01 to every write it took, so its model takes either as taken.
-The other models take 0 alone, a guess. A CTS400's gateway answered some writes with a status
+An Optima 314 takes either too, a guess: its gateway is built in as the Optima 270's is. The
+other models take 0 alone, a guess. A CTS400's gateway answered some writes with a status
 saying it did not take them, and took the same write on a later try. A write answered with a
 status its model does not take is sent again every half second, for up to 15 seconds after it was
 first sent; every model does so, as nothing else is known. A newer value for the same setting
