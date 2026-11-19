@@ -270,6 +270,15 @@ class FilterReplaceInterval(IntEnum):
     DAYS_70_AND_PRESSURE_GUARD = 5
 
 
+class ElectricCoil(IntEnum):
+    """The electric heating coil fitted to the unit."""
+    NONE = 0
+    REHEAT = 1
+    """A reheater, after the heat exchanger."""
+    PREHEAT = 2
+    """A preheater, before the heat exchanger."""
+
+
 class ExtraSensor(IntEnum):
     """The extra sensor fitted to the unit."""
     NONE = 0

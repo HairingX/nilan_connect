@@ -92,6 +92,11 @@ def setting[T](key: Key[T], address: int, limits: Limits | None, *, write_addres
                  poll_rate=PollRate.SLOW, on_write=on_write)
 
 
+def setpoint_bit(key: Key[bool], address: int, bit: int) -> Point[bool]:
+    """One bit of a setpoint that is only read: set while `key` is true."""
+    return Point(key, read=SetpointRegister(address), data_type=DataType.bit(bit), poll_rate=PollRate.SLOW)
+
+
 def choice[T: IntEnum](key: Key[T], address: int, *, write_address: int | None = None,
                        codes: Mapping[int, IntEnum] | None = None) -> Point[T]:
     """A setpoint holding one of the states `key` names, written at `address` unless

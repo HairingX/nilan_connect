@@ -20,6 +20,7 @@ from ._states import (
     ControlSensor,
     CoolingSetpoint,
     DamperTestState,
+    ElectricCoil,
     ExtraSensor,
     FilterReplaceInterval,
     HeatSource,
@@ -308,6 +309,12 @@ class PointKey:
     PREHEAT_ENABLE = Key("preheat_enable", bool)
     PREHEAT_OUTPUT = Key("preheat_output", float)
     """The preheater's output, in percent."""
+    ELECTRIC_COIL = Key("electric_coil", ElectricCoil)
+    """The electric heating coil fitted, as the controller states it."""
+    REHEAT_COIL_FITTED = Key("reheat_coil_fitted", bool)
+    """Whether a reheater is fitted."""
+    PREHEAT_COIL_FITTED = Key("preheat_coil_fitted", bool)
+    """Whether a preheater is fitted."""
     COOLING_ENABLE = Key("cooling_enable", bool)
     COMPRESSOR_PRIORITY = Key("compressor_priority", CompressorPriority)
     """What the compressor serves first."""

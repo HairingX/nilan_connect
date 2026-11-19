@@ -26,6 +26,7 @@ from nilan_connect import (
     Alarm,
     Certainty,
     Client,
+    ElectricCoil,
     FilterReplaceInterval,
     MODELS,
     Identity,
@@ -334,6 +335,25 @@ async def test_an_optima_270s_and_314s_setpoint_100_is_the_days_since_the_filter
     point = _point(variant, PointKey.FILTER_REPLACE_TIME_AGO)
     assert (point.read, point.write, point.unit) == (SetpointRegister(100), None, Unit.DAYS)
     assert point.certainty is Certainty.REPORTED
+
+
+@pytest.mark.parametrize(("raw", "coil", "reheater", "preheater"), [
+    (0, ElectricCoil.NONE, False, False), (1, ElectricCoil.REHEAT, True, False), (2, ElectricCoil.PREHEAT, False, True)])
+async def test_an_optima_312s_setpoint_21_is_the_electric_coil_fitted(
+        raw: int, coil: ElectricCoil, reheater: bool, preheater: bool) -> None:
+    """The user manual's item 25: "0 = No electric heating coil installed, 1 = Electric reheater
+    installed, 2 = Electric preheater installed"."""
+    async for client, _ in _client(VARIANTS["OPTIMA_312"][1], {}, {21: raw}):
+        assert _value(client, PointKey.ELECTRIC_COIL) is coil
+        assert _value(client, PointKey.REHEAT_COIL_FITTED) is reheater
+        assert _value(client, PointKey.PREHEAT_COIL_FITTED) is preheater
+
+
+def test_an_optima_312s_electric_coil_is_only_read() -> None:
+    """Writing it would tell the controller another coil is installed."""
+    at_21 = {point.key: point.write for point in _points("OPTIMA_312") if point.read == SetpointRegister(21)}
+    assert at_21 == {PointKey.ELECTRIC_COIL: None, PointKey.REHEAT_COIL_FITTED: None,
+                     PointKey.PREHEAT_COIL_FITTED: None}
 
 
 def test_an_optima_314s_datapoint_24_is_the_hot_water_tanks_bottom() -> None:
