@@ -400,6 +400,17 @@ async def test_a_write_an_optima_314s_gateway_answers_0x01_is_taken_and_not_sent
         assert len(simulated.received(SETPOINT_WRITE)) == 1
 
 
+@pytest.mark.parametrize(("variant", "address"), [
+    ("OPTIMA_250", 104), ("OPTIMA_251", 104), ("OPTIMA_301", 104), ("OPTIMA_312", 104), ("OPTIMA_260", 11)])
+async def test_an_optimas_bypass_opening_is_read_in_percent_beside_whether_it_is_open(
+        variant: str, address: int) -> None:
+    """Genvex's workbook gives the register as the bypass's opening, 0-100 %."""
+    async for client, _ in _client(VARIANTS[variant][1], {address: 63}, {}):
+        assert _value(client, PointKey.BYPASS_POSITION) == 63
+        assert _value(client, PointKey.BYPASS_ACTIVE) is True
+    assert _point(variant, PointKey.BYPASS_POSITION).unit is Unit.PERCENT
+
+
 @pytest.mark.parametrize(("slave_model", "address"), [(13, 34), (3, 41)])
 async def test_a_cts602_reads_its_extract_air_where_its_variant_has_it(slave_model: int, address: int) -> None:
     async for client, _ in _client(_cts602(slave_model), {address: 2150}, {}):
@@ -446,6 +457,13 @@ async def test_an_optimas_alarm_bits_are_alarms_of_their_own_with_the_filter_as_
 def test_the_state_code_names_only_the_control_states_of_the_manual() -> None:
     state = _point("CTS602/0", PointKey.OPERATION_STATE)
     assert state.states[-1] is OperationState.HEATING_HOT_WATER and len(state.states) == 18
+
+
+async def test_a_heat_pump_states_code_is_kept_beside_the_state_it_means() -> None:
+    """Codes 6 and 10 both mean the heat pump has stopped; only the code tells them apart."""
+    async for client, _ in _client(VARIANTS["CTS602/44"][1], {198: 10}, {}):
+        assert _value(client, PointKey.HEAT_PUMP_STATE_CODE) == 10
+        assert _value(client, PointKey.HEAT_PUMP_STATE) is OperationState.HEAT_PUMP_STOP
 
 
 def test_heat_pump_states_that_share_a_text_are_one_state() -> None:

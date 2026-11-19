@@ -196,7 +196,8 @@ class PointKey:
     BYPASS_ACTIVE = Key("bypass_active", bool)
     """Whether the bypass damper is open."""
     BYPASS_POSITION = Key("bypass_position", int)
-    """The bypass damper's control signal; no public description gives its unit."""
+    """The bypass damper's opening, in percent where the controller states it; otherwise its
+    control signal."""
     TEMP_BYPASS_OPEN_OFFSET = Key("temp_bypass_open_offset", float)
     """The bypass's opening offset, in °C."""
     TEMP_BYPASS_CLOSE_OFFSET = Key("temp_bypass_close_offset", float)
@@ -357,6 +358,8 @@ class PointKey:
     """Whether the heat pump's electric heater runs."""
     HEAT_PUMP_ROOM_HEATING = Key("heat_pump_room_heating", bool)
     HEAT_PUMP_WATER_HEATING = Key("heat_pump_water_heating", bool)
+    HEAT_PUMP_STATE_CODE = Key("heat_pump_state_code", int)
+    """The heat pump's state as the controller numbers it; `heat_pump_state` is what it means."""
     HEAT_PUMP_STATE = Key("heat_pump_state", OperationState)
     """What the heat pump is doing."""
     HEAT_PUMP_CAPACITY = Key("heat_pump_capacity", float)

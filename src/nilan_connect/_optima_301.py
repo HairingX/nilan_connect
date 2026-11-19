@@ -4,8 +4,8 @@ Sources:
     The gateway's addresses, scales and ranges were found in material published online. Genvex's
     Modbus register workbook, posted at
     https://community.openenergymonitor.org/t/reverse-engineer-heatpump-genvex-combi-185/15992/46,
-    has an 'Optima 301' sheet, whose register numbers are the gateway's datapoint and setpoint
-    numbers wherever the two have been compared.
+    has an 'Optima 301' sheet; the gateway's datapoint and setpoint numbers are taken to be its
+    register numbers.
 """
 from __future__ import annotations
 

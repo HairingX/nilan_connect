@@ -260,6 +260,7 @@ CTS602_SECTIONS = (
         temperature(PointKey.TEMP_HEAT_PUMP_OUTDOOR, 156, scale=0.1),
         state(PointKey.HEAT_PUMP_ACTIVE, 164),
         state(PointKey.HEAT_PUMP_HEATER_ACTIVE, 165),
+        reading(PointKey.HEAT_PUMP_STATE_CODE, 198),  # reported: where heat_pump_state is read
         reading(PointKey.HEAT_PUMP_STATE, 198, codes=HEAT_PUMP_STATES),
         temperature(PointKey.TEMP_BUFFER_TANK, 252, scale=0.1),
         temperature(PointKey.TEMP_PRESSURE_PIPE, 256, scale=0.1),
