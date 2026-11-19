@@ -73,7 +73,7 @@ class PointKey:
     TEMP_EXHAUST = Key("temp_exhaust", float)
     """Air leaving the unit to the outside, in °C."""
     TEMP_ROOM = Key("temp_room", float)
-    """The room, in °C."""
+    """A room sensor other than the panel's, in °C."""
     TEMP_ROOM_PANEL = Key("temp_room_panel", float)
     """The room at the user panel, in °C."""
     TEMP_HEATER = Key("temp_heater", float)
@@ -226,7 +226,7 @@ class PointKey:
     """False while the filter must be changed."""
     FILTER_REPLACE_INTERVAL = Key("filter_replace_interval", int)
     """How long between filter changes, in the unit the point states: days on some controllers,
-    months on others."""
+    months on others. An interval the user sets, never a count of days since the change."""
     FILTER_REPLACE_TIME_AGO = Key("filter_replace_time_ago", float)
     """Days since the filter was changed."""
     FILTER_REPLACE_TIME_REMAIN = Key("filter_replace_time_remain", float)
@@ -307,6 +307,7 @@ class PointKey:
     REHEAT_OUTPUT = Key("reheat_output", float)
     """The reheater's output, in percent."""
     PREHEAT_ENABLE = Key("preheat_enable", bool)
+    """Whether the preheater may run."""
     PREHEAT_OUTPUT = Key("preheat_output", float)
     """The preheater's output, in percent."""
     ELECTRIC_COIL = Key("electric_coil", ElectricCoil)
@@ -325,9 +326,9 @@ class PointKey:
     TEMP_HOTWATER_BOTTOM = Key("temp_hotwater_bottom", float)
     """The bottom of the hot water tank, in °C."""
     TEMP_HOTWATER = Key("temp_hotwater", float)
-    """The hot water temperature aimed for, in °C."""
+    """The hot water temperature the heat pump heats to, in °C."""
     TEMP_HOTWATER_BOOST = Key("temp_hotwater_boost", float)
-    """The hot water temperature, in °C, heated to electrically."""
+    """The hot water temperature the electric element heats to, in °C."""
     TEMP_HOTWATER_SCALD_PROTECTION = Key("temp_hotwater_scald_protection", float)
     """The scald protection temperature, in °C."""
     TEMP_HOTWATER_BYPASS_OFFSET = Key("temp_hotwater_bypass_offset", float)
@@ -361,7 +362,7 @@ class PointKey:
     # -------------------------------------------------------------------- heat pump
     HEAT_PUMP_ACTIVE = Key("heat_pump_active", bool)
     HEAT_PUMP_HEATER_ACTIVE = Key("heat_pump_heater_active", bool)
-    """Whether the heat pump's electric heater runs."""
+    """Whether the electric element in the hot water tank runs."""
     HEAT_PUMP_ROOM_HEATING = Key("heat_pump_room_heating", bool)
     HEAT_PUMP_WATER_HEATING = Key("heat_pump_water_heating", bool)
     HEAT_PUMP_STATE_CODE = Key("heat_pump_state_code", int)
