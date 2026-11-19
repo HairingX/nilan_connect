@@ -1,9 +1,12 @@
 """Genvex's Optima 250 as a model: its points, and how its gateway is talked to over micro_nabto.
 
 Sources:
-    No Modbus description of an Optima is published. The gateway's addresses, scales and
-    ranges were found in material published online. The user manuals in this repository's
-    docs/models/genvex-optima name the sensors and the settings' ranges.
+    The gateway's addresses, scales and ranges were found in material published online. Genvex's
+    Modbus register workbook, posted at
+    https://community.openenergymonitor.org/t/reverse-engineer-heatpump-genvex-combi-185/15992/46,
+    has an 'Optima 250' sheet; the gateway's datapoint and setpoint numbers are taken to be its
+    register numbers. The user manuals in this repository's docs/models/genvex-optima name the
+    sensors and the settings' ranges.
 """
 from __future__ import annotations
 
