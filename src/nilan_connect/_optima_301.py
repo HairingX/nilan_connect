@@ -43,6 +43,15 @@ OPTIMA_301 = MicroNabtoModel(
             switch(PointKey.COOLING_ENABLE, 2),
             SLAVE_79250_FAN_LEVEL,
         )),
+        section(candidates=(
+            # Not read on a 301 yet. Genvex's register workbook, sheet 'Optima 301'
+            # (https://community.openenergymonitor.org/t/reverse-engineer-heatpump-genvex-combi-185/15992/46):
+            # A85, 4x0016 "20) Preheat (on/off)", 0-1
+            switch(PointKey.PREHEAT_ENABLE, 16),
+            # A89, 4x0020 "24) Min air volume (%)", 0-100; the Optima 312's user manual, item 24
+            # "Minimum extract air": "The heat pump will not start with extract air flow below this setting."
+            setting(PointKey.MIN_AIR_VOLUME, 20, Limits(0, 100, step=1), unit=Unit.PERCENT),
+        )),
     ),
     poll_intervals={
         PollRate.FAST: FAST_INTERVAL,

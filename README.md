@@ -53,6 +53,15 @@ of its own. Where it replaces a point of the same key, a consumer that stores th
 only the register behind it changes. A candidate that is confirmed on a unit becomes a point
 like any other, and its source is named on its line in the model.
 
+| Controller | Candidate | Replaces | Source |
+|---|---|---|---|
+| Optima 250, 251 | `bypass_active` at datapoint 107, "Bypass ON/OFF" | `bypass_active` at datapoint 104, the bypass's opening, 0-100 % | Genvex's register workbook |
+| Optima 301 | `preheat_enable` at setpoint 16, "Preheat (on/off)" | - | Genvex's register workbook |
+| Optima 301 | `min_air_volume` at setpoint 20, "Min air volume (%)" | - | Genvex's register workbook; the Optima 312's user manual, item 24 |
+
+Genvex's register workbook was posted on the
+[OpenEnergyMonitor forum](https://community.openenergymonitor.org/t/reverse-engineer-heatpump-genvex-combi-185/15992/46).
+
 ```python
 from nilan_connect import Level, create_client
 

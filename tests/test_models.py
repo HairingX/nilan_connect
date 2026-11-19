@@ -436,7 +436,16 @@ def test_an_optima_314s_datapoint_24_is_the_hot_water_tanks_bottom() -> None:
 POINTS: dict[str, dict[str, str]] = json.loads((Path(__file__).parent / "points.json").read_text(encoding="utf-8"))
 """Every point of each variant, by key, as it was before the first candidate, inferred ones included."""
 
-CANDIDATES: dict[str, dict[str, str]] = {}
+CANDIDATES: dict[str, dict[str, str]] = {
+    "OPTIMA_250": {"bypass_active": "reported DatapointRegister(address=107, obj=0) None DataType.BOOL x1+0"},
+    "OPTIMA_251": {"bypass_active": "reported DatapointRegister(address=107, obj=0) None DataType.BOOL x1+0"},
+    "OPTIMA_301": {
+        "preheat_enable": "reported SetpointRegister(address=16, obj=0) SetpointRegister(address=16, obj=0) "
+                          "DataType.BOOL x1+0",
+        "min_air_volume": "reported SetpointRegister(address=20, obj=0) SetpointRegister(address=20, obj=0) "
+                          "DataType.UINT16 x1+0",
+    },
+}
 """What each variant's candidates put in place at the Test level."""
 
 
@@ -459,6 +468,48 @@ def test_below_the_test_level_a_variant_has_the_points_it_had_before_the_candida
 @pytest.mark.parametrize("variant", sorted(VARIANTS))
 def test_at_the_test_level_a_variant_has_every_point_it_had_with_its_candidates_in_place(variant: str) -> None:
     assert _used(variant, Level.TEST) == {**POINTS[variant], **CANDIDATES.get(variant, {})}
+
+
+def test_the_candidates_are_those_read_on_no_unit_whose_registers_genvexs_workbook_gives() -> None:
+    found = {variant: {key: point.candidate.replaces for key, point in _resolved(variant, Level.TEST).used.items()
+                       if point.candidate is not None} for variant in VARIANTS}
+    assert {variant: candidates for variant, candidates in found.items() if candidates} == {
+        "OPTIMA_250": {"bypass_active": PointKey.BYPASS_ACTIVE},
+        "OPTIMA_251": {"bypass_active": PointKey.BYPASS_ACTIVE},
+        "OPTIMA_301": {"preheat_enable": None, "min_air_volume": None},
+    }
+
+
+@pytest.mark.parametrize("variant", ["OPTIMA_250", "OPTIMA_251"])
+async def test_at_the_test_level_an_optima_250s_bypass_is_open_by_its_on_off_datapoint_107(variant: str) -> None:
+    """Genvex's workbook: 3x0107 "Bypass ON/OFF"; 3x0104 is the bypass's opening, 0-100 %."""
+    async for client, _ in _client(VARIANTS[variant][1], {104: 63, 107: 0}, {}, Level.TEST):
+        assert _value(client, PointKey.BYPASS_ACTIVE) is False
+        assert _value(client, PointKey.BYPASS_POSITION) == 63
+    async for client, _ in _client(VARIANTS[variant][1], {104: 63, 107: 0}, {}):
+        assert _value(client, PointKey.BYPASS_ACTIVE) is True
+
+
+async def test_at_the_test_level_an_optima_301_reads_and_writes_its_preheat_at_setpoint_16() -> None:
+    """Genvex's workbook: 4x0016 "20) Preheat (on/off)"."""
+    async for client, simulated in _client(VARIANTS["OPTIMA_301"][1], {}, {16: 1}, Level.TEST):
+        assert _value(client, PointKey.PREHEAT_ENABLE) is True
+        assert await client.write(PointKey.PREHEAT_ENABLE, False) is True
+        assert [c.items for c in simulated.received(SETPOINT_WRITE)] == [((0, 16, 0),)]
+
+
+async def test_at_the_test_level_an_optima_301_reads_and_writes_its_minimum_air_volume_at_setpoint_20() -> None:
+    """Genvex's workbook: 4x0020 "24) Min air volume (%)", 0-100."""
+    async for client, simulated in _client(VARIANTS["OPTIMA_301"][1], {}, {20: 30}, Level.TEST):
+        assert _value(client, PointKey.MIN_AIR_VOLUME) == 30
+        assert client.points[PointKey.MIN_AIR_VOLUME].limits == Limits(0, 100, step=1)
+        assert await client.write(PointKey.MIN_AIR_VOLUME, 40) is True
+        assert [c.items for c in simulated.received(SETPOINT_WRITE)] == [((0, 20, 40),)]
+
+
+async def test_below_the_test_level_an_optima_301_has_neither_preheat_nor_a_minimum_air_volume() -> None:
+    async for client, _ in _client(VARIANTS["OPTIMA_301"][1], {}, {16: 1, 20: 30}):
+        assert not client.has(PointKey.PREHEAT_ENABLE) and not client.has(PointKey.MIN_AIR_VOLUME)
 
 
 # =================================================================== through a simulated gateway
