@@ -333,8 +333,7 @@ class PointKey:
     TEMP_HOTWATER_BYPASS_OFFSET = Key("temp_hotwater_bypass_offset", float)
     """The bypass offset for hot water, in °C; 0 for off."""
     HOTWATER_HEATER_ENABLE = Key("hotwater_heater_enable", bool)
-    HOTWATER_SUPPLEMENT = Key("hotwater_supplement", HeatSource)
-    """What supplements the heat pump for hot water."""
+    """Whether the electric element in the hot water tank may heat the water."""
     ANTILEGIONELLA_DAY = Key("antilegionella_day", Weekday)
     """The day hot water is heated against legionella."""
     SACRIFICIAL_ANODE_OK = Key("sacrificial_anode_ok", bool)

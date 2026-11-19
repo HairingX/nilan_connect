@@ -514,6 +514,14 @@ def test_heat_pump_states_that_share_a_text_are_one_state() -> None:
     assert heat_pump.codes[6] is heat_pump.codes[10] is OperationState.HEAT_PUMP_STOP
 
 
+async def test_a_cts602s_electric_hot_water_supplement_is_a_switch() -> None:
+    """HR 1704 HotWater.HeatType: "Use of electricity supplement: 0=OFF, 1=El"."""
+    async for client, simulated in _client(VARIANTS["CTS602/9"][1], {}, {193: 1}):
+        assert _value(client, PointKey.HOTWATER_HEATER_ENABLE) is True
+        assert await client.write(PointKey.HOTWATER_HEATER_ENABLE, False) is True
+        assert [c.items for c in simulated.received(SETPOINT_WRITE)] == [((0, 193, 0),)]
+
+
 async def test_a_weekday_is_numbered_as_the_manual_numbers_it() -> None:
     """HotWater.LegioType: "0=OFF, 1=Mandag, ..., 7=sondag"."""
     async for client, simulated in _client(VARIANTS["CTS602/9"][1], {}, {194: 1}):
