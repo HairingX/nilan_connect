@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-from modbus_event_connect import Fixed, Retry, Steps, Within
+from modbus_event_connect import Fixed, Retry, Section, Steps, Within
 from modbus_event_connect.micro_nabto import DatapointRegister, RereadZeros, SetpointRegister
 from modbus_event_connect.testing import ResolvedModel, assert_models_valid, resolve
 
@@ -43,6 +43,7 @@ from nilan_connect import (
     PollRate,
     Unit,
     Weekday,
+    model_points,
     select_model,
 )
 from nilan_connect._points import (
@@ -158,6 +159,19 @@ def test_each_model_is_valid_for_its_variants(model: str) -> None:
     """Every section of a model must be one some variant has."""
     variants = [VARIANTS[name] for name in VARIANTS if name.split("/")[0] == model]
     assert_models_valid([variants[0][0]], identities=[identity for _, identity in variants])
+
+
+@pytest.mark.parametrize("model", MODELS, ids=lambda model: model.name)
+def test_a_models_points_are_every_point_it_declares_at_any_level(model: MicroNabtoModel) -> None:
+    """A model's sections are fixed: none repeats its points per instance."""
+    assert all(isinstance(section, Section) for section in model.sections)
+    assert {point.key for point in model_points(model)} == model.keys
+
+
+def test_the_points_of_a_model_with_candidates_hold_them_beside_the_points_they_replace() -> None:
+    bypass = [point for point in model_points(OPTIMA_250) if point.key == PointKey.BYPASS_ACTIVE]
+    assert [point.candidate for point in bypass] == [None, Candidate(replaces=PointKey.BYPASS_ACTIVE)]
+    assert {point.certainty for point in model_points(CTS602)} == set(Certainty)
 
 
 @pytest.mark.parametrize("model", MODELS, ids=lambda model: model.name)

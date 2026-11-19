@@ -69,6 +69,8 @@ client = create_client(email="you@example.com", host="192.0.2.10", level=Level.T
 ```
 
 `client.diagnostics()` names the level, the certainty of each point and the candidates in use.
+`model_points(model)` gives every point a model declares, whatever the unit and the level: of each
+variant, with its certainty, and each candidate beside the point it replaces.
 
 ## Installation
 

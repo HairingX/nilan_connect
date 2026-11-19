@@ -72,7 +72,7 @@ from ._states import (
     ServiceMode,
     Weekday,
 )
-from ._nilan import MODELS, DiscoveredDevice, create_client, discover
+from ._nilan import MODELS, DiscoveredDevice, create_client, discover, model_points
 
 __version__ = _installed_version("nilan_connect")
 __all__ = [
@@ -114,6 +114,7 @@ __all__ = [
     "create_client",
     "discover",
     "MODELS",
+    "model_points",
     "select_model",
     "CTS400",
     "CTS602",

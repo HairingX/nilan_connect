@@ -2,8 +2,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Any
 
-from modbus_event_connect import CircuitBreaker, Client, Clock, Fixed, Level, Retry
+from modbus_event_connect import CircuitBreaker, Client, Clock, Fixed, Level, Point, Retry, Section
 from modbus_event_connect.micro_nabto import BROADCAST, PORT, MicroNabtoDevice, MicroNabtoModel
 from modbus_event_connect.micro_nabto import discover as discover_devices
 
@@ -32,6 +33,12 @@ MODELS: tuple[MicroNabtoModel, ...] = (
     OPTIMA_314,
 )
 """Every model `select_model` chooses from."""
+
+
+def model_points(model: MicroNabtoModel) -> tuple[Point[Any], ...]:
+    """Every point `model` declares, whatever the unit and the level: those of each variant, each
+    with its certainty, and the candidates beside the points they replace."""
+    return tuple(point for section in model.sections if isinstance(section, Section) for point in section.points)
 
 _TIMEOUT = 1.0  # guess
 """Seconds a request is given to be acknowledged before it is sent again."""
