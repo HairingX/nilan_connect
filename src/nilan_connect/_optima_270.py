@@ -21,7 +21,7 @@ from ._optima import (
     optima_temperature,
     optima_write_address,
 )
-from ._points import alarm_bit, command, reading, section, state
+from ._points import alarm_bit, command, reading, section, setpoint_reading, state
 from ._shared import (
     ANSWER_WAIT,
     FAST_INTERVAL,
@@ -99,9 +99,14 @@ OPTIMA_270 = MicroNabtoModel(
             optima_270_setting(PointKey.TEMP_BYPASS_FAN_INCREASE_OFFSET, 58, Limits(0, 5, step=0.1),
                                data_type=DataType.INT16, scale=0.1, unit=Unit.CELSIUS),
             optima_270_setting(PointKey.BOOST_TIME, 70, Limits(1, 120, step=1), unit=Unit.MINUTES),
-            # The user manual gives the filter timer in months, 0-12; this register was reported in days.
-            optima_270_setting(PointKey.FILTER_REPLACE_INTERVAL, 100, None, unit=Unit.DAYS),
-        ), reported=ALARMS_270),
+        ), reported=(
+            *ALARMS_270,
+            # reported: the user manual's EF1 counter, "days since the last filter reset"; two owners
+            # see it count to about 90 and then stay at 250 once a change is due
+            # (https://github.com/superrob/genvexconnect/issues/52,
+            # https://github.com/superrob/genvexconnect/issues/45)
+            setpoint_reading(PointKey.FILTER_REPLACE_TIME_AGO, 100, unit=Unit.DAYS),
+        )),
     ),
     poll_intervals={
         PollRate.FAST: FAST_INTERVAL,

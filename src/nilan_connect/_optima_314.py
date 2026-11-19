@@ -21,7 +21,7 @@ from ._optima import (
     optima_temperature,
     optima_write_address,
 )
-from ._points import alarm_bit, command, reading, section, state
+from ._points import alarm_bit, command, reading, section, setpoint_reading, state
 from ._shared import (
     ANSWER_WAIT,
     FAST_INTERVAL,
@@ -97,8 +97,11 @@ OPTIMA_314 = MicroNabtoModel(
             optima_270_switch(PointKey.BOOST_ENABLE, 30),
             command(PointKey.FILTER_REPLACE_RESET, 110),
             optima_270_setting(PointKey.BOOST_TIME, 70, Limits(1, 120, step=1), unit=Unit.MINUTES),
-            # The user manual gives the filter timer in months, 0-12; this register was reported in days.
-            optima_270_setting(PointKey.FILTER_REPLACE_INTERVAL, 100, None, unit=Unit.DAYS),
+            # reported: the Optima 270's register, whose layout the 314's follows (genvexnabto's
+            # FILTER_DAYS); the user manual's EF1 counter, "days since last filterreset". That it stays
+            # at 250 once a change is due is known from Optima 270s
+            # (https://github.com/superrob/genvexconnect/issues/52); not read on a 314
+            setpoint_reading(PointKey.FILTER_REPLACE_TIME_AGO, 100, unit=Unit.DAYS),
             optima_270_setting(PointKey.TEMP_HOTWATER, 122, Limits(0, 55, step=0.1), data_type=DataType.INT16,
                                scale=0.1, unit=Unit.CELSIUS),
         )),

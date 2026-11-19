@@ -73,9 +73,10 @@ def alarm_bit(key: Key[bool], address: int, bit: int, *, inverted: bool = False)
 
 
 def setpoint_reading[T](key: Key[T], address: int, *, data_type: DataType = DataType.UINT16,
-                        codes: Mapping[int, IntEnum] | None = None) -> Point[T]:
+                        unit: Unit | None = None, codes: Mapping[int, IntEnum] | None = None) -> Point[T]:
     """A setpoint that is only read."""
-    return Point(key, read=SetpointRegister(address), data_type=data_type, codes=codes, poll_rate=PollRate.SLOW)
+    return Point(key, read=SetpointRegister(address), data_type=data_type, unit=unit, codes=codes,
+                 poll_rate=PollRate.SLOW)
 
 
 def setting[T](key: Key[T], address: int, limits: Limits | None, *, write_address: int | None = None,

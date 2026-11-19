@@ -324,6 +324,18 @@ async def test_an_optima_301s_cooling_setting_reads_and_writes_tenths_of_a_degre
         assert [c.items for c in simulated.received(SETPOINT_WRITE)] == [((0, 1, 70),)]
 
 
+@pytest.mark.parametrize("variant", ["OPTIMA_270", "OPTIMA_314"])
+async def test_an_optima_270s_and_314s_setpoint_100_is_the_days_since_the_filter_was_changed(variant: str) -> None:
+    """The user manual's EF1 counter: two Optima 270s count to about 90 days, then show 250 once a
+    change is due (superrob/genvexconnect#52); it is never written."""
+    async for client, _ in _client(VARIANTS[variant][1], {}, {100: 250}):
+        assert _value(client, PointKey.FILTER_REPLACE_TIME_AGO) == 250
+        assert not client.has(PointKey.FILTER_REPLACE_INTERVAL)
+    point = _point(variant, PointKey.FILTER_REPLACE_TIME_AGO)
+    assert (point.read, point.write, point.unit) == (SetpointRegister(100), None, Unit.DAYS)
+    assert point.certainty is Certainty.REPORTED
+
+
 def test_an_optima_314s_datapoint_24_is_the_hot_water_tanks_bottom() -> None:
     """The user manual calls sensor T8 the tank bottom."""
     at_24 = [point.key for point in _points("OPTIMA_314") if point.read == DatapointRegister(24)]
