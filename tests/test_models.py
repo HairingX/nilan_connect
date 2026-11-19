@@ -451,6 +451,14 @@ async def test_a_cts602_reads_its_extract_air_where_its_variant_has_it(slave_mod
         assert _value(client, PointKey.TEMP_EXTRACT) == pytest.approx(21.5)
 
 
+async def test_a_cts602_lights_supply_air_is_read_after_its_heater() -> None:
+    """By its group, gateway 37 is IR 207 Input.T7_Inlet, "Inlet temperature (after heater)"; the
+    Light's manual lists no T2."""
+    async for client, _ in _client(VARIANTS["CTS602_LIGHT"][1], {37: 2150}, {}):
+        assert _value(client, PointKey.TEMP_SUPPLY_AFTER_HEATER) == pytest.approx(21.5)
+        assert not client.has(PointKey.TEMP_SUPPLY)
+
+
 async def test_an_inferred_alarm_status_is_the_bit_the_manual_names_for_an_active_alarm() -> None:
     async for client, _ in _client(VARIANTS["CTS602_LIGHT"][1], {63: 0x80}, {}):
         assert _value(client, PointKey.ALARM_STATUS) is True

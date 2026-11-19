@@ -48,7 +48,9 @@ CTS602_LIGHT_SECTIONS = (
         reported=(
             cts602_temperature(PointKey.TEMP_EXTRACT, 33),
             cts602_temperature(PointKey.TEMP_EXHAUST, 34),
-            cts602_temperature(PointKey.TEMP_SUPPLY, 37),
+            # reported: by its group IR 207 Input.T7_Inlet, "Inlet temperature (after heater)"; the
+            # manual lists no T2, the supply air before the heater
+            cts602_temperature(PointKey.TEMP_SUPPLY_AFTER_HEATER, 37),
             cts602_temperature(PointKey.TEMP_OUTSIDE, 38),
             cts602_temperature(PointKey.TEMP_HEATER, 39),
             reading(PointKey.HUMIDITY, 51, data_type=DataType.INT16, scale=0.01, unit=Unit.PERCENT),
