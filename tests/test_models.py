@@ -204,6 +204,15 @@ def test_only_the_cts400_the_optima_270_and_four_cts602_temperatures_are_verifie
     assert all(point.certainty is Certainty.VERIFIED for point in _points("CTS400"))
 
 
+def test_an_optima_270s_alarm_bits_are_reported_and_its_alarm_words_verified() -> None:
+    """A running Optima 270 with no alarm on its panel read an external stop in them
+    (HairingX/nilan_connect#31)."""
+    bits = {point.key: point.certainty for point in _points("OPTIMA_270") if point.data_type.bit_index is not None}
+    assert len(bits) == 23 and set(bits.values()) == {Certainty.REPORTED}
+    assert _point("OPTIMA_270", PointKey.ALARM_BITS).certainty is Certainty.VERIFIED
+    assert _point("OPTIMA_270", PointKey.ALARM_BITS_HIGH).certainty is Certainty.VERIFIED
+
+
 @pytest.mark.parametrize(("variant", "key", "expected"), [
     ("CTS602/0", PointKey.TEMP_SUPPLY, Certainty.VERIFIED),
     ("CTS602/0", PointKey.TEMP_ROOM, Certainty.REPORTED),

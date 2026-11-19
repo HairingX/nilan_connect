@@ -35,6 +35,10 @@ from ._shared import (
 
 # The alarm bits, as found in material published online. The filter alarm's bit is set while the
 # filter must be changed, so it is `filter_ok` inverted, as every controller has that key.
+# reported: the layout superrob/genvexconnect derived from datapoint 38 on units
+# (https://github.com/superrob/genvexconnect/issues/22); on datapoints 114 and 115 a running unit
+# with no alarm on its panel reads an external stop in it
+# (https://github.com/HairingX/nilan_connect/issues/31), so it is not taken as read on a unit.
 ALARMS_270: tuple[Point[bool], ...] = (
     alarm_bit(PointKey.FILTER_OK, 114, 0, inverted=True),
     alarm_bit(PointKey.ALARM_EXTERNAL_STOP, 114, 1),
@@ -82,7 +86,6 @@ OPTIMA_270 = MicroNabtoModel(
             state(PointKey.BYPASS_ACTIVE, 53),
             reading(PointKey.ALARM_BITS, 114),
             reading(PointKey.ALARM_BITS_HIGH, 115),
-            *ALARMS_270,
             optima_target(1, write_address=optima_write_address(1)),
             optima_270_switch(PointKey.REHEAT_ENABLE, 3),
             optima_270_switch(PointKey.HUMIDITY_CONTROL_ENABLE, 6),
@@ -98,7 +101,7 @@ OPTIMA_270 = MicroNabtoModel(
             optima_270_setting(PointKey.BOOST_TIME, 70, Limits(1, 120, step=1), unit=Unit.MINUTES),
             # The user manual gives the filter timer in months, 0-12; this register was reported in days.
             optima_270_setting(PointKey.FILTER_REPLACE_INTERVAL, 100, None, unit=Unit.DAYS),
-        )),
+        ), reported=ALARMS_270),
     ),
     poll_intervals={
         PollRate.FAST: FAST_INTERVAL,
