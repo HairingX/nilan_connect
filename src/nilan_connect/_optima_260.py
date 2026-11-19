@@ -28,6 +28,7 @@ from ._shared import (
     READ_BACK_AFTER,
     SLOW_INTERVAL,
     WRITE_RETRY,
+    WRITE_TAKEN,
     ZEROS,
 )
 
@@ -64,5 +65,6 @@ OPTIMA_260 = MicroNabtoModel(
     answer_wait=ANSWER_WAIT,
     later_answer_wait=LATER_ANSWER_WAIT,
     zeros=ZEROS,
+    write_taken=WRITE_TAKEN,
 )
 """Genvex's Optima 260, as its gateway is talked to over micro_nabto."""

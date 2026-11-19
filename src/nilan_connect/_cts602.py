@@ -42,6 +42,7 @@ from ._shared import (
     READ_BACK_AFTER,
     SLOW_INTERVAL,
     WRITE_RETRY,
+    WRITE_TAKEN,
     ZEROS,
 )
 from ._states import Alarm, FilterReplaceInterval, HeatSource, OperationState
@@ -310,5 +311,6 @@ CTS602 = MicroNabtoModel(
     answer_wait=ANSWER_WAIT,
     later_answer_wait=LATER_ANSWER_WAIT,
     zeros=ZEROS,
+    write_taken=WRITE_TAKEN,
 )
 """Nilan's CTS602, every variant, as its gateway is talked to over micro_nabto."""

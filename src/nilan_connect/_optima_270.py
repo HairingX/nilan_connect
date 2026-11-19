@@ -113,5 +113,6 @@ OPTIMA_270 = MicroNabtoModel(
     answer_wait=ANSWER_WAIT,
     later_answer_wait=LATER_ANSWER_WAIT,
     zeros=ZEROS,
+    write_taken=frozenset({0, 1}),  # measured on an Optima 270: 8 of 8 writes answered 0x01 and taken (HairingX/modbus_event_connect#37); 0 a guess
 )
 """Genvex's Optima 270, as its gateway is talked to over micro_nabto."""
