@@ -1,6 +1,8 @@
 """Every controller: the model a handshake selects, the rules every model keeps, the points checked
 against the manuals, and values through a simulated gateway."""
 import csv
+import dataclasses
+import json
 from collections import Counter
 from collections.abc import AsyncGenerator, Mapping
 from datetime import datetime
@@ -24,14 +26,17 @@ from nilan_connect import (
     OPTIMA_312,
     OPTIMA_314,
     Alarm,
+    Candidate,
     Certainty,
     Client,
     ElectricCoil,
     FilterReplaceInterval,
     MODELS,
     Identity,
+    Level,
     Limits,
     MicroNabtoModel,
+    ModelError,
     OperationState,
     Point,
     PointKey,
@@ -40,7 +45,19 @@ from nilan_connect import (
     Weekday,
     select_model,
 )
-from nilan_connect._points import section
+from nilan_connect._points import (
+    alarm_bit,
+    choice,
+    command,
+    reading,
+    section,
+    setpoint_bit,
+    setpoint_reading,
+    setting,
+    state,
+    switch,
+    temperature,
+)
 from nilan_connect.testing import SimulatedMicroNabtoDevice, client_for
 
 DOCS = Path(__file__).parent.parent / "docs" / "models"
@@ -81,17 +98,19 @@ HANDSHAKE_ZEROS = {"device_number": 0, "device_model": 0, "slave_device_number":
 """What a simulated gateway's handshake says for a number the test does not care about."""
 
 
-def _resolved(variant: str) -> ResolvedModel:
+def _resolved(variant: str, level: Level = Level.DOCUMENTED) -> ResolvedModel:
     model, identity = VARIANTS[variant]
-    return resolve(model, identity)
+    return resolve(model, identity, level)
 
 
-def _points(variant: str) -> list[Point[Any]]:
-    return list(_resolved(variant).points.values())
+def _points(variant: str, level: Level = Level.DOCUMENTED) -> list[Point[Any]]:
+    """Every point of `variant` but the candidates below `level` Test, those left out for their
+    certainty included."""
+    return list(_resolved(variant, level).points.values())
 
 
-def _point(variant: str, key: str) -> Point[Any]:
-    return _resolved(variant).point(key)
+def _point(variant: str, key: str, level: Level = Level.DOCUMENTED) -> Point[Any]:
+    return _resolved(variant, level).point(key)
 
 
 def _manual(folder: str) -> dict[tuple[str, int], dict[str, str]]:
@@ -230,6 +249,42 @@ def test_one_point_given_under_two_certainties_in_two_sections_has_each_in_its_o
     point = Point(PointKey.TEMP_SUPPLY, read=SetpointRegister(1), poll_rate=PollRate.SLOW)
     verified, inferred = section(verified=[point]), section(inferred=[point])
     assert [p.certainty for p in (*verified.points, *inferred.points)] == [Certainty.VERIFIED, Certainty.INFERRED]
+
+
+def test_a_point_built_to_replace_another_is_refused_outside_the_candidates() -> None:
+    with pytest.raises(ModelError, match="preheat_enable"):
+        section(reported=[switch(PointKey.PREHEAT_ENABLE, 16, replaces=PointKey.PREHEAT_ENABLE)])
+
+
+def test_a_candidate_keeps_the_certainty_it_was_built_with_and_replaces_what_it_was_built_to() -> None:
+    new, replacing = section(candidates=[
+        switch(PointKey.PREHEAT_ENABLE, 16), state(PointKey.BYPASS_ACTIVE, 107, replaces=PointKey.BYPASS_ACTIVE)]).points
+    assert (new.candidate, new.certainty) == (Candidate(), Certainty.REPORTED)
+    assert (replacing.candidate, replacing.certainty) == (Candidate(replaces=PointKey.BYPASS_ACTIVE), Certainty.REPORTED)
+
+
+@pytest.mark.parametrize("built", [
+    reading(PointKey.TEMP_SUPPLY, 1, replaces=PointKey.TEMP_SUPPLY),
+    temperature(PointKey.TEMP_SUPPLY, 1, scale=0.1, replaces=PointKey.TEMP_SUPPLY),
+    state(PointKey.BYPASS_ACTIVE, 1, replaces=PointKey.TEMP_SUPPLY),
+    alarm_bit(PointKey.BYPASS_ACTIVE, 1, 0, replaces=PointKey.TEMP_SUPPLY),
+    setpoint_reading(PointKey.TEMP_SUPPLY, 1, replaces=PointKey.TEMP_SUPPLY),
+    setting(PointKey.TEMP_SUPPLY, 1, None, replaces=PointKey.TEMP_SUPPLY),
+    setpoint_bit(PointKey.BYPASS_ACTIVE, 1, 0, replaces=PointKey.TEMP_SUPPLY),
+    choice(PointKey.ELECTRIC_COIL, 1, replaces=PointKey.TEMP_SUPPLY),
+    switch(PointKey.BYPASS_ACTIVE, 1, replaces=PointKey.TEMP_SUPPLY),
+    command(PointKey.BYPASS_ACTIVE, 1, replaces=PointKey.TEMP_SUPPLY),
+], ids=["reading", "temperature", "state", "alarm_bit", "setpoint_reading", "setting", "setpoint_bit", "choice",
+        "switch", "command"])
+def test_every_kind_of_point_can_be_built_to_replace_another(built: Point[Any]) -> None:
+    assert built.candidate == Candidate(replaces=PointKey.TEMP_SUPPLY)
+
+
+def test_a_model_refuses_a_candidate_replacing_a_point_it_does_not_have() -> None:
+    """An Optima 301 has no reheat switch."""
+    candidate = section(candidates=[switch(PointKey.REHEAT_ENABLE, 16, replaces=PointKey.REHEAT_ENABLE)])
+    with pytest.raises(ModelError, match="reheat_enable"):
+        dataclasses.replace(OPTIMA_301, sections=(*OPTIMA_301.sections, candidate))
 
 
 @pytest.mark.parametrize("variant", sorted(VARIANTS))
@@ -376,17 +431,47 @@ def test_an_optima_314s_datapoint_24_is_the_hot_water_tanks_bottom() -> None:
     assert at_24 == [PointKey.TEMP_HOTWATER_BOTTOM]
 
 
+# ================================================================== levels and candidates
+
+POINTS: dict[str, dict[str, str]] = json.loads((Path(__file__).parent / "points.json").read_text(encoding="utf-8"))
+"""Every point of each variant, by key, as it was before the first candidate, inferred ones included."""
+
+CANDIDATES: dict[str, dict[str, str]] = {}
+"""What each variant's candidates put in place at the Test level."""
+
+
+def _described(point: Point[Any]) -> str:
+    return f"{point.certainty} {point.read!r} {point.write!r} {point.data_type} x{point.scale:g}{point.offset:+g}"
+
+
+def _used(variant: str, level: Level) -> dict[str, str]:
+    return {key: _described(point) for key, point in _resolved(variant, level).used.items()}
+
+
+@pytest.mark.parametrize("level", [Level.VERIFIED, Level.DOCUMENTED])
+@pytest.mark.parametrize("variant", sorted(VARIANTS))
+def test_below_the_test_level_a_variant_has_the_points_it_had_before_the_candidates_that_the_level_admits(
+        variant: str, level: Level) -> None:
+    assert _used(variant, level) == {
+        key: described for key, described in POINTS[variant].items() if level.admits(Certainty(described.split()[0]))}
+
+
+@pytest.mark.parametrize("variant", sorted(VARIANTS))
+def test_at_the_test_level_a_variant_has_every_point_it_had_with_its_candidates_in_place(variant: str) -> None:
+    assert _used(variant, Level.TEST) == {**POINTS[variant], **CANDIDATES.get(variant, {})}
+
+
 # =================================================================== through a simulated gateway
 
 
-async def _client(identity: Mapping[str, Any], datapoints: dict[int, int],
-                  setpoints: dict[int, int]) -> AsyncGenerator[tuple[Client, SimulatedMicroNabtoDevice], None]:
+async def _client(identity: Mapping[str, Any], datapoints: dict[int, int], setpoints: dict[int, int],
+                  level: Level = Level.DOCUMENTED) -> AsyncGenerator[tuple[Client, SimulatedMicroNabtoDevice], None]:
     simulated = SimulatedMicroNabtoDevice(
         emails=frozenset({EMAIL}), identity={**HANDSHAKE_ZEROS, **identity},
         datapoint_registers={(0, a): v for a, v in datapoints.items()},
         setpoint_registers={(0, a): v for a, v in setpoints.items()})
     async with simulated:
-        client = client_for(simulated, email=EMAIL, timeout=0.2, retries=1)
+        client = client_for(simulated, email=EMAIL, timeout=0.2, retries=1, level=level)
         await client.connect()
         try:
             yield client, simulated
@@ -460,13 +545,13 @@ async def test_a_cts602_lights_supply_air_is_read_after_its_heater() -> None:
 
 
 async def test_an_inferred_alarm_status_is_the_bit_the_manual_names_for_an_active_alarm() -> None:
-    async for client, _ in _client(VARIANTS["CTS602_LIGHT"][1], {63: 0x80}, {}):
+    async for client, _ in _client(VARIANTS["CTS602_LIGHT"][1], {63: 0x80}, {}, Level.TEST):
         assert _value(client, PointKey.ALARM_STATUS) is True
 
 
 async def test_an_inferred_alarms_time_is_its_dos_date_and_time() -> None:
     date_word, time_word = (46 << 9) | (9 << 5) | 29, (13 << 11) | (37 << 5) | 21
-    async for client, _ in _client(VARIANTS["CTS602/0"][1], {66: date_word, 67: time_word}, {}):
+    async for client, _ in _client(VARIANTS["CTS602/0"][1], {66: date_word, 67: time_word}, {}, Level.TEST):
         assert _value(client, PointKey.ALARM_1_TIME) == datetime(2026, 9, 29, 13, 37, 42)
 
 
@@ -516,7 +601,7 @@ def test_heat_pump_states_that_share_a_text_are_one_state() -> None:
 
 async def test_a_cts602s_electric_hot_water_supplement_is_a_switch() -> None:
     """HR 1704 HotWater.HeatType: "Use of electricity supplement: 0=OFF, 1=El"."""
-    async for client, simulated in _client(VARIANTS["CTS602/9"][1], {}, {193: 1}):
+    async for client, simulated in _client(VARIANTS["CTS602/9"][1], {}, {193: 1}, Level.TEST):
         assert _value(client, PointKey.HOTWATER_HEATER_ENABLE) is True
         assert await client.write(PointKey.HOTWATER_HEATER_ENABLE, False) is True
         assert [c.items for c in simulated.received(SETPOINT_WRITE)] == [((0, 193, 0),)]
@@ -524,7 +609,7 @@ async def test_a_cts602s_electric_hot_water_supplement_is_a_switch() -> None:
 
 async def test_a_weekday_is_numbered_as_the_manual_numbers_it() -> None:
     """HotWater.LegioType: "0=OFF, 1=Mandag, ..., 7=sondag"."""
-    async for client, simulated in _client(VARIANTS["CTS602/9"][1], {}, {194: 1}):
+    async for client, simulated in _client(VARIANTS["CTS602/9"][1], {}, {194: 1}, Level.TEST):
         assert _value(client, PointKey.ANTILEGIONELLA_DAY) is Weekday.MONDAY
         assert await client.write(PointKey.ANTILEGIONELLA_DAY, Weekday.SUNDAY) is True
         assert [c.items for c in simulated.received(SETPOINT_WRITE)] == [((0, 194, 7),)]

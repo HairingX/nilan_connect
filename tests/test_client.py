@@ -17,11 +17,12 @@ from nilan_connect import (
     Client,
     DeviceClient,
     DiscoveredDevice,
+    Level,
     NotConnectedError,
     create_client,
     discover,
 )
-from nilan_connect.testing import FakeClock, SimulatedMicroNabtoDevice
+from nilan_connect.testing import FakeClock, SimulatedMicroNabtoDevice, client_for
 
 EMAIL = "user@example.invalid"
 CTS400_IDENTITY = {"device_number": 72280, "device_model": 1140, "slave_device_number": 72270, "slave_device_model": 1}
@@ -94,6 +95,19 @@ def test_a_created_client_counts_a_gateway_as_not_answering_after_one_missed_fas
     monkeypatch.setattr(nilan_connect._nilan, "Client", recording)
     create_client(email=EMAIL, host="192.0.2.1")
     assert told["offline_after_intervals"] == 1
+
+
+@pytest.mark.parametrize(("settings", "level"), [({}, Level.DOCUMENTED), ({"level": Level.TEST}, Level.TEST)],
+                         ids=["unless-told", "told"])
+def test_a_created_client_uses_the_documented_points_unless_told_a_level(settings: dict[str, Any], level: Level) -> None:
+    assert create_client(email=EMAIL, host="192.0.2.1", **settings).level is level
+
+
+@pytest.mark.parametrize(("settings", "level"), [({}, Level.DOCUMENTED), ({"level": Level.TEST}, Level.TEST)],
+                         ids=["unless-told", "told"])
+async def test_a_client_of_a_simulated_gateway_uses_the_documented_points_unless_told_a_level(
+        gateway: SimulatedMicroNabtoDevice, settings: dict[str, Any], level: Level) -> None:
+    assert client_for(gateway, email=EMAIL, timeout=0.2, retries=1, **settings).level is level
 
 
 def test_a_client_needs_the_gateways_address_or_its_id() -> None:
