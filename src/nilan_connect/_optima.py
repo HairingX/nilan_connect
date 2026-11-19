@@ -1,9 +1,13 @@
 """What Genvex's Optima controllers share: how their points are built, and the points several have.
 
 Sources:
-    No Modbus description of an Optima is published. The gateway's addresses, scales and
-    ranges were found in material published online. The user manuals in this repository's
-    docs/models/genvex-optima name the sensors and the settings' ranges.
+    The gateway's addresses, scales and ranges were found in material published online.
+    Genvex's Modbus register workbook, posted at
+    https://community.openenergymonitor.org/t/reverse-engineer-heatpump-genvex-combi-185/15992/46,
+    has a sheet for the Optima 250, 251, 260, 301 and 311-312. For an Optima behind slave device
+    79250, the gateway's datapoint and setpoint numbers are taken to be the sheet's register
+    numbers. The user manuals in this repository's docs/models/genvex-optima name the sensors
+    and the settings' ranges.
 """
 from __future__ import annotations
 
@@ -94,6 +98,7 @@ SLAVE_79250_POINTS: tuple[Point[Any], ...] = (
     optima_percent(PointKey.FAN_DUTYCYCLE_SUPPLY, 102),
     optima_percent(PointKey.FAN_DUTYCYCLE_EXTRACT, 103),
     state(PointKey.BYPASS_ACTIVE, 104),
+    reading(PointKey.BYPASS_POSITION, 104, unit=Unit.PERCENT),  # reported: the workbook's 3x0104 "Bypass", 0-100%
     optima_target(0),
     *optima_fan_presets(6),
     command(PointKey.FILTER_REPLACE_RESET, 105),

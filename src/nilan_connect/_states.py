@@ -170,6 +170,7 @@ class OperationState(IntEnum):
 
 
 class OperationMode(IntEnum):
+    """The operation mode: whether the unit may heat, cool or both."""
     OFF = 0
     HEAT = 1
     """Heating only, no cooling."""
@@ -222,6 +223,7 @@ class CoolingSetpoint(IntEnum):
 
 
 class AirExchangeMode(IntEnum):
+    """The air exchange mode: whether the unit favours saving energy or comfort."""
     ENERGY = 0
     COMFORT = 1
     COMFORT_WATER = 2
@@ -236,6 +238,7 @@ class ControlSensor(IntEnum):
 
 
 class CentralHeatMode(IntEnum):
+    """When the central heating heats."""
     FROST_PROTECTION_ONLY = 0
     """Only moving the pump and protecting against frost."""
     ALWAYS = 1
@@ -243,11 +246,13 @@ class CentralHeatMode(IntEnum):
 
 
 class CirculationPumpMode(IntEnum):
+    """When the central heating's circulation pump runs."""
     WHEN_HEATING = 0
     CONTINUOUS = 1
 
 
 class ServiceMode(IntEnum):
+    """The service mode: the part of the unit run on its own for a test."""
     OFF = 0
     DEFROST = 1
     FLAPS = 2
@@ -270,6 +275,15 @@ class FilterReplaceInterval(IntEnum):
     DAYS_70_AND_PRESSURE_GUARD = 5
 
 
+class ElectricCoil(IntEnum):
+    """The electric heating coil fitted to the unit."""
+    NONE = 0
+    REHEAT = 1
+    """A reheater, after the heat exchanger."""
+    PREHEAT = 2
+    """A preheater, before the heat exchanger."""
+
+
 class ExtraSensor(IntEnum):
     """The extra sensor fitted to the unit."""
     NONE = 0
@@ -278,6 +292,7 @@ class ExtraSensor(IntEnum):
 
 
 class DamperTestState(IntEnum):
+    """Where the air damper's self-test is."""
     OFF = 0
     STANDBY = 1
     START = 2

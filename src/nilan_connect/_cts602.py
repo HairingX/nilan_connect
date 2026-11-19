@@ -125,8 +125,6 @@ CENTRAL_HEAT_SOURCES: Mapping[int, HeatSource] = {
 }
 """CentralHeat.HeatType: "0=OFF, 1=El, 2=Heatpump, 3=Both (first compressor then electric priority)"."""
 
-HOT_WATER_SUPPLEMENTS: Mapping[int, HeatSource] = {0: HeatSource.OFF, 1: HeatSource.ELECTRIC}
-
 FILTER_INTERVALS: Mapping[int, FilterReplaceInterval] = {
     0: FilterReplaceInterval.PRESSURE_GUARD, 1: FilterReplaceInterval.DAYS_30, 2: FilterReplaceInterval.DAYS_90,
     3: FilterReplaceInterval.DAYS_180, 4: FilterReplaceInterval.DAYS_360,
@@ -134,7 +132,6 @@ FILTER_INTERVALS: Mapping[int, FilterReplaceInterval] = {
 }
 """AirFlow.FiltAlmType: "0: Pressure guard (input) 1: 30 days 2: 90 days 3: 180 days 4: 360 days
 5: 70 days and pressure guard"."""
-"""HotWater.HeatType: "Use of electricity supplement: 0=OFF, 1=El"."""
 
 
 def cts602_temperature(key: Key[float], address: int) -> Point[float]:
@@ -224,7 +221,8 @@ CTS602_SECTIONS = (
             choice(PointKey.CONTROL_SENSOR, 178),                                  # HR 1208 AirTemp.SensorSelect
             choice(PointKey.HEAT_SOURCE, 179, codes=HEAT_SELECTS),                 # HR 1209 AirTemp.HeatSelect
             cts602_temperature_setting(PointKey.TEMP_HOTWATER_SCALD_PROTECTION, 192),  # HR 1703 HotWater.TempCprMax
-            choice(PointKey.HOTWATER_SUPPLEMENT, 193, codes=HOT_WATER_SUPPLEMENTS),  # HR 1704 HotWater.HeatType
+            # "Use of electricity supplement: 0=OFF, 1=El"
+            switch(PointKey.HOTWATER_HEATER_ENABLE, 193),                          # HR 1704 HotWater.HeatType
             setting(PointKey.TEMP_HOTWATER_BYPASS_OFFSET, 195, Limits(0, 30, step=1),
                     unit=Unit.CELSIUS),                                            # HR 1706 HotWater.TempPri
             cts602_temperature_setting(PointKey.TEMP_CENTRAL_HEAT_OFFSET, 201),    # HR 1800 CentralHeat.HeatExtern
@@ -260,6 +258,7 @@ CTS602_SECTIONS = (
         temperature(PointKey.TEMP_HEAT_PUMP_OUTDOOR, 156, scale=0.1),
         state(PointKey.HEAT_PUMP_ACTIVE, 164),
         state(PointKey.HEAT_PUMP_HEATER_ACTIVE, 165),
+        reading(PointKey.HEAT_PUMP_STATE_CODE, 198),  # reported: where heat_pump_state is read
         reading(PointKey.HEAT_PUMP_STATE, 198, codes=HEAT_PUMP_STATES),
         temperature(PointKey.TEMP_BUFFER_TANK, 252, scale=0.1),
         temperature(PointKey.TEMP_PRESSURE_PIPE, 256, scale=0.1),

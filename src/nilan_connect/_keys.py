@@ -20,6 +20,7 @@ from ._states import (
     ControlSensor,
     CoolingSetpoint,
     DamperTestState,
+    ElectricCoil,
     ExtraSensor,
     FilterReplaceInterval,
     HeatSource,
@@ -72,7 +73,7 @@ class PointKey:
     TEMP_EXHAUST = Key("temp_exhaust", float)
     """Air leaving the unit to the outside, in °C."""
     TEMP_ROOM = Key("temp_room", float)
-    """The room, in °C."""
+    """A room sensor other than the panel's, in °C."""
     TEMP_ROOM_PANEL = Key("temp_room_panel", float)
     """The room at the user panel, in °C."""
     TEMP_HEATER = Key("temp_heater", float)
@@ -103,8 +104,9 @@ class PointKey:
     """The room temperature, in °C, night cooling aims for."""
     TEMP_COOLING_START_OFFSET = Key("temp_cooling_start_offset", CoolingSetpoint)
     """How far above the target temperature cooling starts."""
-    COOLING_TEMPERATURE = Key("cooling_temperature", int)
-    """An Optima 301's cooling setting; no public description gives its meaning."""
+    COOLING_TEMPERATURE = Key("cooling_temperature", float)
+    """An Optima 301's cooling setting, in °C; no public description says what it is measured
+    against."""
     CONTROL_SENSOR = Key("control_sensor", ControlSensor)
     """The sensor the temperature is controlled by."""
 
@@ -195,7 +197,8 @@ class PointKey:
     BYPASS_ACTIVE = Key("bypass_active", bool)
     """Whether the bypass damper is open."""
     BYPASS_POSITION = Key("bypass_position", int)
-    """The bypass damper's control signal; no public description gives its unit."""
+    """The bypass damper's opening, in percent where the controller states it; otherwise its
+    control signal."""
     TEMP_BYPASS_OPEN_OFFSET = Key("temp_bypass_open_offset", float)
     """The bypass's opening offset, in °C."""
     TEMP_BYPASS_CLOSE_OFFSET = Key("temp_bypass_close_offset", float)
@@ -223,7 +226,7 @@ class PointKey:
     """False while the filter must be changed."""
     FILTER_REPLACE_INTERVAL = Key("filter_replace_interval", int)
     """How long between filter changes, in the unit the point states: days on some controllers,
-    months on others."""
+    months on others. An interval the user sets, never a count of days since the change."""
     FILTER_REPLACE_TIME_AGO = Key("filter_replace_time_ago", float)
     """Days since the filter was changed."""
     FILTER_REPLACE_TIME_REMAIN = Key("filter_replace_time_remain", float)
@@ -304,8 +307,15 @@ class PointKey:
     REHEAT_OUTPUT = Key("reheat_output", float)
     """The reheater's output, in percent."""
     PREHEAT_ENABLE = Key("preheat_enable", bool)
+    """Whether the preheater may run."""
     PREHEAT_OUTPUT = Key("preheat_output", float)
     """The preheater's output, in percent."""
+    ELECTRIC_COIL = Key("electric_coil", ElectricCoil)
+    """The electric heating coil fitted, as the controller states it."""
+    REHEAT_COIL_FITTED = Key("reheat_coil_fitted", bool)
+    """Whether a reheater is fitted."""
+    PREHEAT_COIL_FITTED = Key("preheat_coil_fitted", bool)
+    """Whether a preheater is fitted."""
     COOLING_ENABLE = Key("cooling_enable", bool)
     COMPRESSOR_PRIORITY = Key("compressor_priority", CompressorPriority)
     """What the compressor serves first."""
@@ -316,16 +326,15 @@ class PointKey:
     TEMP_HOTWATER_BOTTOM = Key("temp_hotwater_bottom", float)
     """The bottom of the hot water tank, in °C."""
     TEMP_HOTWATER = Key("temp_hotwater", float)
-    """The hot water temperature aimed for, in °C."""
+    """The hot water temperature the heat pump heats to, in °C."""
     TEMP_HOTWATER_BOOST = Key("temp_hotwater_boost", float)
-    """The hot water temperature, in °C, heated to electrically."""
+    """The hot water temperature the electric element heats to, in °C."""
     TEMP_HOTWATER_SCALD_PROTECTION = Key("temp_hotwater_scald_protection", float)
     """The scald protection temperature, in °C."""
     TEMP_HOTWATER_BYPASS_OFFSET = Key("temp_hotwater_bypass_offset", float)
     """The bypass offset for hot water, in °C; 0 for off."""
     HOTWATER_HEATER_ENABLE = Key("hotwater_heater_enable", bool)
-    HOTWATER_SUPPLEMENT = Key("hotwater_supplement", HeatSource)
-    """What supplements the heat pump for hot water."""
+    """Whether the electric element in the hot water tank may heat the water."""
     ANTILEGIONELLA_DAY = Key("antilegionella_day", Weekday)
     """The day hot water is heated against legionella."""
     SACRIFICIAL_ANODE_OK = Key("sacrificial_anode_ok", bool)
@@ -353,9 +362,11 @@ class PointKey:
     # -------------------------------------------------------------------- heat pump
     HEAT_PUMP_ACTIVE = Key("heat_pump_active", bool)
     HEAT_PUMP_HEATER_ACTIVE = Key("heat_pump_heater_active", bool)
-    """Whether the heat pump's electric heater runs."""
+    """Whether the electric element in the hot water tank runs."""
     HEAT_PUMP_ROOM_HEATING = Key("heat_pump_room_heating", bool)
     HEAT_PUMP_WATER_HEATING = Key("heat_pump_water_heating", bool)
+    HEAT_PUMP_STATE_CODE = Key("heat_pump_state_code", int)
+    """The heat pump's state as the controller numbers it; `heat_pump_state` is what it means."""
     HEAT_PUMP_STATE = Key("heat_pump_state", OperationState)
     """What the heat pump is doing."""
     HEAT_PUMP_CAPACITY = Key("heat_pump_capacity", float)
@@ -365,6 +376,8 @@ class PointKey:
     TEMP_EVAPORATOR = Key("temp_evaporator", float)
     """The evaporator, in °C."""
     TEMP_BEFORE_CONDENSER = Key("temp_before_condenser", float)
+    TEMP_BEFORE_EVAPORATOR = Key("temp_before_evaporator", float)
+    """Air before the evaporator, the cooling coil, in °C."""
     TEMP_AFTER_CONDENSER = Key("temp_after_condenser", float)
     TEMP_PRESSURE_PIPE = Key("temp_pressure_pipe", float)
     """The compressor's pressure pipe, in °C."""

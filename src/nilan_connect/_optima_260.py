@@ -1,9 +1,10 @@
 """Genvex's Optima 260 as a model: its points, and how its gateway is talked to over micro_nabto.
 
 Sources:
-    No Modbus description of an Optima is published. The gateway's addresses, scales and
-    ranges were found in material published online. The user manuals in this repository's
-    docs/models/genvex-optima name the sensors and the settings' ranges.
+    The gateway's addresses, scales and ranges were found in material published online. Genvex's
+    Modbus register workbook, posted at
+    https://community.openenergymonitor.org/t/reverse-engineer-heatpump-genvex-combi-185/15992/46,
+    has an 'Optima 260' sheet that names the gateway's datapoint and setpoint of each register.
 """
 from __future__ import annotations
 
@@ -42,6 +43,8 @@ OPTIMA_260 = MicroNabtoModel(
             optima_percent(PointKey.FAN_DUTYCYCLE_SUPPLY, 9),
             optima_percent(PointKey.FAN_DUTYCYCLE_EXTRACT, 10),
             state(PointKey.BYPASS_ACTIVE, 11),
+            # reported: the workbook's 3x0011 "Bypass ventil", 0-100, which it gives as datapoint 11
+            reading(PointKey.BYPASS_POSITION, 11, unit=Unit.PERCENT),
             reading(PointKey.HUMIDITY, 13, data_type=DataType.INT16, unit=Unit.PERCENT),
             setting(PointKey.FAN_LEVEL, 0, Limits(0, 4, step=1), on_write=Refresh(
                 [PointKey.FAN_DUTYCYCLE_SUPPLY, PointKey.FAN_DUTYCYCLE_EXTRACT], after=FAN_LEVEL_REREAD_AFTER)),

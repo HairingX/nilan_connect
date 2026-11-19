@@ -1,13 +1,15 @@
 """Genvex's Optima 301 as a model: its points, and how its gateway is talked to over micro_nabto.
 
 Sources:
-    No Modbus description of an Optima is published. The gateway's addresses, scales and
-    ranges were found in material published online. The user manuals in this repository's
-    docs/models/genvex-optima name the sensors and the settings' ranges.
+    The gateway's addresses, scales and ranges were found in material published online. Genvex's
+    Modbus register workbook, posted at
+    https://community.openenergymonitor.org/t/reverse-engineer-heatpump-genvex-combi-185/15992/46,
+    has an 'Optima 301' sheet; the gateway's datapoint and setpoint numbers are taken to be its
+    register numbers.
 """
 from __future__ import annotations
 
-from modbus_event_connect import Limits, PollRate
+from modbus_event_connect import Limits, PollRate, Unit
 from modbus_event_connect.micro_nabto import MicroNabtoModel
 
 from ._keys import PointKey
@@ -29,14 +31,16 @@ OPTIMA_301 = MicroNabtoModel(
     "Optima 301", "Genvex", (
         section(reported=(
             *SLAVE_79250_POINTS,
-            optima_temperature(PointKey.TEMP_BEFORE_CONDENSER, 4),
+            # reported: the workbook's 3x0004 T5; its defrost programs name "Before cooling surface"
+            # and "Cooling surface", which T6 is
+            optima_temperature(PointKey.TEMP_BEFORE_EVAPORATOR, 4),
             optima_temperature(PointKey.TEMP_EVAPORATOR, 5),
             optima_temperature(PointKey.TEMP_HOTWATER_TOP, 6),
             optima_temperature(PointKey.TEMP_HOTWATER_BOTTOM, 7),
-            optima_temperature(PointKey.TEMP_ROOM, 9),
-            setting(PointKey.COOLING_TEMPERATURE, 1, Limits(30, 100, step=1)),
+            optima_temperature(PointKey.TEMP_ROOM_PANEL, 9),  # reported: the workbook's 3x0009 "T2 Panel"
+            # reported: the workbook's 4x0001 "02) Cooling (°C)", 30-100 at a resolution of 0.1, shown 3-10
+            setting(PointKey.COOLING_TEMPERATURE, 1, Limits(3, 10, step=0.1), scale=0.1, unit=Unit.CELSIUS),
             switch(PointKey.COOLING_ENABLE, 2),
-            switch(PointKey.PREHEAT_ENABLE, 20),
             SLAVE_79250_FAN_LEVEL,
         )),
     ),

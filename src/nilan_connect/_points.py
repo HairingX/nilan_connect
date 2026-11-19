@@ -73,9 +73,10 @@ def alarm_bit(key: Key[bool], address: int, bit: int, *, inverted: bool = False)
 
 
 def setpoint_reading[T](key: Key[T], address: int, *, data_type: DataType = DataType.UINT16,
-                        codes: Mapping[int, IntEnum] | None = None) -> Point[T]:
+                        unit: Unit | None = None, codes: Mapping[int, IntEnum] | None = None) -> Point[T]:
     """A setpoint that is only read."""
-    return Point(key, read=SetpointRegister(address), data_type=data_type, codes=codes, poll_rate=PollRate.SLOW)
+    return Point(key, read=SetpointRegister(address), data_type=data_type, unit=unit, codes=codes,
+                 poll_rate=PollRate.SLOW)
 
 
 def setting[T](key: Key[T], address: int, limits: Limits | None, *, write_address: int | None = None,
@@ -89,6 +90,11 @@ def setting[T](key: Key[T], address: int, limits: Limits | None, *, write_addres
                  write=SetpointRegister(address if write_address is None else write_address),
                  data_type=data_type, scale=scale, offset=offset, unit=unit, limits=limits,
                  poll_rate=PollRate.SLOW, on_write=on_write)
+
+
+def setpoint_bit(key: Key[bool], address: int, bit: int) -> Point[bool]:
+    """One bit of a setpoint that is only read: set while `key` is true."""
+    return Point(key, read=SetpointRegister(address), data_type=DataType.bit(bit), poll_rate=PollRate.SLOW)
 
 
 def choice[T: IntEnum](key: Key[T], address: int, *, write_address: int | None = None,

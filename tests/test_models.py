@@ -26,14 +26,17 @@ from nilan_connect import (
     Alarm,
     Certainty,
     Client,
+    ElectricCoil,
     FilterReplaceInterval,
     MODELS,
     Identity,
+    Limits,
     MicroNabtoModel,
     OperationState,
     Point,
     PointKey,
     PollRate,
+    Unit,
     Weekday,
     select_model,
 )
@@ -202,6 +205,15 @@ def test_only_the_cts400_the_optima_270_and_four_cts602_temperatures_are_verifie
     assert all(point.certainty is Certainty.VERIFIED for point in _points("CTS400"))
 
 
+def test_an_optima_270s_alarm_bits_are_reported_and_its_alarm_words_verified() -> None:
+    """A running Optima 270 with no alarm on its panel read an external stop in them
+    (HairingX/nilan_connect#31)."""
+    bits = {point.key: point.certainty for point in _points("OPTIMA_270") if point.data_type.bit_index is not None}
+    assert len(bits) == 23 and set(bits.values()) == {Certainty.REPORTED}
+    assert _point("OPTIMA_270", PointKey.ALARM_BITS).certainty is Certainty.VERIFIED
+    assert _point("OPTIMA_270", PointKey.ALARM_BITS_HIGH).certainty is Certainty.VERIFIED
+
+
 @pytest.mark.parametrize(("variant", "key", "expected"), [
     ("CTS602/0", PointKey.TEMP_SUPPLY, Certainty.VERIFIED),
     ("CTS602/0", PointKey.TEMP_ROOM, Certainty.REPORTED),
@@ -293,6 +305,71 @@ async def test_a_cts602s_filter_interval_is_one_of_the_manuals_periods(variant: 
         assert not client.has(PointKey.FILTER_REPLACE_INTERVAL)
 
 
+def test_an_optima_301_neither_reads_nor_writes_its_minimum_air_volume_as_preheat() -> None:
+    """Genvex's workbook gives setpoint 20 as "24) Min air volume (%)"; preheat is setpoint 16."""
+    at_20 = [point.key for point in _points("OPTIMA_301") if SetpointRegister(20) in (point.read, point.write)]
+    assert at_20 == []
+    assert PointKey.PREHEAT_ENABLE not in {point.key for point in _points("OPTIMA_301")}
+
+
+def test_an_optima_301s_cooling_setting_is_3_to_10_c_in_tenths() -> None:
+    """Genvex's workbook: 4x0001 "02) Cooling (°C)", 30-100 at a resolution of 0.1."""
+    point = _point("OPTIMA_301", PointKey.COOLING_TEMPERATURE)
+    assert (point.limits, point.unit, point.scale) == (Limits(3, 10, step=0.1), Unit.CELSIUS, 0.1)
+
+
+async def test_an_optima_301s_cooling_setting_reads_and_writes_tenths_of_a_degree() -> None:
+    async for client, simulated in _client(VARIANTS["OPTIMA_301"][1], {}, {1: 55}):
+        assert _value(client, PointKey.COOLING_TEMPERATURE) == pytest.approx(5.5)
+        assert await client.write(PointKey.COOLING_TEMPERATURE, 7.0) is True
+        assert [c.items for c in simulated.received(SETPOINT_WRITE)] == [((0, 1, 70),)]
+
+
+@pytest.mark.parametrize("variant", ["OPTIMA_270", "OPTIMA_314"])
+async def test_an_optima_270s_and_314s_setpoint_100_is_the_days_since_the_filter_was_changed(variant: str) -> None:
+    """The user manual's EF1 counter: two Optima 270s count to about 90 days, then show 250 once a
+    change is due (superrob/genvexconnect#52); it is never written."""
+    async for client, _ in _client(VARIANTS[variant][1], {}, {100: 250}):
+        assert _value(client, PointKey.FILTER_REPLACE_TIME_AGO) == 250
+        assert not client.has(PointKey.FILTER_REPLACE_INTERVAL)
+    point = _point(variant, PointKey.FILTER_REPLACE_TIME_AGO)
+    assert (point.read, point.write, point.unit) == (SetpointRegister(100), None, Unit.DAYS)
+    assert point.certainty is Certainty.REPORTED
+
+
+@pytest.mark.parametrize(("raw", "coil", "reheater", "preheater"), [
+    (0, ElectricCoil.NONE, False, False), (1, ElectricCoil.REHEAT, True, False), (2, ElectricCoil.PREHEAT, False, True)])
+async def test_an_optima_312s_setpoint_21_is_the_electric_coil_fitted(
+        raw: int, coil: ElectricCoil, reheater: bool, preheater: bool) -> None:
+    """The user manual's item 25: "0 = No electric heating coil installed, 1 = Electric reheater
+    installed, 2 = Electric preheater installed"."""
+    async for client, _ in _client(VARIANTS["OPTIMA_312"][1], {}, {21: raw}):
+        assert _value(client, PointKey.ELECTRIC_COIL) is coil
+        assert _value(client, PointKey.REHEAT_COIL_FITTED) is reheater
+        assert _value(client, PointKey.PREHEAT_COIL_FITTED) is preheater
+
+
+def test_an_optima_312s_electric_coil_is_only_read() -> None:
+    """Writing it would tell the controller another coil is installed."""
+    at_21 = {point.key: point.write for point in _points("OPTIMA_312") if point.read == SetpointRegister(21)}
+    assert at_21 == {PointKey.ELECTRIC_COIL: None, PointKey.REHEAT_COIL_FITTED: None,
+                     PointKey.PREHEAT_COIL_FITTED: None}
+
+
+@pytest.mark.parametrize(("variant", "address"), [("OPTIMA_301", 4), ("OPTIMA_312", 4), ("OPTIMA_314", 65)])
+def test_an_optimas_sensor_t5_is_the_air_before_the_evaporator(variant: str, address: int) -> None:
+    """The Optima 312's user manual: "T5 Before cooling coil, T6 Cooling coil"."""
+    at_t5 = [point.key for point in _points(variant) if point.read == DatapointRegister(address)]
+    assert at_t5 == [PointKey.TEMP_BEFORE_EVAPORATOR]
+
+
+@pytest.mark.parametrize("variant", ["OPTIMA_301", "OPTIMA_312"])
+def test_an_optimas_sensor_t2_is_the_room_at_its_panel(variant: str) -> None:
+    """Genvex's workbook: 3x0009 "T2 Panel"."""
+    at_9 = [point.key for point in _points(variant) if point.read == DatapointRegister(9)]
+    assert at_9 == [PointKey.TEMP_ROOM_PANEL]
+
+
 def test_an_optima_314s_datapoint_24_is_the_hot_water_tanks_bottom() -> None:
     """The user manual calls sensor T8 the tank bottom."""
     at_24 = [point.key for point in _points("OPTIMA_314") if point.read == DatapointRegister(24)]
@@ -357,10 +434,29 @@ async def test_a_write_an_optima_314s_gateway_answers_0x01_is_taken_and_not_sent
         assert len(simulated.received(SETPOINT_WRITE)) == 1
 
 
+@pytest.mark.parametrize(("variant", "address"), [
+    ("OPTIMA_250", 104), ("OPTIMA_251", 104), ("OPTIMA_301", 104), ("OPTIMA_312", 104), ("OPTIMA_260", 11)])
+async def test_an_optimas_bypass_opening_is_read_in_percent_beside_whether_it_is_open(
+        variant: str, address: int) -> None:
+    """Genvex's workbook gives the register as the bypass's opening, 0-100 %."""
+    async for client, _ in _client(VARIANTS[variant][1], {address: 63}, {}):
+        assert _value(client, PointKey.BYPASS_POSITION) == 63
+        assert _value(client, PointKey.BYPASS_ACTIVE) is True
+    assert _point(variant, PointKey.BYPASS_POSITION).unit is Unit.PERCENT
+
+
 @pytest.mark.parametrize(("slave_model", "address"), [(13, 34), (3, 41)])
 async def test_a_cts602_reads_its_extract_air_where_its_variant_has_it(slave_model: int, address: int) -> None:
     async for client, _ in _client(_cts602(slave_model), {address: 2150}, {}):
         assert _value(client, PointKey.TEMP_EXTRACT) == pytest.approx(21.5)
+
+
+async def test_a_cts602_lights_supply_air_is_read_after_its_heater() -> None:
+    """By its group, gateway 37 is IR 207 Input.T7_Inlet, "Inlet temperature (after heater)"; the
+    Light's manual lists no T2."""
+    async for client, _ in _client(VARIANTS["CTS602_LIGHT"][1], {37: 2150}, {}):
+        assert _value(client, PointKey.TEMP_SUPPLY_AFTER_HEATER) == pytest.approx(21.5)
+        assert not client.has(PointKey.TEMP_SUPPLY)
 
 
 async def test_an_inferred_alarm_status_is_the_bit_the_manual_names_for_an_active_alarm() -> None:
@@ -405,10 +501,25 @@ def test_the_state_code_names_only_the_control_states_of_the_manual() -> None:
     assert state.states[-1] is OperationState.HEATING_HOT_WATER and len(state.states) == 18
 
 
+async def test_a_heat_pump_states_code_is_kept_beside_the_state_it_means() -> None:
+    """Codes 6 and 10 both mean the heat pump has stopped; only the code tells them apart."""
+    async for client, _ in _client(VARIANTS["CTS602/44"][1], {198: 10}, {}):
+        assert _value(client, PointKey.HEAT_PUMP_STATE_CODE) == 10
+        assert _value(client, PointKey.HEAT_PUMP_STATE) is OperationState.HEAT_PUMP_STOP
+
+
 def test_heat_pump_states_that_share_a_text_are_one_state() -> None:
     heat_pump = _point("CTS602/44", PointKey.HEAT_PUMP_STATE)
     assert heat_pump.codes is not None
     assert heat_pump.codes[6] is heat_pump.codes[10] is OperationState.HEAT_PUMP_STOP
+
+
+async def test_a_cts602s_electric_hot_water_supplement_is_a_switch() -> None:
+    """HR 1704 HotWater.HeatType: "Use of electricity supplement: 0=OFF, 1=El"."""
+    async for client, simulated in _client(VARIANTS["CTS602/9"][1], {}, {193: 1}):
+        assert _value(client, PointKey.HOTWATER_HEATER_ENABLE) is True
+        assert await client.write(PointKey.HOTWATER_HEATER_ENABLE, False) is True
+        assert [c.items for c in simulated.received(SETPOINT_WRITE)] == [((0, 193, 0),)]
 
 
 async def test_a_weekday_is_numbered_as_the_manual_numbers_it() -> None:

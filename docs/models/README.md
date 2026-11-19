@@ -23,7 +23,10 @@ All documents were downloaded on 2026-09-27 from the manufacturers' own sites.
 Not found:
 - **No Genvex Optima Modbus register list is published.** The user manuals refer to "a separate
   description" for Modbus; it is on none of Genvex's download pages. The user manuals are kept
-  for their menus, setting ranges and sensor names.
+  for their menus, setting ranges and sensor names. A Genvex register workbook with a sheet for
+  the Optima 250, 251, 260, 301, 310 and 311-312 was posted on the
+  [OpenEnergyMonitor forum](https://community.openenergymonitor.org/t/reverse-engineer-heatpump-genvex-combi-185/15992/46),
+  without saying where it came from; the models cite it.
 - **Optima 301**: the user manual's download link on genvex.com answered 404 on 2026-09-27.
 
 ## Extracts
