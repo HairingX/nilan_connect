@@ -376,6 +376,8 @@ class PointKey:
     TEMP_EVAPORATOR = Key("temp_evaporator", float)
     """The evaporator, in °C."""
     TEMP_BEFORE_CONDENSER = Key("temp_before_condenser", float)
+    TEMP_BEFORE_EVAPORATOR = Key("temp_before_evaporator", float)
+    """Air before the evaporator, the cooling coil, in °C."""
     TEMP_AFTER_CONDENSER = Key("temp_after_condenser", float)
     TEMP_PRESSURE_PIPE = Key("temp_pressure_pipe", float)
     """The compressor's pressure pipe, in °C."""

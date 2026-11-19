@@ -356,6 +356,20 @@ def test_an_optima_312s_electric_coil_is_only_read() -> None:
                      PointKey.PREHEAT_COIL_FITTED: None}
 
 
+@pytest.mark.parametrize(("variant", "address"), [("OPTIMA_301", 4), ("OPTIMA_312", 4), ("OPTIMA_314", 65)])
+def test_an_optimas_sensor_t5_is_the_air_before_the_evaporator(variant: str, address: int) -> None:
+    """The Optima 312's user manual: "T5 Before cooling coil, T6 Cooling coil"."""
+    at_t5 = [point.key for point in _points(variant) if point.read == DatapointRegister(address)]
+    assert at_t5 == [PointKey.TEMP_BEFORE_EVAPORATOR]
+
+
+@pytest.mark.parametrize("variant", ["OPTIMA_301", "OPTIMA_312"])
+def test_an_optimas_sensor_t2_is_the_room_at_its_panel(variant: str) -> None:
+    """Genvex's workbook: 3x0009 "T2 Panel"."""
+    at_9 = [point.key for point in _points(variant) if point.read == DatapointRegister(9)]
+    assert at_9 == [PointKey.TEMP_ROOM_PANEL]
+
+
 def test_an_optima_314s_datapoint_24_is_the_hot_water_tanks_bottom() -> None:
     """The user manual calls sensor T8 the tank bottom."""
     at_24 = [point.key for point in _points("OPTIMA_314") if point.read == DatapointRegister(24)]

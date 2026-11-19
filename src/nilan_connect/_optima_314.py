@@ -84,7 +84,9 @@ OPTIMA_314 = MicroNabtoModel(
             optima_rpm(PointKey.FAN_RPM_EXTRACT, 36),
             state(PointKey.HEAT_PUMP_HEATER_ACTIVE, 58),
             optima_temperature(PointKey.TEMP_EXTRACT, 64),
-            optima_temperature(PointKey.TEMP_BEFORE_CONDENSER, 65),
+            # reported: T5, which the user manual places "in the discharge of the heatexchanger",
+            # where the air reaches the evaporator
+            optima_temperature(PointKey.TEMP_BEFORE_EVAPORATOR, 65),
             optima_temperature(PointKey.TEMP_EVAPORATOR, 66),
             state(PointKey.HEAT_PUMP_ACTIVE, 75),
             reading(PointKey.ALARM_BITS, 114),

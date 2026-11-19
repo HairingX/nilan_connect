@@ -32,11 +32,12 @@ OPTIMA_312 = MicroNabtoModel(
     "Optima 312", "Genvex", (
         section(reported=(
             *SLAVE_79250_POINTS,
-            optima_temperature(PointKey.TEMP_BEFORE_CONDENSER, 4),
+            # reported: T5, which the user manual calls "Before cooling coil"; T6 is the cooling coil
+            optima_temperature(PointKey.TEMP_BEFORE_EVAPORATOR, 4),
             optima_temperature(PointKey.TEMP_EVAPORATOR, 5),
             optima_temperature(PointKey.TEMP_HOTWATER_TOP, 6),
             optima_temperature(PointKey.TEMP_HOTWATER_BOTTOM, 7),
-            optima_temperature(PointKey.TEMP_ROOM, 9),
+            optima_temperature(PointKey.TEMP_ROOM_PANEL, 9),  # reported: the workbook's 3x0009 "T2 Panel"
             state(PointKey.HEAT_PUMP_ACTIVE, 11),
             state(PointKey.HEAT_PUMP_HEATER_ACTIVE, 12),
             state(PointKey.REHEAT_ACTIVE, 13),

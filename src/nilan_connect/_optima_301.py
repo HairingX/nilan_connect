@@ -31,11 +31,13 @@ OPTIMA_301 = MicroNabtoModel(
     "Optima 301", "Genvex", (
         section(reported=(
             *SLAVE_79250_POINTS,
-            optima_temperature(PointKey.TEMP_BEFORE_CONDENSER, 4),
+            # reported: the workbook's 3x0004 T5; its defrost programs name "Before cooling surface"
+            # and "Cooling surface", which T6 is
+            optima_temperature(PointKey.TEMP_BEFORE_EVAPORATOR, 4),
             optima_temperature(PointKey.TEMP_EVAPORATOR, 5),
             optima_temperature(PointKey.TEMP_HOTWATER_TOP, 6),
             optima_temperature(PointKey.TEMP_HOTWATER_BOTTOM, 7),
-            optima_temperature(PointKey.TEMP_ROOM, 9),
+            optima_temperature(PointKey.TEMP_ROOM_PANEL, 9),  # reported: the workbook's 3x0009 "T2 Panel"
             # reported: the workbook's 4x0001 "02) Cooling (°C)", 30-100 at a resolution of 0.1, shown 3-10
             setting(PointKey.COOLING_TEMPERATURE, 1, Limits(3, 10, step=0.1), scale=0.1, unit=Unit.CELSIUS),
             switch(PointKey.COOLING_ENABLE, 2),
