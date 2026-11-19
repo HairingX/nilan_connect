@@ -186,6 +186,8 @@ class PointKey:
     """The fan level while the CO2 is high."""
     FAN_LEVEL_COOLING = Key("fan_level_cooling", int)
     """The fan level while the unit cools."""
+    MIN_AIR_VOLUME = Key("min_air_volume", int)
+    """The least air volume, in percent, at which the heat pump starts."""
     AIR_EXCHANGE_MODE = Key("air_exchange_mode", AirExchangeMode)
     BOOST_ENABLE = Key("boost_enable", bool)
     BOOST_TIME = Key("boost_time", int)

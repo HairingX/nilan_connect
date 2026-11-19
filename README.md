@@ -33,15 +33,44 @@ A point's `certainty` says how certain it is that the point is right:
 On a CTS602 the gateway does not use the manual's addresses. Within one of the manual's register
 groups - blocks of 100, such as the temperatures from input register 200 - it keeps the manual's
 order and spacing, so a group's other registers follow from one known address in it: those are
-the `inferred` points. A setting among them can be written, as a test of it needs to; whether a
-user is offered that is the consumer's choice. A consumer that wants only what has been seen
-working leaves the inferred points out:
+the `inferred` points. A setting among them can be written, as a test of it needs to.
+
+### Levels and candidates
+
+A client uses the points of its `level`, chosen when it is made:
+
+| `Level` | The points a client has |
+|---|---|
+| `VERIFIED` | Only `VERIFIED` points. |
+| `DOCUMENTED` (the default) | `VERIFIED` and `REPORTED` points. |
+| `TEST` | Every point, `INFERRED` ones included, and each candidate in place of the point it replaces. |
+
+A **candidate** is a point read on no unit of the model yet, whose place a source gives: it is
+used only at `TEST`, so that the owner of such a unit can compare its values with the unit's
+panel. Below `TEST` the model is exactly as without it. `point.candidate` says a point is one,
+and `point.candidate.replaces` the key of the point it takes the place of, or None for a point
+of its own. Where it replaces a point of the same key, a consumer that stores the key keeps it;
+only the register behind it changes. A candidate that is confirmed on a unit becomes a point
+like any other, and its source is named on its line in the model.
+
+| Controller | Candidate | Replaces | Source |
+|---|---|---|---|
+| Optima 250, 251 | `bypass_active` at datapoint 107, "Bypass ON/OFF" | `bypass_active` at datapoint 104, the bypass's opening, 0-100 % | Genvex's register workbook |
+| Optima 301 | `preheat_enable` at setpoint 16, "Preheat (on/off)" | - | Genvex's register workbook |
+| Optima 301 | `min_air_volume` at setpoint 20, "Min air volume (%)" | - | Genvex's register workbook; the Optima 312's user manual, item 24 |
+
+Genvex's register workbook was posted on the
+[OpenEnergyMonitor forum](https://community.openenergymonitor.org/t/reverse-engineer-heatpump-genvex-combi-185/15992/46).
 
 ```python
-from nilan_connect import Certainty
+from nilan_connect import Level, create_client
 
-shown = [point for point in client.points.values() if point.certainty is not Certainty.INFERRED]
+client = create_client(email="you@example.com", host="192.0.2.10", level=Level.TEST)
 ```
+
+`client.diagnostics()` names the level, the certainty of each point and the candidates in use.
+`model_points(model)` gives every point a model declares, whatever the unit and the level: of each
+variant, with its certainty, and each candidate beside the point it replaces.
 
 ## Installation
 
@@ -78,11 +107,12 @@ asyncio.run(main())
 ```
 
 `create_client` takes keyword arguments only: `email`, `host`, `device_id`, `port` (micro_nabto's
-standard `PORT` unless given), `read_only` and `clock`. With only a `device_id`, the gateway is
-found by discovery, and with both, a gateway that has moved is found again. `run()` is the whole
-poll loop, and never ends by itself: it waits while the client is not connected, and logs a poll
-that raises and polls on after a pause. A program with a loop of its own calls `poll()`, which
-reads only what is due, and waits `seconds_until_next_poll()`.
+standard `PORT` unless given), `level` (`Level.DOCUMENTED` unless given), `read_only` and
+`clock`. With only a `device_id`, the gateway is found by discovery, and with both, a gateway
+that has moved is found again. `run()` is the whole poll loop, and never ends by itself: it
+waits while the client is not connected, and logs a poll that raises and polls on after a pause.
+A program with a loop of its own calls `poll()`, which reads only what is due, and waits
+`seconds_until_next_poll()`.
 
 ```python
 from nilan_connect import discover

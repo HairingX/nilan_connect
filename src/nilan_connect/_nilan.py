@@ -2,8 +2,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Any
 
-from modbus_event_connect import CircuitBreaker, Client, Clock, Fixed, Retry
+from modbus_event_connect import CircuitBreaker, Client, Clock, Fixed, Level, Point, Retry, Section
 from modbus_event_connect.micro_nabto import BROADCAST, PORT, MicroNabtoDevice, MicroNabtoModel
 from modbus_event_connect.micro_nabto import discover as discover_devices
 
@@ -32,6 +33,12 @@ MODELS: tuple[MicroNabtoModel, ...] = (
     OPTIMA_314,
 )
 """Every model `select_model` chooses from."""
+
+
+def model_points(model: MicroNabtoModel) -> tuple[Point[Any], ...]:
+    """Every point `model` declares, whatever the unit and the level: those of each variant, each
+    with its certainty, and the candidates beside the points they replace."""
+    return tuple(point for section in model.sections if isinstance(section, Section) for point in section.points)
 
 _TIMEOUT = 1.0  # guess
 """Seconds a request is given to be acknowledged before it is sent again."""
@@ -68,7 +75,7 @@ _DISCOVERY_RESEND = 0.5  # guess
 
 
 def create_client(*, email: str, host: str | None = None, device_id: str | None = None, port: int = PORT,
-                  read_only: bool = False, clock: Clock | None = None) -> Client:
+                  level: Level = Level.DOCUMENTED, read_only: bool = False, clock: Clock | None = None) -> Client:
     """A client for the controller behind a Nilan gateway, with its own connection; nothing is sent
     until `connect()`.
 
@@ -78,6 +85,9 @@ def create_client(*, email: str, host: str | None = None, device_id: str | None 
         device_id: the id the gateway answers discovery with; with it, a gateway that has moved is
             found again.
         port: the gateway's UDP port.
+        level: which points the unit has: those read on a unit of its model (VERIFIED), also those
+            its documentation states (DOCUMENTED), or every point, with each candidate in place of
+            the point it replaces (TEST).
         read_only: refuse every write before it reaches the controller.
         clock: the time the client plans by; None is the system's.
 
@@ -87,11 +97,11 @@ def create_client(*, email: str, host: str | None = None, device_id: str | None 
     `connect()` raises `UnsupportedDeviceError` for a controller no model matches.
     """
     return build_client(email, host=host, device_id=device_id, port=port, timeout=_TIMEOUT, retries=_RETRIES,
-                        read_only=read_only, clock=clock)
+                        level=level, read_only=read_only, clock=clock)
 
 
 def build_client(email: str, *, host: str | None, device_id: str | None, port: int, timeout: float, retries: int,
-                 read_only: bool, clock: Clock | None) -> Client:
+                 level: Level, read_only: bool, clock: Clock | None) -> Client:
     """A client as `create_client` makes it, but whose requests are given `timeout` seconds to be
     acknowledged and are sent again `retries` times."""
     device = MicroNabtoDevice.udp(
@@ -99,8 +109,8 @@ def build_client(email: str, *, host: str | None, device_id: str | None, port: i
         timeout=timeout, retries=retries, session_idle=_SESSION_IDLE,
         rediscovery_timeout=timeout * (retries + 1),  # guess: as long as a request is tried
         rediscovery_resend=_REDISCOVERY_RESEND, answer_wait=_ANSWER_WAIT, discovery_target=BROADCAST, clock=clock)
-    return Client(device, select_model, offline_after_intervals=_OFFLINE_AFTER_INTERVALS, read_only=read_only,
-                  clock=clock)
+    return Client(device, select_model, offline_after_intervals=_OFFLINE_AFTER_INTERVALS, level=level,
+                  read_only=read_only, clock=clock)
 
 
 @dataclass(frozen=True)

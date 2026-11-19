@@ -15,7 +15,7 @@ from modbus_event_connect.micro_nabto import MicroNabtoModel
 
 from ._keys import PointKey
 from ._optima import SLAVE_79250_POINTS, optima_rpm, optima_temperature
-from ._points import section, setting, switch
+from ._points import section, setting, state, switch
 from ._shared import (
     ANSWER_WAIT,
     FAN_LEVEL_REREAD_AFTER,
@@ -43,6 +43,14 @@ OPTIMA_250_SECTIONS = (
         setting(PointKey.FAN_LEVEL, 100, Limits(0, 4, step=1), on_write=Refresh(
             [PointKey.FAN_DUTYCYCLE_SUPPLY, PointKey.FAN_DUTYCYCLE_EXTRACT, PointKey.FAN_RPM_SUPPLY,
              PointKey.FAN_RPM_EXTRACT], after=FAN_LEVEL_REREAD_AFTER)),
+    )),
+    section(candidates=(
+        # Not read on a 250 or 251 yet. Genvex's register workbook, sheets 'Optima 250' A59 and
+        # 'Optima 251' A73
+        # (https://community.openenergymonitor.org/t/reverse-engineer-heatpump-genvex-combi-185/15992/46):
+        # 3x0107 "Bypass ON/OFF", 0=OFF, 1=ON. 3x0104, where it is read below the Test level, is the
+        # bypass's opening, 0-100 %, which reads as open at any opening.
+        state(PointKey.BYPASS_ACTIVE, 107, replaces=PointKey.BYPASS_ACTIVE),
     )),
 )
 """The Optima 250's, and the Optima 251's, which material published online gives the same."""
