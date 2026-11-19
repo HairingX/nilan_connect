@@ -29,11 +29,13 @@ from nilan_connect import (
     FilterReplaceInterval,
     MODELS,
     Identity,
+    Limits,
     MicroNabtoModel,
     OperationState,
     Point,
     PointKey,
     PollRate,
+    Unit,
     Weekday,
     select_model,
 )
@@ -291,6 +293,26 @@ async def test_a_cts602s_filter_interval_is_one_of_the_manuals_periods(variant: 
     async for client, _ in _client(VARIANTS[variant][1], {}, {address: 2}):
         assert _value(client, PointKey.FILTER_REPLACE_INTERVAL_CHOICE) is FilterReplaceInterval.DAYS_90
         assert not client.has(PointKey.FILTER_REPLACE_INTERVAL)
+
+
+def test_an_optima_301_neither_reads_nor_writes_its_minimum_air_volume_as_preheat() -> None:
+    """Genvex's workbook gives setpoint 20 as "24) Min air volume (%)"; preheat is setpoint 16."""
+    at_20 = [point.key for point in _points("OPTIMA_301") if SetpointRegister(20) in (point.read, point.write)]
+    assert at_20 == []
+    assert PointKey.PREHEAT_ENABLE not in {point.key for point in _points("OPTIMA_301")}
+
+
+def test_an_optima_301s_cooling_setting_is_3_to_10_c_in_tenths() -> None:
+    """Genvex's workbook: 4x0001 "02) Cooling (°C)", 30-100 at a resolution of 0.1."""
+    point = _point("OPTIMA_301", PointKey.COOLING_TEMPERATURE)
+    assert (point.limits, point.unit, point.scale) == (Limits(3, 10, step=0.1), Unit.CELSIUS, 0.1)
+
+
+async def test_an_optima_301s_cooling_setting_reads_and_writes_tenths_of_a_degree() -> None:
+    async for client, simulated in _client(VARIANTS["OPTIMA_301"][1], {}, {1: 55}):
+        assert _value(client, PointKey.COOLING_TEMPERATURE) == pytest.approx(5.5)
+        assert await client.write(PointKey.COOLING_TEMPERATURE, 7.0) is True
+        assert [c.items for c in simulated.received(SETPOINT_WRITE)] == [((0, 1, 70),)]
 
 
 def test_an_optima_314s_datapoint_24_is_the_hot_water_tanks_bottom() -> None:

@@ -103,8 +103,9 @@ class PointKey:
     """The room temperature, in °C, night cooling aims for."""
     TEMP_COOLING_START_OFFSET = Key("temp_cooling_start_offset", CoolingSetpoint)
     """How far above the target temperature cooling starts."""
-    COOLING_TEMPERATURE = Key("cooling_temperature", int)
-    """An Optima 301's cooling setting; no public description gives its meaning."""
+    COOLING_TEMPERATURE = Key("cooling_temperature", float)
+    """An Optima 301's cooling setting, in °C; no public description says what it is measured
+    against."""
     CONTROL_SENSOR = Key("control_sensor", ControlSensor)
     """The sensor the temperature is controlled by."""
 
