@@ -125,6 +125,31 @@ async def find():
 
 Discovery waits two seconds for answers.
 
+## Mapping a unit
+
+To find out what a controller's registers mean, its owner changes one thing at a time on the
+unit's own panel, and the registers are read as raw words before and after each change:
+
+```python
+from nilan_connect import difference
+
+async def map_unit(client):
+    found = await client.map_areas(limit=300)   # every address 0-299: its word, or missing
+    input("Change one thing on the panel, then press Enter")
+    after = await client.read_mapped(found)     # only the registers found
+    for change in difference(found, after):
+        print(change.address, change.before, change.after, change.bits)
+```
+
+The registers are the gateway's own datapoints and setpoints, never the manuals' Modbus numbers:
+every address from 0 up to the `limit`, or up to the highest the controller's model reads or
+writes where that is higher, ends with its word or as missing; none is skipped. The first read
+finds which registers the gateway has: on a CTS400 with a limit of 300 about 670 requests, as
+each absent address is asked for alone, which takes seconds on a quick gateway and up to a few
+minutes on a slow one. Each read after it reads only the registers found, in two requests.
+Nothing is read for a mapping unless it is asked for, and nothing is written.
+`tools/measure_mapping.py` measures, read-only, how far a gateway's numbering goes.
+
 ## How often values are read
 
 Each controller's model says when its points are read, and nothing outside the model or

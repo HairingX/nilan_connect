@@ -3,11 +3,12 @@
 Everything a user of a Nilan controller needs is here, so that nothing has to be imported from
 modbus_event_connect or event_connect: the client and its values, what a point is, how certain it
 is and the range it can be written with, the level of certainty a client uses and the candidates
-tried at its Test level, the errors, and discovery.
+tried at its Test level, the raw snapshots a mapping of the unit reads, the errors, and discovery.
 """
 from importlib.metadata import version as _installed_version
 
 from event_connect import (
+    Area,
     AuthenticationError,
     Candidate,
     CannotConnectError,
@@ -28,8 +29,11 @@ from event_connect import (
     PointsCallback,
     PollRate,
     Quality,
+    RawAddress,
     ReadOnlyError,
+    RegisterChange,
     Selector,
+    Snapshot,
     Status,
     StatusCallback,
     Unit,
@@ -38,6 +42,7 @@ from event_connect import (
     Write,
     WriteKind,
     WriteRange,
+    difference,
 )
 from modbus_event_connect import Client, Point
 from modbus_event_connect.micro_nabto import PORT, MicroNabtoModel
@@ -104,6 +109,11 @@ __all__ = [
     "Write",
     "WriteKind",
     "WriteRange",
+    "Area",
+    "RawAddress",
+    "RegisterChange",
+    "Snapshot",
+    "difference",
     "Level",
     "Candidate",
     "Client",
