@@ -134,7 +134,7 @@ unit's own panel, and the registers are read as raw words before and after each 
 from nilan_connect import difference
 
 async def map_unit(client):
-    found = await client.map_areas(limit=300)   # which registers the gateway holds, and their words
+    found = await client.map_areas(limit=300)   # every address 0-299: its word, or missing
     input("Change one thing on the panel, then press Enter")
     after = await client.read_mapped(found)     # only the registers found
     for change in difference(found, after):
@@ -142,12 +142,13 @@ async def map_unit(client):
 ```
 
 The registers are the gateway's own datapoints and setpoints, never the manuals' Modbus numbers:
-for each, from the lowest to the highest the controller's model reads or writes, the gaps
-included, and above it one in ten up to the `limit`, with the stretches around one that answers.
-The first read finds which registers the gateway has, and costs on a CTS400 about 250 requests
-with a limit of 300; each read after it reads only those, in two requests. Nothing is read for a
-mapping unless it is asked for, and nothing is written. `tools/measure_mapping.py` measures, read-only,
-how far a gateway's numbering goes.
+every address from 0 up to the `limit`, or up to the highest the controller's model reads or
+writes where that is higher, ends with its word or as missing; none is skipped. The first read
+finds which registers the gateway has: on a CTS400 with a limit of 300 about 670 requests, as
+each absent address is asked for alone, which takes seconds on a quick gateway and up to a few
+minutes on a slow one. Each read after it reads only the registers found, in two requests.
+Nothing is read for a mapping unless it is asked for, and nothing is written.
+`tools/measure_mapping.py` measures, read-only, how far a gateway's numbering goes.
 
 ## How often values are read
 
