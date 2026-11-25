@@ -9,8 +9,8 @@ reading it costs.
     Run, from a checkout with `pip install -e .`:
         python tools/measure_mapping.py
 
-For each table it reads, through the client's own requests: the span from the lowest to the
-highest address the unit's model reads, gaps included; then above it one address at a time up to
+For each table it reads, through the client's own requests: every address from 0 to the highest
+the unit's model reads or writes, as a mapping does; then above it one address at a time up to
 511, stopping after 100 absent addresses in a row; then once more only the addresses that
 answered. It prints which answered and what each read cost, and a summary to paste back. It
 never writes, and it stops at once when the gateway answers busy or does not answer. The email
@@ -57,11 +57,12 @@ def setting(name: str) -> str | None:
 
 
 def known_span(client: Client, table: str) -> range:
-    """From the lowest to the highest address the unit's model reads in `table`."""
+    """From 0 to the highest address the unit's model reads or writes in `table`, as a mapping
+    reads it."""
     space = TABLES[table]
-    addresses = [p.read.address + i for p in model_points(cast(MicroNabtoModel, client.model))
-                 if isinstance(p.read, space) for i in range(p.registers)]
-    return range(min(addresses), max(addresses) + 1)
+    addresses = [access.address + i for p in model_points(cast(MicroNabtoModel, client.model))
+                 for access in (p.read, p.write) if isinstance(access, space) for i in range(p.registers)]
+    return range(0, max(addresses) + 1)
 
 
 def ranges(addresses: Iterable[int]) -> str:
