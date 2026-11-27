@@ -4,7 +4,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
-from modbus_event_connect import CircuitBreaker, Client, Clock, Fixed, Level, Point, Retry, Section
+from modbus_event_connect import CircuitBreaker, Client, Clock, Fixed, Identity, Level, Point, Retry, Section
 from modbus_event_connect.micro_nabto import BROADCAST, PORT, MicroNabtoDevice, MicroNabtoModel
 from modbus_event_connect.micro_nabto import discover as discover_devices
 
@@ -19,6 +19,7 @@ from ._optima_301 import OPTIMA_301
 from ._optima_312 import OPTIMA_312
 from ._optima_314 import OPTIMA_314
 from ._select import select_model
+from ._unrecognised import UNRECOGNISED
 
 MODELS: tuple[MicroNabtoModel, ...] = (
     CTS400,
@@ -75,7 +76,8 @@ _DISCOVERY_RESEND = 0.5  # guess
 
 
 def create_client(*, email: str, host: str | None = None, device_id: str | None = None, port: int = PORT,
-                  level: Level = Level.DOCUMENTED, read_only: bool = False, clock: Clock | None = None) -> Client:
+                  level: Level = Level.DOCUMENTED, read_only: bool = False, unrecognised: bool = False,
+                  clock: Clock | None = None) -> Client:
     """A client for the controller behind a Nilan gateway, with its own connection; nothing is sent
     until `connect()`.
 
@@ -89,28 +91,37 @@ def create_client(*, email: str, host: str | None = None, device_id: str | None 
             its documentation states (DOCUMENTED), or every point, with each candidate in place of
             the point it replaces (TEST).
         read_only: refuse every write before it reaches the controller.
+        unrecognised: connect a controller no model matches as `UNRECOGNISED`, which has no
+            points but can be mapped, rather than refuse it.
         clock: the time the client plans by; None is the system's.
 
     Raises:
         ValueError: neither `host` nor `device_id` is given.
 
-    `connect()` raises `UnsupportedDeviceError` for a controller no model matches.
+    `connect()` raises `UnsupportedDeviceError` for a controller no model matches, unless
+    `unrecognised`.
     """
     return build_client(email, host=host, device_id=device_id, port=port, timeout=_TIMEOUT, retries=_RETRIES,
-                        level=level, read_only=read_only, clock=clock)
+                        level=level, read_only=read_only, unrecognised=unrecognised, clock=clock)
 
 
 def build_client(email: str, *, host: str | None, device_id: str | None, port: int, timeout: float, retries: int,
-                 level: Level, read_only: bool, clock: Clock | None) -> Client:
+                 level: Level, read_only: bool, unrecognised: bool, clock: Clock | None) -> Client:
     """A client as `create_client` makes it, but whose requests are given `timeout` seconds to be
     acknowledged and are sent again `retries` times."""
     device = MicroNabtoDevice.udp(
-        email, host=host, device_id=device_id, port=port, reconnect=_RECONNECT, models=MODELS,
+        email, host=host, device_id=device_id, port=port, reconnect=_RECONNECT,
+        models=(*MODELS, UNRECOGNISED) if unrecognised else MODELS,
         timeout=timeout, retries=retries, session_idle=_SESSION_IDLE,
         rediscovery_timeout=timeout * (retries + 1),  # guess: as long as a request is tried
         rediscovery_resend=_REDISCOVERY_RESEND, answer_wait=_ANSWER_WAIT, discovery_target=BROADCAST, clock=clock)
-    return Client(device, select_model, offline_after_intervals=_OFFLINE_AFTER_INTERVALS, level=level,
+    selector = _or_unrecognised if unrecognised else select_model
+    return Client(device, selector, offline_after_intervals=_OFFLINE_AFTER_INTERVALS, level=level,
                   read_only=read_only, clock=clock)
+
+
+def _or_unrecognised(identity: Identity) -> MicroNabtoModel:
+    return select_model(identity) or UNRECOGNISED
 
 
 @dataclass(frozen=True)

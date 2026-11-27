@@ -58,6 +58,7 @@ from ._optima_270 import OPTIMA_270
 from ._optima_301 import OPTIMA_301
 from ._optima_312 import OPTIMA_312
 from ._optima_314 import OPTIMA_314
+from ._unrecognised import UNRECOGNISED
 from ._select import select_model
 from ._states import (
     AirExchangeMode,
@@ -136,6 +137,7 @@ __all__ = [
     "OPTIMA_301",
     "OPTIMA_312",
     "OPTIMA_314",
+    "UNRECOGNISED",
     "PointKey",
     "AirExchangeMode",
     "Alarm",

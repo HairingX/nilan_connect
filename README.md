@@ -20,7 +20,10 @@ You subscribe to the values you care about and are told when one changes - with 
 **The gateway's addresses of the untested controllers are derived and calculated from the
 material we could find online, and have not been tested on those controllers.** Values may be
 wrong or missing; reports of what a unit shows are welcome. `connect()` raises
-`UnsupportedDeviceError` for any other controller.
+`UnsupportedDeviceError` for any other controller, unless the client is made with
+`unrecognised=True`: then such a controller is connected as `UNRECOGNISED`, a model with no
+points. Its `identity` holds the numbers its gateway names it by, and it can be mapped as any
+other, as every gateway numbers its datapoints and setpoints alike.
 
 A point's `certainty` says how certain it is that the point is right:
 
@@ -107,8 +110,8 @@ asyncio.run(main())
 ```
 
 `create_client` takes keyword arguments only: `email`, `host`, `device_id`, `port` (micro_nabto's
-standard `PORT` unless given), `level` (`Level.DOCUMENTED` unless given), `read_only` and
-`clock`. With only a `device_id`, the gateway is found by discovery, and with both, a gateway
+standard `PORT` unless given), `level` (`Level.DOCUMENTED` unless given), `read_only`,
+`unrecognised` (False unless given) and `clock`. With only a `device_id`, the gateway is found by discovery, and with both, a gateway
 that has moved is found again. `run()` is the whole poll loop, and never ends by itself: it
 waits while the client is not connected, and logs a poll that raises and polls on after a pause.
 A program with a loop of its own calls `poll()`, which reads only what is due, and waits
