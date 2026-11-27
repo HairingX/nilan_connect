@@ -13,10 +13,11 @@ __all__ = [
 
 
 def client_for(gateway: SimulatedMicroNabtoDevice, *, email: str, timeout: float, retries: int,
-               clock: Clock | None = None, level: Level = Level.DOCUMENTED, read_only: bool = False) -> Client:
+               clock: Clock | None = None, level: Level = Level.DOCUMENTED, read_only: bool = False,
+               unrecognised: bool = False) -> Client:
     """A client of the started `gateway` as `create_client` makes it, but whose requests are given
     `timeout` seconds to be acknowledged and are sent again `retries` times, so that a test need
     not wait for a request the gateway leaves unanswered."""
     host, port = gateway.address
     return build_client(email, host=host, device_id=None, port=port, timeout=timeout, retries=retries,
-                        level=level, read_only=read_only, clock=clock)
+                        level=level, read_only=read_only, unrecognised=unrecognised, clock=clock)
